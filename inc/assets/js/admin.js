@@ -20,7 +20,7 @@ var AstraSitesAjaxQueue = (function($) {
 		 * @since 1.0.0
 		 */
 		add:  function(opt) {
-		    requests.push(opt);
+			requests.push(opt);
 		},
 
 		/**
@@ -29,8 +29,8 @@ var AstraSitesAjaxQueue = (function($) {
 		 * @since 1.0.0
 		 */
 		remove:  function(opt) {
-		    if( $.inArray(opt, requests) > -1 )
-		        requests.splice($.inArray(opt, requests), 1);
+			if( $.inArray(opt, requests) > -1 )
+				requests.splice($.inArray(opt, requests), 1);
 		},
 
 		/**
@@ -39,26 +39,26 @@ var AstraSitesAjaxQueue = (function($) {
 		 * @since 1.0.0
 		 */
 		run: function() {
-		    var self = this,
-		        oriSuc;
+			var self = this,
+				oriSuc;
 
-		    if( requests.length ) {
-		        oriSuc = requests[0].complete;
+			if( requests.length ) {
+				oriSuc = requests[0].complete;
 
-		        requests[0].complete = function() {
-		             if( typeof(oriSuc) === 'function' ) oriSuc();
-		             requests.shift();
-		             self.run.apply(self, []);
-		        };
+				requests[0].complete = function() {
+					 if( typeof(oriSuc) === 'function' ) oriSuc();
+					 requests.shift();
+					 self.run.apply(self, []);
+				};
 
-		        $.ajax(requests[0]);
+				$.ajax(requests[0]);
 
-		    } else {
+			} else {
 
-		      self.tid = setTimeout(function() {
-		         self.run.apply(self, []);
-		      }, 1000);
-		    }
+			  self.tid = setTimeout(function() {
+				 self.run.apply(self, []);
+			  }, 1000);
+			}
 		},
 
 		/**
@@ -68,8 +68,8 @@ var AstraSitesAjaxQueue = (function($) {
 		 */
 		stop:  function() {
 
-		    requests = [];
-		    clearTimeout(this.tid);
+			requests = [];
+			clearTimeout(this.tid);
 		}
 	};
 
