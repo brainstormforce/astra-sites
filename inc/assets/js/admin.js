@@ -1060,8 +1060,12 @@ var AstraSitesAjaxQueue = (function() {
 		/**
 		 * Enable Demo Import Button.
 		 */
-		_enable_demo_import_button: function( type = 'free' ) {
+		_enable_demo_import_button: function( type ) {
 			var demo_slug;
+
+			if ( ! type ) {
+				type = 'free';
+			}
 
 			switch( type ) {
 
