@@ -80,16 +80,16 @@ var AstraSitesAjaxQueue = (function() {
 	AstraSites = {
 
 		_ref: null,
-		
+
 		_iconUploader: null,
-	
+
 		init: function()
 		{
 			this._bind();
 			this._resetPagedCount();
 			this._initial_load_demos();
 		},
-		
+
 		/**
 		 * Binds events for the Astra Sites.
 		 *
@@ -511,14 +511,14 @@ var AstraSitesAjaxQueue = (function() {
 			$this = jQuery(this);
 			$this.parent('li').siblings().find('.current').removeClass('current');
 			$this.addClass('current');
-			
+
 			var astra_page_builder = jQuery('.filter-links.astra-page-builder'),
 				astra_category 	   = jQuery('.filter-links.astra-category'),
 				page_builder_id   	= astra_page_builder.find('.current').data('id'),
 				category_id   		= astra_category.find('.current').data('id');
 
 			AstraSites._resetPagedCount();
-			
+
 			paged = parseInt(jQuery('body').attr('data-astra-demo-paged'));
 
 			jQuery('body').addClass('loading-content');
@@ -572,7 +572,7 @@ var AstraSitesAjaxQueue = (function() {
 				astra_category 	   = jQuery('.filter-links.astra-category'),
 				page_builder_id   	= astra_page_builder.find('.current').data('id'),
 				category_id   		= astra_category.find('.current').data('id');
-			
+
 
 			window.clearTimeout(AstraSites._ref);
 			AstraSites._ref = window.setTimeout(function () {
@@ -742,7 +742,7 @@ var AstraSitesAjaxQueue = (function() {
 				slug: $button.data( 'slug' )
 			} );
 		},
-		
+
 		/**
 		 * Update Page Count.
 		 */
@@ -985,7 +985,7 @@ var AstraSitesAjaxQueue = (function() {
 		 * Install All Plugins.
 		 */
 		_installAllPlugins: function( not_installed ) {
-			
+
 			jQuery.each( not_installed, function(index, single_plugin) {
 
 				var $card   = jQuery( '.plugin-card-' + single_plugin.slug ),
