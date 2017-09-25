@@ -892,10 +892,6 @@ var AstraSitesAjaxQueue = (function() {
 
 			$this.closest('.theme').focus();
 
-			var $theme = $this.closest('.astra-sites-preview').find('.wp-full-overlay-header');
-
-			var apiURL = $theme.data('demo-api') || '';
-
 			jQuery.ajax({
 				url: astraDemo.ajaxurl,
 				type: 'POST',
