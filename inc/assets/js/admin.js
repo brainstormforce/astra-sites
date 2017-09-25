@@ -620,7 +620,7 @@ var AstraSitesAjaxQueue = (function() {
 		/**
 		 * Collapse Sidebar.
 		 */
-		_collapse: function() {
+		_collapse: function(event) {
 			event.preventDefault();
 
 			overlay = jQuery('.wp-full-overlay');
@@ -643,7 +643,7 @@ var AstraSitesAjaxQueue = (function() {
 		 *
 		 * On click on image, more link & preview button.
 		 */
-		_preview: function() {
+		_preview: function(event) {
 
 			event.preventDefault();
 
