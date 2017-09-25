@@ -227,7 +227,7 @@ var AstraSitesAjaxQueue = (function() {
 		/**
 		 * Render Demo Preview
 		 */
-		_activateNow: function( eventn ) {
+		_activateNow: function( event ) {
 
 			event.preventDefault();
 
