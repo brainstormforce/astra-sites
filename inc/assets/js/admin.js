@@ -143,7 +143,7 @@ var AstraSitesAjaxQueue = (function() {
 		 */
 		_nextTheme: function (event) {
 			event.preventDefault();
-			currentDemo = jQuery('.theme-preview-on')
+			currentDemo = jQuery('.theme-preview-on');
 			currentDemo.removeClass('theme-preview-on');
 			nextDemo = currentDemo.next('.theme');
 			nextDemo.addClass('theme-preview-on');
@@ -761,7 +761,7 @@ var AstraSitesAjaxQueue = (function() {
 			jQuery('body').attr('data-astra-site-category', categoryId);
 			jQuery('body').attr('data-astra-demo-search', '');
 			jQuery('body').attr('data-scrolling', false);
-			jQuery('body').attr( 'data-required-plugins', 0 )
+			jQuery('body').attr( 'data-required-plugins', 0 );
 
 		},
 
@@ -833,7 +833,7 @@ var AstraSitesAjaxQueue = (function() {
 					required_plugins: requiredPlugins,
 					astra_site_options: astraSiteOptions,
 					astra_enabled_extensions: astraEnabledExtensions
-				}]
+				}];
 
 				var template = wp.template('astra-single-demo');
 				jQuery('.themes').append(template(templateData[0]));
