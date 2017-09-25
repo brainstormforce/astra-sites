@@ -1061,6 +1061,7 @@ var AstraSitesAjaxQueue = (function() {
 		 * Enable Demo Import Button.
 		 */
 		_enable_demo_import_button: function( type = 'free' ) {
+			var demo_slug;
 
 			switch( type ) {
 
@@ -1080,7 +1081,7 @@ var AstraSitesAjaxQueue = (function() {
 					break;
 
 				case 'upgrade':
-							var demo_slug = jQuery('.wp-full-overlay-header').attr('data-demo-slug');
+							demo_slug = jQuery('.wp-full-overlay-header').attr('data-demo-slug');
 
 							jQuery('.astra-demo-import')
 									.addClass('go-pro button-primary')
@@ -1092,7 +1093,7 @@ var AstraSitesAjaxQueue = (function() {
 					break;
 
 				default:
-							var demo_slug = jQuery('.wp-full-overlay-header').attr('data-demo-slug');
+							demo_slug = jQuery('.wp-full-overlay-header').attr('data-demo-slug');
 
 							jQuery('.astra-demo-import')
 									.addClass('go-pro button-primary')
