@@ -21,7 +21,7 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 		 * @since  1.0.0
 		 * @var (Object) Class object
 		 */
-		private static $_instance = null;
+		public static $_instance     = null;
 
 		/**
 		 * Set Instance
@@ -43,7 +43,7 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 		 *
 		 * @since  1.0.0
 		 */
-		private function __construct() {
+		public function __construct() {
 
 			require_once ASTRA_SITES_DIR . 'inc/importers/class-astra-sites-helper.php';
 			require_once ASTRA_SITES_DIR . 'inc/importers/class-widgets-importer.php';
@@ -51,152 +51,147 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 			require_once ASTRA_SITES_DIR . 'inc/importers/wxr-importer/class-astra-wxr-importer.php';
 			require_once ASTRA_SITES_DIR . 'inc/importers/class-astra-site-options-import.php';
 
-			add_action( 'wp_ajax_astra-import-demo',                        array( $this, 'demo_ajax_import' ) );
-			add_action( 'astra_sites_image_import_complete',                array( $this, 'clear_cache' ) );
+			// Import AJAX.
+			add_action( 'wp_ajax_astra-sites-import-start'               , array( $this, 'import_start' ) );
+			add_action( 'wp_ajax_astra-sites-import-customizer-settings' , array( $this, 'import_customizer_settings' ) );
+			add_action( 'wp_ajax_astra-sites-import-xml'                 , array( $this, 'import_xml' ) );
+			add_action( 'wp_ajax_astra-sites-import-options'             , array( $this, 'import_options' ) );
+			add_action( 'wp_ajax_astra-sites-import-widgets'             , array( $this, 'import_widgets' ) );
+			add_action( 'wp_ajax_astra-sites-import-end'                 , array( $this, 'import_end' ) );
+
+			// Hooks in AJAX.
+			add_action( 'astra_sites_import_complete'                    , array( $this, 'clear_cache' ) );
+			add_action( 'astra_sites_image_import_complete'              , array( $this, 'clear_cache' ) );
 
 		}
 
 		/**
-		 * Ajax callback for demo import action.
+		 * Start Site Import
 		 *
-		 * @since  1.0.0
+		 * @since 1.0.14
+		 * @return void
 		 */
-		public function demo_ajax_import() {
-
-			$report = array(
-				'success' => false,
-				'message' => '',
-			);
+		function import_start() {
 
 			if ( ! current_user_can( 'customize' ) ) {
-				$report['message'] = __( 'You have not "customize" access to import the astra site.', 'astra-sites' );
-				wp_send_json( $report );
+				wp_send_json_error( __( 'You have not "customize" access to import the astra site.', 'astra-sites' ) );
 			}
 
 			$demo_api_uri = isset( $_POST['api_url'] ) ? esc_url( $_POST['api_url'] ) : '';
-			$this->import_demo( $demo_api_uri );
 
-			$report['success'] = true;
-			$report['message'] = __( 'Demo Imported Successfully.', 'astra-sites' );
-			wp_send_json( $report );
+			if ( ! empty( $demo_api_uri ) ) {
 
-		}
+				$demo_data = self::get_astra_single_demo( $demo_api_uri );
 
+				do_action( 'astra_sites_import_start', $demo_data );
 
-		/**
-		 * Import the demo.
-		 *
-		 * @since  1.0.0
-		 *
-		 * @param  (String) $demo_api_uri API URL for the single demo.
-		 */
-		public function import_demo( $demo_api_uri ) {
+				wp_send_json_success( $demo_data );
 
-			$demo_data = self::get_astra_single_demo( $demo_api_uri );
-
-			// Import Enabled Extensions.
-			$this->import_astra_enabled_extension( $demo_data['astra-enabled-extensions'] );
-
-			// Import Customizer Settings.
-			$this->import_customizer_settings( $demo_data['astra-site-customizer-data'] );
-
-			// Import XML.
-			$this->import_wxr( $demo_data['astra-site-wxr-path'] );
-
-			// Import WordPress site options.
-			$this->import_site_options( $demo_data['astra-site-options-data'] );
-
-			// Import Custom 404 extension options.
-			$this->import_custom_404_extension_options( $demo_data['astra-custom-404'] );
-
-			// Import Widgets data.
-			$this->import_widgets( $demo_data['astra-site-widgets-data'] );
-
-			// Clear Cache.
-			$this->clear_cache();
-
-			do_action( 'astra_sites_import_complete', $demo_data );
-		}
-
-		/**
-		 * Import widgets and assign to correct sidebars.
-		 *
-		 * @since  1.0.0
-		 *
-		 * @param  (Object) $data Widgets data.
-		 */
-		private function import_widgets( $data ) {
-
-			// bail if widgets data is not available.
-			if ( null == $data ) {
-				return;
+			} else {
+				wp_send_json_error( __( 'Site API URL is empty!', 'astra-sites' ) );
 			}
 
-			$widgets_importer = Astra_Widget_Importer::instance();
-			$widgets_importer->import_widgets_data( $data );
 		}
 
 		/**
-		 * Import custom 404 section.
+		 * Import Customizer Settings.
 		 *
-		 * @since 1.0.0
-		 *
-		 * @param  (Array) $options_404 404 Extensions settings from the demo.
+		 * @since 1.0.14
+		 * @return void
 		 */
-		private function import_custom_404_extension_options( $options_404 ) {
-			if ( is_callable( 'Astra_Admin_Helper::update_admin_settings_option' ) ) {
-				Astra_Admin_Helper::update_admin_settings_option( '_astra_ext_custom_404', $options_404 );
+		function import_customizer_settings() {
+
+			$customizer_data = ( isset( $_POST['customizer_data'] ) ) ? (array) json_decode( stripcslashes( $_POST['customizer_data'] ), 1 ) : '';
+
+			if ( isset( $customizer_data ) ) {
+				$customizer_import = Astra_Customizer_Import::instance();
+				$customizer_import->import( $customizer_data );
+
+				wp_send_json_success( $customizer_data );
+			} else {
+				wp_send_json_error( __( 'Customizer data is empty!', 'astra-sites' ) );
 			}
+
 		}
 
 		/**
-		 * Import site options - Front Page, Menus, Blog page etc.
+		 * Import XML.
 		 *
-		 * @since  1.0.0
-		 *
-		 * @param  (Array) $options Array of required site options from the demo.
+		 * @since 1.0.14
+		 * @return void
 		 */
-		private function import_site_options( $options ) {
-			$options_importer = Astra_Site_Options_Import::instance();
-			$options_importer->import_options( $options );
-		}
+		function import_xml() {
 
-		/**
-		 * Download and import the XML from the demo.
-		 *
-		 * @since  1.0.0
-		 *
-		 * @param  (String) $wxr_url URL of the xml export of the demo to be imported.
-		 */
-		private function import_wxr( $wxr_url ) {
-			$wxr_importer = Astra_WXR_Importer::instance();
-			$xml_path     = $wxr_importer->download_xml( $wxr_url );
-			$wxr_importer->import_xml( $xml_path['file'] );
-		}
+			$wxr_url = ( isset( $_POST['wxr_url'] ) ) ? urldecode( $_POST['wxr_url'] ) : '';
 
-		/**
-		 * Import Customizer data.
-		 *
-		 * @since  1.0.0
-		 *
-		 * @param  (Array) $customizer_data Customizer data for the demo to be imported.
-		 */
-		private function import_customizer_settings( $customizer_data ) {
-			$customizer_import = Astra_Customizer_Import::instance();
-			$customizer_data   = $customizer_import->import( $customizer_data );
-		}
-
-		/**
-		 * Import settings enabled astra extensions from the demo.
-		 *
-		 * @since  1.0.0
-		 *
-		 * @param  (Array) $saved_extensions Array of enabled extensions.
-		 */
-		private function import_astra_enabled_extension( $saved_extensions ) {
-			if ( is_callable( 'Astra_Admin_Helper::update_admin_settings_option' ) ) {
-				Astra_Admin_Helper::update_admin_settings_option( '_astra_ext_enabled_extensions', $saved_extensions );
+			if ( isset( $wxr_url ) ) {
+				$wxr_importer = Astra_WXR_Importer::instance();
+				$xml_path     = $wxr_importer->download_xml( $wxr_url );
+				$wxr_importer->import_xml( $xml_path['file'] );
+				wp_send_json_success( $wxr_url );
+			} else {
+				wp_send_json_error( __( 'Invalid site XML file!', 'astra-sites' ) );
 			}
+
+		}
+
+		/**
+		 * Import Options.
+		 *
+		 * @since 1.0.14
+		 * @return void
+		 */
+		function import_options() {
+
+			$options_data = ( isset( $_POST['options_data'] ) ) ? (array) json_decode( stripcslashes( $_POST['options_data'] ), 1 ) : '';
+
+			if ( isset( $options_data ) ) {
+				$options_importer = Astra_Site_Options_Import::instance();
+				$options_importer->import_options( $options_data );
+				wp_send_json_success( $options_data );
+			} else {
+				wp_send_json_error( __( 'Site options are empty!', 'astra-sites' ) );
+			}
+
+		}
+
+		/**
+		 * Import Widgets.
+		 *
+		 * @since 1.0.14
+		 * @return void
+		 */
+		function import_widgets() {
+
+			$widgets_data = ( isset( $_POST['widgets_data'] ) ) ? (object) json_decode( stripcslashes( $_POST['widgets_data'] ) ) : '';
+
+			if ( isset( $widgets_data ) ) {
+				$widgets_importer = Astra_Widget_Importer::instance();
+				$status = $widgets_importer->import_widgets_data( $widgets_data );
+				wp_send_json_success( $widgets_data );
+			} else {
+				wp_send_json_error( __( 'Site options are empty!', 'astra-sites' ) );
+			}
+
+		}
+
+		/**
+		 * Import End.
+		 *
+		 * @since 1.0.14
+		 * @return void
+		 */
+		function import_end() {
+
+			$demo_data = ( isset( $_POST['demo_data'] ) ) ? (array) json_decode( stripcslashes( $_POST['demo_data'] ), 1 ) : '';
+
+			if ( ! empty( $demo_data ) ) {
+				do_action( 'astra_sites_import_complete', $demo_data );
+				wp_send_json_success( $demo_data );
+			} else {
+				wp_send_json_error( __( 'Site Import data not found!', 'astra-sites' ) );
+			}
+
 		}
 
 		/**

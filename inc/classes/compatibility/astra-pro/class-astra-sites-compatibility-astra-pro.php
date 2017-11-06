@@ -45,7 +45,9 @@ if ( ! class_exists( 'Astra_Sites_Compatibility_Astra_Pro' ) ) :
 		 * @since 1.0.0
 		 */
 		public function __construct() {
-			add_action( 'astra_sites_after_plugin_activation', array( $this, 'astra_pro' ), 10, 2 );
+			add_action( 'astra_sites_after_plugin_activation' , array( $this, 'astra_pro' ), 10, 2 );
+			add_action( 'astra_sites_import_start'            , array( $this, 'import_enabled_extension' ) );
+			add_action( 'astra_sites_import_start'            , array( $this, 'import_custom_404' ) );
 		}
 
 		/**
@@ -74,6 +76,37 @@ if ( ! class_exists( 'Astra_Sites_Compatibility_Astra_Pro' ) ) :
 				}
 			}
 
+		}
+
+		/**
+		 * Import custom 404 section.
+		 *
+		 * @since 1.0.0
+		 * @param  array $demo_data Site all data render from API call.
+		 */
+		public function import_custom_404( $demo_data ) {
+
+			if ( isset( $demo_data['astra-custom-404'] ) ) {
+				if ( is_callable( 'Astra_Admin_Helper::update_admin_settings_option' ) ) {
+					$options_404 = $demo_data['astra-custom-404'];
+					Astra_Admin_Helper::update_admin_settings_option( '_astra_ext_custom_404', $options_404 );
+				}
+			}
+		}
+
+		/**
+		 * Import settings enabled Astra extensions from the demo.
+		 *
+		 * @since  1.0.0
+		 * @param  array $demo_data Site all data render from API call.
+		 */
+		public function import_enabled_extension( $demo_data = array() ) {
+
+			if ( isset( $demo_data['astra-enabled-extensions'] ) ) {
+				if ( is_callable( 'Astra_Admin_Helper::update_admin_settings_option' ) ) {
+					Astra_Admin_Helper::update_admin_settings_option( '_astra_ext_enabled_extensions', $demo_data['astra-enabled-extensions'] );
+				}
+			}
 		}
 
 	}
