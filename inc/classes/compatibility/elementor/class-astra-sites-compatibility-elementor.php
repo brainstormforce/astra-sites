@@ -114,7 +114,7 @@ if ( ! class_exists( 'Astra_Sites_Compatibility_Elementor' ) ) :
 		protected function get_pages() {
 
 			$args = array(
-				'post_type'    => 'page',
+				'post_type'     => 'page',
 
 				// Query performance optimization.
 				'fields'        => 'ids',

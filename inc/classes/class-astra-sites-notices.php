@@ -53,9 +53,9 @@ if ( ! class_exists( 'Astra_Sites_Notices' ) ) :
 		 */
 		public function __construct() {
 
-			add_action( 'admin_notices',            array( $this, 'show_notices' ) );
-			add_action( 'admin_enqueue_scripts',    array( $this, 'enqueue_scripts' ) );
-			add_action( 'wp_ajax_astra-notices',    array( $this, 'dismiss' ) );
+			add_action( 'admin_notices', array( $this, 'show_notices' ) );
+			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
+			add_action( 'wp_ajax_astra-notices', array( $this, 'dismiss' ) );
 
 		}
 
@@ -118,16 +118,16 @@ if ( ! class_exists( 'Astra_Sites_Notices' ) ) :
 		function show_notices() {
 
 			$defaults = array(
-				'type' => 'info',
-				'show_if' => true,
-				'message' => '',
-				'class' => 'ast-active-notice',
+				'type'             => 'info',
+				'show_if'          => true,
+				'message'          => '',
+				'class'            => 'ast-active-notice',
 
-				'dismissible' => false,
+				'dismissible'      => false,
 				'dismissible-meta' => 'user',
 				'dismissible-time' => MINUTE_IN_SECONDS,
 
-				'data' => '',
+				'data'             => '',
 			);
 
 			foreach ( self::$notices as $key => $notice ) {
@@ -150,8 +150,8 @@ if ( ! class_exists( 'Astra_Sites_Notices' ) ) :
 				}
 
 				// Notice ID.
-				$notice_id = 'astra-sites-notices-id-' . $key;
-				$notice['id'] = $notice_id;
+				$notice_id         = 'astra-sites-notices-id-' . $key;
+				$notice['id']      = $notice_id;
 				$notice['classes'] = implode( ' ', $classes );
 
 				// User meta.

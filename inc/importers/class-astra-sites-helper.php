@@ -62,7 +62,7 @@ if ( ! class_exists( 'Astra_Sites_Helper' ) ) :
 
 			// Get current menu ID & Slugs.
 			$menu_locations = array();
-			$nav_menus = (object) wp_get_nav_menus();
+			$nav_menus      = (object) wp_get_nav_menus();
 			if ( isset( $nav_menus ) ) {
 				foreach ( $nav_menus as $menu_key => $menu ) {
 					if ( is_object( $menu ) ) {
@@ -128,11 +128,11 @@ if ( ! class_exists( 'Astra_Sites_Helper' ) ) :
 				// we downloaded the file from a remote server, so there
 				// will be no form fields
 				// Default is true.
-				'test_form' => false,
+				'test_form'   => false,
 
 				// Setting this to false lets WordPress allow empty files, not recommended.
 				// Default is true.
-				'test_size' => true,
+				'test_size'   => true,
 
 				// A properly uploaded file will pass this test. There should be no reason to override this one.
 				'test_upload' => true,
@@ -180,7 +180,7 @@ if ( ! class_exists( 'Astra_Sites_Helper' ) ) :
 
 				// Set variables for storage, fix file filename for query strings.
 				preg_match( '/[^\?]+\.(jpe?g|jpe|gif|png)\b/i', $file, $matches );
-				$file_array = array();
+				$file_array         = array();
 				$file_array['name'] = basename( $matches[0] );
 
 				// Download file to temp location.
@@ -201,12 +201,12 @@ if ( ! class_exists( 'Astra_Sites_Helper' ) ) :
 				}
 
 				// Build the object to return.
-				$meta                   = wp_get_attachment_metadata( $id );
-				$data->attachment_id    = $id;
-				$data->url              = wp_get_attachment_url( $id );
-				$data->thumbnail_url    = wp_get_attachment_thumb_url( $id );
-				$data->height           = $meta['height'];
-				$data->width            = $meta['width'];
+				$meta                = wp_get_attachment_metadata( $id );
+				$data->attachment_id = $id;
+				$data->url           = wp_get_attachment_url( $id );
+				$data->thumbnail_url = wp_get_attachment_thumb_url( $id );
+				$data->height        = $meta['height'];
+				$data->width         = $meta['width'];
 			}
 
 			return $data;

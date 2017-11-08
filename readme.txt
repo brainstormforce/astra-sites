@@ -38,6 +38,7 @@ _<a href="https://wpastra.com/ready-websites/">See list of all available sites t
 == Changelog ==
 
 v1.0.14 - Unreleased
+* New: Categorized AJAX calls while importing Astra Site.
 * Improvement: Removed LazyLoad which is not useful in admin back-end for showing Astra Sites.
 
 v1.0.13 - 9-Oct-2017

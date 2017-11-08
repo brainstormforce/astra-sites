@@ -41,7 +41,7 @@ defined( 'ABSPATH' ) or exit;
 				<input placeholder="<?php _e( 'Search Sites...', 'astra-sites' ); ?>" type="search" aria-describedby="live-search-desc" id="wp-filter-search-input" class="wp-filter-search">
 			</div>
 
-		 </div>
+		</div>
 
 	</div>
 
@@ -137,7 +137,7 @@ defined( 'ABSPATH' ) or exit;
 		<?php
 
 		/* translators: %1$s & %2$s are a Demo API URL */
-		printf( __( '<p> It seems the demo data server, <i><a href="%1$s">%2$s</a></i> is unreachable from your site.</p>', 'astra-sites' ) , esc_url( Astra_Sites::$api_url ), esc_url( Astra_Sites::$api_url ) );
+		printf( __( '<p> It seems the demo data server, <i><a href="%1$s">%2$s</a></i> is unreachable from your site.</p>', 'astra-sites' ), esc_url( Astra_Sites::$api_url ), esc_url( Astra_Sites::$api_url ) );
 
 		_e( '<p class="left-margin"> 1. Sometimes, simple page reload fixes any temporary issues. No kidding!</p>', 'astra-sites' );
 
@@ -159,7 +159,7 @@ defined( 'ABSPATH' ) or exit;
 	<# if ( data ) { #>
 
 		<ul class="{{ data.args.wrapper_class }} {{ data.args.class }}">
-			
+
 			<# if ( data.args.show_all ) { #>
 				<li>
 					<a href="#" data-group="all"> All </a>
@@ -170,7 +170,7 @@ defined( 'ABSPATH' ) or exit;
 				<# if ( data.items[ key ].count ) { #>
 					<li>
 						<a href="#" data-group='{{ data.items[ key ].id }}' class="{{ data.items[ key ].name }}">
-							 {{ data.items[ key ].name }}
+							{{ data.items[ key ].name }}
 						</a>
 					</li>
 				<# } #>
@@ -206,7 +206,7 @@ defined( 'ABSPATH' ) or exit;
 
 				<div class="inner">
 				<span class="site-preview" data-href="{{ data.items[ key ]['astra-site-url'] }}?TB_iframe=true&width=600&height=550" data-title="{{ data.items[ key ].title.rendered }}">		
-				
+
 				<div class="theme-screenshot">
 				<# if( '' !== data.items[ key ]['featured-image-url'] ) { #>
 					<img src="{{ data.items[ key ]['featured-image-url'] }}" />

@@ -90,6 +90,11 @@
     text-align: center;
 }
 
+.wp-core-ui .wp-full-overlay-footer .button.button-hero,
+.wp-core-ui .wp-full-overlay-footer .button-group.button-hero .button {
+    padding: 0 10px 1px;
+}
+
 .wp-full-overlay-footer .installing:before {
     vertical-align: text-bottom;
 }
@@ -235,4 +240,7 @@
 }
 #astra-sites-admin {
     height: 100vh;
+}
+.install-theme-info > .notice {
+    margin: 5px 0 10px 0;
 }

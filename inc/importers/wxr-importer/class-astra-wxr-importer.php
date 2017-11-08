@@ -45,19 +45,8 @@ class Astra_WXR_Importer {
 	private function __construct() {
 		$this->includes();
 
-		add_filter( 'upload_mimes',                     array( $this, 'custom_upload_mimes' ) );
-		add_filter( 'wxr_importer.pre_process.user',    array( $this, 'avoid_user' ), 10, 2 );
-	}
-
-	/**
-	 * Pre-process user data.
-	 *
-	 * @since 1.0.3
-	 * @param array $data User data. (Return empty to skip.).
-	 * @param array $meta Meta data.
-	 */
-	function avoid_user( $data, $meta ) {
-		return '';
+		add_filter( 'upload_mimes', array( $this, 'custom_upload_mimes' ) );
+		add_filter( 'wxr_importer.pre_process.user', '__return_false' );
 	}
 
 	/**
@@ -105,27 +94,6 @@ class Astra_WXR_Importer {
 		$importer = new WXR_Importer( $options );
 		$importer->set_logger( $logger );
 		$result = $importer->import( $path );
-	}
-
-	/**
-	 * Download and save XML file to uploads directory.
-	 *
-	 * @since  1.0.0
-	 *
-	 * @param  (String) $url URL of the xml file.
-	 *
-	 * @return (Array)      Attachment array of the downloaded xml file.
-	 */
-	public function download_xml( $url ) {
-
-		// Download XML file.
-		$response = Astra_Sites_Helper::download_file( $url );
-
-		// Is Success?
-		if ( $response['success'] ) {
-			return $response['data'];
-		}
-
 	}
 
 }

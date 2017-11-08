@@ -102,17 +102,17 @@ class Astra_Sites_Source_Remote extends Source_Base {
 	 */
 	public function get_item( $template_data ) {
 		return array(
-			'template_id' => $template_data['id'],
-			'source' => $this->get_id(),
-			'title' => $template_data['title'],
-			'thumbnail' => $template_data['thumbnail'],
-			'date' => date( get_option( 'date_format' ), $template_data['tmpl_created'] ),
-			'author' => $template_data['author'],
-			'categories' => array(),
-			'keywords' => array(),
-			'isPro' => ( '1' === $template_data['is_pro'] ),
+			'template_id'     => $template_data['id'],
+			'source'          => $this->get_id(),
+			'title'           => $template_data['title'],
+			'thumbnail'       => $template_data['thumbnail'],
+			'date'            => date( get_option( 'date_format' ), $template_data['tmpl_created'] ),
+			'author'          => $template_data['author'],
+			'categories'      => array(),
+			'keywords'        => array(),
+			'isPro'           => ( '1' === $template_data['is_pro'] ),
 			'hasPageSettings' => ( '1' === $template_data['has_page_settings'] ),
-			'url' => $template_data['url'],
+			'url'             => $template_data['url'],
 		);
 	}
 
@@ -186,7 +186,7 @@ class Astra_Sites_Source_Remote extends Source_Base {
 				)
 			);
 
-			$page_settings_data = $this->process_element_export_import_content( $page, 'on_import' );
+			$page_settings_data    = $this->process_element_export_import_content( $page, 'on_import' );
 			$data['page_settings'] = $page_settings_data['settings'];
 		}
 
