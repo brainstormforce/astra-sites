@@ -52,6 +52,20 @@ defined( 'ABSPATH' ) or exit;
 		<div id="astra-sites" class="themes wp-clearfix"></div>
 	</div>
 
+	<div class="spinner-wrap">
+		<span class="spinner"></span>
+	</div>
+
+	<?php do_action( 'astra_sites_after_site_grid' ); ?>
+
+</div>
+
+<?php
+/**
+ * TMPL - Single Demo Preview
+ */
+?>
+<script type="text/template" id="tmpl-astra-site-select-page-builder">
 	<div class="select-page-builder">
 		<div class="note-wrap">
 			<h3>
@@ -61,14 +75,7 @@ defined( 'ABSPATH' ) or exit;
 		</div>
 		<img src="<?php echo esc_url( ASTRA_SITES_URI . 'inc/assets/images/sites-screenshot.jpg' ); ?>" alt="<?php _e( 'Sites List..', 'astra-sites' ); ?>" title="<?php _e( 'Sites List..', 'astra-sites' ); ?>" />
 	</div>
-
-	<div class="spinner-wrap">
-		<span class="spinner"></span>
-	</div>
-
-	<?php do_action( 'astra_sites_after_site_grid' ); ?>
-
-</div>
+</script>
 
 <?php
 /**

@@ -16,12 +16,13 @@
 		 */
 		_api_params		: {},
 		_breakpoint		: 768,
+		_has_default_page_builder : false,
 	
 		init: function()
 		{
 			this._resetPagedCount();
 			this._bind();
-			this._showFilters();
+			this._loadPageBuilders();
 		},
 
 		/**
@@ -37,8 +38,8 @@
 			$( document ).on('astra-sites-api-request-fail'    , AstraRender._addSuggestionBox );
 			$( document ).on('astra-api-post-loaded-on-scroll' , AstraRender._reinitGridScrolled );
 			$( document ).on('astra-api-post-loaded'           , AstraRender._reinitGrid );
-			$( document ).on('astra-api-category-loaded'       , AstraRender._addFilters );
-			$( document ).on('astra-api-all-category-loaded'   , AstraRender._loadFirstGrid );
+			$( document ).on('astra-api-page-builder-loaded'       , AstraRender._addPageBuilders );
+			$( document ).on('astra-api-category-loaded'   			, AstraRender._loadFirstGrid );
 			
 			// Event's for API request.
 			$( document ).on('click'                           , '.filter-links a', AstraRender._filterClick );
@@ -279,6 +280,28 @@
 
 		/**
 		 * Get Category Params
+		 *
+		 * @since 1.2.4
+		 * @param  {string} category_slug Category Slug.
+		 * @return {mixed}               Add `include=<category-ids>` in API request.
+		 */
+		_getPageBuilderParams: function()
+		{
+			var _category_params = {};
+
+			if( astraRenderGrid.sites && astraRenderGrid.sites.purchase_key ) {
+				_category_params['purchase_key'] = astraRenderGrid.sites.purchase_key;
+			}
+
+			if( astraRenderGrid.sites && astraRenderGrid.sites.site_url ) {
+				_category_params['site_url'] = astraRenderGrid.sites.site_url;
+			}
+
+			return '/?' + decodeURIComponent( $.param( _category_params ) );
+		},
+
+		/**
+		 * Get Category Params
 		 * 
 		 * @param  {string} category_slug Category Slug.
 		 * @return {mixed}               Add `include=<category-ids>` in API request.
@@ -324,34 +347,19 @@
 		/**
 		 * Show Filters
 		 */
-		_showFilters: function() {
-
-			/**
-			 * Categories
-			 */
-			var category_slug = 'astra-site-page-builder';
-			var category = {
-				slug          : category_slug + AstraRender._getCategoryParams( category_slug ),
-				id            : category_slug,
-				class         : category_slug,
-				trigger       : 'astra-api-category-loaded',
-				wrapper_class : 'filter-links',
-				show_all      : false,
-			};
-
-			AstraSitesAPI._api_request( category );
+		_loadPageBuilders: function() {
 
 			/**
 			 * Page Builder
 			 */
-			var category_slug = 'astra-site-category';
+			var category_slug = 'astra-site-page-builder';
 			var category = {
-				slug          : category_slug + AstraRender._getCategoryParams( category_slug ),
+				slug          : category_slug + AstraRender._getPageBuilderParams(),
 				id            : category_slug,
 				class         : category_slug,
-				trigger       : 'astra-api-all-category-loaded',
+				trigger       : 'astra-api-page-builder-loaded',
 				wrapper_class : 'filter-links',
-				show_all      : AstraRender._getCategoryAllSelectStatus( category_slug ),
+				show_all      : false,
 			};
 
 			AstraSitesAPI._api_request( category );
@@ -365,10 +373,24 @@
 		 * @param  {object} event Event Object.
 		 */
 		_loadFirstGrid: function( event, data ) {
-			AstraRender._addFilters( event, data );
-			setTimeout(function() {
-				$('body').removeClass('loading-content');
-			}, 100);
+			
+			event.preventDefault();
+
+			if( $('#' + data.args.id).length ) {
+				var template = wp.template('astra-site-filters');
+				$('#' + data.args.id).html(template( data ));
+
+				if( 'true' === $('body').attr( 'data-default-page-builder-selected' ) ) {
+					$('#' + data.args.id).find('li:first a').addClass('current');
+					AstraRender._showSites();
+				} else {
+					$('body').removeClass('loading-content');
+					if( ! $('#astra-sites-admin .astra-site-select-page-builder').length ) {
+						$('#astra-sites-admin').append( wp.template( 'astra-site-select-page-builder' ) );
+					}
+				}
+			}
+
 		},
 
 		/**
@@ -377,15 +399,36 @@
 		 * @param  {object} event Object.
 		 * @param  {object} data  API response data.
 		 */
-		_addFilters: function( event, data ) {
+		_addPageBuilders: function( event, data ) {
 			event.preventDefault();
 
-			if( jQuery('#' + data.args.id).length ) {
+			if( $('#' + data.args.id).length ) {
 				var template = wp.template('astra-site-filters');
-				jQuery('#' + data.args.id).html(template( data ));
+				$('#' + data.args.id).html(template( data ));
+
+				if( 1 === parseInt( data.items_count ) ) {
+					$('body').attr( 'data-default-page-builder-selected', true );
+					$('#' + data.args.id).find('li:first a').addClass('current');
+				}
 			}
 
+			/**
+			 * Categories
+			 */
+			var category_slug = 'astra-site-category';
+			var category = {
+				slug          : category_slug + AstraRender._getCategoryParams( category_slug ),
+				id            : category_slug,
+				class         : category_slug,
+				trigger       : 'astra-api-category-loaded',
+				wrapper_class : 'filter-links',
+				show_all      : AstraRender._getCategoryAllSelectStatus( category_slug ),
+			};
+
+			AstraSitesAPI._api_request( category );
+
 		},
+		
 
 		/**
 		 * Append sites on scroll.
@@ -408,10 +451,7 @@
 					AstraRender._imagesLoaded();
 				}, 800);
 			} else {
-
 				$('body').addClass('listed-all-sites');
-
-				// $('#astra-sites-admin').find('.spinner').removeClass('is-active');
 			}
 
 		},
