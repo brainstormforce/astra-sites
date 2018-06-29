@@ -306,7 +306,8 @@
 		 * @param  {string} category_slug Category Slug.
 		 * @return {mixed}               Add `include=<category-ids>` in API request.
 		 */
-		_getCategoryParams: function( category_slug ) {
+		_getCategoryParams: function( category_slug )
+		{
 
 			// Has category?
 			if( category_slug in astraRenderGrid.settings ) {
