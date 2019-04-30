@@ -5,8 +5,8 @@
           "phpcompatibility/phpcompatibility-wp": "*"
       },
       "scripts": {
-          "format": "phpcbf",
-          "lint": "phpcs"
+          "format": "vendor/bin/phpcbf",
+          "lint": "vendor/bin/phpcs"
       }
   }
   

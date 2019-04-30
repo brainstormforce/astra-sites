@@ -25,7 +25,7 @@
 	box-shadow: none;
 	left: 0;
 	border-left: none;
-	background: #fff;
+	background: #fafafa;
 	padding: 0;
 	margin-right: 20%;
 }
@@ -34,6 +34,7 @@
 	width: 90%;
 	align-self: center;
     box-shadow: none;
+    background: none;
 }
 #astra-sites-admin .theme-id-container {
 	background: rgba(255,255,255,0.65);
@@ -51,6 +52,17 @@
 #astra-sites-admin .theme-action-wrap {
 	width: 90%;
 	padding: 10px 15px;
+}
+.favorite-filters-wrap {
+	border-left: 1px solid #ddd;
+	padding: 0 10px;
+}
+.favorite-filters-title {
+	width: 10%;
+	padding: 15px 5px;
+	align-self: center;
+	justify-content: center;
+	text-align: center;
 }
 .favorite-action-wrap {
 	width: 10%;
