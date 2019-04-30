@@ -298,7 +298,7 @@ var AstraSitesAjaxQueue = (function() {
 			}
 		},
 
-		_reset_customizer_data() {
+		_reset_customizer_data: function() {
 			$.ajax({
 				url  : astraSitesAdmin.ajaxurl,
 				type : 'POST',
@@ -1398,7 +1398,7 @@ var AstraSitesAjaxQueue = (function() {
 
 		},
 
-		_process_import() {
+		_process_import: function() {
 
 			var $theme  = $('.astra-sites-preview').find('.wp-full-overlay-header'),
 				apiURL  = $theme.data('demo-api') || '';
