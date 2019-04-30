@@ -982,7 +982,7 @@ var AstraSitesAjaxQueue = (function() {
 				return;
 			}
 
-			AstraSitesAdmin._log_title( 'Installing Plugin..' );
+			AstraSitesAdmin._log_title( 'Installing Required Plugin..' );
 
 			if ( wp.updates.shouldRequestFilesystemCredentials && ! wp.updates.ajaxLocked ) {
 				wp.updates.requestFilesystemCredentials( event );
@@ -998,7 +998,7 @@ var AstraSitesAjaxQueue = (function() {
 				} );
 			}
 
-			AstraSitesAdmin._log_title( 'Installing ' + AstraSitesAdmin.ucwords( $button.data( 'name' ) ) );
+			AstraSitesAdmin._log_title( 'Installing Plugin - ' + AstraSitesAdmin.ucwords( $button.data( 'name' ) ) );
 
 			wp.updates.installPlugin( {
 				slug:    $button.data( 'slug' )
@@ -1035,6 +1035,7 @@ var AstraSitesAjaxQueue = (function() {
 
 			// Transform the 'Install' button into an 'Activate' button.
 			var $init = $( '.plugin-card-' + response.slug ).data('init');
+			var $name = $( '.plugin-card-' + response.slug ).data('name');
 
 			// Reset not installed plugins list.
 			var pluginsList = astraSitesAdmin.requiredPlugins.notinstalled;
@@ -1043,7 +1044,7 @@ var AstraSitesAjaxQueue = (function() {
 			// WordPress adds "Activate" button after waiting for 1000ms. So we will run our activation after that.
 			setTimeout( function() {
 
-				AstraSitesAdmin._log_title( 'Activating Plugin..' );
+				AstraSitesAdmin._log_title( 'Installing Plugin - ' + AstraSitesAdmin.ucwords($name) );
 
 				$.ajax({
 					url: astraSitesAdmin.ajaxurl,
@@ -1058,9 +1059,9 @@ var AstraSitesAjaxQueue = (function() {
 				.done(function (result) {
 
 					if( result.success ) {
-						AstraSitesAdmin._log_title( 'Activating Plugin ' + AstraSitesAdmin.ucwords(response.name) );
-
 						var pluginsList = astraSitesAdmin.requiredPlugins.inactive;
+
+						AstraSitesAdmin._log_title( 'Installed Plugin - ' + AstraSitesAdmin.ucwords($name) );
 
 						// Reset not installed plugins list.
 						astraSitesAdmin.requiredPlugins.inactive = AstraSitesAdmin._removePluginFromQueue( response.slug, pluginsList );
@@ -1081,8 +1082,9 @@ var AstraSitesAjaxQueue = (function() {
 		_installError: function( event, response ) {
 
 			var $card = $( '.plugin-card-' + response.slug );
+			var $name = $card.data('name');
 
-			AstraSitesAdmin._log_title( response.errorMessage + ' ' + AstraSitesAdmin.ucwords(response.name) );
+			AstraSitesAdmin._log_title( response.errorMessage + ' ' + AstraSitesAdmin.ucwords($name) );
 
 
 			$card
@@ -1099,8 +1101,9 @@ var AstraSitesAjaxQueue = (function() {
 			event.preventDefault();
 
 			var $card = $( '.plugin-card-' + args.slug );
+			var $name = $card.data('name');
 
-			AstraSitesAdmin._log_title( 'Installing ' + AstraSitesAdmin.ucwords(args.name ));
+			AstraSitesAdmin._log_title( 'Installing Plugin - ' + AstraSitesAdmin.ucwords( $name ));
 
 			$card.addClass('updating-message');
 
@@ -1122,7 +1125,7 @@ var AstraSitesAjaxQueue = (function() {
 				return;
 			}
 
-			AstraSitesAdmin._log_title( 'Activating plugin ' + AstraSitesAdmin.ucwords( $name ) );
+			AstraSitesAdmin._log_title( 'Activating Plugin - ' + AstraSitesAdmin.ucwords( $name ) );
 
 			$button.addClass('updating-message button-primary')
 				.html( astraSitesAdmin.strings.btnActivating );
@@ -1144,7 +1147,7 @@ var AstraSitesAjaxQueue = (function() {
 
 				if( result.success ) {
 
-					AstraSitesAdmin._log_title( 'Activated ' + AstraSitesAdmin.ucwords($name)  );
+					AstraSitesAdmin._log_title( 'Activated Plugin - ' + AstraSitesAdmin.ucwords($name)  );
 
 					var pluginsList = astraSitesAdmin.requiredPlugins.inactive;
 
@@ -1220,7 +1223,7 @@ var AstraSitesAjaxQueue = (function() {
 		 */
 		_activateAllPlugins: function( activate_plugins ) {
 
-			AstraSitesAdmin._log_title( 'Activating Plugins..' );
+			AstraSitesAdmin._log_title( 'Activating Required Plugins..' );
 
 			$.each( activate_plugins, function(index, single_plugin) {
 
@@ -1262,11 +1265,11 @@ var AstraSitesAjaxQueue = (function() {
 		 */
 		_installAllPlugins: function( not_installed ) {
 
-			AstraSitesAdmin._log_title( 'Installing Plugins..' );
+			AstraSitesAdmin._log_title( 'Installing Required Plugins..' );
 			
 			$.each( not_installed, function(index, single_plugin) {
 
-				AstraSitesAdmin._log_title( 'Installing ' + AstraSitesAdmin.ucwords( single_plugin.name ));
+				AstraSitesAdmin._log_title( 'Installing Plugin - ' + AstraSitesAdmin.ucwords( single_plugin.name ));
 
 				var $card = $( '.plugin-card-' + single_plugin.slug );
 
