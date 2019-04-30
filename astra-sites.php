@@ -1,6 +1,6 @@
 <?php
 /**
- * Plugin Name: Astra Starter Sites – Elementor, Beaver Builder & Gutenberg Templates
+ * Plugin Name: Astra Starter Sites
  * Plugin URI: http://www.wpastra.com/pro/
  * Description: Import free sites build with Astra theme.
  * Version: 1.3.7
