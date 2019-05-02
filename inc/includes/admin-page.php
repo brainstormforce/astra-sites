@@ -37,12 +37,15 @@ $import_text = ( 'site-pages' === $global_cpt_meta['cpt_slug'] ) ? __( 'Import P
 
 					<div class="filters-wrap favorite-filters-wrap">
 						<div class="filters-slug">
-							<div>
-								<span><i class="dashicons-heart dashicons"></i></span><span class="favorite-filters-title"><a href="#">My Favorites</a></span>
-							</div>
+							<ul class="filter-links">
+								<li>
+									<a href="#">
+										<span><i class="dashicons-heart dashicons"></i></span><span class="favorite-filters-title"><span>My Favorites</span></span>
+									</a>
+								</li>
+							</ul>
 						</div>
 					</div>
-
 				</div>
 
 				<div class="section-right">

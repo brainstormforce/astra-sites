@@ -57,6 +57,13 @@
 	border-left: 1px solid #ddd;
 	padding: 0 10px;
 }
+.favorite-filters-wrap .dashicons {
+	color: #c34444;
+	font-size: 18px;
+	line-height: 18px;
+	width: 17px;
+	height: 17px;
+}
 .favorite-filters-title {
 	width: 10%;
 	padding: 15px 5px;
@@ -64,6 +71,11 @@
 	justify-content: center;
 	text-align: center;
 }
+.favorite-filters-title a {
+	color: #666;
+	cursor: pointer;
+}
+
 .favorite-action-wrap {
 	width: 10%;
 	border-left: 1px solid #ddd;

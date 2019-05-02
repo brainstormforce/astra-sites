@@ -152,6 +152,12 @@
 
 			event.preventDefault();
 
+			if ( $( this ).closest( '.filters-wrap' ).hasClass( 'favorite-filters-wrap' ) ) {
+				console.log('fav');
+				$( this ).toggleClass( "current" );
+				return;
+			}
+
 			if( $( this ).parents( '.filter-links[data-category="' + astraSitesApi.category_slug + '"]' ).length && ! $('body').hasClass('page-builder-selected') ) {
 				return;
 			}
