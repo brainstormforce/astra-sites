@@ -515,9 +515,6 @@ $import_text = ( 'site-pages' === $global_cpt_meta['cpt_slug'] ) ? __( 'Import P
 					<div class="theme-id-container">
 						<h3 class="theme-name" id="astra-theme-name">
 							{{{ data.items[ key ].title.rendered }}}
-							<# if ( data.type != 'site-pages' ) { #>
-							<span class="sites-page-count">14 Page Templates</span>
-							<# } #>
 						</h3>
 						<div class="favorite-action-wrap">
 							<span><i class="dashicons-heart dashicons"></i></span>
