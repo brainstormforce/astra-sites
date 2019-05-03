@@ -28,10 +28,10 @@ $import_text = ( 'site-pages' === $global_cpt_meta['cpt_slug'] ) ? __( 'Import P
 					<div class="filter-count">
 						<span class="count"></span>
 					</div>
-					<div class="filters-wrap" style="display: none;">
+					<div class="filters-wrap filters-wrap-page-builder" style="display: none;">
 						<div class="filters-slug" data-id="<?php echo $global_cpt_meta['page_builder']; ?>"></div>
 					</div>
-					<div class="filters-wrap">
+					<div class="filters-wrap filters-wrap-page-categories">
 						<div class="filters-slug" data-id="<?php echo $global_cpt_meta['category_slug']; ?>"></div>
 					</div>
 
