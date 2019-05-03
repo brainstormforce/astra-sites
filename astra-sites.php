@@ -52,18 +52,3 @@ if ( ! function_exists( 'astra_sites_setup' ) ) :
 	add_action( 'plugins_loaded', 'astra_sites_setup' );
 
 endif;
-
-
-
-add_filter( 'pre_http_request', function( $default, $r, $url ){
-   error_log("\n\n\n-----------------------");
-   error_log($url);
-   return $default;
-}, 10 , 3 );
-
-add_action( 'http_api_debug', function( $response, $response_context, $requests, $r, $url ) {
-	if( is_wp_error( $response ) ) {
-		error_log( $response->get_error_message() );
-	}
-	error_log( json_encode( $response ) );
-}, 10 , 5 );                                                                             
