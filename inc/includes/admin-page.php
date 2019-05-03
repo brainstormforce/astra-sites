@@ -101,6 +101,24 @@ defined( 'ABSPATH' ) or exit;
 
 <?php
 /**
+ * TMPL - Third Party Required Plugins
+ */
+?>
+<script type="text/template" id="tmpl-astra-sites-third-party-required-plugins">
+	<div class="astra-sites-third-party-required-plugins-wrap">
+		<div class="notice notice-warning">
+			<p>To import this website, You need to install below plugins!</p>
+		</div>
+		<ul class="astra-sites-third-party-required-plugins">
+			<# for ( key in data ) { #>
+				<li class="plugin-card plugin-card-{{data[ key ].slug}}'" data-slug="{{data[ key ].slug }}" data-init="{{data[ key ].init}}" data-name="{{data[ key ].name}}">{{data[ key ].name}}</li>
+			<# } #>
+		</ul>
+	</div>
+</script>
+
+<?php
+/**
  * TMPL - Single Demo Preview
  */
 ?>
