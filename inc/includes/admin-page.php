@@ -259,9 +259,6 @@ $import_text = ( 'site-pages' === $global_cpt_meta['cpt_slug'] ) ? __( 'Import P
 					<div class="astra-site-import-process-wrap" style="display: none;">
 						<progress class="astra-site-import-process" max="100" value="0"></progress>
 					</div>
-					<!-- <a class="button button-hero hide-if-no-customize astra-site-import" href="#">
-						<?php esc_html_e( 'Import Site', 'astra-sites' ); ?>
-					</a> -->
 				</div>
 				<button type="button" class="collapse-sidebar button" aria-expanded="true"
 						aria-label="Collapse Sidebar">
