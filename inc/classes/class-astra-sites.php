@@ -236,7 +236,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		 * @since  1.0.0
 		 */
 		public static function set_api_url() {
-			self::$api_url = apply_filters( 'astra_sites_api_url', 'https://websitedemos.net/wp-json/wp/v2/' );
+			self::$api_url = apply_filters( 'astra_sites_api_url', 'http://nik-websitedemos.sharkz.in/wp-json/wp/v2/' );
 
 		}
 
@@ -498,10 +498,12 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				'learndash-course-grid' => array(
 					'init' => 'learndash-course-grid/learndash_course_grid.php',
 					'name' => 'LearnDash Course Grid',
+					'link' => 'https://www.learndash.com/add-on/course-grid/',
 				),
 				'sfwd-lms' => array(
 					'init' => 'sfwd-lms/sfwd_lms.php',
 					'name' => 'LearnDash LMS',
+					'link' => 'https://www.learndash.com/',
 				)
 			);
 
@@ -538,7 +540,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 
 							// Added premium plugins which need to install first.
 							if( array_key_exists($plugin['slug'], $third_party_plugins ) ) {
-								$third_party_required_plugins[] = $plugin;
+								$third_party_required_plugins[] = $third_party_plugins[$plugin['slug']];
 							}
 
 							// Lite - Active.
