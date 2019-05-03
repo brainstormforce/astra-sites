@@ -21,6 +21,9 @@
 #astra-sites-admin .filter-links li > a {
 	border-bottom: 3px solid #ffffff;
 }
+#astra-sites-admin .filter-links li > a:focus {
+	box-shadow: none;
+}
 #astra-sites-admin .theme-actions {
 	box-shadow: none;
 	left: 0;
