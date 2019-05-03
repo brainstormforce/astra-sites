@@ -162,14 +162,14 @@ $import_text = ( 'site-pages' === $global_cpt_meta['cpt_slug'] ) ? __( 'Import P
 					data-screenshot="{{{data.screenshot}}}"
 					data-content="{{{data.content}}}"
 					data-required-plugins="{{data.required_plugins}}"
-					data-import-slug="<?php echo $global_cpt_meta['cpt_slug']; ?>">
 				<input type="hidden" class="astra-site-options" value="{{data.astra_site_options}}" >
 				<input type="hidden" class="astra-enabled-extensions" value="{{data.astra_enabled_extensions}}" >
 				<button class="close-full-overlay"><span class="screen-reader-text"><?php esc_html_e( 'Close', 'astra-sites' ); ?></span></button>
 				<button class="previous-theme"><span class="screen-reader-text"><?php esc_html_e( 'Previous', 'astra-sites' ); ?></span></button>
 				<button class="next-theme"><span class="screen-reader-text"><?php esc_html_e( 'Next', 'astra-sites' ); ?></span></button>
-				<a class="button hide-if-no-customize button-primary astra-demo-import" href="#" data-import="disabled"><?php echo $import_text; ?></a>
-
+				<a class="button hide-if-no-customize button-primary astra-demo-import" href="#" data-import="disabled">
+					<?php _e( 'Import Site', 'astra-sites' ); ?>
+				</a>
 			</div>
 			<div class="wp-full-overlay-sidebar-content">
 				<div class="install-theme-info">
@@ -239,21 +239,14 @@ $import_text = ( 'site-pages' === $global_cpt_meta['cpt_slug'] ) ? __( 'Import P
 							</li>
 						</ul>
 
-						<!-- <p><a href="#" class="astra-sites-advanced-options-button"><?php _e( 'Advanced Options', 'astra-sites' ); ?></a></p> -->
-
 					</div>
-
-					<!-- <div class="astra-sites-advanced-options">
-						<h4><?php _e( 'Required Plugins', 'astra-sites' ); ?> </h4>
-						<div class="required-plugins"></div>
-					</div> -->
 				</div>
 			</div>
 
 			<div class="wp-full-overlay-footer">
 				<div class="footer-import-button-wrap">
 					<a class="button button-hero hide-if-no-customize button-primary astra-demo-import" href="#" data-import="disabled">
-						<?php echo $import_text; ?>
+						<?php _e( 'Import Site', 'astra-sites' ); ?>
 						<span class="percent"></span>
 					</a>
 					<div class="astra-site-import-process-wrap" style="display: none;">
@@ -319,14 +312,14 @@ $import_text = ( 'site-pages' === $global_cpt_meta['cpt_slug'] ) ? __( 'Import P
 					data-screenshot="{{{data.screenshot}}}"
 					data-content="{{{data.content}}}"
 					data-required-plugins="{{data.required_plugins}}"
-					data-import-slug="<?php echo $global_cpt_meta['cpt_slug']; ?>">
 				<input type="hidden" class="astra-site-options" value="{{data.astra_site_options}}" >
 				<input type="hidden" class="astra-enabled-extensions" value="{{data.astra_enabled_extensions}}" >
 				<button class="close-full-overlay"><span class="screen-reader-text"><?php esc_html_e( 'Close', 'astra-sites' ); ?></span></button>
 				<button class="previous-theme"><span class="screen-reader-text"><?php esc_html_e( 'Previous', 'astra-sites' ); ?></span></button>
 				<button class="next-theme"><span class="screen-reader-text"><?php esc_html_e( 'Next', 'astra-sites' ); ?></span></button>
-				<a class="button hide-if-no-customize button-primary astra-demo-import" href="#" data-import="disabled"><?php echo $import_text; ?></a>
-
+				<a class="button hide-if-no-customize button-primary astra-demo-import" href="#" data-import="disabled">
+					<?php _e( 'Import Page', 'astra-sites' ); ?>
+				</a>
 			</div>
 			<div class="wp-full-overlay-sidebar-content">
 				<div class="install-theme-info">
@@ -358,7 +351,7 @@ $import_text = ( 'site-pages' === $global_cpt_meta['cpt_slug'] ) ? __( 'Import P
 			<div class="wp-full-overlay-footer">
 				<div class="footer-import-button-wrap">
 					<a class="button button-hero hide-if-no-customize button-primary astra-demo-import" href="#" data-import="disabled">
-						<?php echo $import_text; ?>
+						<?php _e( 'Import Page', 'astra-sites' ); ?>
 						<span class="percent"></span>
 					</a>
 					<div id="astra-site-import-process-wrap" style="display: none;">

@@ -1336,7 +1336,7 @@ var AstraSitesAjaxQueue = (function() {
 				AstraSitesAdmin._bulkPluginInstallActivate();
 			}
 		},
-		
+
 		_importPage: function( event ) {
 
 			if ( null == AstraSitesAdmin.templateData ) {
