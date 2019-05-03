@@ -323,9 +323,10 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 				</div>
 			<?php } else { ?>
 				<?php
-				$page_title = apply_filters( 'astra_sites_page_title', __( 'Astra Starter Sites - Your Library of 100+ Ready Templates!', 'astra-sites' ) );
+				$page_title = apply_filters( 'astra_sites_page_title', __( 'Astra Starter Sites', 'astra-sites' ) );
 				?>
 				<div class="nav-tab-wrapper">
+					<div class="astra-sites-logo-wrap"><a href="" target="_blank" rel="noopener"><img src="<?php echo esc_url( ASTRA_SITES_URI . 'inc/assets/images/logo.svg' ); ?>" alt="<?php echo $page_title; ?>"></a></div>
 					<h1 class='astra-sites-title'> <?php echo esc_html( $page_title ); ?> </h1>
 					<form id="astra-sites-welcome-form-inline" enctype="multipart/form-data" method="post">
 						<div class="fields">
