@@ -475,7 +475,7 @@ $import_text = ( 'site-pages' === $global_cpt_meta['cpt_slug'] ) ? __( 'Import P
 ?>
 <script type="text/template" id="tmpl-astra-sites-list">
 
-	<# if ( data.items.length ) { #>
+	<# if ( data.items.length ) { console.log(data); #>
 		<# for ( key in data.items ) { #>
 
 			<div class="theme astra-theme site-single {{ data.items[ key ].status }}" tabindex="0" aria-describedby="astra-theme-action astra-theme-name"
@@ -509,7 +509,18 @@ $import_text = ( 'site-pages' === $global_cpt_meta['cpt_slug'] ) ? __( 'Import P
 						<h3 class="theme-name" id="astra-theme-name">
 							{{{ data.items[ key ].title.rendered }}}
 						</h3>
-						<div class="favorite-action-wrap">
+						<#
+						var fav_class = "";
+						var fav_flag = false;
+						for ( fav_item in data.args.favorites ) {
+							if ( data.items[ key ].id.toString() == data.args.favorites[fav_item] ) {
+								fav_class = "is-favorite";
+								fav_flag = true;
+								break;
+							}
+						}
+						#>
+						<div class="favorite-action-wrap {{fav_class}}" data-favorite={{fav_flag}}>
 							<span><i class="dashicons-heart dashicons"></i></span>
 						</div>
 						<div class="theme-actions">

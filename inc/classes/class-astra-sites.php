@@ -70,6 +70,47 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			add_action( 'wp_ajax_astra-sites-activate-theme', array( $this, 'activate_theme' ) );
 			add_action( 'wp_ajax_astra-sites-create-page', array( $this, 'create_page' ) );
 			add_action( 'wp_ajax_astra-sites-getting-started-notice', array( $this, 'getting_started_notice' ) );
+			add_action( 'wp_ajax_astra-sites-favorite', array( $this, 'add_to_favorite' ) );
+		}
+
+		/**
+		 * Add/Remove Favorite.
+		 *
+		 * @since  x.x.x
+		 */
+		public function add_to_favorite () {
+
+			if ( ! current_user_can( 'manage_options' ) ) {
+				wp_send_json_error( 'You can\'t access this action.' );
+			}
+
+			$new_favorites = array();
+			$site_id = $_POST['site_id'];
+
+			$favorite_settings = get_option( 'astra-sites-favorites', array() );
+
+			if ( false !== $favorite_settings && is_array( $favorite_settings ) ) {
+				$new_favorites = $favorite_settings;
+			}
+
+			if ( "false" === $_POST['is_favorite'] ) {
+				if ( in_array( $site_id , $new_favorites ) ) {
+					$key = array_search( $site_id, $new_favorites );
+					unset( $new_favorites[$key] );
+				}
+			} else {
+				if ( !in_array( $site_id , $new_favorites ) ) {
+					array_push( $new_favorites , $site_id );
+				}
+			}
+
+			update_option( 'astra-sites-favorites', $new_favorites );
+
+			wp_send_json_success(
+				array(
+					'all_favorites' => $new_favorites
+				)
+			);
 		}
 
 		/**
@@ -410,6 +451,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				'site-pages-page-builder'    => array(),
 				'site-pages-parent-category' => array(),
 				'site-pages'                 => array(),
+				'favorites'					 => get_option( 'astra-sites-favorites' ),
 			);
 
 			if ( 'appearance_page_astra-sites' === $hook ) {

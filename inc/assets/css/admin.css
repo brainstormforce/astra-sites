@@ -660,6 +660,10 @@ a.astra-pages-back:before {
 	margin-bottom: 50px;
 }
 
+.is-favorite span i {
+	color : #c34444;
+}
+
 /**
  * Welcome Screen
  */
