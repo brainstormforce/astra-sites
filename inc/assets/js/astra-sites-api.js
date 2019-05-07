@@ -4,6 +4,7 @@
 
 		_api_url      : astraSitesApi.ApiURL,
 		_stored_data  : astraSitesApi._stored_data,
+		_favorite_data  : astraSitesApi._favorite_data,
 
 		/**
 		 * API Request
@@ -33,12 +34,12 @@
 			})
 			.then(data => {
 				if( 'object' === typeof data ) {
+					console.log(AstraSitesAPI)
 					data['args'] = args;
 					if( data.args.id ) {
 						AstraSitesAPI._stored_data[ args.id ] = $.merge( AstraSitesAPI._stored_data[ data.args.id ], data.items );
-						console.log(AstraSitesAPI._stored_data[ args.id ]);
 					}
-					data['args']['favorites'] = AstraSitesAPI._stored_data['favorites'];
+					data['args']['favorites'] = AstraSitesAPI._favorite_data;
 
 					if( 'undefined' !== typeof args.trigger && '' !== args.trigger ) {
 						$(document).trigger( args.trigger, [data] );

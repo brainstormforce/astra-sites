@@ -78,14 +78,14 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		 *
 		 * @since  x.x.x
 		 */
-		public function add_to_favorite () {
+		public function add_to_favorite() {
 
 			if ( ! current_user_can( 'manage_options' ) ) {
 				wp_send_json_error( 'You can\'t access this action.' );
 			}
 
 			$new_favorites = array();
-			$site_id = $_POST['site_id'];
+			$site_id       = $_POST['site_id'];
 
 			$favorite_settings = get_option( 'astra-sites-favorites', array() );
 
@@ -93,14 +93,14 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				$new_favorites = $favorite_settings;
 			}
 
-			if ( "false" === $_POST['is_favorite'] ) {
-				if ( in_array( $site_id , $new_favorites ) ) {
-					$key = array_search( $site_id, $new_favorites );
-					unset( $new_favorites[$key] );
+			if ( 'false' === $_POST['is_favorite'] ) {
+				if ( in_array( $site_id, $new_favorites, true ) ) {
+					$key = array_search( $site_id, $new_favorites, true );
+					unset( $new_favorites[ $key ] );
 				}
 			} else {
-				if ( !in_array( $site_id , $new_favorites ) ) {
-					array_push( $new_favorites , $site_id );
+				if ( ! in_array( $site_id, $new_favorites, true ) ) {
+					array_push( $new_favorites, $site_id );
 				}
 			}
 
@@ -108,7 +108,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 
 			wp_send_json_success(
 				array(
-					'all_favorites' => $new_favorites
+					'all_favorites' => $new_favorites,
 				)
 			);
 		}
@@ -451,8 +451,10 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				'site-pages-page-builder'    => array(),
 				'site-pages-parent-category' => array(),
 				'site-pages'                 => array(),
-				'favorites'					 => get_option( 'astra-sites-favorites' ),
+				'favorites'                  => get_option( 'astra-sites-favorites' ),
 			);
+
+			$_favorite_data = get_option( 'astra-sites-favorites' );
 
 			if ( 'appearance_page_astra-sites' === $hook ) {
 
@@ -486,6 +488,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 						),
 					),
 					'_stored_data'    => $_stored_data,
+					'_favorite_data'  => $_favorite_data,
 					'category_slug'   => $category_slug,
 					'page_builder'    => $page_builder,
 					'cpt_slug'        => $cpt_slug,

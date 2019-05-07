@@ -58,11 +58,28 @@
 
 		_favoriteAction: function( event ) {
 
-			var is_favorite = $( this ).data( 'favorite' );
-			var site_id = $( this ).closest( '.astra-theme' ).data( 'demo-id' );
+			let is_favorite = $( this ).data( 'favorite' );
+			let site_id = $( this ).closest( '.astra-theme' ).data( 'demo-id' ).toString();
+			let new_array = Array();
 
 			$( this ).toggleClass( 'is-favorite' );
 			$( this ).data( 'favorite', !is_favorite );
+
+			if ( !is_favorite ) {
+				// Add.
+				for ( value in AstraSitesAPI._favorite_data ) {
+					new_array.push( AstraSitesAPI._favorite_data[value] );
+				}
+				new_array.push( site_id );
+			} else {
+				// Remove.
+				for ( value in AstraSitesAPI._favorite_data ) {
+					if ( site_id != AstraSitesAPI._favorite_data[value].toString() ) {
+						new_array.push( AstraSitesAPI._favorite_data[value] );
+					}
+				}
+			}
+			AstraSitesAPI._favorite_data = new_array;
 
 			$.ajax({
 				url  : astraSitesAdmin.ajaxurl,
@@ -217,29 +234,38 @@
 			AstraRender._showSites();
 		},
 
+		/**
+		 * Show all favorite sites
+		 */
 		_showFavoriteSites : function () {
 
-			var fav_array = AstraSitesAPI._stored_data['favorites'];
-			var all_sites = AstraSitesAPI._stored_data['astra-sites'];
-			var data = Array();
+			let fav_array = AstraSitesAPI._favorite_data;
+			let all_sites = AstraSitesAPI._stored_data['astra-sites'];
+			let data = Array();
+			let check_array = Array();
+
 			data['items'] = Array();
 			data['args'] = Array();
 			data['args']['favorites'] = Array();
-			for( var i = 0; i < all_sites.length; i++ ) {
+
+			for( let i = 0; i < all_sites.length; i++ ) {
 
 				for ( value in fav_array ) {
-					data['args']['favorites'].push( fav_array[value] );
 					if ( fav_array[value] == all_sites[i].id ) {
-						data['items'].push( all_sites[i] );
-						delete fav_array[value]
+
+						if ( ! check_array.includes( all_sites[i].id ) ) {
+							data['items'].push( all_sites[i] );
+							check_array.push( all_sites[i].id );
+							data['args']['favorites'].push( fav_array[value] );
+						}
 					}
 				};
 
 			}
-			data['items_count'] = data['items'].length;
-			console.log( data );
 
-			var template = wp.template('astra-sites-list');
+			data['items_count'] = data['items'].length;
+
+			let template = wp.template('astra-sites-list');
 
 			$('body').removeClass( 'loading-content' );
 			$('.filter-count .count').text( data.items_count );
@@ -458,7 +484,7 @@
 			AstraRender._apiAddParam_astra_page_parent_category();
 			AstraRender._apiAddParam_site_url();
 			AstraRender._apiAddParam_purchase_key();
-			console.log(astraSitesApi)
+			//console.log(astraSitesApi)
 			// API Request.
 			var api_post = {
 				id: astraSitesApi.cpt_slug,
