@@ -161,7 +161,7 @@ $import_text = ( 'site-pages' === $global_cpt_meta['cpt_slug'] ) ? __( 'Import P
 					data-demo-slug="{{{data.slug}}}"
 					data-screenshot="{{{data.screenshot}}}"
 					data-content="{{{data.content}}}"
-					data-required-plugins="{{data.required_plugins}}"
+					data-required-plugins="{{data.required_plugins}}">
 				<input type="hidden" class="astra-site-options" value="{{data.astra_site_options}}" >
 				<input type="hidden" class="astra-enabled-extensions" value="{{data.astra_enabled_extensions}}" >
 				<button class="close-full-overlay"><span class="screen-reader-text"><?php esc_html_e( 'Close', 'astra-sites' ); ?></span></button>
@@ -311,7 +311,7 @@ $import_text = ( 'site-pages' === $global_cpt_meta['cpt_slug'] ) ? __( 'Import P
 					data-demo-slug="{{{data.slug}}}"
 					data-screenshot="{{{data.screenshot}}}"
 					data-content="{{{data.content}}}"
-					data-required-plugins="{{data.required_plugins}}"
+					data-required-plugins="{{data.required_plugins}}">
 				<input type="hidden" class="astra-site-options" value="{{data.astra_site_options}}" >
 				<input type="hidden" class="astra-enabled-extensions" value="{{data.astra_enabled_extensions}}" >
 				<button class="close-full-overlay"><span class="screen-reader-text"><?php esc_html_e( 'Close', 'astra-sites' ); ?></span></button>
@@ -475,7 +475,7 @@ $import_text = ( 'site-pages' === $global_cpt_meta['cpt_slug'] ) ? __( 'Import P
 ?>
 <script type="text/template" id="tmpl-astra-sites-list">
 
-	<# if ( data.items.length ) { console.log(data); #>
+	<# if ( data.items.length ) { #>
 		<# for ( key in data.items ) { #>
 
 			<div class="theme astra-theme site-single {{ data.items[ key ].status }}" tabindex="0" aria-describedby="astra-theme-action astra-theme-name"

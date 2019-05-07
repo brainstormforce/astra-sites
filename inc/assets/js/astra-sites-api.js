@@ -34,7 +34,6 @@
 			})
 			.then(data => {
 				if( 'object' === typeof data ) {
-					console.log(AstraSitesAPI)
 					data['args'] = args;
 					if( data.args.id ) {
 						AstraSitesAPI._stored_data[ args.id ] = $.merge( AstraSitesAPI._stored_data[ data.args.id ], data.items );

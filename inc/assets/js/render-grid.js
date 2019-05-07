@@ -484,7 +484,6 @@
 			AstraRender._apiAddParam_astra_page_parent_category();
 			AstraRender._apiAddParam_site_url();
 			AstraRender._apiAddParam_purchase_key();
-			//console.log(astraSitesApi)
 			// API Request.
 			var api_post = {
 				id: astraSitesApi.cpt_slug,
