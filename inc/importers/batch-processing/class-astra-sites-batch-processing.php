@@ -100,7 +100,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 				return $default;
 			}
 
-			if ( preg_match( '/^((https?:\/\/)|(www\.))([a-z0-9-].?)+(:[0-9]+)?\/[\w\-]+\.(jpg|png|gif|jpeg)\/?$/i', $url ) ) {
+			if ( Astra_Sites_Image_Importer::get_instance()->is_image_url( $url ) ) {
 				$default = 30;
 			}
 
