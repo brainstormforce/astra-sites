@@ -237,12 +237,12 @@ if ( ! class_exists( 'Astra_Sites_Image_Importer' ) ) :
 		 * Is Image URL
 		 *
 		 * @since x.x.x
-		 * 
-		 * @param  string  $url URL.
+		 *
+		 * @param  string $url URL.
 		 * @return boolean
 		 */
 		function is_image_url( $url = '' ) {
-			if( empty( $url ) ) {
+			if ( empty( $url ) ) {
 				return false;
 			}
 
