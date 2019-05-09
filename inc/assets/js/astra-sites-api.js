@@ -17,7 +17,7 @@
 			var params = {
 				method: 'GET',
 	            cache: 'default',
-			};
+           	};
 
 			if( astraRenderGrid.headers ) {
 				params['headers'] = astraRenderGrid.headers;
@@ -49,10 +49,8 @@
 					if( callback && typeof callback == "function"){
 						callback( data );
 				    }
-				}
-
-
-	        });
+			   	}
+			});
 
 		},
 

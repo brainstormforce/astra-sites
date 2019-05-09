@@ -2,10 +2,11 @@ module.exports = function( grunt ) {
 
 	'use strict';
 	var banner = '/**\n * <%= pkg.homepage %>\n * Copyright (c) <%= grunt.template.today("yyyy") %>\n * This file is generated automatically. Do not edit.\n */\n';
+
+    var pkg = grunt.file.readJSON('package.json');
+
 	// Project configuration
 	grunt.initConfig( {
-
-		pkg: grunt.file.readJSON( 'package.json' ),
 
 		addtextdomain: {
 			options: {
@@ -90,7 +91,7 @@ module.exports = function( grunt ) {
         compress: {
             main: {
                 options: {
-                    archive: 'astra-sites.zip',
+                    archive: 'astra-sites-' + pkg.version + '.zip',
                     mode: 'zip'
                 },
                 files: [

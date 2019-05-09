@@ -3,9 +3,9 @@
 msgid ""
 msgstr ""
 "Project-Id-Version: Astra Starter Sites – Elementor, Beaver Builder & "
-"Gutenberg Templates 1.3.7\n"
+"Gutenberg Templates 1.3.9\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/astra-sites\n"
-"POT-Creation-Date: 2019-04-23 12:15:17+00:00\n"
+"POT-Creation-Date: 2019-04-29 12:59:09+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -23,7 +23,7 @@ msgstr ""
 "X-Poedit-SearchPath-0: .\n"
 "X-Poedit-Bookmarks: \n"
 "X-Textdomain-Support: yes\n"
-"X-Generator: grunt-wp-i18n 1.0.3\n"
+"X-Generator: grunt-wp-i18n1.0.0\n"
 
 #: astra-sites.php:18
 msgid "Astra Sites"
@@ -47,38 +47,38 @@ msgstr ""
 msgid "No"
 msgstr ""
 
-#: inc/classes/class-astra-sites-importer.php:98
+#: inc/classes/class-astra-sites-importer.php:126
 msgid "You have not \"customize\" access to import the Astra site."
 msgstr ""
 
-#: inc/classes/class-astra-sites-importer.php:122
+#: inc/classes/class-astra-sites-importer.php:150
 msgid "Request site API URL is empty. Try again!"
 msgstr ""
 
-#: inc/classes/class-astra-sites-importer.php:222
+#: inc/classes/class-astra-sites-importer.php:250
 msgid "Customizer data is empty!"
 msgstr ""
 
-#: inc/classes/class-astra-sites-importer.php:236
+#: inc/classes/class-astra-sites-importer.php:264
 msgid ""
 "If XMLReader is not available, it imports all other settings and only skips "
 "XML import. This creates an incomplete website. We should bail early and "
 "not import anything if this is not present."
 msgstr ""
 
-#: inc/classes/class-astra-sites-importer.php:254
+#: inc/classes/class-astra-sites-importer.php:282
 msgid "There was an error downloading the XML file."
 msgstr ""
 
-#: inc/classes/class-astra-sites-importer.php:260
+#: inc/classes/class-astra-sites-importer.php:288
 msgid "Invalid site XML file!"
 msgstr ""
 
-#: inc/classes/class-astra-sites-importer.php:287
+#: inc/classes/class-astra-sites-importer.php:315
 msgid "Site options are empty!"
 msgstr ""
 
-#: inc/classes/class-astra-sites-importer.php:317
+#: inc/classes/class-astra-sites-importer.php:345
 msgid "Widget data is empty!"
 msgstr ""
 
@@ -721,7 +721,7 @@ msgid "Preview"
 msgstr ""
 
 #: inc/includes/admin-page.php:264
-msgid "We're building your website."
+msgid "We're importing your website."
 msgstr ""
 
 #: inc/includes/admin-page.php:265

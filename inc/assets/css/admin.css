@@ -225,7 +225,9 @@
     margin-left: 0;
     width: auto;
     float: none;
+    margin-right: 220px;
 }
+
 .filters-wrap {
     display: inline-block;
 }
