@@ -233,6 +233,26 @@ if ( ! class_exists( 'Astra_Sites_Image_Importer' ) ) :
 			return $new_attachment;
 		}
 
+		/**
+		 * Is Image URL
+		 *
+		 * @since x.x.x
+		 *
+		 * @param  string $url URL.
+		 * @return boolean
+		 */
+		function is_image_url( $url = '' ) {
+			if ( empty( $url ) ) {
+				return false;
+			}
+
+			if ( preg_match( '/^((https?:\/\/)|(www\.))([a-z0-9-].?)+(:[0-9]+)?\/[\w\-]+\.(jpg|png|svg|gif|jpeg)\/?$/i', $url ) ) {
+				return true;
+			}
+
+			return false;
+		}
+
 	}
 
 	/**
