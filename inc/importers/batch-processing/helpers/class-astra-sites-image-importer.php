@@ -236,7 +236,7 @@ if ( ! class_exists( 'Astra_Sites_Image_Importer' ) ) :
 		/**
 		 * Is Image URL
 		 *
-		 * @since x.x.x
+		 * @since 1.3.10
 		 *
 		 * @param  string $url URL.
 		 * @return boolean

@@ -89,7 +89,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 		/**
 		 * Set the timeout for the HTTP request for the images which serve from domain `websitedemos.net`.
 		 *
-		 * @since x.x.x
+		 * @since 1.3.10
 		 *
 		 * @param int    $default Time in seconds until a request times out. Default 5.
 		 * @param string $url           The request URL.

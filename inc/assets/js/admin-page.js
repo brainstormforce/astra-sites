@@ -1663,11 +1663,7 @@ var AstraSitesAjaxQueue = (function() {
 
 				})
 				.done(function ( response ) {
-					console.log( response );
-					console.log( response.data );
-					console.log( response.data['required_plugins'] );
 					required_plugins = response.data['required_plugins'];
-					console.log( response.data['third_party_required_plugins'] );
 
 					if( response.data['third_party_required_plugins'].length ) {
 						$('.astra-demo-import').removeClass('button-primary').addClass('disabled');

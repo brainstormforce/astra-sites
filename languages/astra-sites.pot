@@ -1,11 +1,10 @@
 # Copyright (C) 2019 Brainstorm Force
-# This file is distributed under the same license as the Astra Starter Sites – Elementor, Beaver Builder & Gutenberg Templates package.
+# This file is distributed under the same license as the Astra Starter Sites package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Astra Starter Sites – Elementor, Beaver Builder & "
-"Gutenberg Templates 1.3.9\n"
+"Project-Id-Version: Astra Starter Sites 1.3.9\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/astra-sites\n"
-"POT-Creation-Date: 2019-04-29 12:59:09+00:00\n"
+"POT-Creation-Date: 2019-05-13 08:30:13+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -140,7 +139,7 @@ msgstr ""
 msgid "Please select your favorite page builder to continue.."
 msgstr ""
 
-#: inc/classes/class-astra-sites-page.php:313 inc/includes/admin-page.php:141
+#: inc/classes/class-astra-sites-page.php:313 inc/includes/admin-page.php:159
 msgid "Next"
 msgstr ""
 
@@ -152,7 +151,7 @@ msgstr ""
 msgid "Block Editor (Gutenberg)"
 msgstr ""
 
-#: inc/classes/class-astra-sites-page.php:393
+#. Plugin Name of the plugin/theme
 msgid "Astra Starter Sites"
 msgstr ""
 
@@ -260,7 +259,7 @@ msgstr ""
 msgid "Importing.."
 msgstr ""
 
-#: inc/classes/class-astra-sites.php:365 inc/includes/admin-page.php:161
+#: inc/classes/class-astra-sites.php:365 inc/includes/admin-page.php:179
 msgid "Read more"
 msgstr ""
 
@@ -272,7 +271,7 @@ msgstr ""
 msgid "There was a problem receiving a response from server."
 msgstr ""
 
-#: inc/classes/class-astra-sites.php:368 inc/includes/admin-page.php:391
+#: inc/classes/class-astra-sites.php:368 inc/includes/admin-page.php:409
 msgid "No Demos found, Try a different search."
 msgstr ""
 
@@ -642,121 +641,121 @@ msgid ""
 "of the Astra Premium Sites plugin."
 msgstr ""
 
-#: inc/includes/admin-page.php:112
+#: inc/includes/admin-page.php:130
 msgid "Select Your Favorite Page Builder"
 msgstr ""
 
-#: inc/includes/admin-page.php:115
+#: inc/includes/admin-page.php:133
 msgid "Sites List.."
 msgstr ""
 
-#: inc/includes/admin-page.php:139
+#: inc/includes/admin-page.php:157
 msgid "Close"
 msgstr ""
 
-#: inc/includes/admin-page.php:140
+#: inc/includes/admin-page.php:158
 msgid "Previous"
 msgstr ""
 
-#: inc/includes/admin-page.php:142 inc/includes/admin-page.php:143
-#: inc/includes/admin-page.php:228 inc/includes/admin-page.php:235
+#: inc/includes/admin-page.php:160 inc/includes/admin-page.php:161
+#: inc/includes/admin-page.php:246 inc/includes/admin-page.php:253
 msgid "Import Site"
 msgstr ""
 
-#: inc/includes/admin-page.php:170
+#: inc/includes/admin-page.php:188
 msgid "Install Required Plugins"
 msgstr ""
 
-#: inc/includes/admin-page.php:182
+#: inc/includes/admin-page.php:200
 msgid ""
 "Customizer is what gives a design to the website; and selecting this option "
 "replaces your current design with a new one."
 msgstr ""
 
-#: inc/includes/admin-page.php:183
+#: inc/includes/admin-page.php:201
 msgid ""
 "Backup of current customizer settings will be stored in "
 "\"wp-content/astra-sites\" directory, just in case if you want to restore "
 "it later."
 msgstr ""
 
-#: inc/includes/admin-page.php:193
+#: inc/includes/admin-page.php:211
 msgid ""
 "Selecting this option will import dummy pages, posts, images and menus. If "
 "you do not want to import dummy content, please uncheck this option."
 msgstr ""
 
-#: inc/includes/admin-page.php:209
+#: inc/includes/admin-page.php:227
 msgid ""
 "WARNING: Selecting this option will delete data from your current website. "
 "Choose this option only if this is intended."
 msgstr ""
 
-#: inc/includes/admin-page.php:214
+#: inc/includes/admin-page.php:232
 msgid "Advanced Options"
 msgstr ""
 
-#: inc/includes/admin-page.php:219
+#: inc/includes/admin-page.php:237
 msgid "Required Plugins"
 msgstr ""
 
-#: inc/includes/admin-page.php:241
+#: inc/includes/admin-page.php:259
 msgid "Collapse"
 msgstr ""
 
-#: inc/includes/admin-page.php:247
+#: inc/includes/admin-page.php:265
 msgid "Enter desktop preview mode"
 msgstr ""
 
-#: inc/includes/admin-page.php:250
+#: inc/includes/admin-page.php:268
 msgid "Enter tablet preview mode"
 msgstr ""
 
-#: inc/includes/admin-page.php:253
+#: inc/includes/admin-page.php:271
 msgid "Enter mobile preview mode"
 msgstr ""
 
-#: inc/includes/admin-page.php:261 inc/includes/admin-page.php:383
+#: inc/includes/admin-page.php:279 inc/includes/admin-page.php:401
 msgid "Preview"
 msgstr ""
 
-#: inc/includes/admin-page.php:264
+#: inc/includes/admin-page.php:282
 msgid "We're importing your website."
 msgstr ""
 
-#: inc/includes/admin-page.php:265
+#: inc/includes/admin-page.php:283
 msgid ""
 "The process can take anywhere between 2 to 10 minutes depending on the size "
 "of the website and speed of connection."
 msgstr ""
 
-#: inc/includes/admin-page.php:266
+#: inc/includes/admin-page.php:284
 msgid ""
 "Please do not close this browser window until the site is imported "
 "completely."
 msgstr ""
 
-#: inc/includes/admin-page.php:289
+#: inc/includes/admin-page.php:307
 #. translators: %1$s & %2$s are a Demo API URL
 msgid ""
 "<p> It seems the demo data server, <i><a href=\"%1$s\">%2$s</a></i> is "
 "unreachable from your site.</p>"
 msgstr ""
 
-#: inc/includes/admin-page.php:291
+#: inc/includes/admin-page.php:309
 msgid ""
 "<p class=\"left-margin\"> 1. Sometimes, simple page reload fixes any "
 "temporary issues. No kidding!</p>"
 msgstr ""
 
-#: inc/includes/admin-page.php:293
+#: inc/includes/admin-page.php:311
 msgid ""
 "<p class=\"left-margin\"> 2. If that does not work, you will need to talk "
 "to your server administrator and check if demo server is being blocked by "
 "the firewall!</p>"
 msgstr ""
 
-#: inc/includes/admin-page.php:296
+#: inc/includes/admin-page.php:314
 #. translators: %1$s is a support link
 msgid ""
 "<p>If that does not help, please open up a <a href=\"%1$s\" "
@@ -764,24 +763,24 @@ msgid ""
 "for you.</p>"
 msgstr ""
 
-#: inc/includes/admin-page.php:308
+#: inc/includes/admin-page.php:326
 msgid "Under Maintenance.."
 msgstr ""
 
-#: inc/includes/admin-page.php:309
+#: inc/includes/admin-page.php:327
 msgid ""
 "If you are seeing this message, most likely our servers are under routine "
 "maintenance and we will be back shortly. "
 msgstr ""
 
-#: inc/includes/admin-page.php:310
+#: inc/includes/admin-page.php:328
 msgid ""
 "In rare case, it is possible your website is having trouble connecting with "
 "ours. If you need help, please feel free to get in touch with us from our "
 "website."
 msgstr ""
 
-#: inc/includes/admin-page.php:395 inc/includes/admin-page.php:413
+#: inc/includes/admin-page.php:413 inc/includes/admin-page.php:431
 #. translators: %1$s External Link
 msgid ""
 "Don't see a site that you would like to import?<br><a target=\"_blank\" "
@@ -794,10 +793,6 @@ msgstr ""
 
 #: inc/includes/white-label.php:34
 msgid "Plugin Description:"
-msgstr ""
-
-#. Plugin Name of the plugin/theme
-msgid "Astra Starter Sites – Elementor, Beaver Builder & Gutenberg Templates"
 msgstr ""
 
 #. Plugin URI of the plugin/theme
