@@ -83,6 +83,28 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 			// Start image importing after site import complete.
 			add_filter( 'astra_sites_image_importer_skip_image', array( $this, 'skip_image' ), 10, 2 );
 			add_action( 'astra_sites_import_complete', array( $this, 'start_process' ) );
+			add_filter( 'http_request_timeout', array( $this, 'set_http_timeout' ), 10, 2 );
+		}
+
+		/**
+		 * Set the timeout for the HTTP request for the images which serve from domain `websitedemos.net`.
+		 *
+		 * @since x.x.x
+		 *
+		 * @param int    $default Time in seconds until a request times out. Default 5.
+		 * @param string $url           The request URL.
+		 */
+		function set_http_timeout( $default, $url ) {
+
+			if ( strpos( $url, 'websitedemos.net' ) === false ) {
+				return $default;
+			}
+
+			if ( Astra_Sites_Image_Importer::get_instance()->is_image_url( $url ) ) {
+				$default = 30;
+			}
+
+			return $default;
 		}
 
 		/**
