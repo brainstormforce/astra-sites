@@ -492,17 +492,17 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				wp_send_json_error( $response );
 			}
 
-			$required_plugins = ( isset( $_POST['required_plugins'] ) ) ? $_POST['required_plugins'] : array();
+			$required_plugins             = ( isset( $_POST['required_plugins'] ) ) ? $_POST['required_plugins'] : array();
 			$third_party_required_plugins = array();
-			$third_party_plugins = array(
+			$third_party_plugins          = array(
 				'learndash-course-grid' => array(
 					'init' => 'learndash-course-grid/learndash_course_grid.php',
 					'name' => 'LearnDash Course Grid',
 				),
-				'sfwd-lms' => array(
+				'sfwd-lms'              => array(
 					'init' => 'sfwd-lms/sfwd_lms.php',
 					'name' => 'LearnDash LMS',
-				)
+				),
 			);
 
 			if ( count( $required_plugins ) > 0 ) {
@@ -537,7 +537,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 							$response['notinstalled'][] = $plugin;
 
 							// Added premium plugins which need to install first.
-							if( array_key_exists($plugin['slug'], $third_party_plugins ) ) {
+							if ( array_key_exists( $plugin['slug'], $third_party_plugins ) ) {
 								$third_party_required_plugins[] = $plugin;
 							}
 
@@ -550,10 +550,12 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			}
 
 			// Send response.
-			wp_send_json_success( array(
-				'required_plugins'             => $response,
-				'third_party_required_plugins' => $third_party_required_plugins,
-			));
+			wp_send_json_success(
+				array(
+					'required_plugins'             => $response,
+					'third_party_required_plugins' => $third_party_required_plugins,
+				)
+			);
 		}
 
 		/**
