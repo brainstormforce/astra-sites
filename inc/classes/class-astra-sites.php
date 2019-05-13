@@ -566,7 +566,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 						'bulkActivation'          => __( 'Bulk plugin activation...', 'astra-sites' ),
 						'activate'                => __( 'Plugin activate - ', 'astra-sites' ),
 						'activationError'         => __( 'Error! While activating plugin  - ', 'astra-sites' ),
-						'bulkInstall'             => __( 'Bulk plugin installation...', 'astra-sites' ),
+						'bulkInstall'             => __( 'Installing Required Plugins..', 'astra-sites' ),
 						'api'                     => __( 'Site API ', 'astra-sites' ),
 						'importing'               => __( 'Importing..', 'astra-sites' ),
 						'processingRequest'       => __( 'Processing requests...', 'astra-sites' ),
@@ -683,7 +683,18 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				wp_send_json_error( $response );
 			}
 
-			$required_plugins = ( isset( $_POST['required_plugins'] ) ) ? $_POST['required_plugins'] : array();
+			$required_plugins             = ( isset( $_POST['required_plugins'] ) ) ? $_POST['required_plugins'] : array();
+			$third_party_required_plugins = array();
+			$third_party_plugins          = array(
+				'learndash-course-grid' => array(
+					'init' => 'learndash-course-grid/learndash_course_grid.php',
+					'name' => 'LearnDash Course Grid',
+				),
+				'sfwd-lms'              => array(
+					'init' => 'sfwd-lms/sfwd_lms.php',
+					'name' => 'LearnDash LMS',
+				),
+			);
 
 			if ( count( $required_plugins ) > 0 ) {
 				foreach ( $required_plugins as $key => $plugin ) {
@@ -716,6 +727,11 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 
 							$response['notinstalled'][] = $plugin;
 
+							// Added premium plugins which need to install first.
+							if ( array_key_exists( $plugin['slug'], $third_party_plugins ) ) {
+								$third_party_required_plugins[] = $plugin;
+							}
+
 							// Lite - Active.
 						} else {
 							$response['active'][] = $plugin;
@@ -725,7 +741,12 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			}
 
 			// Send response.
-			wp_send_json_success( $response );
+			wp_send_json_success(
+				array(
+					'required_plugins'             => $response,
+					'third_party_required_plugins' => $third_party_required_plugins,
+				)
+			);
 		}
 
 		/**

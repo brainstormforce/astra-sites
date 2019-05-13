@@ -101,7 +101,7 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) {
 			}
 
 			// Check is image URL of type jpg|png|gif|jpeg.
-			if ( preg_match( '/^((https?:\/\/)|(www\.))([a-z0-9-].?)+(:[0-9]+)?\/[\w\-]+\.(jpg|png|gif|jpeg)\/?$/i', $url ) ) {
+			if ( Astra_Sites_Image_Importer::get_instance()->is_image_url( $url ) ) {
 				$timeout_value = 30;
 			}
 			return $timeout_value;

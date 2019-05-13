@@ -350,7 +350,9 @@
 	margin-left: 0;
 	width: auto;
 	float: none;
+	margin-right: 220px;
 }
+
 .filters-wrap {
 	display: inline-block;
 }
@@ -709,13 +711,15 @@ a.astra-pages-back:before {
 	visibility: hidden;
 }
 
-.required-plugins-list {
+.required-plugins-list,
+.astra-sites-third-party-required-plugins {
 	margin-left: 2em;
 	margin-top: .5em;
 	margin-bottom: .5em;
 	list-style-type: disc;
 }
 
+.astra-sites-third-party-required-plugins .plugin-card,
 .required-plugins-list .plugin-card {
 	background: transparent;
 	border: none;
