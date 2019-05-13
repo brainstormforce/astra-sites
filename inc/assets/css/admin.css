@@ -593,7 +593,8 @@ body.loading-content .select-page-builder {
 	}
 }
 
-#astra-sites-filters {
+#astra-sites-filters,
+#astra-pages-back-wrap {
 	display: inline-block;
 	width: calc( 100% + 20px );
 	margin-left: -20px;
@@ -607,8 +608,6 @@ body.loading-content .select-page-builder {
 
 #astra-pages-back-wrap .section-left {
 	background: #fff;
-	-ms-flex: 0 0 50px;
-	flex: 0 0 50px;
 	padding: 0 20px;
 	box-shadow: 0 1px 0 rgba(0,0,0,.1);
 	z-index: 8;
@@ -651,7 +650,8 @@ a.astra-pages-back:before {
 	margin-top: 20px;
 }
 
-#astra-sites-filters .wp-filter {
+#astra-sites-filters .wp-filter,
+#astra-pages-back-wrap .wp-filter {
 	margin-top: 0;
 	display: flex;
 	justify-content: space-between;
