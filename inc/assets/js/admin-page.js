@@ -120,7 +120,6 @@ var AstraSitesAjaxQueue = (function() {
 			var complete = 0;
 			var total = 0;
 
-
 			for (var i = types.length - 1; i >= 0; i--) {
 				var type = types[i];
 				this.updateProgress( type, this.complete[ type ], this.data.count[ type ] );
@@ -762,7 +761,7 @@ var AstraSitesAjaxQueue = (function() {
 						evtSource.addEventListener( 'log', function ( message ) {
 							var data = JSON.parse( message.data );
 							var message = data.message || '';
-							if( message ) {
+							if( message && 'info' === data.level ) {
 								message = message.replace(/"/g, function(letter) {
 								    return '';
 								});
@@ -983,7 +982,7 @@ var AstraSitesAjaxQueue = (function() {
 				return;
 			}
 
-			AstraSitesAdmin._log_title( 'Installing Plugin..' );
+			AstraSitesAdmin._log_title( 'Installing Required Plugin..' );
 
 			if ( wp.updates.shouldRequestFilesystemCredentials && ! wp.updates.ajaxLocked ) {
 				wp.updates.requestFilesystemCredentials( event );
@@ -999,7 +998,7 @@ var AstraSitesAjaxQueue = (function() {
 				} );
 			}
 
-			AstraSitesAdmin._log_title( 'Installing ' + AstraSitesAdmin.ucwords( $button.data( 'name' ) ) );
+			AstraSitesAdmin._log_title( 'Installing Plugin - ' + AstraSitesAdmin.ucwords( $button.data( 'name' ) ) );
 
 			wp.updates.installPlugin( {
 				slug:    $button.data( 'slug' )
@@ -1036,6 +1035,7 @@ var AstraSitesAjaxQueue = (function() {
 
 			// Transform the 'Install' button into an 'Activate' button.
 			var $init = $( '.plugin-card-' + response.slug ).data('init');
+			var $name = $( '.plugin-card-' + response.slug ).data('name');
 
 			// Reset not installed plugins list.
 			var pluginsList = astraSitesAdmin.requiredPlugins.notinstalled;
@@ -1044,7 +1044,7 @@ var AstraSitesAjaxQueue = (function() {
 			// WordPress adds "Activate" button after waiting for 1000ms. So we will run our activation after that.
 			setTimeout( function() {
 
-				AstraSitesAdmin._log_title( 'Activating Plugin..' );
+				AstraSitesAdmin._log_title( 'Installing Plugin - ' + AstraSitesAdmin.ucwords($name) );
 
 				$.ajax({
 					url: astraSitesAdmin.ajaxurl,
@@ -1059,9 +1059,9 @@ var AstraSitesAjaxQueue = (function() {
 				.done(function (result) {
 
 					if( result.success ) {
-						AstraSitesAdmin._log_title( 'Activating Plugin ' + AstraSitesAdmin.ucwords(response.name) );
-
 						var pluginsList = astraSitesAdmin.requiredPlugins.inactive;
+
+						AstraSitesAdmin._log_title( 'Installed Plugin - ' + AstraSitesAdmin.ucwords($name) );
 
 						// Reset not installed plugins list.
 						astraSitesAdmin.requiredPlugins.inactive = AstraSitesAdmin._removePluginFromQueue( response.slug, pluginsList );
@@ -1082,8 +1082,9 @@ var AstraSitesAjaxQueue = (function() {
 		_installError: function( event, response ) {
 
 			var $card = $( '.plugin-card-' + response.slug );
+			var $name = $card.data('name');
 
-			AstraSitesAdmin._log_title( response.errorMessage + ' ' + AstraSitesAdmin.ucwords(response.name) );
+			AstraSitesAdmin._log_title( response.errorMessage + ' ' + AstraSitesAdmin.ucwords($name) );
 
 
 			$card
@@ -1100,8 +1101,9 @@ var AstraSitesAjaxQueue = (function() {
 			event.preventDefault();
 
 			var $card = $( '.plugin-card-' + args.slug );
+			var $name = $card.data('name');
 
-			AstraSitesAdmin._log_title( 'Installing ' + AstraSitesAdmin.ucwords(args.name ));
+			AstraSitesAdmin._log_title( 'Installing Plugin - ' + AstraSitesAdmin.ucwords( $name ));
 
 			$card.addClass('updating-message');
 
@@ -1123,7 +1125,7 @@ var AstraSitesAjaxQueue = (function() {
 				return;
 			}
 
-			AstraSitesAdmin._log_title( 'Activating plugin ' + AstraSitesAdmin.ucwords( $name ) );
+			AstraSitesAdmin._log_title( 'Activating Plugin - ' + AstraSitesAdmin.ucwords( $name ) );
 
 			$button.addClass('updating-message button-primary')
 				.html( astraSitesAdmin.strings.btnActivating );
@@ -1145,7 +1147,7 @@ var AstraSitesAjaxQueue = (function() {
 
 				if( result.success ) {
 
-					AstraSitesAdmin._log_title( 'Activated ' + AstraSitesAdmin.ucwords($name)  );
+					AstraSitesAdmin._log_title( 'Activated Plugin - ' + AstraSitesAdmin.ucwords($name)  );
 
 					var pluginsList = astraSitesAdmin.requiredPlugins.inactive;
 
@@ -1221,7 +1223,7 @@ var AstraSitesAjaxQueue = (function() {
 		 */
 		_activateAllPlugins: function( activate_plugins ) {
 
-			AstraSitesAdmin._log_title( 'Activating Plugins..' );
+			AstraSitesAdmin._log_title( 'Activating Required Plugins..' );
 
 			$.each( activate_plugins, function(index, single_plugin) {
 
@@ -1263,11 +1265,11 @@ var AstraSitesAjaxQueue = (function() {
 		 */
 		_installAllPlugins: function( not_installed ) {
 
-			AstraSitesAdmin._log_title( 'Installing Plugins..' );
+			AstraSitesAdmin._log_title( 'Installing Required Plugins..' );
 			
 			$.each( not_installed, function(index, single_plugin) {
 
-				AstraSitesAdmin._log_title( 'Installing ' + AstraSitesAdmin.ucwords( single_plugin.name ));
+				AstraSitesAdmin._log_title( 'Installing Plugin - ' + AstraSitesAdmin.ucwords( single_plugin.name ));
 
 				var $card = $( '.plugin-card-' + single_plugin.slug );
 
@@ -1661,12 +1663,20 @@ var AstraSitesAjaxQueue = (function() {
 
 				})
 				.done(function ( response ) {
+					required_plugins = response.data['required_plugins'];
 
+					if( response.data['third_party_required_plugins'].length ) {
+						$('.astra-demo-import').removeClass('button-primary').addClass('disabled');
 
-					// Release disabled class from import button.
-					$('.astra-demo-import')
-						.removeClass('disabled not-click-able')
-						.attr('data-import', 'disabled');
+						$('.astra-sites-third-party-required-plugins-wrap').remove();
+						var template = wp.template('astra-sites-third-party-required-plugins');
+						$('.astra-sites-advanced-options-wrap').append( template( response.data['third_party_required_plugins'] ) );
+					} else {
+						// Release disabled class from import button.
+						$('.astra-demo-import')
+							.removeClass('disabled not-click-able')
+							.attr('data-import', 'disabled');
+					}
 
 					// Remove loader.
 					$('.required-plugins').removeClass('loading').html('');
@@ -1683,12 +1693,12 @@ var AstraSitesAjaxQueue = (function() {
 					 *
 					 * List of not installed required plugins.
 					 */
-					if ( typeof response.data.notinstalled !== 'undefined' ) {
+					if ( typeof required_plugins.notinstalled !== 'undefined' ) {
 
 						// Add not have installed plugins count.
-						remaining_plugins += parseInt( response.data.notinstalled.length );
+						remaining_plugins += parseInt( required_plugins.notinstalled.length );
 
-						$( response.data.notinstalled ).each(function( index, plugin ) {
+						$( required_plugins.notinstalled ).each(function( index, plugin ) {
 							$('.required-plugins-list').append('<li class="plugin-card plugin-card-'+plugin.slug+'" data-slug="'+plugin.slug+'" data-init="'+plugin.init+'" data-name="'+plugin.name+'">'+plugin.name+'</li>');
 						});
 					}
@@ -1698,12 +1708,12 @@ var AstraSitesAjaxQueue = (function() {
 					 *
 					 * List of not inactive required plugins.
 					 */
-					if ( typeof response.data.inactive !== 'undefined' ) {
+					if ( typeof required_plugins.inactive !== 'undefined' ) {
 
 						// Add inactive plugins count.
-						remaining_plugins += parseInt( response.data.inactive.length );
+						remaining_plugins += parseInt( required_plugins.inactive.length );
 
-						$( response.data.inactive ).each(function( index, plugin ) {
+						$( required_plugins.inactive ).each(function( index, plugin ) {
 							$('.required-plugins-list').append('<li class="plugin-card plugin-card-'+plugin.slug+'" data-slug="'+plugin.slug+'" data-init="'+plugin.init+'" data-name="'+plugin.name+'">'+plugin.name+'</li>');
 						});
 					}
@@ -1713,9 +1723,9 @@ var AstraSitesAjaxQueue = (function() {
 					 *
 					 * List of not active required plugins.
 					 */
-					if ( typeof response.data.active !== 'undefined' ) {
+					if ( typeof required_plugins.active !== 'undefined' ) {
 
-						$( response.data.active ).each(function( index, plugin ) {
+						$( required_plugins.active ).each(function( index, plugin ) {
 							$('.required-plugins-list').append('<li class="plugin-card plugin-card-'+plugin.slug+'" data-slug="'+plugin.slug+'" data-init="'+plugin.init+'" data-name="'+plugin.name+'">'+plugin.name+'</li>');
 						});
 					}
@@ -1724,7 +1734,7 @@ var AstraSitesAjaxQueue = (function() {
 					 * Enable Demo Import Button
 					 * @type number
 					 */
-					astraSitesAdmin.requiredPlugins = response.data;
+					astraSitesAdmin.requiredPlugins = required_plugins;
 				});
 
 			} else {

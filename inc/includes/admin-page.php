@@ -101,6 +101,24 @@ defined( 'ABSPATH' ) or exit;
 
 <?php
 /**
+ * TMPL - Third Party Required Plugins
+ */
+?>
+<script type="text/template" id="tmpl-astra-sites-third-party-required-plugins">
+	<div class="astra-sites-third-party-required-plugins-wrap">
+		<div class="notice notice-warning">
+			<p>To import this website, You need to install below plugins!</p>
+		</div>
+		<ul class="astra-sites-third-party-required-plugins">
+			<# for ( key in data ) { #>
+				<li class="plugin-card plugin-card-{{data[ key ].slug}}'" data-slug="{{data[ key ].slug }}" data-init="{{data[ key ].init}}" data-name="{{data[ key ].name}}">{{data[ key ].name}}</li>
+			<# } #>
+		</ul>
+	</div>
+</script>
+
+<?php
+/**
  * TMPL - Single Demo Preview
  */
 ?>
@@ -261,7 +279,7 @@ defined( 'ABSPATH' ) or exit;
 			<iframe src="{{{data.astra_demo_url}}}" title="<?php esc_attr_e( 'Preview', 'astra-sites' ); ?>"></iframe>
 			<div class="astra-sites-result-preview" style="display: none;">
 				<div class="inner">
-					<h2><?php _e( 'We\'re building your website.', 'astra-sites' ); ?></h2>
+					<h2><?php _e( 'We\'re importing your website.', 'astra-sites' ); ?></h2>
 					<p><?php _e( 'The process can take anywhere between 2 to 10 minutes depending on the size of the website and speed of connection.', 'astra-sites' ); ?></p>
 					<p><?php _e( 'Please do not close this browser window until the site is imported completely.', 'astra-sites' ); ?></p>
 					<div class="current-importing-status-wrap">
