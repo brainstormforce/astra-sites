@@ -62,7 +62,7 @@
 }
 #astra-sites-admin .theme-action-wrap {
 	width: 90%;
-	padding: 10px 15px;
+	padding: 8px 15px;
 }
 .filters-wrap-page-categories {
 	margin-right: 10px;
@@ -808,11 +808,6 @@ a.astra-pages-back:before {
 	height: auto;
 }
 
-#astra-sites {
-	/*display: flex;
-	flex-wrap: wrap;*/
-}
-
 .astra-sites-menu-page-wrapper .title-count,
 .astra-sites-menu-page-wrapper .filter-count .count {
 	display: flex;
@@ -990,6 +985,42 @@ a.astra-pages-back:before {
 
 .current-importing-status p {
 	margin: 0;
+}
+
+@media (max-width: 1366px) {
+	.theme-browser .theme {
+		width: calc( 25% - 25px );
+		margin: 0 25px 25px 0;
+	}
+	.theme-browser .theme:nth-child(4n) {
+		margin-right: 0;
+	}
+	.theme-browser .theme:nth-child(even),
+	.theme-browser .theme:nth-child(odd) {
+		margin-right: 25px;
+	}
+	.theme-browser .theme:nth-child(5n),
+	.theme-browser .theme:nth-child(4n) {
+		margin-right: 25px;
+	}
+
+}
+
+@media (min-width: 960px) and (max-width: 1020px) {
+	#astra-sites-admin .theme-action-wrap {
+		padding: 5px;
+		width: 100%;
+	}
+}
+
+@media (min-width: 781px) and (max-width: 920px) {
+	#astra-sites-admin .theme-action-wrap {
+		padding: 5px;
+		width: 100%;
+	}
+	.theme-browser .theme .theme-actions button:first-child {
+		margin-bottom: 5px;
+	}
 }
 
 @media (max-width: 1120px) {
