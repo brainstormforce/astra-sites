@@ -4,8 +4,8 @@ Donate link: https://wpastra.com/pro/
 Tags: Elementor,Beaver Builder,Templates,Gutenberg,Astra Starter Sites
 Requires at least: 4.4
 Requires PHP: 5.3
-Tested up to: 5.1.1
-Stable tag: 1.3.10
+Tested up to: 5.2
+Stable tag: 1.3.11
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -116,6 +116,9 @@ We are open to suggestions and would love to work on topics that our users are l
 3. Click the import site button to start the import process.
 
 == Changelog ==
+
+v1.3.11 - 13-May-2019
+- Improvement: Added compatibility to WordPress 5.2.
 
 v1.3.10 - 13-May-2019
 - Improvement: Added LarnDash plugin support for LarnDash demos.
