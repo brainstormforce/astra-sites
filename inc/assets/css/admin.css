@@ -827,7 +827,7 @@ a.astra-pages-back:before {
 	padding: 0px 5px 2px 5px;
 	outline: 2px solid transparent;
 	outline-offset: 0;
-	background: #fafafa;
+	background: #ffffff;
 	border: 1px solid #ccc;
 	color: #72777c;
 	font-weight: normal;
@@ -962,7 +962,7 @@ a.astra-pages-back:before {
 }
 
 .theme-browser .theme .theme-screenshot:after {
-	padding-top: 100%;
+	padding-top: 130%;
 }
 
 @-webkit-keyframes rotation {
