@@ -650,9 +650,8 @@ a.astra-pages-back:before {
     color: #4e555d;
     font-size: 14px;
     text-decoration: none;
-    padding: 21px 20px 21px 43px;
+    padding: 21px 20px 24px 43px;
     font-weight: 500;
-    border-bottom: 1px solid #e8e8e8;
 }
 
 .astra-sites-nav-items a:before {
