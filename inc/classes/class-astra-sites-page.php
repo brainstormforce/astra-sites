@@ -327,7 +327,9 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 				?>
 				<div class="nav-tab-wrapper">
 					<div class="logo">
-						<div class="astra-sites-logo-wrap"><a href="" target="_blank" rel="noopener"><img src="<?php echo esc_url( ASTRA_SITES_URI . 'inc/assets/images/logo.svg' ); ?>" alt="<?php echo $page_title; ?>"></a></div>
+						<div class="astra-sites-logo-wrap"><a href="" target="_blank" rel="noopener">
+							<img src="<?php echo esc_url( ASTRA_SITES_URI . 'inc/assets/images/logo.svg' ); ?>" alt="<?php echo $page_title; ?>"></a>
+						</div>
 						<h1 class='astra-sites-title'> <?php echo esc_html( $page_title ); ?> </h1>
 					</div>
 
