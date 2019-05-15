@@ -546,7 +546,7 @@ $import_text = ( 'site-pages' === $global_cpt_meta['cpt_slug'] ) ? __( 'Import P
 								<# if ( data.type != 'site-pages' ) { #>
 								<button class="button install-page-preview"><?php esc_html_e( 'Import Pages', 'astra-sites' ); ?></button>
 								<# } #>
-								<button class="button-primary button preview install-theme-preview"><?php esc_html_e( 'Preview', 'astra-sites' ); ?></button>
+								<button class="button-primary button preview install-theme-preview"><?php esc_html_e( 'Import Site', 'astra-sites' ); ?></button>
 							</div>
 						</div>
 					</div>
