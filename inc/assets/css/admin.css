@@ -712,6 +712,7 @@ a.astra-pages-back:before {
     border: none;
 	margin-bottom: 40px;
  	background: transparent;
+ 	padding: 0;
 }
 
 .is-favorite span i {
