@@ -588,7 +588,7 @@ body.loading-content .select-page-builder {
 #astra-pages-back-wrap {
 	display: inline-block;
 	width: 100%;
-	margin-top: 20px;
+	margin-top: 10px;
 }
 
 #astra-pages-back-wrap {
@@ -706,7 +706,7 @@ a.astra-pages-back:before {
 	justify-content: space-between;
     box-shadow: none;
     border: none;
-	margin-bottom: 50px;
+	margin-bottom: 40px;
  	background: transparent;
 }
 
