@@ -1019,7 +1019,9 @@ a.astra-pages-back:before {
 	animation: astra-scale 0.5s alternate infinite ease-in;
 }
 
-.theme-browser .theme:hover .theme-actions, .theme-browser .theme.focus .theme-actions, .theme-browser .theme:focus .theme-actions {
+.theme-browser .theme:hover .theme-actions,
+.theme-browser .theme.focus .theme-actions,
+.theme-browser .theme:focus .theme-actions {
     opacity: 0;
 }
 @keyframes astra-scale {
@@ -1076,4 +1078,6 @@ a.astra-pages-back:before {
 
 .theme-browser .theme {
     box-shadow: 0 1px 7px 0 rgba(0, 0, 0, 0.08);
+    margin: 0 3% 3.6% 0;
+    border: none;
 }
