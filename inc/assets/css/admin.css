@@ -664,15 +664,10 @@ a.astra-pages-back:before {
     content: "\f105";
 }
 
-/*#astra-sites-filters .search-form:after {
-    content: "\f179";
-}*/
-
 #astra-sites-filters .search-form {
 	font-weight: normal;
 }
 
-/*#astra-sites-filters .search-form:after,*/
 .astra-sites-nav-items a:before {
     font-family: dashicons;
     display: inline-block;
@@ -685,14 +680,12 @@ a.astra-pages-back:before {
     text-rendering: auto;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
-    font-size: 20px;
+    font-size: 17px;
     vertical-align: top;
     text-align: center;
     transition: color 0.1s ease-in;
     position: absolute;
-    /*right: 15px;
-    top: 20px;*/
-    margin-left: -25px;
+    margin-left: -22px;
     font-weight: normal;
 }
 
