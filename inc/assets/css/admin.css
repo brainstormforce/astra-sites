@@ -7,9 +7,6 @@
 	top: -0.5em;
 	text-transform: uppercase;
 }
-.wrap#astra-sites-admin {
-	margin: 0;
-}
 #astra-sites-admin.wrap .status,
 #astra-sites-admin.wrap .site-type.premium {
 	background: #6645E4;
@@ -299,10 +296,6 @@
     padding-left: 15px;
     border-left: 1px solid #ddd;
     color: #444;
-}
-
-#astra-sites-admin .theme-browser {
-	margin-right: 0;
 }
 
 .astra-sites-logo-wrap {
@@ -1017,14 +1010,6 @@ a.astra-pages-back:before {
 	color: #c1c1c1;
 }
 
-.theme-browser .theme:nth-child(5n) {
-	margin-right: 0;
-}
-.theme-browser .theme:nth-child(3n),
-.theme-browser .theme:nth-child(4n) {
-	margin-right: 25px;
-}
-
 .theme-browser .theme .theme-screenshot:after {
 	padding-top: 130%;
 }
@@ -1055,25 +1040,6 @@ a.astra-pages-back:before {
 	margin: 0;
 }
 
-@media (max-width: 1366px) {
-	.theme-browser .theme {
-		width: calc( 25% - 25px );
-		margin: 0 25px 25px 0;
-	}
-	.theme-browser .theme:nth-child(4n) {
-		margin-right: 0;
-	}
-	.theme-browser .theme:nth-child(even),
-	.theme-browser .theme:nth-child(odd) {
-		margin-right: 25px;
-	}
-	.theme-browser .theme:nth-child(5n),
-	.theme-browser .theme:nth-child(4n) {
-		margin-right: 25px;
-	}
-
-}
-
 @media (min-width: 960px) and (max-width: 1020px) {
 	#astra-sites-admin .theme-action-wrap {
 		padding: 5px;
@@ -1088,39 +1054,5 @@ a.astra-pages-back:before {
 	}
 	.theme-browser .theme .theme-actions button:first-child {
 		margin-bottom: 5px;
-	}
-}
-
-@media (max-width: 1120px) {
-	.theme-browser .theme {
-		width: calc( 33% - 25px );
-		margin: 0 25px 25px 0;
-	}
-	.theme-browser .theme:nth-child(3n) {
-		margin-right: 0;
-	}
-	.theme-browser .theme:nth-child(even),
-	.theme-browser .theme:nth-child(odd) {
-		margin-right: 25px;
-	}
-	.theme-browser .theme:nth-child(5n),
-	.theme-browser .theme:nth-child(4n) {
-		margin-right: 25px;
-	}
-
-}
-
-@media (max-width: 767px) {
-	.theme-browser .theme {
-		width: calc( 50% - 25px );
-		margin: 0 25px 25px 0;
-	}
-	.theme-browser .theme:nth-child(2n) {
-		margin-right: 0;
-	}
-	.theme-browser .theme:nth-child(5n),
-	.theme-browser .theme:nth-child(4n),
-	.theme-browser .theme:nth-child(3n) {
-		margin-right: 25px;
 	}
 }
