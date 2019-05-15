@@ -993,6 +993,12 @@ a.astra-pages-back:before {
 	color: #c1c1c1;
 }
 
+.theme-browser .theme:hover .theme-actions,
+.theme-browser .theme.focus .theme-actions,
+.theme-browser .theme:focus .theme-actions {
+    opacity: 0;
+}
+
 .theme-browser .theme .theme-screenshot:after {
 	padding-top: 130%;
 }
@@ -1014,6 +1020,9 @@ a.astra-pages-back:before {
 	animation: astra-scale 0.5s alternate infinite ease-in;
 }
 
+.theme-browser .theme:hover .theme-actions, .theme-browser .theme.focus .theme-actions, .theme-browser .theme:focus .theme-actions {
+    opacity: 0;
+}
 @keyframes astra-scale {
   0%   {transform: scale(1);}
   100% {transform: scale(1.03);}
