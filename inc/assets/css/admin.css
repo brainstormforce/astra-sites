@@ -1048,3 +1048,29 @@ a.astra-pages-back:before {
 		margin-bottom: 5px;
 	}
 }
+
+.theme-browser .theme .site-preview > .theme-screenshot.two:hover,
+.theme-browser .theme .site-preview > .theme-screenshot.three:hover {
+    background-position: center top;
+}
+
+.theme-browser .theme .theme-screenshot.two,
+.theme-browser .theme .theme-screenshot.three {
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0px;
+}
+
+.theme-browser .theme .theme-screenshot.two {
+    width: calc(100% - 10px);
+    opacity: .8;
+    left: 0px;
+    transform: translate(5px, -5px);
+}
+
+.theme-browser .theme .theme-screenshot.three {
+    width: calc(100% - 20px);
+    opacity: .4;
+    transform: translate(10px, -10px);
+}

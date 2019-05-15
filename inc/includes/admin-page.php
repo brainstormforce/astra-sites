@@ -514,7 +514,9 @@ $import_text = ( 'site-pages' === $global_cpt_meta['cpt_slug'] ) ? __( 'Import P
 
 				<div class="inner">
 					<span class="site-preview" data-href="{{ data.items[ key ]['astra-site-url'] }}?TB_iframe=true&width=600&height=550" data-title="{{ data.items[ key ].title.rendered }}">
-						<div class="theme-screenshot" style="background-image: url('{{ data.items[ key ]['featured-image-url'] }}');"></div>
+						<div class="theme-screenshot three" style="background-image: url('{{ data.items[ key ]['featured-image-url'] }}');"></div>
+						<div class="theme-screenshot two" style="background-image: url('{{ data.items[ key ]['featured-image-url'] }}');"></div>
+						<div class="theme-screenshot one" style="background-image: url('{{ data.items[ key ]['featured-image-url'] }}');"></div>
 					</span>
 					<# if ( data.items[ key ]['astra-site-type'] ) { #>
 						<# var type = ( data.items[ key ]['astra-site-type'] !== 'premium' ) ? ( data.items[ key ]['astra-site-type'] ) : 'agency'; #>
