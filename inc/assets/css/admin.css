@@ -653,11 +653,11 @@ a.astra-pages-back:before {
 
 .astra-sites-nav-items a {
     background: #f1f1f1;
-    color: #000;
-    font-weight: normal;
-    font-size: 1rem;
+    color: #4e555d;
+    font-size: 14px;
     text-decoration: none;
     padding: 25px 25px 25px 45px;
+    font-weight: 500;
 }
 
 .astra-sites-nav-items a:before {
