@@ -11,9 +11,6 @@
 #astra-sites-admin.wrap .site-type.premium {
 	background: #6645E4;
 }
-#astra-sites-admin .title-count, .filter-count .count {
-	border-radius: 0;
-}
 #astra-sites-admin .filter-links .current {
 	border-bottom: 2px solid #000;
     color: #000;	
@@ -861,13 +858,6 @@ a.astra-pages-back:before {
 	font-size: 15px;
 	vertical-align: middle;
 	height: auto;
-}
-
-.astra-sites-menu-page-wrapper .title-count,
-.astra-sites-menu-page-wrapper .filter-count .count {
-	display: flex;
-	justify-content: center;
-	align-items: center;
 }
 
 #astra-sites-welcome-form-inline {
