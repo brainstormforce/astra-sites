@@ -1081,3 +1081,8 @@ a.astra-pages-back:before {
     margin: 0 3% 3.6% 0;
     border: none;
 }
+
+.theme-browser .theme .inner {
+    border-radius: 4px;
+    overflow: hidden;
+}
