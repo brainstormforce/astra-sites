@@ -326,21 +326,31 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 				$page_title = apply_filters( 'astra_sites_page_title', __( 'Astra Starter Sites', 'astra-sites' ) );
 				?>
 				<div class="nav-tab-wrapper">
-					<div class="astra-sites-logo-wrap"><a href="" target="_blank" rel="noopener"><img src="<?php echo esc_url( ASTRA_SITES_URI . 'inc/assets/images/logo.svg' ); ?>" alt="<?php echo $page_title; ?>"></a></div>
-					<h1 class='astra-sites-title'> <?php echo esc_html( $page_title ); ?> </h1>
-					<form id="astra-sites-welcome-form-inline" enctype="multipart/form-data" method="post">
-						<div class="fields">
-							<select name="page_builder" required="required">
-								<option value="gutenberg" <?php selected( $default_page_builder, 'gutenberg' ); ?>><?php _e( 'Block Editor (Gutenberg)', 'astra-sites' ); ?></option>
-								<option value="elementor" <?php selected( $default_page_builder, 'elementor' ); ?>><?php _e( 'Elementor', 'astra-sites' ); ?></option>
-								<option value="beaver-builder" <?php selected( $default_page_builder, 'beaver-builder' ); ?>><?php _e( 'Beaver Builder', 'astra-sites' ); ?></option>
-								<option value="brizy" <?php selected( $default_page_builder, 'brizy' ); ?>><?php _e( 'Brizy', 'astra-sites' ); ?></option>
-							</select>
-						</div>
-						<input type="hidden" name="message" value="saved" />
-						<input type="hidden" name="redirect_page" value="<?php echo $current_slug; ?>">
-						<?php wp_nonce_field( 'astra-sites-welcome-screen', 'astra-sites-page-builder' ); ?>
-					</form>
+					<div class="logo">
+						<div class="astra-sites-logo-wrap"><a href="" target="_blank" rel="noopener"><img src="<?php echo esc_url( ASTRA_SITES_URI . 'inc/assets/images/logo.svg' ); ?>" alt="<?php echo $page_title; ?>"></a></div>
+						<h1 class='astra-sites-title'> <?php echo esc_html( $page_title ); ?> </h1>
+					</div>
+
+					<div class="menu">
+						<ul class="astra-sites-nav-items">
+							<li><a href="#"><?php _e( 'Site &amp; Pages', 'astra-sites'); ?></a></li>
+						</ul>
+					</div>
+					<div class="form">
+						<form id="astra-sites-welcome-form-inline" enctype="multipart/form-data" method="post">
+							<div class="fields">
+								<select name="page_builder" required="required">
+									<option value="gutenberg" <?php selected( $default_page_builder, 'gutenberg' ); ?>><?php _e( 'Block Editor (Gutenberg)', 'astra-sites' ); ?></option>
+									<option value="elementor" <?php selected( $default_page_builder, 'elementor' ); ?>><?php _e( 'Elementor', 'astra-sites' ); ?></option>
+									<option value="beaver-builder" <?php selected( $default_page_builder, 'beaver-builder' ); ?>><?php _e( 'Beaver Builder', 'astra-sites' ); ?></option>
+									<option value="brizy" <?php selected( $default_page_builder, 'brizy' ); ?>><?php _e( 'Brizy', 'astra-sites' ); ?></option>
+								</select>
+							</div>
+							<input type="hidden" name="message" value="saved" />
+							<input type="hidden" name="redirect_page" value="<?php echo $current_slug; ?>">
+							<?php wp_nonce_field( 'astra-sites-welcome-screen', 'astra-sites-page-builder' ); ?>
+						</form>
+					</div>
 					<?php
 					$view_actions = $this->get_view_actions();
 
