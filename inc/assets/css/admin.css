@@ -8,7 +8,6 @@
 	font-size: 11px;
     letter-spacing: .3px;
     padding: 0.5em .8em;
-    border-radius: 2px;
 }
 #astra-sites-admin.wrap .status,
 #astra-sites-admin.wrap .site-type.premium {
@@ -793,7 +792,6 @@ a.astra-pages-back:before {
     margin-top: -2px;
     z-index: 999999;
     position: relative;
-    border-radius: 3px;
     overflow: hidden;
 }
 
@@ -832,10 +830,10 @@ a.astra-pages-back:before {
 	background-size: cover;
 	background-repeat: no-repeat;
 }
-.theme-browser .theme .site-preview > .theme-screenshot:hover {
+/*.theme-browser .theme .site-preview > .theme-screenshot:hover {
 	background-position: center bottom;
 	background-size: cover;
-}
+}*/
 
 .astra-sites-tooltip-icon {
 	cursor: pointer;
@@ -1082,9 +1080,4 @@ a.astra-pages-back:before {
     box-shadow: 0 1px 7px 0 rgba(0, 0, 0, 0.08);
     margin: 0 3% 3.6% 0;
     border: none;
-}
-
-.theme-browser .inner {
-    border-radius: 2px;
-    overflow: hidden;
 }
