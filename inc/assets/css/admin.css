@@ -1134,9 +1134,32 @@ a.astra-pages-back:before {
 }
 
 .single-site-preview-wrap {
-    width: 50%;
+    width: 60%;
 }
 
 .single-site-pages-wrap {
-    width: 50%;
+    width: 40%;
+}
+
+/**
+ * 3 Grid for Pages
+ */
+@media only screen and (min-width: 1640px) {
+    .theme-browser #site-pages .theme {
+        width: 30.7%;
+        margin: 0 3% 3% 0;
+    }
+    .theme-browser #site-pages .theme:nth-child(4n) {
+        margin: 0 3.9% 3.6% 0;        
+    }
+}
+
+@media only screen and (min-width: 1640px) {
+    .theme-browser #site-pages .theme:nth-child(3n) {
+        margin-right: 0;
+    }
+}
+
+.theme-browser #site-pages .theme {
+    margin: 0 3.9% 3.6% 0;
 }
