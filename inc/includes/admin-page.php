@@ -66,13 +66,6 @@ $import_text = ( 'site-pages' === $global_cpt_meta['cpt_slug'] ) ? __( 'Import P
 	</div>
 
 	<div id="astra-pages-back-wrap">
-
-		<div class="wp-filter hide-if-no-js">
-			<div class="section-left">
-				<a class="astra-pages-back" href="javascript:void(0);"><?php _e( 'Go back to Sites', 'astra-sites' ); ?></a>
-			</div>
-		</div>
-
 	</div>
 
 	<?php do_action( 'astra_sites_before_site_grid' ); ?>
@@ -488,6 +481,41 @@ $import_text = ( 'site-pages' === $global_cpt_meta['cpt_slug'] ) ? __( 'Import P
 
 <?php
 /**
+ * TMPL - Single Site Preview
+ */
+?>
+<script type="text/template" id="tmpl-astra-sites-single-site-preview">
+	<div class="single-site-wrap">
+		<div class="single-site">
+			<div class="single-site-preview-wrap">
+				<div class="astra-pages-back-wrap">
+					<a class="astra-pages-back" href="javascript:void(0);"><?php _e( 'Back to Layouts', 'astra-sites' ); ?></a>
+				</div>
+				<div class="single-site-preview">
+					<img src="{{data['featured-image-url']}}" />
+				</div>
+			</div>
+			<div class="single-site-pages-wrap">
+				<div class="single-site-pages-header">
+					<h2 class="astra-site-title"></h2>
+					<span class="count" style="display: none"></span>
+				</div>
+				<div class="single-site-pages">
+					<div id="single-pages"></div>
+				</div>
+			</div>
+			<div class="single-site-footer">
+				<div class="site-action-buttons-wrap">
+					<div class="button button-hero site-preview-button">Preview This Site</div>
+					<div class="button button-hero button-primary site-import-button">Import This Layout</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+
+<?php
+/**
  * TMPL - List
  */
 ?>
@@ -514,9 +542,11 @@ $import_text = ( 'site-pages' === $global_cpt_meta['cpt_slug'] ) ? __( 'Import P
 
 				<div class="inner">
 					<span class="site-preview" data-href="{{ data.items[ key ]['astra-site-url'] }}?TB_iframe=true&width=600&height=550" data-title="{{ data.items[ key ].title.rendered }}">
-						<div class="theme-screenshot three" style="background-image: url('{{ data.items[ key ]['featured-image-url'] }}');"></div>
-						<div class="theme-screenshot two" style="background-image: url('{{ data.items[ key ]['featured-image-url'] }}');"></div>
-						<div class="theme-screenshot one" style="background-image: url('{{ data.items[ key ]['featured-image-url'] }}');"></div>
+						<# if ( data.type != 'site-pages' ) { #>
+							<div class="theme-screenshot three" data-src="{{data.items[ key ]['featured-image-url']}}" style="background-image: url('{{ data.items[ key ]['featured-image-url'] }}');"></div>
+							<div class="theme-screenshot two" data-src="{{data.items[ key ]['featured-image-url']}}" style="background-image: url('{{ data.items[ key ]['featured-image-url'] }}');"></div>
+						<# } #>
+						<div class="theme-screenshot one" data-src="{{data.items[ key ]['featured-image-url']}}" style="background-image: url('{{ data.items[ key ]['featured-image-url'] }}');"></div>
 					</span>
 					<# if ( data.items[ key ]['astra-site-type'] ) { #>
 						<# var type = ( data.items[ key ]['astra-site-type'] !== 'premium' ) ? ( data.items[ key ]['astra-site-type'] ) : 'agency'; #>
@@ -543,14 +573,14 @@ $import_text = ( 'site-pages' === $global_cpt_meta['cpt_slug'] ) ? __( 'Import P
 						<div class="favorite-action-wrap {{fav_class}}" data-favorite={{fav_flag}}>
 							<span><i class="dashicons-heart dashicons"></i></span>
 						</div>
-						<div class="theme-actions">
+						<!-- <div class="theme-actions">
 							<div class="theme-action-wrap">
 								<# if ( data.type != 'site-pages' ) { #>
 								<button class="button install-page-preview"><?php esc_html_e( 'Import Pages', 'astra-sites' ); ?></button>
 								<# } #>
 								<button class="button-primary button preview install-theme-preview"><?php esc_html_e( 'Import Site', 'astra-sites' ); ?></button>
 							</div>
-						</div>
+						</div> -->
 					</div>
 				</div>
 			</div>
