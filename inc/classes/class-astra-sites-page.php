@@ -333,7 +333,7 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 						<h1 class='astra-sites-title'> <?php echo esc_html( $page_title ); ?> </h1>
 					</div>
 
-					<div class="menu">
+					<div class="menu" style="display:none;">
 						<ul class="astra-sites-nav-items">
 							<li><a href="#"><?php _e( 'Site &amp; Pages', 'astra-sites'); ?></a></li>
 						</ul>
