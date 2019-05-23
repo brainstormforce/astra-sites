@@ -124,10 +124,10 @@ if ( ! class_exists( 'Astra_Sites_Tracker' ) ) :
 		public function admin_enqueue( $hook = '' ) {
 
 			$params = self::get_tracking_data();
-			echo '<xmp>';
-			print_r( $params );
-			echo '</xmp>';
-			wp_die();
+			// echo '<xmp>';
+			// print_r( $params );
+			// echo '</xmp>';
+			// wp_die();
 			wp_localize_script( 'jquery', 'trackingData', $params );
 
 		}
