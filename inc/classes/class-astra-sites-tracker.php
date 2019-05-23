@@ -109,7 +109,7 @@ if ( ! class_exists( 'Astra_Sites_Tracker' ) ) :
 		 */
 		public static function set_api_url() {
 
-			self::$api_url = apply_filters( 'astra_sites_api_url', 'http://nik-websitedemos.sharkz.in/wp-json/wp/v2/' );
+			self::$api_url = apply_filters( 'astra_sites_tracking_api_url', 'http://localhost/projects/analytics-server/wp-json/analytics/v2/' );
 
 		}
 
