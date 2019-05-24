@@ -22,16 +22,23 @@
 
 		_track: function( data, type ) {
 
-			console.log(trackingData.url);
-			console.log( data );
+			console.log( trackingData.url );
+			console.log( AstraSitesAdmin );
+			console.log( AstraSitesAdmin['templateData'] );
+
+			let post_data = {
+				type: type,
+				url: AstraSitesAdmin.templateData.astra_demo_url,
+				id: AstraSitesAdmin.templateData.id,
+				params: data
+			}
+
+			console.log( post_data );
 
 			$.ajax({
 				url  : trackingData.url,
 				type : 'POST',
-				data : {
-					type: type,
-					params: data
-				}
+				data : post_data
 			})
 			.fail(function( jqXHR ){
 				//console.log( jqXHR );

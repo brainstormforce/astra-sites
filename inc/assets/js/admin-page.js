@@ -1332,6 +1332,8 @@ var AstraSitesAjaxQueue = (function() {
 				var output = '<div class="current-importing-status-title"></div><div class="current-importing-status-description"></div>';
 				$('.current-importing-status').html( output );
 
+				$(document).trigger( 'astra-sites-tracking-import' );
+
 				/**
 				 * Process Bulk Plugin Install & Activate
 				 */
@@ -1422,8 +1424,6 @@ var AstraSitesAjaxQueue = (function() {
 					AstraSitesAdmin._importSite( apiURL );
 				}
 			}
-
-			$(document).trigger( 'astra-sites-tracking-import' );
 		},
 
 		/**
@@ -1595,9 +1595,9 @@ var AstraSitesAjaxQueue = (function() {
 
 			$('html').addClass('astra-site-preview-on');
 
-			$(document).trigger( 'astra-sites-tracking-preview' );
-
 			AstraSitesAdmin._renderDemoPreview( previewDemo );
+			
+			$(document).trigger( 'astra-sites-tracking-preview' );
 		},
 
 		_get_site_details: function( site_id ) {
