@@ -4,7 +4,6 @@
 
 		init: function()
 		{
-			console.log(trackingData);
 			$( document ).on( 'astra-sites-tracking-preview', AstraSitesTracking._trackPreview );
 
 			$( document ).on( 'astra-sites-tracking-import', AstraSitesTracking._trackImport );
@@ -22,18 +21,12 @@
 
 		_track: function( data, type ) {
 
-			console.log( trackingData.url );
-			console.log( AstraSitesAdmin );
-			console.log( AstraSitesAdmin['templateData'] );
-
 			let post_data = {
 				type: type,
 				url: AstraSitesAdmin.templateData.astra_demo_url,
 				id: AstraSitesAdmin.templateData.id,
 				params: data
 			}
-
-			console.log( post_data );
 
 			$.ajax({
 				url  : trackingData.url,
