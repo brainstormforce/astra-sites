@@ -109,8 +109,17 @@ if ( ! class_exists( 'Astra_Sites_Tracker' ) ) :
 		 */
 		public static function set_api_url() {
 
-			self::$api_url = apply_filters( 'astra_sites_tracking_api_url', 'http://localhost/projects/analytics-server/wp-json/analytics/v2/' );
+			self::$api_url = apply_filters( 'astra_sites_tracking_api_url', 'http://localhost/projects/analytics-server/wp-json/analytics/v2/track' );
 
+		}
+
+		/**
+		 * Getter for $api_url
+		 *
+		 * @since  x.x.x
+		 */
+		public static function get_api_url() {
+			return self::$api_url;
 		}
 
 		/**
@@ -124,11 +133,14 @@ if ( ! class_exists( 'Astra_Sites_Tracker' ) ) :
 		public function admin_enqueue( $hook = '' ) {
 
 			$params = self::get_tracking_data();
-			// echo '<xmp>';
-			// print_r( $params );
-			// echo '</xmp>';
-			// wp_die();
-			wp_localize_script( 'jquery', 'trackingData', $params );
+
+			$tracking_data = array(
+				'params' => $params,
+				'url'    => self::get_api_url(),
+			);
+
+			wp_enqueue_script( 'astra-sites-tracking', ASTRA_SITES_URI . 'inc/assets/js/tracking.js', array( 'jquery' ), ASTRA_SITES_VER, 'all' );
+			wp_localize_script( 'astra-sites-tracking', 'trackingData', $tracking_data );
 
 		}
 
@@ -248,6 +260,7 @@ if ( ! class_exists( 'Astra_Sites_Tracker' ) ) :
 		 * @return array
 		 */
 		private static function get_all_plugins() {
+
 			// Ensure get_plugins function is loaded.
 			if ( ! function_exists( 'get_plugins' ) ) {
 				include ABSPATH . '/wp-admin/includes/plugin.php';

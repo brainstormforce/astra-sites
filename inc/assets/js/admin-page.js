@@ -1594,6 +1594,8 @@ var AstraSitesAjaxQueue = (function() {
 
 			$('html').addClass('astra-site-preview-on');
 
+			$(document).trigger( 'astra-sites-tracking-preview' );
+
 			AstraSitesAdmin._renderDemoPreview( previewDemo );
 		},
 
