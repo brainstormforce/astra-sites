@@ -1423,6 +1423,7 @@ var AstraSitesAjaxQueue = (function() {
 				}
 			}
 
+			$(document).trigger( 'astra-sites-tracking-import' );
 		},
 
 		/**

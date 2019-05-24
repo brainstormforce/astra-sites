@@ -4,16 +4,15 @@
 
 		init: function()
 		{
-			//$( document ).on('click', '.theme-browser .theme-screenshot, .theme-browser .more-details, .theme-browser .install-theme-preview', AstraSitesTracking._preview);
 			console.log(trackingData);
-			
-			$( document ).on('click', '.astra-demo-import', AstraSitesTracking._importDemo);
-
-			$( document ).on('click', '.install-now', AstraSitesTracking._installNow);
-			
-			$( document ).on('site-pages-import-wpforms-done', AstraSitesTracking._importPage );
-
 			$( document ).on( 'astra-sites-tracking-preview', AstraSitesTracking._trackPreview );
+
+			$( document ).on( 'astra-sites-tracking-import', AstraSitesTracking._trackImport );
+		},
+
+		_trackImport: function() {
+			let params = trackingData.params
+			AstraSitesTracking._track( params, 'import' );
 		},
 
 		_trackPreview: function() {
