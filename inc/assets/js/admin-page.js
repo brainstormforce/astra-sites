@@ -221,11 +221,12 @@ var AstraSitesAjaxQueue = (function() {
 
 			$( document ).on('click'                     , '.astra-import-settings', AstraSitesAdmin._import_settings);
 			$( document ).on('click'					 , '.devices button', AstraSitesAdmin._previewDevice);
-			$( document ).on('click'                     , '.theme-browser .more-details, .theme-browser .install-theme-preview', AstraSitesAdmin._preview);
+			$( document ).on('click'                     , '#astra-sites .site-single > .inner > .site-preview, .theme-browser .more-details, .theme-browser .install-theme-preview', AstraSitesAdmin._preview);
 			$( document ).on('click'                     , '.next-theme', AstraSitesAdmin._nextTheme);
 			$( document ).on('click'                     , '.previous-theme', AstraSitesAdmin._previousTheme);
 			$( document ).on('click'                     , '.collapse-sidebar', AstraSitesAdmin._collapse);
-			$( document ).on('click'                     , '.astra-demo-import', AstraSitesAdmin._importDemo);
+			$( document ).on('click'                     , '.site-import-site-button', AstraSitesAdmin._newImportDemo);
+			// $( document ).on('click'                     , '.astra-demo-import', AstraSitesAdmin._importDemo);
 
 			$( document ).on('astra-sites-install-and-activate-required-plugins-done'       , AstraSitesAdmin._process_import );
 
@@ -1314,10 +1315,37 @@ var AstraSitesAjaxQueue = (function() {
 		 * @access private
 		 * @method _importDemo
 		 */
-		_importDemo: function(event) {
+		_newImportDemo: function(event) {
 			event.preventDefault();
 
-			var date = new Date();
+			AstraSitesAdmin.import_start_time = new Date();
+
+			if( $( this ).hasClass('updating-message') ) {
+				return;
+			}
+
+			$(this).addClass('updating-message installing')
+				.text( wp.updates.l10n.installing );
+
+			$('.astra-sites-result-preview').show();
+			var output = '<div class="current-importing-status-title"></div><div class="current-importing-status-description"></div>';
+			$('.current-importing-status').html( output );
+
+			/**
+			 * Process Bulk Plugin Install & Activate
+			 */
+			AstraSitesAdmin._bulkPluginInstallActivate();
+		},
+
+		/**
+		 * Fires when a nav item is clicked.
+		 *
+		 * @since 1.0
+		 * @access private
+		 * @method _importDemo
+		 */
+		_importDemo: function(event) {
+			event.preventDefault();
 
 			AstraSitesAdmin.import_start_time = new Date();
 
@@ -1590,9 +1618,9 @@ var AstraSitesAjaxQueue = (function() {
 			}
 
 			var previewDemo = $(this).parents('.theme');
-			previewDemo.addClass('theme-preview-on');
+			// previewDemo.addClass('theme-preview-on');
 
-			$('html').addClass('astra-site-preview-on');
+			// $('html').addClass('astra-site-preview-on');
 
 			AstraSitesAdmin._renderDemoPreview( previewDemo );
 		},
@@ -1692,10 +1720,10 @@ var AstraSitesAjaxQueue = (function() {
 			AstraSitesAdmin.templateData = templateData[0];
 
 			// delete any earlier fullscreen preview before we render new one.
-			$('.theme-install-overlay').remove();
+			// $('.theme-install-overlay').remove();
 
-			$('#astra-sites-menu-page').append(template(templateData[0]));
-			$('.theme-install-overlay').css('display', 'block');
+			// $('#astra-sites-menu-page').append(template(templateData[0]));
+			// $('.theme-install-overlay').css('display', 'block');
 
 			AstraSitesAdmin._checkNextPrevButtons();
 

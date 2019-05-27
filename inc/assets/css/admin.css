@@ -957,10 +957,35 @@ a.astra-pages-back:before {
     margin-top: 1em;
 }
 
+.astra-sites-result-preview .overlay {
+    background: rgba(0, 0, 0, 0.7);
+    filter: alpha(opacity=70);
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 100050;
+}
 .astra-sites-result-preview .inner {
 	margin: 0 auto;
 	max-width: 700px;
-	padding: 5em 0;
+	padding: 2em 4em;
+	-webkit-transform: translate(-50%, -50%);
+    -ms-transform: translate(-50%, -50%);
+    transform: translate(-50%, -50%);
+    background: #fff;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
+    position: fixed;
+    background-color: #fff;
+    z-index: 100059;
+    text-align: left;
+    top: 50%;
+    left: 50%;
+    -webkit-box-shadow: 0 3px 6px rgba( 0, 0, 0, 0.3 );
+    box-shadow: 0 3px 6px rgba( 0, 0, 0, 0.3 );
 }
 
 .astra-sites-result-preview h2 {

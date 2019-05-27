@@ -289,6 +289,7 @@ $import_text = ( 'site-pages' === $global_cpt_meta['cpt_slug'] ) ? __( 'Import P
 		<div class="wp-full-overlay-main">
 			<iframe src="{{{data.astra_demo_url}}}" title="<?php esc_attr_e( 'Preview', 'astra-sites' ); ?>"></iframe>
 			<div class="astra-sites-result-preview" style="display: none;">
+				<div class="overlay"></div>
 				<div class="inner">
 					<h2><?php _e( 'We\'re importing your website.', 'astra-sites' ); ?></h2>
 					<p><?php _e( 'The process can take anywhere between 2 to 10 minutes depending on the size of the website and speed of connection.', 'astra-sites' ); ?></p>
@@ -511,6 +512,20 @@ $import_text = ( 'site-pages' === $global_cpt_meta['cpt_slug'] ) ? __( 'Import P
 						<div class="button button-hero button-primary site-import-site-button">Import Complete Site</div>
 					</div>
 					<div class="button button-hero button-primary site-import-layout-button disabled">Import Layout</div>
+				</div>
+			</div>
+		</div>
+		<div class="astra-sites-result-preview" style="display: none;">
+			<div class="overlay"></div>
+			<div class="inner">
+				<h2><?php _e( 'We\'re importing your website.', 'astra-sites' ); ?></h2>
+				<p><?php _e( 'The process can take anywhere between 2 to 10 minutes depending on the size of the website and speed of connection.', 'astra-sites' ); ?></p>
+				<p><?php _e( 'Please do not close this browser window until the site is imported completely.', 'astra-sites' ); ?></p>
+				<div class="current-importing-status-wrap">
+					<div class="current-importing-status">
+						<div class="current-importing-status-title"></div>
+						<div class="current-importing-status-description"></div>
+					</div>
 				</div>
 			</div>
 		</div>
