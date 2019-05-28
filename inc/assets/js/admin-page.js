@@ -225,7 +225,9 @@ var AstraSitesAjaxQueue = (function() {
 			$( document ).on('click'                     , '.next-theme', AstraSitesAdmin._nextTheme);
 			$( document ).on('click'                     , '.previous-theme', AstraSitesAdmin._previousTheme);
 			$( document ).on('click'                     , '.collapse-sidebar', AstraSitesAdmin._collapse);
-			$( document ).on('click'                     , '.site-import-site-button', AstraSitesAdmin._newImportDemo);
+			$( document ).on('click'                     , '.site-import-site-button', AstraSitesAdmin._importDemo);
+			$( document ).on('click'                     , '.site-install-site-button', AstraSitesAdmin._installDemo);
+			$( document ).on( 'click', '.site-import-cancel', AstraSitesAdmin._cancel );
 			// $( document ).on('click'                     , '.astra-demo-import', AstraSitesAdmin._importDemo);
 
 			$( document ).on('astra-sites-install-and-activate-required-plugins-done'       , AstraSitesAdmin._process_import );
@@ -1315,7 +1317,17 @@ var AstraSitesAjaxQueue = (function() {
 		 * @access private
 		 * @method _importDemo
 		 */
-		_newImportDemo: function(event) {
+		_importDemo: function(event) {
+			event.preventDefault();
+
+			if( $( this ).hasClass('updating-message') ) {
+				return;
+			}
+
+			$('.astra-sites-result-preview').show();
+		},
+
+		_installDemo: function(event) {
 			event.preventDefault();
 
 			AstraSitesAdmin.import_start_time = new Date();
@@ -1324,10 +1336,10 @@ var AstraSitesAjaxQueue = (function() {
 				return;
 			}
 
-			$(this).addClass('updating-message installing')
-				.text( wp.updates.l10n.installing );
+			$(this).addClass('updating-message installing').text( wp.updates.l10n.installing );
 
-			$('.astra-sites-result-preview').show();
+			$('.install-theme-info').hide();
+			$('.ast-importing-wrap').show();
 			var output = '<div class="current-importing-status-title"></div><div class="current-importing-status-description"></div>';
 			$('.current-importing-status').html( output );
 
@@ -1338,13 +1350,24 @@ var AstraSitesAjaxQueue = (function() {
 		},
 
 		/**
-		 * Fires when a nav item is clicked.
+		 * Cancel
 		 *
 		 * @since 1.0
 		 * @access private
 		 * @method _importDemo
 		 */
-		_importDemo: function(event) {
+		_cancel: function(event) {
+			$('.astra-sites-result-preview').hide();
+		},
+
+		/**
+		 * Fires when a nav item is clicked.
+		 *
+		 * @since 1.0
+		 * @access private
+		 * @method _importDemo_old
+		 */
+		_importDemo_old: function(event) {
 			event.preventDefault();
 
 			AstraSitesAdmin.import_start_time = new Date();

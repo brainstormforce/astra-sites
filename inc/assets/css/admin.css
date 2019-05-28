@@ -127,6 +127,10 @@
 	display: none;
 }
 
+.install-theme-info {
+	display: block;
+}
+
 .install-theme-info .site-type {
 	display: none;
 }
@@ -722,10 +726,14 @@ a.astra-pages-back:before {
 	padding: 10em 0;
 	text-align: center;
 }
+.ast-importing-wrap {
+	display: none;
+}
 .astra-sites-welcome .inner {
 	margin: 0 auto;
 	display: inline-block;
 	max-width: 700px;
+	width: 700px;
 	background: #fff;
 	padding: 3em;
 }
@@ -993,7 +1001,7 @@ a.astra-pages-back:before {
 }
 
 .astra-sites-result-preview p {
-	font-size: 1rem;
+	font-size: 0.8rem;
 }
 
 .current-importing-status {
