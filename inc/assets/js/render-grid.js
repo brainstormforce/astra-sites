@@ -50,7 +50,7 @@
 			$( document ).on('click'                           , '.filter-links a', AstraRender._filterClick );
 			$( document ).on('click'                     , '#astra-sites .theme-screenshot', AstraRender._previewPages);
 			$( document ).on('click'                     , '#single-pages .site-single', AstraRender._change_site_preview_screenshot);
-			$( document ).on( 'click', '.site-import-layout-button', AstraRender.vrunda );
+			// $( document ).on( 'click', '.site-import-layout-button', AstraRender.vrunda );
 			$( document ).on('click'                     , '.favorite-action-wrap', AstraRender._favoriteAction);
 			$( document ).on('keyup input'                     , '#wp-filter-search-input', AstraRender._search );
 			$( document ).on('scroll'                          , AstraRender._scroll );

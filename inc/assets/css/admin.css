@@ -737,7 +737,7 @@ a.astra-pages-back:before {
 .astra-sites-welcome .inner {
 	margin: 0 auto;
 	display: inline-block;
-	max-width: 700px;
+	width: 700px;
 	width: 700px;
 	background: #fff;
 	padding: 3em;
@@ -950,6 +950,12 @@ a.astra-pages-back:before {
 
 .current-importing-status-wrap {
 	font-size: 1rem;
+	margin-bottom: 4em;
+}
+
+.astra-demo-import.button.updating-message:before,
+.astra-demo-import.button.installing:before {
+    vertical-align: text-bottom;
 }
 
 .current-importing-status-wrap hr {
@@ -982,7 +988,7 @@ a.astra-pages-back:before {
 }
 .astra-sites-result-preview .inner {
 	margin: 0 auto;
-	max-width: 700px;
+	width: 700px;
 	padding: 2em 4em;
 	-webkit-transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
@@ -1013,7 +1019,6 @@ a.astra-pages-back:before {
 	font-size: 1rem;
 	background: #eeeeee;
 	padding: 1em 1.5em;
-	margin-bottom: 4em;
 }
 
 .current-importing-status-title {
