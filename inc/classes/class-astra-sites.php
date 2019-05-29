@@ -133,6 +133,9 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 
 			$data = isset( $_POST['data'] ) ? $_POST['data'] : array();
 
+			// vl( $data );
+			// wp_die();
+
 			if ( empty( $data ) ) {
 				wp_send_json_error( 'Empty page data.' );
 			}

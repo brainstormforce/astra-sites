@@ -111,11 +111,12 @@
 			event.preventDefault();
 
 			var url = $(this).find( '.theme-screenshot' ).attr( 'data-src' ) || '';
+			var demo_id = $(this).attr( 'data-demo-id' ) || '';
 
 			$( this ).siblings().removeClass( 'current_page' );
 			$( this ).addClass( 'current_page' );
 
-			$( '.site-import-layout-button' ).removeClass( 'disabled' );
+			$( '.site-import-layout-button' ).removeClass( 'disabled' ).attr('data-demo-id', demo_id);
 
 			if( url ) {
 				$('.single-site-preview img').attr( 'src', url );

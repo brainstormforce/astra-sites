@@ -515,86 +515,9 @@ $import_text = ( 'site-pages' === $global_cpt_meta['cpt_slug'] ) ? __( 'Import P
 				</div>
 			</div>
 		</div>
-		<div class="astra-sites-result-preview" style="display: none;">
-			<div class="overlay"></div>
-			<div class="inner">
-				<h2><?php _e( 'Here are few Pre Requisite.', 'astra-sites' ); ?></h2>
-				<div class="wp-full-overlay-sidebar-content">
-					<div class="install-theme-info">
-						<# console.log( data ); #>
-						<span class="site-type {{{data['astra-site-type']}}}">{{{data['astra-site-type']}}}</span>
-						<h3 class="theme-name">{{{data.demo_name}}}</h3>
-						<div class="theme-details">
-							{{{data.content.rendered}}}
-						</div>
-						<a href="#" class="theme-details-read-more"><?php _e( 'Read more', 'astra-sites' ); ?> &hellip;</a>
-						<div class="astra-sites-advanced-options-wrap">
-							<div class="astra-sites-advanced-options">
-								<ul class="astra-site-contents">
-									<li class="astra-sites-import-plugins">
-										<input type="checkbox" name="plugins" checked="checked" class="disabled checkbox" readonly>
-										<strong><?php _e( 'Install Required Plugins', 'astra-sites' ); ?></strong>
-										<span class="astra-sites-tooltip-icon" data-tip-id="astra-sites-tooltip-plugins-settings"><span class="dashicons dashicons-editor-help"></span></span>
-										<div class="astra-sites-tooltip-message" id="astra-sites-tooltip-plugins-settings" style="display: none;">
-											<ul class="required-plugins-list"><span class="spinner is-active"></span></ul>
-										</div>
-									</li>
-									<li class="astra-sites-import-customizer">
-										<label>
-											<input type="checkbox" name="customizer" checked="checked" class="checkbox">
-											<strong>Import Customizer Settings</strong>
-											<span class="astra-sites-tooltip-icon" data-tip-id="astra-sites-tooltip-customizer-settings"><span class="dashicons dashicons-editor-help"></span></span>
-											<div class="astra-sites-tooltip-message" id="astra-sites-tooltip-customizer-settings" style="display: none;">
-												<p><?php _e( 'Customizer is what gives a design to the website; and selecting this option replaces your current design with a new one.', 'astra-sites' ); ?></p>
-												<p><?php _e( 'Backup of current customizer settings will be stored in "wp-content/astra-sites" directory, just in case if you want to restore it later.', 'astra-sites' ); ?></p>
-											</div>
-										</label>
-									</li>
-									<li class="astra-sites-import-xml">
-										<label>
-											<input type="checkbox" name="xml" checked="checked" class="checkbox">
-											<strong>Import Content</strong>
-										</label>
-										<span class="astra-sites-tooltip-icon" data-tip-id="astra-sites-tooltip-site-content"><span class="dashicons dashicons-editor-help"></span></span>
-										<div class="astra-sites-tooltip-message" id="astra-sites-tooltip-site-content" style="display: none;"><p><?php _e( 'Selecting this option will import dummy pages, posts, images and menus. If you do not want to import dummy content, please uncheck this option.', 'astra-sites' ); ?></p></div>
-									</li>
-									<li class="astra-sites-import-widgets">
-										<label>
-											<input type="checkbox" name="widgets" checked="checked" class="checkbox">
-											<strong>Import Widgets</strong>
-										</label>
-									</li>
-								</ul>
-							</div>
-							<ul>
-								<li class="astra-sites-reset-data">
-									<label>
-										<input type="checkbox" name="reset" class="checkbox">
-										<strong>Delete Previously Imported Site</strong>
-										<div class="astra-sites-tooltip-message" id="astra-sites-tooltip-reset-data" style="display: none;"><p><?php _e( 'WARNING: Selecting this option will delete data from your current website. Choose this option only if this is intended.', 'astra-sites' ); ?></p></div>
-									</label>
-								</li>
-							</ul>
-						</div>
-					</div>
-					<div class="ast-importing-wrap">
-						<h2><?php _e( 'We\'re importing your website.', 'astra-sites' ); ?></h2>
-						<p><?php _e( 'The process can take anywhere between 2 to 10 minutes depending on the size of the website and speed of connection.', 'astra-sites' ); ?></p>
-						<p><?php _e( 'Please do not close this browser window until the site is imported completely.', 'astra-sites' ); ?></p>
-						<div class="current-importing-status-wrap">
-							<div class="current-importing-status">
-								<div class="current-importing-status-title"></div>
-								<div class="current-importing-status-description"></div>
-							</div>
-						</div>
-					</div>
-					<div class="ast-actioms-wrap">
-						<div class="button button-hero site-import-cancel" style="margin-right: 20px;"><?php _e( 'Cancel', 'astra-sites' ); ?></div>
-						<a href="#" class="button button-hero button-primary astra-demo-import site-install-site-button"><?php _e( 'Install', 'astra-sites' ); ?></a>
-					</div>
-				</div>
-			</div>
-		</div>
+
+		<div class="astra-sites-result-preview" style="display: none;"></div>
+
 		<div class="astra-sites-result-preview-next-step" style="display: none;">
 			<div class="overlay"></div>
 			<div class="inner">
@@ -608,6 +531,90 @@ $import_text = ( 'site-pages' === $global_cpt_meta['cpt_slug'] ) ? __( 'Import P
 					</div>
 				</div>
 			</div>
+		</div>
+	</div>
+</script>
+
+<?php
+/**
+ * TMPL - First Screen
+ */
+?>
+<script type="text/template" id="tmpl-astra-sites-result-preview">
+
+	<# console.log( data ); #>
+	<div class="overlay"></div>
+	<div class="inner">
+		<h2><?php _e( 'Here are few Pre Requisite.', 'astra-sites' ); ?></h2>
+
+		<div class="install-theme-info">
+			<div class="astra-sites-advanced-options-wrap">
+				<div class="astra-sites-advanced-options">
+					<ul class="astra-site-contents">
+						<li class="astra-sites-import-plugins">
+							<input type="checkbox" name="plugins" checked="checked" class="disabled checkbox" readonly>
+							<strong><?php _e( 'Install Required Plugins', 'astra-sites' ); ?></strong>
+							<span class="astra-sites-tooltip-icon" data-tip-id="astra-sites-tooltip-plugins-settings"><span class="dashicons dashicons-editor-help"></span></span>
+							<div class="astra-sites-tooltip-message" id="astra-sites-tooltip-plugins-settings" style="display: none;">
+								<ul class="required-plugins-list"><span class="spinner is-active"></span></ul>
+							</div>
+						</li>
+						<# if( 'astra-sites' === data ) { #>
+							<li class="astra-sites-import-customizer">
+								<label>
+									<input type="checkbox" name="customizer" checked="checked" class="checkbox">
+									<strong>Import Customizer Settings</strong>
+									<span class="astra-sites-tooltip-icon" data-tip-id="astra-sites-tooltip-customizer-settings"><span class="dashicons dashicons-editor-help"></span></span>
+									<div class="astra-sites-tooltip-message" id="astra-sites-tooltip-customizer-settings" style="display: none;">
+										<p><?php _e( 'Customizer is what gives a design to the website; and selecting this option replaces your current design with a new one.', 'astra-sites' ); ?></p>
+										<p><?php _e( 'Backup of current customizer settings will be stored in "wp-content/astra-sites" directory, just in case if you want to restore it later.', 'astra-sites' ); ?></p>
+									</div>
+								</label>
+							</li>
+							<li class="astra-sites-import-xml">
+								<label>
+									<input type="checkbox" name="xml" checked="checked" class="checkbox">
+									<strong>Import Content</strong>
+								</label>
+								<span class="astra-sites-tooltip-icon" data-tip-id="astra-sites-tooltip-site-content"><span class="dashicons dashicons-editor-help"></span></span>
+								<div class="astra-sites-tooltip-message" id="astra-sites-tooltip-site-content" style="display: none;"><p><?php _e( 'Selecting this option will import dummy pages, posts, images and menus. If you do not want to import dummy content, please uncheck this option.', 'astra-sites' ); ?></p></div>
+							</li>
+							<li class="astra-sites-import-widgets">
+								<label>
+									<input type="checkbox" name="widgets" checked="checked" class="checkbox">
+									<strong>Import Widgets</strong>
+								</label>
+							</li>
+						<# } #>
+					</ul>
+				</div>
+				<# if( 'astra-sites' === data ) { #>
+					<ul>
+						<li class="astra-sites-reset-data">
+							<label>
+								<input type="checkbox" name="reset" class="checkbox">
+								<strong>Delete Previously Imported Site</strong>
+								<div class="astra-sites-tooltip-message" id="astra-sites-tooltip-reset-data" style="display: none;"><p><?php _e( 'WARNING: Selecting this option will delete data from your current website. Choose this option only if this is intended.', 'astra-sites' ); ?></p></div>
+							</label>
+						</li>
+					</ul>
+				<# } #>
+			</div>
+		</div>
+		<div class="ast-importing-wrap">
+			<h2><?php _e( 'We\'re importing your website.', 'astra-sites' ); ?></h2>
+			<p><?php _e( 'The process can take anywhere between 2 to 10 minutes depending on the size of the website and speed of connection.', 'astra-sites' ); ?></p>
+			<p><?php _e( 'Please do not close this browser window until the site is imported completely.', 'astra-sites' ); ?></p>
+			<div class="current-importing-status-wrap">
+				<div class="current-importing-status">
+					<div class="current-importing-status-title"></div>
+					<div class="current-importing-status-description"></div>
+				</div>
+			</div>
+		</div>
+		<div class="ast-actioms-wrap">
+			<div class="button button-hero site-import-cancel" style="margin-right: 20px;"><?php _e( 'Cancel', 'astra-sites' ); ?></div>
+			<a href="#" class="button button-hero button-primary astra-demo-import site-install-site-button"><?php _e( 'Install', 'astra-sites' ); ?></a>
 		</div>
 	</div>
 </script>

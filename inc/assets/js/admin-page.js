@@ -1335,8 +1335,13 @@ var AstraSitesAjaxQueue = (function() {
 			$('.astra-sites-result-preview')
 				.addClass('astra-sites-site-import-popup')
 				.show();
+
+			var template = wp.template( 'astra-sites-result-preview' );
+			$('.astra-sites-result-preview').html( template( 'astra-sites' ) );
+
 				// .attr('data-slug', 'astra-sites');
 			AstraSitesAdmin.action_slug = 'astra-sites';
+			astraSitesApi.cpt_slug = 'astra-sites';
 		},
 
 		/**
@@ -1356,9 +1361,46 @@ var AstraSitesAjaxQueue = (function() {
 			$('.astra-sites-result-preview')
 				.addClass('astra-sites-page-import-popup')
 				.show();
-				// .attr('data-slug', 'site-pages');
 
+			var template = wp.template( 'astra-sites-result-preview' );
+			$('.astra-sites-result-preview').html( template( 'site-pages' ) );
+
+				// .attr('data-slug', 'site-pages');
 			AstraSitesAdmin.action_slug = 'site-pages';
+			astraSitesApi.cpt_slug = 'site-pages';
+
+			var site_id = $( this ).attr('data-demo-id') || '';
+			console.log( site_id );
+			console.log( AstraSitesAPI._stored_data );
+
+
+			if( AstraSitesAPI._stored_data ) {
+				var site_data = AstraSitesAdmin._get_site_details( site_id );
+
+				if( site_data ) {
+					// Set current site details.
+					AstraSitesAdmin.current_site = site_data;
+				}
+			}
+
+			console.log( AstraSitesAdmin.current_site );
+
+			AstraSitesAdmin.templateData = {
+				id             	         : AstraSitesAdmin.current_site['id'] || '',
+				astra_demo_type          : AstraSitesAdmin.current_site['astra-site-type'] || '',
+				astra_demo_url           : AstraSitesAdmin.current_site['astra-page-url'] + '?preview_type=page' || '',
+				demo_api                 : AstraSitesAdmin.current_site['astra-page-api-url'] || '',
+				screenshot               : AstraSitesAdmin.current_site['featured-image-url'] || '',
+				demo_name                : AstraSitesAdmin.current_site.title.rendered || '',
+				slug                     : AstraSitesAdmin.current_site.slug || '',
+				content                  : AstraSitesAdmin.current_site.content.rendered || '',
+				required_plugins         : AstraSitesAdmin.current_site['site-pages-required-plugins'],
+				// astra_site_options       : '',
+				// astra_enabled_extensions : '',
+			};
+
+			console.log( AstraSitesAdmin.templateData );
+			// return;
 		},
 
 		// _installSite: function(event) {
@@ -1460,6 +1502,8 @@ var AstraSitesAjaxQueue = (function() {
 
 		_importPage: function( event ) {
 
+			console.log( AstraSitesAdmin.templateData );
+
 			if ( null == AstraSitesAdmin.templateData ) {
 				return;
 			}
@@ -1488,14 +1532,25 @@ var AstraSitesAjaxQueue = (function() {
 
 						$('body').removeClass('importing-site');
 
-						$('.astra-demo-import').removeClass('updating-message installing')
-							.removeAttr('data-import')
-							.addClass('view-site')
-							.removeClass('site-install-site-button astra-demo-import')
-							.text( 'Done! View Page' )
-							.attr('target', '_blank')
-							.append('<i class="dashicons dashicons-external"></i>')
-							.attr('href', data.data['link'] );
+						// $('.current-importing-status-wrap').remove();
+						var	output  = '<h2>Done 🎉</h2>';
+							output += '<p>Your page imported successfully! Now go ahead, customize the text, images, and design to make it yours!</p>';
+							output += '<p>You can now start making changes according to your requirements.</p>';
+							output += '<p><a class="button button-primary button-hero" href="'+data.data['link']+'" target="_blank">View Page <i class="dashicons dashicons-external"></i></a></p>';
+
+						$('.rotating,.current-importing-status-wrap,.notice-warning').remove();
+						$('.astra-sites-result-preview .inner').html(output);
+
+						$('.ast-actioms-wrap').hide();
+						// $('.astra-demo-import').removeClass('updating-message installing')
+						// 	.removeAttr('data-import')
+						// 	.addClass('view-site')
+						// 	.removeClass('site-install-site-button astra-demo-import')
+						// 	.text( 'Done! View Page' )
+						// 	.attr('target', '_blank')
+						// 	.append('<i class="dashicons dashicons-external"></i>')
+						// 	.attr('href', data.data['link'] );
+
 					}
 
 				});
