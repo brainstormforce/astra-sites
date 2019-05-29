@@ -210,7 +210,6 @@ var AstraSitesAjaxQueue = (function() {
 		 */
 		_bind: function()
 		{
-			AstraSitesAdmin.action_slug 				= $( '#astra-sites-admin' ).data( 'slug' );
 			$( document ).on( 'click'					 , '.astra-sites-reset-data .checkbox', AstraSitesAdmin._toggle_reset_notice );
 			$( document ).on( 'click'					 , '.page-builders li', AstraSitesAdmin._toggle_reset_notice );
 			$( document ).on('click'                     , '#astra-sites-welcome-form .submit', AstraSitesAdmin._show_page_builder_notice);
@@ -225,11 +224,14 @@ var AstraSitesAjaxQueue = (function() {
 			$( document ).on('click'                     , '.next-theme', AstraSitesAdmin._nextTheme);
 			$( document ).on('click'                     , '.previous-theme', AstraSitesAdmin._previousTheme);
 			$( document ).on('click'                     , '.collapse-sidebar', AstraSitesAdmin._collapse);
-			$( document ).on('click'                     , '.site-import-site-button', AstraSitesAdmin._importDemo);
+			$( document ).on('click'                     , '.site-import-site-button', AstraSitesAdmin._showImportPopupForSites);
+			$( document ).on('click'                     , '.site-import-layout-button', AstraSitesAdmin._showImportPopupForPages);
 			$( document ).on( 'click'					 , '.site-import-cancel', AstraSitesAdmin._cancel );
 			$( document ).on( 'click'					 , '.astra-sites-result-preview .overlay', AstraSitesAdmin._close_popup );
 			$( document ).on('click'                     , '.site-install-site-button', AstraSitesAdmin._installDemo);
-			// $( document ).on('click'                     , '.astra-demo-import', AstraSitesAdmin._importDemo);
+			// $( document ).on('click'                     , '.site-install-site-button', AstraSitesAdmin._installSite);
+			// $( document ).on('click'                     , '.site-install-page-button', AstraSitesAdmin._installPage);
+			// $( document ).on('click'                     , '.astra-demo-import', AstraSitesAdmin._showImportPopupForSites);
 
 			$( document ).on('astra-sites-install-and-activate-required-plugins-done'       , AstraSitesAdmin._process_import );
 
@@ -1321,20 +1323,73 @@ var AstraSitesAjaxQueue = (function() {
 		 *
 		 * @since 1.0
 		 * @access private
-		 * @method _importDemo
+		 * @method _showImportPopupForSites
 		 */
-		_importDemo: function(event) {
+		_showImportPopupForSites: function(event) {
 			event.preventDefault();
 
 			if( $( this ).hasClass('updating-message') ) {
 				return;
 			}
 
-			$('.astra-sites-result-preview').show();
+			$('.astra-sites-result-preview')
+				.addClass('astra-sites-site-import-popup')
+				.show();
+				// .attr('data-slug', 'astra-sites');
+			AstraSitesAdmin.action_slug = 'astra-sites';
 		},
+
+		/**
+		 * Fires when a nav item is clicked.
+		 *
+		 * @since 1.0
+		 * @access private
+		 * @method _showImportPopupForPages
+		 */
+		_showImportPopupForPages: function(event) {
+			event.preventDefault();
+
+			if( $( this ).hasClass('updating-message') ) {
+				return;
+			}
+
+			$('.astra-sites-result-preview')
+				.addClass('astra-sites-page-import-popup')
+				.show();
+				// .attr('data-slug', 'site-pages');
+
+			AstraSitesAdmin.action_slug = 'site-pages';
+		},
+
+		// _installSite: function(event) {
+		// 	event.preventDefault();
+		// 	var action_slug = $(this).parents( '.astra-sites-result-preview' ).data( 'slug' ) || '';
+		// 	console.log( action_slug );
+		// 	AstraSitesAdmin.action_slug = $(this).parents( '.astra-sites-result-preview' ).data( 'slug' ) || '';
+
+		// 	console.log( AstraSitesAdmin.action_slug );
+		// 	return;
+		// },
+
+		// _installPage: function(event) {
+		// 	event.preventDefault();
+		// 	var action_slug = $(this).parents( '.astra-sites-result-preview' ).data( 'slug' ) || '';
+		// 	console.log( action_slug );
+		// 	AstraSitesAdmin.action_slug = $(this).parents( '.astra-sites-result-preview' ).data( 'slug' ) || '';
+
+		// 	console.log( AstraSitesAdmin.action_slug );
+		// 	return;
+		// },
 
 		_installDemo: function(event) {
 			event.preventDefault();
+
+			// var action_slug = $(this).parents( '.astra-sites-result-preview' ).data( 'slug' ) || '';
+			// console.log( action_slug );
+			// AstraSitesAdmin.action_slug = $(this).parents( '.astra-sites-result-preview' ).data( 'slug' ) || '';
+
+			// console.log( AstraSitesAdmin.action_slug );
+			// return;
 
 			AstraSitesAdmin.import_start_time = new Date();
 
@@ -1436,7 +1491,7 @@ var AstraSitesAjaxQueue = (function() {
 						$('.astra-demo-import').removeClass('updating-message installing')
 							.removeAttr('data-import')
 							.addClass('view-site')
-							.removeClass('astra-demo-import')
+							.removeClass('site-install-site-button astra-demo-import')
 							.text( 'Done! View Page' )
 							.attr('target', '_blank')
 							.append('<i class="dashicons dashicons-external"></i>')
