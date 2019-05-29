@@ -521,7 +521,8 @@ $import_text = ( 'site-pages' === $global_cpt_meta['cpt_slug'] ) ? __( 'Import P
 				<h2><?php _e( 'Here are few Pre Requisite.', 'astra-sites' ); ?></h2>
 				<div class="wp-full-overlay-sidebar-content">
 					<div class="install-theme-info">
-						<span class="site-type {{{data.astra_demo_type}}}">{{{data.astra_demo_type}}}</span>
+						<# console.log( data ); #>
+						<span class="site-type {{{data['astra-site-type']}}}">{{{data['astra-site-type']}}}</span>
 						<h3 class="theme-name">{{{data.demo_name}}}</h3>
 						<div class="theme-details">
 							{{{data.content.rendered}}}

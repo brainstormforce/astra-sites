@@ -1218,6 +1218,7 @@ var AstraSitesAjaxQueue = (function() {
 		 */
 		_bulkPluginInstallActivate: function()
 		{
+			console.log( astraSitesAdmin );
 			if( 0 === astraSitesAdmin.requiredPlugins.length ) {
 				return;
 			}
