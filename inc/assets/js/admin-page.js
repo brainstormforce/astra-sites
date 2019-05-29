@@ -787,22 +787,28 @@ var AstraSitesAjaxQueue = (function() {
 
 		_is_process_xml: function() {
 			if ( $( '.astra-sites-import-xml' ).find('.checkbox').is(':checked') ) {
+				console.log( 'checked xml' );
 				return true;
 			}
+			console.log( 'NOT checked xml' );
 			return false;
 		},
 
 		_is_process_customizer: function() {
 			if ( $( '.astra-sites-import-customizer' ).find('.checkbox').is(':checked') ) {
+				console.log( 'checked customizer' );
 				return true;
 			}
+			console.log( 'NOT checked customizer' );
 			return false;
 		},
 
 		_is_process_widgets: function() {
 			if ( $( '.astra-sites-import-widgets' ).find('.checkbox').is(':checked') ) {
+				console.log( 'checked widgets' );
 				return true;
 			}
+			console.log( 'NOT checked widgets' );
 			return false;
 		},
 
@@ -852,9 +858,9 @@ var AstraSitesAjaxQueue = (function() {
 			if ( 'site-pages' == AstraSitesAdmin.action_slug ) {
 				$(document).trigger( 'astra-sites-import-wpforms' );
 			} else {
-				if ( AstraSitesAdmin._is_process_customizer() ) {
+				// if ( AstraSitesAdmin._is_process_customizer() ) {
 					$(document).trigger( 'astra-sites-import-wpforms' );
-				}
+				// }
 			}
 		},
 
@@ -1338,6 +1344,7 @@ var AstraSitesAjaxQueue = (function() {
 
 			$(this).addClass('updating-message installing').text( wp.updates.l10n.installing );
 
+			$('.astra-sites-result-preview .inner > h2').hide();
 			$('.install-theme-info').hide();
 			$('.ast-importing-wrap').show();
 			var output = '<div class="current-importing-status-title"></div><div class="current-importing-status-description"></div>';
