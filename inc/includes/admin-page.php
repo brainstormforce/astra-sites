@@ -614,7 +614,7 @@ $import_text = ( 'site-pages' === $global_cpt_meta['cpt_slug'] ) ? __( 'Import P
 		</div>
 		<div class="ast-actioms-wrap">
 			<div class="button button-hero site-import-cancel" style="margin-right: 20px;"><?php _e( 'Cancel', 'astra-sites' ); ?></div>
-			<a href="#" class="button button-hero button-primary astra-demo-import site-install-site-button"><?php _e( 'Install', 'astra-sites' ); ?></a>
+			<a href="#" class="button button-hero button-primary astra-demo-import site-install-site-button"><?php _e( 'Import', 'astra-sites' ); ?></a>
 		</div>
 	</div>
 </script>
