@@ -989,6 +989,9 @@ a.astra-pages-back:before {
 .astra-sites-result-preview .inner {
 	margin: 0 auto;
 	width: 700px;
+	height: 75vh;
+    max-height: 420px;
+    overflow-y: scroll;
 	padding: 2em 4em;
 	-webkit-transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
