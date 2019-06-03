@@ -293,7 +293,7 @@ if ( ! class_exists( 'Astra_Sites_Helper' ) ) :
 		static public function _is_image_url( $string = '' ) {
 			if ( is_string( $string ) ) {
 
-				if ( preg_match( '/\.(jpg|jpeg|png|gif)/i', $string ) ) {
+				if ( preg_match( '/\.(jpg|jpeg|svg|png|gif)/i', $string ) ) {
 					return true;
 				}
 			}
