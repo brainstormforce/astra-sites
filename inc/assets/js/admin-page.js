@@ -779,28 +779,22 @@ var AstraSitesAjaxQueue = (function() {
 
 		_is_process_xml: function() {
 			if ( $( '.astra-sites-import-xml' ).find('.checkbox').is(':checked') ) {
-				console.log( 'checked xml' );
 				return true;
 			}
-			console.log( 'NOT checked xml' );
 			return false;
 		},
 
 		_is_process_customizer: function() {
 			if ( $( '.astra-sites-import-customizer' ).find('.checkbox').is(':checked') ) {
-				console.log( 'checked customizer' );
 				return true;
 			}
-			console.log( 'NOT checked customizer' );
 			return false;
 		},
 
 		_is_process_widgets: function() {
 			if ( $( '.astra-sites-import-widgets' ).find('.checkbox').is(':checked') ) {
-				console.log( 'checked widgets' );
 				return true;
 			}
-			console.log( 'NOT checked widgets' );
 			return false;
 		},
 
@@ -845,14 +839,10 @@ var AstraSitesAjaxQueue = (function() {
 		 */
 		_importWPForms: function( event ) {
 
-			console.log( 'here' );
-
 			if ( 'site-pages' == AstraSitesAdmin.action_slug ) {
 				$(document).trigger( 'astra-sites-import-wpforms' );
 			} else {
-				// if ( AstraSitesAdmin._is_process_customizer() ) {
-					$(document).trigger( 'astra-sites-import-wpforms' );
-				// }
+				$(document).trigger( 'astra-sites-import-wpforms' );
 			}
 		},
 
@@ -1342,8 +1332,6 @@ var AstraSitesAjaxQueue = (function() {
 
 		_importPage: function( event ) {
 
-			console.log( AstraSitesAdmin.templateData );
-
 			if ( null == AstraSitesAdmin.templateData ) {
 				return;
 			}
@@ -1353,7 +1341,6 @@ var AstraSitesAjaxQueue = (function() {
 			}).then(data => {
 
 				// Work with JSON page here
-
 				$.ajax({
 					url: astraSitesAdmin.ajaxurl,
 					type: 'POST',
@@ -1389,7 +1376,6 @@ var AstraSitesAjaxQueue = (function() {
 
 			}).catch(err => {
 				console.log( err );
-				// Do something for an error here
 			});
 		},
 
@@ -1819,8 +1805,6 @@ var AstraSitesAjaxQueue = (function() {
 
 
 			type = ( undefined !== type ) ? type : 'free';
-
-			console.log( type );
 
 			$('.install-theme-info .theme-details .site-description').remove();
 
