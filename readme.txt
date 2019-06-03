@@ -117,7 +117,10 @@ We are open to suggestions and would love to work on topics that our users are l
 
 == Changelog ==
 
-v1.3.12 - 14-May-2019
+Unreleased
+- New: Added support for Learn Dash plugin while importing Learn Dash demo.
+
+vv1.3.12 - 14-May-2019
 - Improvement: Added compatibility for below WordPress 5.1.
 
 v1.3.11 - 13-May-2019
