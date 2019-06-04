@@ -289,7 +289,8 @@ class Astra_Site_Options_Import {
 	/**
 	 * Download image by URL
 	 *
-	 * @since x.x.x.
+	 * @since 1.3.13
+	 * 
 	 * @param  string $image_url Logo URL.
 	 * @return mixed false|Attachment ID
 	 */
