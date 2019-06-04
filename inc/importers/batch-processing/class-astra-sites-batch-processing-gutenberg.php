@@ -87,7 +87,9 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Gutenberg' ) ) :
 
 			Astra_Sites_Importer_Log::add( '---- Processing WordPress Posts / Pages - for "Gutenberg" ----' );
 
-			$post_ids = Astra_Sites_Batch_Processing::get_pages( array( 'page' ) );
+			$post_types = apply_filters( 'astra_sites_gutenberg_batch_process_post_types', array( 'page' ) );
+
+			$post_ids = Astra_Sites_Batch_Processing::get_pages( $post_types );
 			if ( empty( $post_ids ) && ! is_array( $post_ids ) ) {
 				return;
 			}

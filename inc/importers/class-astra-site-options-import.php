@@ -110,7 +110,6 @@ class Astra_Site_Options_Import {
 			'learndash_settings_theme_ld30',
 			'learndash_settings_courses_themes',
 
-
 		);
 	}
 
@@ -282,7 +281,7 @@ class Astra_Site_Options_Import {
 	 */
 	private function insert_logo( $image_url = '' ) {
 		$attachment_id = $this->download_image( $image_url );
-		if( $attachment_id ) {
+		if ( $attachment_id ) {
 			set_theme_mod( 'custom_logo', $attachment_id );
 		}
 	}
