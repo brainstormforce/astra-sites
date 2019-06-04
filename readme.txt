@@ -120,7 +120,7 @@ We are open to suggestions and would love to work on topics that our users are l
 Unreleased
 - New: Added LearnDash plugin support for the LearnDash demo sites.
 
-vv1.3.12 - 14-May-2019
+v1.3.12 - 14-May-2019
 - Improvement: Added compatibility for below WordPress 5.1.
 
 v1.3.11 - 13-May-2019
