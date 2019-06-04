@@ -291,7 +291,7 @@ class Astra_Site_Options_Import {
 	 *
 	 * @since x.x.x.
 	 * @param  string $image_url Logo URL.
-	 * @return void
+	 * @return mixed false|Attachment ID
 	 */
 	private function download_image( $image_url = '' ) {
 		$data = (object) Astra_Sites_Helper::_sideload_image( $image_url );

@@ -8,14 +8,14 @@
  * @since x.x.x
  */
 
-if ( ! class_exists( 'Astra_Sites_Compatibility_LearnDash' ) ) :
+if ( ! class_exists( 'Astra_Sites_Compatibility_SFWD_LMS' ) ) :
 
 	/**
-	 * Astra_Sites_Compatibility_LearnDash
+	 * Astra_Sites_Compatibility_SFWD_LMS
 	 *
 	 * @since x.x.x
 	 */
-	class Astra_Sites_Compatibility_LearnDash {
+	class Astra_Sites_Compatibility_SFWD_LMS {
 
 		/**
 		 * Instance
@@ -70,6 +70,6 @@ if ( ! class_exists( 'Astra_Sites_Compatibility_LearnDash' ) ) :
 	/**
 	 * Kicking this off by calling 'get_instance()' method
 	 */
-	Astra_Sites_Compatibility_LearnDash::get_instance();
+	Astra_Sites_Compatibility_SFWD_LMS::get_instance();
 
 endif;
