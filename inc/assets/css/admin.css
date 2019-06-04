@@ -1215,3 +1215,8 @@ a.astra-pages-back:before {
     font-size: 1rem;
     margin-left: .2em;
 }
+
+.astra-sites-result-preview.astra-sites-import-complete .inner {
+    overflow: hidden;
+    height: auto;
+}

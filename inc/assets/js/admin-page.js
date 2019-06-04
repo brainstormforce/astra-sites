@@ -611,6 +611,7 @@ var AstraSitesAjaxQueue = (function() {
 						output += '<p><a class="button button-primary button-hero" href="'+astraSitesAdmin.siteURL+'" target="_blank">View Site <i class="dashicons dashicons-external"></i></a></p>';
 
 					$('.rotating,.current-importing-status-wrap,.notice-warning').remove();
+					$('.astra-sites-result-preview').addClass('astra-sites-result-preview');
 					$('.astra-sites-result-preview .inner').html(output);
 
 					// 5. Pass - Import Complete.
