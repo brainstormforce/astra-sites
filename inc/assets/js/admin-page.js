@@ -1670,7 +1670,7 @@ var AstraSitesAjaxQueue = (function() {
 
 						$('.astra-sites-third-party-required-plugins-wrap').remove();
 						var template = wp.template('astra-sites-third-party-required-plugins');
-						$('.astra-sites-advanced-options-wrap').append( template( response.data['third_party_required_plugins'] ) );
+						$('.astra-sites-advanced-options-wrap').html( template( response.data['third_party_required_plugins'] ) );
 					} else {
 						// Release disabled class from import button.
 						$('.astra-demo-import')
