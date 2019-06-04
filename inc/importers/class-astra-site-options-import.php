@@ -105,6 +105,12 @@ class Astra_Site_Options_Import {
 
 			// Categories.
 			'woocommerce_product_cat',
+
+			// Plugin: LearnDash LMS.
+			'learndash_settings_theme_ld30',
+			'learndash_settings_courses_themes',
+
+
 		);
 	}
 
@@ -275,15 +281,29 @@ class Astra_Site_Options_Import {
 	 * @return void
 	 */
 	private function insert_logo( $image_url = '' ) {
+		$attachment_id = $this->download_image( $image_url );
+		if( $attachment_id ) {
+			set_theme_mod( 'custom_logo', $attachment_id );
+		}
+	}
 
+	/**
+	 * Download image by URL
+	 *
+	 * @since x.x.x.
+	 * @param  string $image_url Logo URL.
+	 * @return void
+	 */
+	private function download_image( $image_url = '' ) {
 		$data = (object) Astra_Sites_Helper::_sideload_image( $image_url );
 
 		if ( ! is_wp_error( $data ) ) {
-
 			if ( isset( $data->attachment_id ) && ! empty( $data->attachment_id ) ) {
-				set_theme_mod( 'custom_logo', $data->attachment_id );
+				return $data->attachment_id;
 			}
 		}
+
+		return false;
 	}
 
 }
