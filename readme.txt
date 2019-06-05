@@ -117,7 +117,7 @@ We are open to suggestions and would love to work on topics that our users are l
 
 == Changelog ==
 
-v1.3.13 - 4-June-2019
+v1.3.13 - 5-June-2019
 - New: Added LearnDash plugin support for the LearnDash demo sites.
 
 v1.3.12 - 14-May-2019
