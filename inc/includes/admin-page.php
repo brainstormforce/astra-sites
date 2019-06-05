@@ -106,12 +106,11 @@ defined( 'ABSPATH' ) or exit;
 ?>
 <script type="text/template" id="tmpl-astra-sites-third-party-required-plugins">
 	<div class="astra-sites-third-party-required-plugins-wrap">
-		<div class="notice notice-warning">
-			<p>To import this website, You need to install below plugins!</p>
-		</div>
+		<h3 class="theme-name"><?php esc_html_e( 'Required Plugin Missing', 'astra-sites' ); ?></h3>
+		<p><?php esc_html_e( 'This starter site requires premium plugins. As these are third party premium plugins, you\'ll need to purchase, install and activate them first.', 'astra-sites' ); ?></p>
 		<ul class="astra-sites-third-party-required-plugins">
 			<# for ( key in data ) { #>
-				<li class="plugin-card plugin-card-{{data[ key ].slug}}'" data-slug="{{data[ key ].slug }}" data-init="{{data[ key ].init}}" data-name="{{data[ key ].name}}">{{data[ key ].name}}</li>
+				<li class="plugin-card plugin-card-{{data[ key ].slug}}'" data-slug="{{data[ key ].slug }}" data-init="{{data[ key ].init}}" data-name="{{data[ key ].name}}"><a href="{{data[ key ].link}}" target="_blank">{{data[ key ].name}}</a></li>
 			<# } #>
 		</ul>
 	</div>
