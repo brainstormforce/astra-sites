@@ -1131,13 +1131,14 @@ a.astra-pages-back:before {
 
 .single-site {
     display: flex;
-    margin-bottom: 80px;
+    margin-bottom: 95px;
 }
 
 .single-site-preview {
     margin-right: 5em;
     max-height: 70vh;
     overflow-y: auto;
+    border-radius: 2px;
 }
 
 .single-site-preview img {
@@ -1146,13 +1147,14 @@ a.astra-pages-back:before {
 
 .single-site-footer {
     position: fixed;
-    padding: 20px;
+    padding: 15px 20px;
     bottom: 0;
     background: #fff;
     right: 0;
     left: 0;
     margin-left: 160px;
     z-index: 88;
+    box-shadow: 0 -2px 8px rgba( 0, 0, 0, 0.05);
 }
 
 .folded .single-site-footer {
@@ -1208,6 +1210,7 @@ a.astra-pages-back:before {
 
 .theme-browser #site-pages .theme {
     margin: 0 3.9% 3.6% 0;
+    border-radius: 2px;
 }
 
 .site-action-buttons-wrap .dashicons {
@@ -1219,4 +1222,11 @@ a.astra-pages-back:before {
 .astra-sites-result-preview.astra-sites-import-complete .inner {
     overflow: hidden;
     height: auto;
+}
+
+.site-action-buttons-wrap .button.button-hero {
+    font-size: 13px;
+    height: 38px;
+    line-height: 36px;
+    padding: 0 20px;
 }

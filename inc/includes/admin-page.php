@@ -675,9 +675,11 @@ $import_text = ( 'site-pages' === $global_cpt_meta['cpt_slug'] ) ? __( 'Import P
 							}
 						}
 						#>
+						<# if ( data.type != 'site-pages' ) { #>
 						<div class="favorite-action-wrap {{fav_class}}" data-favorite={{fav_flag}}>
 							<span><i class="dashicons-heart dashicons"></i></span>
 						</div>
+						<# } #>
 						<!-- <div class="theme-actions">
 							<div class="theme-action-wrap">
 								<# if ( data.type != 'site-pages' ) { #>
