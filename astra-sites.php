@@ -52,3 +52,42 @@ if ( ! function_exists( 'astra_sites_setup' ) ) :
 	add_action( 'plugins_loaded', 'astra_sites_setup' );
 
 endif;
+
+
+
+// /**
+//  * Debug WordPress hook sequence.
+//  *
+//  * > How it works?
+//  * 	Add query parameter `debug` in URL e.g. https://<mysite>/?debug
+//  * 	It'll show the list of hooks in sequence.
+//  * 
+//  * @todo Change `prefix_` with your own prefix.
+//  * 
+//  * @since 1.0.0
+//  */
+// if( ! function_exists( 'prefix_hook_sequence' ) ) {
+// 	function prefix_hook_sequence() {
+// 		error_log( '--------------- Started ------------------'  );
+// 	    foreach( $GLOBALS['wp_actions'] as $action => $count ) {
+// 			error_log( $action .' - (' .$count. ')'  );
+// 	    }
+// 		error_log( '--------------- End ------------------'  );
+// 	}
+// 	// Add hook.
+// 	add_action( 'shutdown', 'prefix_hook_sequence' );
+// }
+// 
+// if( ! function_exists( 'prefix_debug_meta' ) ) {
+// 	function prefix_debug_meta( $object_id, $meta_key, $_meta_value ) {
+
+// 		$_meta_value = is_array( $_meta_value ) ? json_encode( $_meta_value ) : $_meta_value;
+// 		error_log( '--------------- Started ------------------'  );
+// 		error_log( $object_id );
+// 		error_log( $meta_key );
+// 		error_log( $_meta_value );
+// 		error_log( '--------------- End ------------------'  );
+// 	}
+// 	// Add hook.
+// 	add_action( 'add_post_meta', 'prefix_debug_meta', 10, 3 );
+// }
