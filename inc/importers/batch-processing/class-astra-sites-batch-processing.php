@@ -107,16 +107,11 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 		 */
 		public function start_process_single( $page_id ) {
 
-			error_log( 'Started ID: ' . $page_id );
-			// return;
-
-			// error_log( '=================== ' . Astra_Sites_White_Label::get_instance()->page_title( ASTRA_SITES_NAME ) . ' - Single Page - Importing Images for Blog name \'' . get_the_title( $page_id ) . '\' (' . $page_id . ') ===================' );
+			error_log( '=================== ' . Astra_Sites_White_Label::get_instance()->page_title( ASTRA_SITES_NAME ) . ' - Single Page - Importing Images for Blog name \'' . get_the_title( $page_id ) . '\' (' . $page_id . ') ===================' );
 
 			$default_page_builder = Astra_Sites_Page::get_instance()->get_setting( 'page_builder' );
 
 			if ( 'gutenberg' === $default_page_builder ) {
-				error_log( 'gutenberg' );
-
 				// Add "gutenberg" in import [queue].
 				self::$process_single->push_to_queue(
 					array(
@@ -128,8 +123,6 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 
 			// Add "brizy" in import [queue].
 			if ( 'brizy' === $default_page_builder && is_plugin_active( 'brizy/brizy.php' ) ) {
-				error_log( 'brizy' );
-
 				// Add "gutenberg" in import [queue].
 				self::$process_single->push_to_queue(
 					array(
@@ -144,8 +137,6 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 				'beaver-builder' === $default_page_builder &&
 				( is_plugin_active( 'beaver-builder-lite-version/fl-builder.php' ) || is_plugin_active( 'bb-plugin/fl-builder.php' ) )
 			) {
-				error_log( 'beaver-builder' );
-
 				// Add "gutenberg" in import [queue].
 				self::$process_single->push_to_queue(
 					array(
@@ -157,8 +148,6 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 
 			// Add "elementor" in import [queue].
 			if ( 'elementor' === $default_page_builder ) {
-				error_log( 'elementor' );
-
 				// @todo Remove required `allow_url_fopen` support.
 				if ( ini_get( 'allow_url_fopen' ) ) {
 					if ( is_plugin_active( 'elementor/elementor.php' ) ) {

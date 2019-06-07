@@ -152,12 +152,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				'post_excerpt' => $excerpt,
 			);
 
-			// $post_args['post_type'] = 'brizy-project';
-			// $new_page_id = wp_insert_post( $post_args );
-
-			// $post_args['post_type'] = 'page';
 			$new_page_id = wp_insert_post( $post_args );
-
 			$post_meta   = isset( $_POST['data']['post-meta'] ) ? $_POST['data']['post-meta'] : array();
 
 			if ( ! empty( $post_meta ) ) {

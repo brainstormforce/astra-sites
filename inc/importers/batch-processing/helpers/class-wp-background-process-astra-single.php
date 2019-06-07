@@ -38,17 +38,13 @@ if ( class_exists( 'WP_Background_Process' ) ) :
 		protected function task( $object ) {
 
 			$page_id = $object['page_id'];
-			error_log('batch star');
-			error_log($page_id);
+
 			$process = $object['instance'];
 
 
 			if ( method_exists( $process, 'import_single_post' ) ) {
 				$process->import_single_post( $page_id );
 			}
-			
-			// $process = (array) $process;
-			// error_log( json_encode( $process ) );
 
 			return false;
 		}
@@ -67,7 +63,7 @@ if ( class_exists( 'WP_Background_Process' ) ) :
 
 			parent::complete();
 
-			// do_action( 'astra_sites_image_import_complete' );
+			do_action( 'astra_sites_image_import_complete' );
 
 		}
 

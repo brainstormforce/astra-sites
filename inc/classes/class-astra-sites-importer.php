@@ -240,7 +240,7 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) {
 				Astra_Sites_Importer_Log::add( 'Imported Customizer Settings ' . json_encode( $customizer_data ) );
 
 				// Set meta for tracking the post.
-				// error_log( 'Customizer Data ' . json_encode( $customizer_data ) );
+				error_log( 'Customizer Data ' . json_encode( $customizer_data ) );
 
 				update_option( '_astra_sites_old_customizer_data', $customizer_data );
 
