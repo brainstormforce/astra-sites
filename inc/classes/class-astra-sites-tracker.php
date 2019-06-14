@@ -109,7 +109,7 @@ if ( ! class_exists( 'Astra_Sites_Tracker' ) ) :
 		 */
 		public static function set_api_url() {
 
-			self::$api_url = apply_filters( 'astra_sites_tracking_api_url', 'http://analytics.sharkz.in/wp-json/analytics/v2/track' );
+			self::$api_url = apply_filters( 'astra_sites_tracking_api_url', 'http://localhost/projects/analytics-server/wp-json/analytics/v2/track' );
 
 		}
 
