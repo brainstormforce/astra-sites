@@ -505,6 +505,11 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 					'name' => 'LearnDash LMS',
 					'link' => 'https://www.learndash.com/',
 				),
+				'learndash-woocommerce' => array(
+					'init' => 'learndash-woocommerce/learndash_woocommerce.php',
+					'name' => 'LearnDash WooCommerce Integration',
+					'link' => 'https://www.learndash.com/add-on/woocommerce/',
+				),
 			);
 
 			if ( count( $required_plugins ) > 0 ) {
