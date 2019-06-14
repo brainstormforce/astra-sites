@@ -4,8 +4,8 @@
 **Tags:** Elementor,Beaver Builder,Templates,Gutenberg,Astra Starter Sites  
 **Requires at least:** 4.4  
 **Requires PHP:** 5.3  
-**Tested up to:** 5.2.1  
-**Stable tag:** 1.3.14 
+**Tested up to:** 5.2  
+**Stable tag:** 1.3.14  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -117,7 +117,10 @@ We are open to suggestions and would love to work on topics that our users are l
 
 ## Changelog ##
 
-v1.3.13 - 4-June-2019
+v1.3.14 - 14-June-2019
+- Improvement: Added Support for Learndash WooCommerce integration plugin.
+
+v1.3.13 - 5-June-2019
 - New: Added LearnDash plugin support for the LearnDash demo sites.
 
 v1.3.12 - 14-May-2019
