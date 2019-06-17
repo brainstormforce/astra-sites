@@ -739,10 +739,12 @@ a.astra-pages-back:before {
 	width: 700px;
 	width: 700px;
 	background: #fff;
-	padding: 3em;
+	padding: 6em;
+	box-shadow: 0 1px 20px 5px rgba(0, 0, 0, 0.1)
 }
 
 .astra-sites-welcome h1 {
+	margin-top: 0;
 	font-size: 2.5em;
 	margin-bottom: 1em;
 }
@@ -912,8 +914,18 @@ a.astra-pages-back:before {
 	margin: 0;
 }
 
+#astra-sites-welcome-form .title {
+    font-size: 14px;
+    font-weight: 500;
+    margin-top: 5px;
+}
+
 #astra-sites-welcome-form #submit {
 	padding: 0em 4rem;
+}
+
+.page-builders {
+    margin: 35px 0;
 }
 
 .page-builders li {
