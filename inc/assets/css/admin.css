@@ -9,6 +9,16 @@
     letter-spacing: .3px;
     padding: 0.5em .8em;
 }
+
+#astra-sites > .astra-theme {
+    transition: all 250ms cubic-bezier(0.02, 0.01, 0.47, 1);
+}
+
+#astra-sites > .astra-theme:hover {
+    transform: translateY(-2px);
+	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+}
+
 #astra-sites-admin.wrap .status,
 #astra-sites-admin.wrap .site-type.premium {
 	background: #0085ba;
