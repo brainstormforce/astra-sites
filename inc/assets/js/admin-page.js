@@ -1804,7 +1804,6 @@ var AstraSitesAjaxQueue = (function() {
 		 */
 		_enable_demo_import_button: function( type ) {
 
-
 			type = ( undefined !== type ) ? type : 'free';
 
 			$('.install-theme-info .theme-details .site-description').remove();
