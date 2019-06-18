@@ -737,18 +737,18 @@ a.astra-pages-back:before {
  * Welcome Screen
  */
 .astra-sites-welcome {
-    text-align: center;
-    position: absolute;
-    left: 50%;
-    top: 45%;
-    transform: translate(-50%, -45%);
-}
-#astra-sites-menu-page {
     position: relative;
     height: 100vh;
 }
 .ast-importing-wrap {
 	display: none;
+}
+.astra-sites-welcome .inner-wrap {
+    position: absolute;
+    left: 50%;
+    top: 40%;
+    transform: translate(-50%, -40%);
+	box-shadow: 0 1px 20px 5px rgba(0, 0, 0, 0.1);
 }
 .astra-sites-welcome .inner {
 	margin: 0 auto;
@@ -757,7 +757,7 @@ a.astra-pages-back:before {
 	width: 700px;
 	background: #fff;
 	padding: 6em;
-	box-shadow: 0 1px 20px 5px rgba(0, 0, 0, 0.1)
+    text-align: center;
 }
 
 .astra-sites-welcome h1 {
