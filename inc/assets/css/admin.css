@@ -743,6 +743,10 @@ a.astra-pages-back:before {
     top: 45%;
     transform: translate(-50%, -45%);
 }
+#astra-sites-menu-page {
+    position: relative;
+    height: 100vh;
+}
 .ast-importing-wrap {
 	display: none;
 }
