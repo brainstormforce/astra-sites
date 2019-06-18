@@ -301,6 +301,7 @@
  */
 .astra-sites-title {
 	float: left;
+	line-height: 1.5;
     font-size: 20px;
     font-weight: 400;
     margin: 0;
