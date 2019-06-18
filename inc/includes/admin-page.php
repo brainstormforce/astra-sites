@@ -506,12 +506,17 @@ $import_text = ( 'site-pages' === $global_cpt_meta['cpt_slug'] ) ? __( 'Import P
 				</div>
 			</div>
 			<div class="single-site-footer">
+				<# console.log( data ) #>
 				<div class="site-action-buttons-wrap">
 					<a href="{{data['astra-site-url']}}" class="button button-hero site-preview-button" target="_blank">Preview This Site <i class="dashicons dashicons-external"></i></a>
-					<div style="flex:1;padding: 0 1em;">
-						<div class="button button-hero button-primary site-import-site-button">Import Complete Site</div>
+					<div>
+						<# if( 'premium' == data['astra-site-type'] ) { #>
+							<a class="button button-hero button-primary" href="{{astraSitesAdmin.getProURL}}" target="_blank">{{astraSitesAdmin.getProText}}<i class="dashicons dashicons-external"></i></a>
+						<# } else { #>
+							<div class="button button-hero button-primary site-import-site-button">Import Complete Site</div>
+							<div style="margin-left: 5px;" class="button button-hero button-primary site-import-layout-button disabled">Import Layout</div>
+						<# } #>
 					</div>
-					<div class="button button-hero button-primary site-import-layout-button disabled">Import Layout</div>
 				</div>
 			</div>
 		</div>
