@@ -1250,6 +1250,12 @@ a.astra-pages-back:before {
 .theme-browser #site-pages .theme {
     margin: 0 3.9% 3.6% 0;
     border-radius: 2px;
+    border-width: 1px;
+    border-style: solid;
+    border-color: transparent;
+}
+.theme-browser #site-pages .theme:focus {
+    border-color: #5b9dd9;
 }
 
 .site-action-buttons-wrap .dashicons {
