@@ -247,7 +247,6 @@ var AstraSitesAjaxQueue = (function() {
 			$( document ).on('astra-sites-backup-settings-done'       	   , AstraSitesAdmin._importWPForms );
 			$( document ).on('astra-sites-import-wpforms-done'       	   , AstraSitesAdmin._importCustomizerSettings );
 			$( document ).on('astra-sites-import-customizer-settings-done' , AstraSitesAdmin._importXML );
-			$( document ).on('astra-sites-import-customizer-settings-done' , AstraSitesAdmin._importXML );
 			$( document ).on('astra-sites-import-xml-done'                 , AstraSitesAdmin._importSiteOptions );
 			$( document ).on('astra-sites-import-options-done'             , AstraSitesAdmin._importWidgets );
 			$( document ).on('astra-sites-import-widgets-done'             , AstraSitesAdmin._importEnd );
