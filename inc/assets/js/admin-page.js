@@ -729,6 +729,14 @@ var AstraSitesAjaxQueue = (function() {
 
 					} else {
 
+						var xml_processing = $('.astra-demo-import').attr( 'data-xml-processing' );
+
+						if( 'yes' === xml_processing ) {
+							return;
+						}
+
+						$('.astra-demo-import').attr( 'data-xml-processing', 'yes' );
+
 						// 2. Pass - Prepare XML Data.
 
 						// Import XML though Event Source.
@@ -752,6 +760,7 @@ var AstraSitesAjaxQueue = (function() {
 									evtSource.close();
 
 									$('.current-importing-status-description').hide();
+									$('.astra-demo-import').removeAttr( 'data-xml-processing' );
 
 									document.getElementsByClassName("astra-site-import-process").value = '100';
 
