@@ -264,7 +264,9 @@ var AstraSitesAjaxQueue = (function() {
 		},
 
 		_show_page_builder_notice: function() {
-			$('.astra-sites-page-builder-notice').show();
+			if( $( '#submit' ).hasClass('disabled') ) {
+				$('.astra-sites-page-builder-notice').show();
+			}
 		},
 
 		_change_page_builder: function() {
