@@ -387,7 +387,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		 */
 		public static function set_api_url() {
 
-			self::$api_url = apply_filters( 'astra_sites_api_url', 'http://nik-websitedemos.sharkz.in/wp-json/wp/v2/' );
+			self::$api_url = apply_filters( 'astra_sites_api_url', 'http://m-website-demos.sharkz.in/wp-json/wp/v2/' );
 
 		}
 
