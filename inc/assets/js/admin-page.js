@@ -728,6 +728,14 @@ var AstraSitesAjaxQueue = (function() {
 
 					} else {
 
+						var xml_processing = $('.astra-demo-import').attr( 'data-xml-processing' );
+
+						if( 'yes' === xml_processing ) {
+							return;
+						}
+
+						$('.astra-demo-import').attr( 'data-xml-processing', 'yes' );
+
 						// 2. Pass - Prepare XML Data.
 
 						// Import XML though Event Source.
@@ -751,6 +759,7 @@ var AstraSitesAjaxQueue = (function() {
 									evtSource.close();
 
 									$('.current-importing-status-description').hide();
+									$('.astra-demo-import').removeAttr( 'data-xml-processing' );
 
 									document.getElementsByClassName("astra-site-import-process").value = '100';
 
@@ -1722,7 +1731,7 @@ var AstraSitesAjaxQueue = (function() {
 
 						$('.astra-sites-third-party-required-plugins-wrap').remove();
 						var template = wp.template('astra-sites-third-party-required-plugins');
-						$('.astra-sites-advanced-options-wrap').append( template( response.data['third_party_required_plugins'] ) );
+						$('.astra-sites-advanced-options-wrap').html( template( response.data['third_party_required_plugins'] ) );
 					} else {
 						// Release disabled class from import button.
 						$('.astra-demo-import')

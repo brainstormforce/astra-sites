@@ -689,10 +689,17 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				'learndash-course-grid' => array(
 					'init' => 'learndash-course-grid/learndash_course_grid.php',
 					'name' => 'LearnDash Course Grid',
+					'link' => 'https://www.learndash.com/add-on/course-grid/',
 				),
 				'sfwd-lms'              => array(
 					'init' => 'sfwd-lms/sfwd_lms.php',
 					'name' => 'LearnDash LMS',
+					'link' => 'https://www.learndash.com/',
+				),
+				'learndash-woocommerce' => array(
+					'init' => 'learndash-woocommerce/learndash_woocommerce.php',
+					'name' => 'LearnDash WooCommerce Integration',
+					'link' => 'https://www.learndash.com/add-on/woocommerce/',
 				),
 			);
 
@@ -729,7 +736,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 
 							// Added premium plugins which need to install first.
 							if ( array_key_exists( $plugin['slug'], $third_party_plugins ) ) {
-								$third_party_required_plugins[] = $plugin;
+								$third_party_required_plugins[] = $third_party_plugins[ $plugin['slug'] ];
 							}
 
 							// Lite - Active.
