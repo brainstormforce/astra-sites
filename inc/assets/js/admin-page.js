@@ -259,7 +259,6 @@ var AstraSitesAjaxQueue = (function() {
 			$( this ).parents('.page-builders').find('img').removeClass('wp-ui-highlight');
 			$( this ).find('img').addClass('wp-ui-highlight');
 
-			$('#submit').parent().removeClass('submit');
 			$('#submit').removeClass('disabled');
 			$('.astra-sites-page-builder-notice').hide();
 		},
