@@ -31,17 +31,20 @@
     background: transparent;
     box-shadow: none;
     border: none;
-    border-bottom: 1px solid #ccc;
     padding: 10px 0px;
     font-weight: normal;
 }
 #wp-filter-search-input:focus + .search-icon {
 	display: none;
 }
+#wp-filter-search-input:focus {
+	width: 200px;
+	opacity: 1;
+}
 .search-icon {
 	position: absolute;
 	top: 0;
-	transform: translateY(50%);
+    padding: 10px 0px;
 	right: 0;
 	z-index: -1;
 	color: #ccc;
@@ -347,11 +350,16 @@
 .wp-filter .search-form {
 	margin-left: 1em;
 	position: relative;
+	border-bottom: 1px solid #ccc;
 }
 .wp-filter .search-form input[type="search"] {
-	width: 200px;
+	width: 20px;
 	font-size: 13px;
 	padding: 5px 10px;
+	opacity: 0;
+	-webkit-transition: width ease 0.3s;
+	-moz-transition: width ease 0.3s;
+	transition: width ease 0.3s;
 }
 .section-left {
 	display: flex;
