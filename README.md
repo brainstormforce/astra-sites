@@ -117,6 +117,9 @@ We are open to suggestions and would love to work on topics that our users are l
 
 ## Changelog ##
 
+v1.3.18 - 11-July-2019
+- Fix: Conflict with `http_request_timeout` for below WordPress 5.1
+
 v1.3.17 - 28-June-2019
 - Minor changes in Links
 

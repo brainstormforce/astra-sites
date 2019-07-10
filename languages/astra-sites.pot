@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the Astra Starter Sites package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Astra Starter Sites 1.3.17\n"
+"Project-Id-Version: Astra Starter Sites 1.3.18\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/astra-sites\n"
-"POT-Creation-Date: 2019-06-28 10:54:05+00:00\n"
+"POT-Creation-Date: 2019-07-10 11:00:13+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -457,144 +457,144 @@ msgstr ""
 
 #: inc/importers/wxr-importer/class-wxr-importer.php:167
 #: inc/importers/wxr-importer/class-wxr-importer.php:283
-#: inc/importers/wxr-importer/class-wxr-importer.php:356
+#: inc/importers/wxr-importer/class-wxr-importer.php:358
 msgid ""
 "This WXR file (version %1$s) is newer than the importer (version %2$s) and "
 "may not be supported. Please consider updating."
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:504
+#: inc/importers/wxr-importer/class-wxr-importer.php:506
 msgid "The file does not exist, please try again."
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:564
+#: inc/importers/wxr-importer/class-wxr-importer.php:566
 msgid "Invalid author mapping"
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:665
+#: inc/importers/wxr-importer/class-wxr-importer.php:667
 msgid "Cannot import auto-draft posts"
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:753
+#: inc/importers/wxr-importer/class-wxr-importer.php:755
 msgid "Failed to import \"%1$s\": Invalid post type %2$s"
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:763
+#: inc/importers/wxr-importer/class-wxr-importer.php:765
 msgid "%1$s \"%2$s\" already exists."
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:857
+#: inc/importers/wxr-importer/class-wxr-importer.php:859
 msgid "Skipping attachment \"%s\", fetching attachments disabled"
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:878
+#: inc/importers/wxr-importer/class-wxr-importer.php:880
 msgid "Failed to import \"%1$s\" (%2$s)"
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:910
-#: inc/importers/wxr-importer/class-wxr-importer.php:1755
+#: inc/importers/wxr-importer/class-wxr-importer.php:912
+#: inc/importers/wxr-importer/class-wxr-importer.php:1757
 msgid "Imported \"%1$s\" (%2$s)"
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:915
+#: inc/importers/wxr-importer/class-wxr-importer.php:917
 msgid "Post %1$d remapped to %2$d"
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:1062
+#: inc/importers/wxr-importer/class-wxr-importer.php:1064
 msgid "Invalid file type"
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:1560
+#: inc/importers/wxr-importer/class-wxr-importer.php:1562
 msgid "Failed to import user \"%s\""
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:1581
+#: inc/importers/wxr-importer/class-wxr-importer.php:1583
 msgid "Imported user \"%s\""
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:1585
+#: inc/importers/wxr-importer/class-wxr-importer.php:1587
 msgid "User %1$d remapped to %2$d"
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:1731
+#: inc/importers/wxr-importer/class-wxr-importer.php:1733
 msgid "Failed to import %1$s %2$s"
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:1760
+#: inc/importers/wxr-importer/class-wxr-importer.php:1762
 msgid "Term %1$d remapped to %2$d"
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:1813
+#: inc/importers/wxr-importer/class-wxr-importer.php:1815
 msgid "Remote server returned %1$d %2$s for %3$s"
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:1826
+#: inc/importers/wxr-importer/class-wxr-importer.php:1828
 msgid "Remote file is incorrect size"
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:1831
+#: inc/importers/wxr-importer/class-wxr-importer.php:1833
 msgid "Zero size file downloaded"
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:1837
+#: inc/importers/wxr-importer/class-wxr-importer.php:1839
 msgid "Remote file is too large, limit is %s"
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:1859
+#: inc/importers/wxr-importer/class-wxr-importer.php:1861
 msgid "Running post-processing for post %d"
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:1872
+#: inc/importers/wxr-importer/class-wxr-importer.php:1874
 msgid "Could not find the post parent for \"%1$s\" (post #%2$d)"
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:1877
+#: inc/importers/wxr-importer/class-wxr-importer.php:1879
 msgid "Post %1$d was imported with parent %2$d, but could not be found"
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:1891
+#: inc/importers/wxr-importer/class-wxr-importer.php:1893
 msgid "Could not find the author for \"%1$s\" (post #%2$d)"
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:1896
+#: inc/importers/wxr-importer/class-wxr-importer.php:1898
 msgid "Post %1$d was imported with author \"%2$s\", but could not be found"
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:1922
+#: inc/importers/wxr-importer/class-wxr-importer.php:1924
 msgid "Post %d was marked for post-processing, but none was required."
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:1933
+#: inc/importers/wxr-importer/class-wxr-importer.php:1935
 msgid "Could not update \"%1$s\" (post #%2$d) with mapped data"
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:1978
+#: inc/importers/wxr-importer/class-wxr-importer.php:1980
 msgid "Could not find the menu object for \"%1$s\" (post #%2$d)"
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:1983
+#: inc/importers/wxr-importer/class-wxr-importer.php:1985
 msgid ""
 "Post %1$d was imported with object \"%2$d\" of type \"%3$s\", but could not "
 "be found"
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:2005
+#: inc/importers/wxr-importer/class-wxr-importer.php:2007
 msgid "Could not find the comment parent for comment #%d"
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:2009
+#: inc/importers/wxr-importer/class-wxr-importer.php:2011
 msgid "Comment %1$d was imported with parent %2$d, but could not be found"
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:2023
+#: inc/importers/wxr-importer/class-wxr-importer.php:2025
 msgid "Could not find the author for comment #%d"
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:2027
+#: inc/importers/wxr-importer/class-wxr-importer.php:2029
 msgid "Comment %1$d was imported with author %2$d, but could not be found"
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:2044
+#: inc/importers/wxr-importer/class-wxr-importer.php:2046
 msgid "Could not update comment #%d with mapped data"
 msgstr ""
 

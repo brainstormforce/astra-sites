@@ -320,7 +320,9 @@ if( ! class_exists( 'WXR_Importer' ) && class_exists( 'WP_Importer' ) ) :
 		 */
 		public function import( $file ) {
 			add_filter( 'import_post_meta_key', array( $this, 'is_valid_meta_key' ) );
-			add_filter( 'http_request_timeout', array( &$this, 'bump_request_timeout' ) );
+			if ( version_compare( get_bloginfo( 'version' ), '5.1.0', '>=' ) ) {
+				add_filter( 'http_request_timeout', array( &$this, 'bump_request_timeout' ) );
+			}
 
 			$result = $this->import_start( $file );
 			if ( is_wp_error( $result ) ) {
