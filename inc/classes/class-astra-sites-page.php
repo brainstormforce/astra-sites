@@ -276,49 +276,51 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 				$page_builders   = implode( ',', $page_builders );
 				?>
 				<div class="astra-sites-welcome" data-plugins="<?php echo esc_attr( $page_builders ); ?>">
-					<div class="inner">
-						<form id="astra-sites-welcome-form" enctype="multipart/form-data" method="post">
-							<h1><?php _e( 'Select Page Builder', 'astra-sites' ); ?></h1>
-							<p><?php _e( 'Astra offers starter sites that can be imported in one click. These templates are available in few different page builders. Please choose your preferred page builder from the list below.', 'astra-sites' ); ?></p>
-							<div class="fields">
-								<ul class="page-builders">
-									<li>
-										<label>
-											<input type="radio" name="page_builder" value="gutenberg">
-											<img src="<?php echo esc_url( ASTRA_SITES_URI . 'inc/assets/images/gutenberg.jpg' ); ?>" />
-											<div class="title"><?php _e( 'Gutenberg', 'astra-sites' ); ?></div>
-										</label>
-									</li>
-									<li>
-										<label>
-											<input type="radio" name="page_builder" value="elementor">
-											<img src="<?php echo esc_url( ASTRA_SITES_URI . 'inc/assets/images/elementor.jpg' ); ?>" />
-											<div class="title"><?php _e( 'Elementor', 'astra-sites' ); ?></div>
-										</label>
-									</li>
-									<li>
-										<label>
-											<input type="radio" name="page_builder" value="beaver-builder">
-											<img src="<?php echo esc_url( ASTRA_SITES_URI . 'inc/assets/images/beaver-builder.png' ); ?>" />
-											<div class="title"><?php _e( 'Beaver Builder', 'astra-sites' ); ?></div>
+					<div class="inner-wrap">
+						<div class="inner">
+							<form id="astra-sites-welcome-form" enctype="multipart/form-data" method="post">
+								<h1><?php _e( 'Select Page Builder', 'astra-sites' ); ?></h1>
+								<p><?php _e( 'Astra offers starter sites that can be imported in one click. These templates are available in few different page builders. Please choose your preferred page builder from the list below.', 'astra-sites' ); ?></p>
+								<div class="fields">
+									<ul class="page-builders">
+										<li>
+											<label>
+												<input type="radio" name="page_builder" value="gutenberg">
+												<img src="<?php echo esc_url( ASTRA_SITES_URI . 'inc/assets/images/gutenberg.jpg' ); ?>" />
+												<div class="title"><?php _e( 'Gutenberg', 'astra-sites' ); ?></div>
+											</label>
 										</li>
-									<li>
-										<label>
-											<input type="radio" name="page_builder" value="brizy">
-											<img src="<?php echo esc_url( ASTRA_SITES_URI . 'inc/assets/images/brizy.jpg' ); ?>" />
-											<div class="title"><?php _e( 'Brizy', 'astra-sites' ); ?></div>
-										</label>
-									</li>
-								</ul>
-								<div class="astra-sites-page-builder-notice" style="display: none;">
-									<p class="description"><?php _e( 'Please select your favorite page builder to continue..', 'astra-sites' ); ?></p>
+										<li>
+											<label>
+												<input type="radio" name="page_builder" value="elementor">
+												<img src="<?php echo esc_url( ASTRA_SITES_URI . 'inc/assets/images/elementor.jpg' ); ?>" />
+												<div class="title"><?php _e( 'Elementor', 'astra-sites' ); ?></div>
+											</label>
+										</li>
+										<li>
+											<label>
+												<input type="radio" name="page_builder" value="beaver-builder">
+												<img src="<?php echo esc_url( ASTRA_SITES_URI . 'inc/assets/images/beaver-builder.png' ); ?>" />
+												<div class="title"><?php _e( 'Beaver Builder', 'astra-sites' ); ?></div>
+											</li>
+										<li>
+											<label>
+												<input type="radio" name="page_builder" value="brizy">
+												<img src="<?php echo esc_url( ASTRA_SITES_URI . 'inc/assets/images/brizy.jpg' ); ?>" />
+												<div class="title"><?php _e( 'Brizy', 'astra-sites' ); ?></div>
+											</label>
+										</li>
+									</ul>
+									<div class="astra-sites-page-builder-notice" style="display: none;">
+										<p class="description"><?php _e( 'Please select your favorite page builder to continue..', 'astra-sites' ); ?></p>
+									</div>
+									<?php submit_button( __( 'Next', 'astra-sites' ), 'primary button-hero disabled' ); ?>
 								</div>
-								<?php submit_button( __( 'Next', 'astra-sites' ), 'primary button-hero disabled' ); ?>
-							</div>
-							<input type="hidden" name="redirect_page" value="<?php echo $current_slug; ?>">
-							<input type="hidden" name="message" value="saved" />
-							<?php wp_nonce_field( 'astra-sites-welcome-screen', 'astra-sites-page-builder' ); ?>
-						</form>
+								<input type="hidden" name="redirect_page" value="<?php echo $current_slug; ?>">
+								<input type="hidden" name="message" value="saved" />
+								<?php wp_nonce_field( 'astra-sites-welcome-screen', 'astra-sites-page-builder' ); ?>
+							</form>
+						</div>
 					</div>
 				</div>
 			<?php } else { ?>
@@ -326,21 +328,33 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 				$page_title = apply_filters( 'astra_sites_page_title', __( 'Astra Starter Sites', 'astra-sites' ) );
 				?>
 				<div class="nav-tab-wrapper">
-					<div class="astra-sites-logo-wrap"><a href="" target="_blank" rel="noopener"><img src="<?php echo esc_url( ASTRA_SITES_URI . 'inc/assets/images/logo.svg' ); ?>" alt="<?php echo $page_title; ?>"></a></div>
-					<h1 class='astra-sites-title'> <?php echo esc_html( $page_title ); ?> </h1>
-					<form id="astra-sites-welcome-form-inline" enctype="multipart/form-data" method="post">
-						<div class="fields">
-							<select name="page_builder" required="required">
-								<option value="gutenberg" <?php selected( $default_page_builder, 'gutenberg' ); ?>><?php _e( 'Block Editor (Gutenberg)', 'astra-sites' ); ?></option>
-								<option value="elementor" <?php selected( $default_page_builder, 'elementor' ); ?>><?php _e( 'Elementor', 'astra-sites' ); ?></option>
-								<option value="beaver-builder" <?php selected( $default_page_builder, 'beaver-builder' ); ?>><?php _e( 'Beaver Builder', 'astra-sites' ); ?></option>
-								<option value="brizy" <?php selected( $default_page_builder, 'brizy' ); ?>><?php _e( 'Brizy', 'astra-sites' ); ?></option>
-							</select>
+					<div class="logo">
+						<div class="astra-sites-logo-wrap"><a href="" target="_blank" rel="noopener">
+							<img src="<?php echo esc_url( ASTRA_SITES_URI . 'inc/assets/images/logo.svg' ); ?>" alt="<?php echo $page_title; ?>"></a>
 						</div>
-						<input type="hidden" name="message" value="saved" />
-						<input type="hidden" name="redirect_page" value="<?php echo $current_slug; ?>">
-						<?php wp_nonce_field( 'astra-sites-welcome-screen', 'astra-sites-page-builder' ); ?>
-					</form>
+						<h1 class='astra-sites-title'> <?php echo esc_html( $page_title ); ?> </h1>
+					</div>
+
+					<div class="menu" style="display:none;">
+						<ul class="astra-sites-nav-items">
+							<li><a href="#"><?php _e( 'Site &amp; Pages', 'astra-sites' ); ?></a></li>
+						</ul>
+					</div>
+					<div class="form">
+						<form id="astra-sites-welcome-form-inline" enctype="multipart/form-data" method="post">
+							<div class="fields">
+								<select name="page_builder" required="required">
+									<option value="gutenberg" <?php selected( $default_page_builder, 'gutenberg' ); ?>><?php _e( 'Block Editor (Gutenberg)', 'astra-sites' ); ?></option>
+									<option value="elementor" <?php selected( $default_page_builder, 'elementor' ); ?>><?php _e( 'Elementor', 'astra-sites' ); ?></option>
+									<option value="beaver-builder" <?php selected( $default_page_builder, 'beaver-builder' ); ?>><?php _e( 'Beaver Builder', 'astra-sites' ); ?></option>
+									<option value="brizy" <?php selected( $default_page_builder, 'brizy' ); ?>><?php _e( 'Brizy', 'astra-sites' ); ?></option>
+								</select>
+							</div>
+							<input type="hidden" name="message" value="saved" />
+							<input type="hidden" name="redirect_page" value="<?php echo $current_slug; ?>">
+							<?php wp_nonce_field( 'astra-sites-welcome-screen', 'astra-sites-page-builder' ); ?>
+						</form>
+					</div>
 					<?php
 					$view_actions = $this->get_view_actions();
 

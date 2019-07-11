@@ -38,10 +38,10 @@ if ( class_exists( 'WP_Background_Process' ) ) :
 		protected function task( $object ) {
 
 			$page_id = $object['page_id'];
+
 			$process = $object['instance'];
 
 			if ( method_exists( $process, 'import_single_post' ) ) {
-
 				$process->import_single_post( $page_id );
 			}
 

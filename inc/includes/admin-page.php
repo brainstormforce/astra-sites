@@ -46,15 +46,13 @@ $import_text = ( 'site-pages' === $global_cpt_meta['cpt_slug'] ) ? __( 'Import P
 							</ul>
 						</div>
 					</div>
+					<div class="search-form">
+						<input placeholder="<?php _e( 'Search Sites...', 'astra-sites' ); ?>" type="search" aria-describedby="live-search-desc" id="wp-filter-search-input" class="wp-filter-search">
+						<span class="dashicons-search dashicons search-icon"></span>
+					</div>
 				</div>
 
 				<div class="section-right">
-
-					<div class="search-form">
-						<label class="screen-reader-text" for="wp-filter-search-input"><?php _e( 'Search Sites', 'astra-sites' ); ?> </label>
-						<input placeholder="<?php _e( 'Search Sites...', 'astra-sites' ); ?>" type="search" aria-describedby="live-search-desc" id="wp-filter-search-input" class="wp-filter-search">
-					</div>
-
 					<div class="filters-wrap">
 						<div class="page-filters-slug" data-id="site-pages-parent-category"></div>
 					</div>
@@ -66,13 +64,6 @@ $import_text = ( 'site-pages' === $global_cpt_meta['cpt_slug'] ) ? __( 'Import P
 	</div>
 
 	<div id="astra-pages-back-wrap">
-
-		<div class="wp-filter hide-if-no-js">
-			<div class="section-left">
-				<a class="astra-pages-back" href="javascript:void(0);"><?php _e( 'Go back to Sites', 'astra-sites' ); ?></a>
-			</div>
-		</div>
-
 	</div>
 
 	<?php do_action( 'astra_sites_before_site_grid' ); ?>
@@ -295,6 +286,7 @@ $import_text = ( 'site-pages' === $global_cpt_meta['cpt_slug'] ) ? __( 'Import P
 		<div class="wp-full-overlay-main">
 			<iframe src="{{{data.astra_demo_url}}}" title="<?php esc_attr_e( 'Preview', 'astra-sites' ); ?>"></iframe>
 			<div class="astra-sites-result-preview" style="display: none;">
+				<div class="overlay"></div>
 				<div class="inner">
 					<h2><?php _e( 'We\'re importing your website.', 'astra-sites' ); ?></h2>
 					<p><?php _e( 'The process can take anywhere between 2 to 10 minutes depending on the size of the website and speed of connection.', 'astra-sites' ); ?></p>
@@ -487,6 +479,150 @@ $import_text = ( 'site-pages' === $global_cpt_meta['cpt_slug'] ) ? __( 'Import P
 
 <?php
 /**
+ * TMPL - Single Site Preview
+ */
+?>
+<script type="text/template" id="tmpl-astra-sites-single-site-preview">
+	<div class="single-site-wrap">
+		<div class="single-site">
+			<div class="single-site-preview-wrap">
+				<div class="astra-pages-back-wrap">
+					<a class="astra-pages-back" href="javascript:void(0);"><?php _e( 'Back to Layouts', 'astra-sites' ); ?></a>
+				</div>
+				<div class="single-site-preview">
+					<img src="{{data['featured-image-url']}}" />
+				</div>
+			</div>
+			<div class="single-site-pages-wrap">
+				<div class="single-site-pages-header">
+					<h2 class="astra-site-title"></h2>
+					<span class="count" style="display: none"></span>
+				</div>
+				<div class="single-site-pages">
+					<div id="single-pages"></div>
+				</div>
+			</div>
+			<div class="single-site-footer">
+				<# console.log( data ) #>
+				<div class="site-action-buttons-wrap">
+					<a href="{{data['astra-site-url']}}" class="button button-hero site-preview-button" target="_blank">Preview This Site <i class="dashicons dashicons-external"></i></a>
+					<div>
+						<# if( 'premium' == data['astra-site-type'] ) { #>
+							<a class="button button-hero button-primary" href="{{astraSitesAdmin.getProURL}}" target="_blank">{{astraSitesAdmin.getProText}}<i class="dashicons dashicons-external"></i></a>
+						<# } else { #>
+							<div class="button button-hero button-primary site-import-site-button">Import Complete Site</div>
+							<div style="margin-left: 5px;" class="button button-hero button-primary site-import-layout-button disabled">Import Layout</div>
+						<# } #>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<div class="astra-sites-result-preview" style="display: none;"></div>
+
+		<div class="astra-sites-result-preview-next-step" style="display: none;">
+			<div class="overlay"></div>
+			<div class="inner">
+				<h2><?php _e( 'We\'re importing your website.', 'astra-sites' ); ?></h2>
+				<p><?php _e( 'The process can take anywhere between 2 to 10 minutes depending on the size of the website and speed of connection.', 'astra-sites' ); ?></p>
+				<p><?php _e( 'Please do not close this browser window until the site is imported completely.', 'astra-sites' ); ?></p>
+				<div class="current-importing-status-wrap">
+					<div class="current-importing-status">
+						<div class="current-importing-status-title"></div>
+						<div class="current-importing-status-description"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</script>
+
+<?php
+/**
+ * TMPL - First Screen
+ */
+?>
+<script type="text/template" id="tmpl-astra-sites-result-preview">
+
+	<# console.log( data ); #>
+	<div class="overlay"></div>
+	<div class="inner">
+		<h2><?php _e( 'Here are few Pre Requisite.', 'astra-sites' ); ?></h2>
+
+		<div class="install-theme-info">
+			<div class="astra-sites-advanced-options-wrap">
+				<div class="astra-sites-advanced-options">
+					<ul class="astra-site-contents">
+						<li class="astra-sites-import-plugins">
+							<input type="checkbox" name="plugins" checked="checked" class="disabled checkbox" readonly>
+							<strong><?php _e( 'Install Required Plugins', 'astra-sites' ); ?></strong>
+							<span class="astra-sites-tooltip-icon" data-tip-id="astra-sites-tooltip-plugins-settings"><span class="dashicons dashicons-editor-help"></span></span>
+							<div class="astra-sites-tooltip-message" id="astra-sites-tooltip-plugins-settings" style="display: none;">
+								<ul class="required-plugins-list"><span class="spinner is-active"></span></ul>
+							</div>
+						</li>
+						<# if( 'astra-sites' === data ) { #>
+							<li class="astra-sites-import-customizer">
+								<label>
+									<input type="checkbox" name="customizer" checked="checked" class="checkbox">
+									<strong>Import Customizer Settings</strong>
+									<span class="astra-sites-tooltip-icon" data-tip-id="astra-sites-tooltip-customizer-settings"><span class="dashicons dashicons-editor-help"></span></span>
+									<div class="astra-sites-tooltip-message" id="astra-sites-tooltip-customizer-settings" style="display: none;">
+										<p><?php _e( 'Customizer is what gives a design to the website; and selecting this option replaces your current design with a new one.', 'astra-sites' ); ?></p>
+										<p><?php _e( 'Backup of current customizer settings will be stored in "wp-content/astra-sites" directory, just in case if you want to restore it later.', 'astra-sites' ); ?></p>
+									</div>
+								</label>
+							</li>
+							<li class="astra-sites-import-xml">
+								<label>
+									<input type="checkbox" name="xml" checked="checked" class="checkbox">
+									<strong>Import Content</strong>
+								</label>
+								<span class="astra-sites-tooltip-icon" data-tip-id="astra-sites-tooltip-site-content"><span class="dashicons dashicons-editor-help"></span></span>
+								<div class="astra-sites-tooltip-message" id="astra-sites-tooltip-site-content" style="display: none;"><p><?php _e( 'Selecting this option will import dummy pages, posts, images and menus. If you do not want to import dummy content, please uncheck this option.', 'astra-sites' ); ?></p></div>
+							</li>
+							<li class="astra-sites-import-widgets">
+								<label>
+									<input type="checkbox" name="widgets" checked="checked" class="checkbox">
+									<strong>Import Widgets</strong>
+								</label>
+							</li>
+						<# } #>
+					</ul>
+				</div>
+				<# if( 'astra-sites' === data ) { #>
+					<ul>
+						<li class="astra-sites-reset-data">
+							<label>
+								<input type="checkbox" name="reset" class="checkbox">
+								<strong>Delete Previously Imported Site</strong>
+								<div class="astra-sites-tooltip-message" id="astra-sites-tooltip-reset-data" style="display: none;"><p><?php _e( 'WARNING: Selecting this option will delete data from your current website. Choose this option only if this is intended.', 'astra-sites' ); ?></p></div>
+							</label>
+						</li>
+					</ul>
+				<# } #>
+			</div>
+		</div>
+		<div class="ast-importing-wrap">
+			<h2><?php _e( 'We\'re importing your website.', 'astra-sites' ); ?></h2>
+			<p><?php _e( 'The process can take anywhere between 2 to 10 minutes depending on the size of the website and speed of connection.', 'astra-sites' ); ?></p>
+			<p><?php _e( 'Please do not close this browser window until the site is imported completely.', 'astra-sites' ); ?></p>
+			<div class="current-importing-status-wrap">
+				<div class="current-importing-status">
+					<div class="current-importing-status-title"></div>
+					<div class="current-importing-status-description"></div>
+				</div>
+			</div>
+		</div>
+		<div class="ast-actioms-wrap">
+			<div class="button button-hero site-import-cancel" style="margin-right: 20px;"><?php _e( 'Cancel', 'astra-sites' ); ?></div>
+			<a href="#" class="button button-hero button-primary astra-demo-import site-install-site-button"><?php _e( 'Import', 'astra-sites' ); ?></a>
+		</div>
+	</div>
+</script>
+
+<?php
+/**
  * TMPL - List
  */
 ?>
@@ -513,7 +649,11 @@ $import_text = ( 'site-pages' === $global_cpt_meta['cpt_slug'] ) ? __( 'Import P
 
 				<div class="inner">
 					<span class="site-preview" data-href="{{ data.items[ key ]['astra-site-url'] }}?TB_iframe=true&width=600&height=550" data-title="{{ data.items[ key ].title.rendered }}">
-						<div class="theme-screenshot" style="background-image: url('{{ data.items[ key ]['featured-image-url'] }}');"></div>
+						<# if ( data.type != 'site-pages' ) { #>
+							<div class="theme-screenshot three" data-src="{{data.items[ key ]['featured-image-url']}}" style="background-image: url('{{ data.items[ key ]['featured-image-url'] }}');"></div>
+							<div class="theme-screenshot two" data-src="{{data.items[ key ]['featured-image-url']}}" style="background-image: url('{{ data.items[ key ]['featured-image-url'] }}');"></div>
+						<# } #>
+						<div class="theme-screenshot one" data-src="{{data.items[ key ]['featured-image-url']}}" style="background-image: url('{{ data.items[ key ]['featured-image-url'] }}');"></div>
 					</span>
 					<# if ( data.items[ key ]['astra-site-type'] ) { #>
 						<# var type = ( data.items[ key ]['astra-site-type'] !== 'premium' ) ? ( data.items[ key ]['astra-site-type'] ) : 'agency'; #>
@@ -537,17 +677,19 @@ $import_text = ( 'site-pages' === $global_cpt_meta['cpt_slug'] ) ? __( 'Import P
 							}
 						}
 						#>
+						<# if ( data.type != 'site-pages' ) { #>
 						<div class="favorite-action-wrap {{fav_class}}" data-favorite={{fav_flag}}>
 							<span><i class="dashicons-heart dashicons"></i></span>
 						</div>
-						<div class="theme-actions">
+						<# } #>
+						<!-- <div class="theme-actions">
 							<div class="theme-action-wrap">
 								<# if ( data.type != 'site-pages' ) { #>
 								<button class="button install-page-preview"><?php esc_html_e( 'Import Pages', 'astra-sites' ); ?></button>
 								<# } #>
 								<button class="button-primary button preview install-theme-preview"><?php esc_html_e( 'Import Site', 'astra-sites' ); ?></button>
 							</div>
-						</div>
+						</div> -->
 					</div>
 				</div>
 			</div>

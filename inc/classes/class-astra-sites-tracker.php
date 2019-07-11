@@ -206,8 +206,10 @@ if ( ! class_exists( 'Astra_Sites_Tracker' ) ) :
 			$memory = self::astra_let_to_num( WP_MEMORY_LIMIT );
 
 			if ( function_exists( 'memory_get_usage' ) ) {
+				// @codingStandardsIgnoreStart
 				$system_memory = self::astra_let_to_num( @ini_get( 'memory_limit' ) );
-				$memory        = max( $memory, $system_memory );
+				// @codingStandardsIgnoreEnd
+				$memory = max( $memory, $system_memory );
 			}
 
 			$wp_data['memory_limit'] = size_format( $memory );
@@ -234,13 +236,14 @@ if ( ! class_exists( 'Astra_Sites_Tracker' ) ) :
 			if ( function_exists( 'phpversion' ) ) {
 				$server_data['php_version'] = phpversion();
 			}
-
+			// @codingStandardsIgnoreStart
 			if ( function_exists( 'ini_get' ) ) {
-				$server_data['php_post_max_size']  = size_format( self::astra_let_to_num( ini_get( 'post_max_size' ) ) );
-				$server_data['php_time_limt']      = ini_get( 'max_execution_time' );
-				$server_data['php_max_input_vars'] = ini_get( 'max_input_vars' );
+				$server_data['php_post_max_size']  = size_format( self::astra_let_to_num( @ini_get( 'post_max_size' ) ) );
+				$server_data['php_time_limt']      = @ini_get( 'max_execution_time' );
+				$server_data['php_max_input_vars'] = @ini_get( 'max_input_vars' );
 				$server_data['php_suhosin']        = extension_loaded( 'suhosin' ) ? 'Yes' : 'No';
 			}
+			// @codingStandardsIgnoreEnd
 
 			$database_version             = self::ast_get_server_database_version();
 			$server_data['mysql_version'] = $database_version['number'];

@@ -99,6 +99,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Brizy' ) ) :
 
 			// Empty mapping? Then return.
 			if ( ! empty( $ids_mapping ) ) {
+
 				// Update WPForm IDs.
 				error_log( '---- Processing WP Forms Mapping ----' );
 				error_log( print_r( $ids_mapping, true ) );
@@ -112,9 +113,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Brizy' ) ) :
 			$data['editor_data'] = base64_encode( $json_value );
 
 			$post->set_editor_data( $json_value );
-
 			$post->storage()->set( Brizy_Editor_Post::BRIZY_POST, $data );
-
 			$post->compile_page();
 			$post->save();
 		}
