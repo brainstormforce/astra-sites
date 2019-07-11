@@ -134,7 +134,7 @@ $import_text = ( 'site-pages' === $global_cpt_meta['cpt_slug'] ) ? __( 'Import P
 ?>
 <script type="text/template" id="tmpl-astra-sites-third-party-required-plugins">
 	<div class="astra-sites-third-party-required-plugins-wrap">
-		<h3 class="theme-name"><?php esc_html_e( 'Required Plugin Missing', 'astra-sites' ); ?></h3>
+		<h3 class="theme-name"><?php esc_html_e( 'Required Plugins Missing', 'astra-sites' ); ?></h3>
 		<p><?php esc_html_e( 'This starter site requires premium plugins. As these are third party premium plugins, you\'ll need to purchase, install and activate them first.', 'astra-sites' ); ?></p>
 		<ul class="astra-sites-third-party-required-plugins">
 			<# for ( key in data ) { #>

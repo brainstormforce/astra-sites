@@ -45,7 +45,6 @@ if ( ! class_exists( 'Astra_Sites_Compatibility_WooCommerce' ) ) :
 		 * @since 1.1.4
 		 */
 		public function __construct() {
-			add_filter( 'woocommerce_enable_setup_wizard', '__return_false', 5 );
 			add_action( 'astra_sites_import_start', array( $this, 'add_attributes' ), 10, 2 );
 		}
 
