@@ -104,6 +104,7 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 
 				// Stored Settings.
 				$stored_data = $this->get_settings();
+				$slug        = ( isset( $_REQUEST['redirect_page'] ) ) ? $_REQUEST['redirect_page'] : 'astra-sites';
 
 				// New settings.
 				$new_data = array(
@@ -116,7 +117,7 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 				// Update settings.
 				update_option( 'astra_sites_settings', $data );
 
-				wp_redirect( admin_url( '/themes.php?page=astra-sites' ) );
+				wp_redirect( admin_url( '/themes.php?page=' . $slug ) );
 			}
 		}
 
@@ -165,6 +166,7 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 			add_action( 'admin_menu', array( $this, 'add_admin_menu' ), 100 );
 			add_action( 'admin_notices', array( $this, 'notices' ) );
 			add_action( 'astra_sites_menu_general_action', array( $this, 'general_page' ) );
+			add_action( 'astra_pages_menu_general_action', array( $this, 'general_page_for_astra_pages' ) );
 		}
 
 		/**
@@ -250,6 +252,7 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 			}
 
 			$default_page_builder = $this->get_setting( 'page_builder' );
+			$current_slug         = isset( $_GET['page'] ) ? esc_attr( $_GET['page'] ) : 'astra-sites';
 
 			if ( empty( $default_page_builder ) || isset( $_GET['change-page-builder'] ) ) {
 
@@ -273,69 +276,84 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 				$page_builders   = implode( ',', $page_builders );
 				?>
 				<div class="astra-sites-welcome" data-plugins="<?php echo esc_attr( $page_builders ); ?>">
-					<div class="inner">
-						<form id="astra-sites-welcome-form" enctype="multipart/form-data" method="post">
-							<h1><?php _e( 'Select Page Builder', 'astra-sites' ); ?></h1>
-							<p><?php _e( 'Astra offers starter sites that can be imported in one click. These templates are available in few different page builders. Please choose your preferred page builder from the list below.', 'astra-sites' ); ?></p>
-							<div class="fields">
-								<ul class="page-builders">
-									<li>
-										<label>
-											<input type="radio" name="page_builder" value="gutenberg">
-											<img src="<?php echo esc_url( ASTRA_SITES_URI . 'inc/assets/images/gutenberg.jpg' ); ?>" />
-											<div class="title"><?php _e( 'Gutenberg', 'astra-sites' ); ?></div>
-										</label>
-									</li>
-									<li>
-										<label>
-											<input type="radio" name="page_builder" value="elementor">
-											<img src="<?php echo esc_url( ASTRA_SITES_URI . 'inc/assets/images/elementor.jpg' ); ?>" />
-											<div class="title"><?php _e( 'Elementor', 'astra-sites' ); ?></div>
-										</label>
-									</li>
-									<li>
-										<label>
-											<input type="radio" name="page_builder" value="beaver-builder">
-											<img src="<?php echo esc_url( ASTRA_SITES_URI . 'inc/assets/images/beaver-builder.png' ); ?>" />
-											<div class="title"><?php _e( 'Beaver Builder', 'astra-sites' ); ?></div>
+					<div class="inner-wrap">
+						<div class="inner">
+							<form id="astra-sites-welcome-form" enctype="multipart/form-data" method="post">
+								<h1><?php _e( 'Select Page Builder', 'astra-sites' ); ?></h1>
+								<p><?php _e( 'Astra offers starter sites that can be imported in one click. These templates are available in few different page builders. Please choose your preferred page builder from the list below.', 'astra-sites' ); ?></p>
+								<div class="fields">
+									<ul class="page-builders">
+										<li>
+											<label>
+												<input type="radio" name="page_builder" value="gutenberg">
+												<img src="<?php echo esc_url( ASTRA_SITES_URI . 'inc/assets/images/gutenberg.jpg' ); ?>" />
+												<div class="title"><?php _e( 'Gutenberg', 'astra-sites' ); ?></div>
+											</label>
 										</li>
-									<li>
-										<label>
-											<input type="radio" name="page_builder" value="brizy">
-											<img src="<?php echo esc_url( ASTRA_SITES_URI . 'inc/assets/images/brizy.jpg' ); ?>" />
-											<div class="title"><?php _e( 'Brizy', 'astra-sites' ); ?></div>
-										</label>
-									</li>
-								</ul>
-								<div class="astra-sites-page-builder-notice" style="display: none;">
-									<p class="description"><?php _e( 'Please select your favorite page builder to continue..', 'astra-sites' ); ?></p>
+										<li>
+											<label>
+												<input type="radio" name="page_builder" value="elementor">
+												<img src="<?php echo esc_url( ASTRA_SITES_URI . 'inc/assets/images/elementor.jpg' ); ?>" />
+												<div class="title"><?php _e( 'Elementor', 'astra-sites' ); ?></div>
+											</label>
+										</li>
+										<li>
+											<label>
+												<input type="radio" name="page_builder" value="beaver-builder">
+												<img src="<?php echo esc_url( ASTRA_SITES_URI . 'inc/assets/images/beaver-builder.png' ); ?>" />
+												<div class="title"><?php _e( 'Beaver Builder', 'astra-sites' ); ?></div>
+											</li>
+										<li>
+											<label>
+												<input type="radio" name="page_builder" value="brizy">
+												<img src="<?php echo esc_url( ASTRA_SITES_URI . 'inc/assets/images/brizy.jpg' ); ?>" />
+												<div class="title"><?php _e( 'Brizy', 'astra-sites' ); ?></div>
+											</label>
+										</li>
+									</ul>
+									<?php submit_button( __( 'Next', 'astra-sites' ), 'primary button-hero disabled' ); ?>
+									<div class="astra-sites-page-builder-notice" style="display: none;">
+										<p class="description"><?php _e( 'Please select your favorite page builder to continue..', 'astra-sites' ); ?></p>
+									</div>
 								</div>
-								<?php submit_button( __( 'Next', 'astra-sites' ), 'primary button-hero disabled' ); ?>
-							</div>
-
-							<input type="hidden" name="message" value="saved" />
-							<?php wp_nonce_field( 'astra-sites-welcome-screen', 'astra-sites-page-builder' ); ?>
-						</form>
+								<input type="hidden" name="redirect_page" value="<?php echo $current_slug; ?>">
+								<input type="hidden" name="message" value="saved" />
+								<?php wp_nonce_field( 'astra-sites-welcome-screen', 'astra-sites-page-builder' ); ?>
+							</form>
+						</div>
 					</div>
 				</div>
 			<?php } else { ?>
 				<?php
-				$page_title = apply_filters( 'astra_sites_page_title', __( 'Astra Starter Sites - Your Library of 100+ Ready Templates!', 'astra-sites' ) );
+				$page_title = apply_filters( 'astra_sites_page_title', __( 'Astra Starter Sites', 'astra-sites' ) );
 				?>
 				<div class="nav-tab-wrapper">
-					<h1 class='astra-sites-title'> <?php echo esc_html( $page_title ); ?> </h1>
-					<form id="astra-sites-welcome-form-inline" enctype="multipart/form-data" method="post">
-						<div class="fields">
-							<select name="page_builder" required="required">
-								<option value="gutenberg" <?php selected( $default_page_builder, 'gutenberg' ); ?>><?php _e( 'Block Editor (Gutenberg)', 'astra-sites' ); ?></option>
-								<option value="elementor" <?php selected( $default_page_builder, 'elementor' ); ?>><?php _e( 'Elementor', 'astra-sites' ); ?></option>
-								<option value="beaver-builder" <?php selected( $default_page_builder, 'beaver-builder' ); ?>><?php _e( 'Beaver Builder', 'astra-sites' ); ?></option>
-								<option value="brizy" <?php selected( $default_page_builder, 'brizy' ); ?>><?php _e( 'Brizy', 'astra-sites' ); ?></option>
-							</select>
+					<div class="logo">
+						<div class="astra-sites-logo-wrap"><a href="" target="_blank" rel="noopener">
+							<img src="<?php echo esc_url( ASTRA_SITES_URI . 'inc/assets/images/logo.svg' ); ?>" alt="<?php echo $page_title; ?>"></a>
 						</div>
-						<input type="hidden" name="message" value="saved" />
-						<?php wp_nonce_field( 'astra-sites-welcome-screen', 'astra-sites-page-builder' ); ?>
-					</form>
+						<h1 class='astra-sites-title'> <?php echo esc_html( $page_title ); ?> </h1>
+					</div>
+					<!-- <div class="menu" style="display:none;">
+						<ul class="astra-sites-nav-items">
+							<li><a href="#"><?php _e( 'Site &amp; Pages', 'astra-sites' ); ?></a></li>
+						</ul>
+					</div> -->
+					<div class="form">
+						<form id="astra-sites-welcome-form-inline" enctype="multipart/form-data" method="post">
+							<div class="fields">
+								<select name="page_builder" required="required">
+									<option value="gutenberg" <?php selected( $default_page_builder, 'gutenberg' ); ?>><?php _e( 'Block Editor (Gutenberg)', 'astra-sites' ); ?></option>
+									<option value="elementor" <?php selected( $default_page_builder, 'elementor' ); ?>><?php _e( 'Elementor', 'astra-sites' ); ?></option>
+									<option value="beaver-builder" <?php selected( $default_page_builder, 'beaver-builder' ); ?>><?php _e( 'Beaver Builder', 'astra-sites' ); ?></option>
+									<option value="brizy" <?php selected( $default_page_builder, 'brizy' ); ?>><?php _e( 'Brizy', 'astra-sites' ); ?></option>
+								</select>
+							</div>
+							<input type="hidden" name="message" value="saved" />
+							<input type="hidden" name="redirect_page" value="<?php echo $current_slug; ?>">
+							<?php wp_nonce_field( 'astra-sites-welcome-screen', 'astra-sites-page-builder' ); ?>
+						</form>
+					</div>
 					<?php
 					$view_actions = $this->get_view_actions();
 
@@ -369,12 +387,13 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 		 */
 		public function get_page_url( $menu_slug ) {
 
-			$parent_page = 'themes.php';
+			$current_slug = isset( $_GET['page'] ) ? esc_attr( $_GET['page'] ) : 'astra-sites';
+			$parent_page  = 'themes.php';
 
 			if ( strpos( $parent_page, '?' ) !== false ) {
-				$query_var = '&page=astra-sites';
+				$query_var = '&page=' . $current_slug;
 			} else {
-				$query_var = '?page=astra-sites';
+				$query_var = '?page=' . $current_slug;
 			}
 
 			$parent_page_url = admin_url( $parent_page . $query_var );
@@ -406,7 +425,6 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 
 			$active_tab   = str_replace( '_', '-', $current_slug );
 			$current_slug = str_replace( '-', '_', $current_slug );
-
 			?>
 			<div class="astra-sites-menu-page-wrapper">
 				<?php $this->init_nav_menu( $active_tab ); ?>
@@ -425,7 +443,85 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 			if ( empty( $default_page_builder ) || isset( $_GET['change-page-builder'] ) ) {
 				return;
 			}
+
+			$global_cpt_meta = array(
+				'category_slug' => 'astra-site-category',
+				'cpt_slug'      => 'astra-sites',
+				'page_builder'  => 'astra-site-page-builder',
+			);
+
 			require_once ASTRA_SITES_DIR . 'inc/includes/admin-page.php';
+		}
+
+		/**
+		 * Converts a period of time in seconds into a human-readable format representing the interval.
+		 *
+		 * Example:
+		 *
+		 *     echo self::interval( 90 );
+		 *     // 1 minute 30 seconds
+		 *
+		 * @param  int $since A period of time in seconds.
+		 * @return string An interval represented as a string.
+		 */
+		public function interval( $since ) {
+			// Array of time period chunks.
+			$chunks = array(
+				/* translators: 1: The number of years in an interval of time. */
+				array( 60 * 60 * 24 * 365, _n_noop( '%s year', '%s years', 'astra-sites' ) ),
+				/* translators: 1: The number of months in an interval of time. */
+				array( 60 * 60 * 24 * 30, _n_noop( '%s month', '%s months', 'astra-sites' ) ),
+				/* translators: 1: The number of weeks in an interval of time. */
+				array( 60 * 60 * 24 * 7, _n_noop( '%s week', '%s weeks', 'astra-sites' ) ),
+				/* translators: 1: The number of days in an interval of time. */
+				array( 60 * 60 * 24, _n_noop( '%s day', '%s days', 'astra-sites' ) ),
+				/* translators: 1: The number of hours in an interval of time. */
+				array( 60 * 60, _n_noop( '%s hour', '%s hours', 'astra-sites' ) ),
+				/* translators: 1: The number of minutes in an interval of time. */
+				array( 60, _n_noop( '%s minute', '%s minutes', 'astra-sites' ) ),
+				/* translators: 1: The number of seconds in an interval of time. */
+				array( 1, _n_noop( '%s second', '%s seconds', 'astra-sites' ) ),
+			);
+
+			if ( $since <= 0 ) {
+				return __( 'now', 'astra-sites' );
+			}
+
+			/**
+			 * We only want to output two chunks of time here, eg:
+			 * x years, xx months
+			 * x days, xx hours
+			 * so there's only two bits of calculation below:
+			 */
+			$j = count( $chunks );
+
+			// Step one: the first chunk.
+			for ( $i = 0; $i < $j; $i++ ) {
+				$seconds = $chunks[ $i ][0];
+				$name    = $chunks[ $i ][1];
+
+				// Finding the biggest chunk (if the chunk fits, break).
+				$count = floor( $since / $seconds );
+				if ( $count ) {
+					break;
+				}
+			}
+
+			// Set output var.
+			$output = sprintf( translate_nooped_plural( $name, $count, 'astra-sites' ), $count );
+
+			// Step two: the second chunk.
+			if ( $i + 1 < $j ) {
+				$seconds2 = $chunks[ $i + 1 ][0];
+				$name2    = $chunks[ $i + 1 ][1];
+				$count2   = floor( ( $since - ( $seconds * $count ) ) / $seconds2 );
+				if ( $count2 ) {
+					// Add to output var.
+					$output .= ' ' . sprintf( translate_nooped_plural( $name2, $count2, 'astra-sites' ), $count2 );
+				}
+			}
+
+			return $output;
 		}
 	}
 

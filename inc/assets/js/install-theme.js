@@ -14,7 +14,7 @@
 		 * Binds events for the Astra Sites.
 		 *
 		 * @since 1.3.2
-		 * 
+		 *
 		 * @access private
 		 * @method _bind
 		 */
@@ -27,12 +27,12 @@
 
 		/**
 		 * Close Getting Started Notice
-		 * 
+		 *
 		 * @param  {object} event
 		 * @return void
 		 */
 		_auto_close_notice: function() {
-			
+
 			if( $( '.astra-sites-getting-started-btn' ).length ) {
 				$.ajax({
 					url: AstraSitesInstallThemeVars.ajaxurl,
@@ -92,7 +92,7 @@
 		 * Install and activate
 		 *
 		 * @since 1.3.2
-		 * 
+		 *
 		 * @param  {object} event Current event.
 		 * @return void
 		 */
@@ -110,7 +110,7 @@
 			if ( wp.updates.shouldRequestFilesystemCredentials && ! wp.updates.ajaxLocked ) {
 				wp.updates.requestFilesystemCredentials( event );
 			}
-			
+
 			wp.updates.installTheme( {
 				slug: theme_slug
 			});

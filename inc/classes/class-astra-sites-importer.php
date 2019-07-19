@@ -8,7 +8,7 @@
 
 defined( 'ABSPATH' ) or exit;
 
-if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
+if ( ! class_exists( 'Astra_Sites_Importer' ) ) {
 
 	/**
 	 * Astra Sites Importer
@@ -240,6 +240,8 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 				Astra_Sites_Importer_Log::add( 'Imported Customizer Settings ' . json_encode( $customizer_data ) );
 
 				// Set meta for tracking the post.
+				error_log( 'Customizer Data ' . json_encode( $customizer_data ) );
+
 				update_option( '_astra_sites_old_customizer_data', $customizer_data );
 
 				Astra_Customizer_Import::instance()->import( $customizer_data );
@@ -325,7 +327,12 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 		 */
 		function import_widgets() {
 
-			$widgets_data = ( isset( $_POST['widgets_data'] ) ) ? (object) json_decode( stripcslashes( $_POST['widgets_data'] ) ) : '';
+			$widgets_data = ( isset( $_POST['widgets_data'] ) ) ? (object) json_decode( stripslashes( $_POST['widgets_data'] ) ) : '';
+
+			// $widgets_data = stripslashes(json_encode($widgets_data->scalar));
+			// $widgets_data = json_decode( $widget_data );
+			// vl( $widgets_data );
+			// wp_die();
 
 			Astra_Sites_Importer_Log::add( 'Imported - Widgets ' . json_encode( $widgets_data ) );
 
@@ -333,10 +340,13 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 
 				$widgets_importer = Astra_Widget_Importer::instance();
 				$status           = $widgets_importer->import_widgets_data( $widgets_data );
+				// vl( $status );
+				// wp_die();
 
 				// Set meta for tracking the post.
 				if ( is_object( $widgets_data ) ) {
 					$widgets_data = (array) $widgets_data;
+
 					update_option( '_astra_sites_old_widgets_data', $widgets_data );
 				}
 
@@ -502,16 +512,17 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 		 * @return void
 		 */
 		function reset_widgets_data() {
-			$old_widgets = get_option( '_astra_sites_old_widgets_data', array() );
+			$old_widgets = (array) get_option( '_astra_sites_old_widgets_data', array() );
 
-			Astra_Sites_Importer_Log::add( 'DELETED - WIDGETS ' . json_encode( $old_widgets ) );
+			if ( ! empty( $old_widgets ) ) {
 
-			if ( $old_widgets ) {
+				Astra_Sites_Importer_Log::add( 'DELETED - WIDGETS ' . json_encode( $old_widgets ) );
+
 				$sidebars_widgets = get_option( 'sidebars_widgets', array() );
 
 				foreach ( $old_widgets as $sidebar_id => $widgets ) {
 
-					if ( $widgets ) {
+					if ( ! empty( $widgets ) ) {
 						foreach ( $widgets as $widget_key => $widget_data ) {
 
 							if ( isset( $sidebars_widgets['wp_inactive_widgets'] ) ) {
@@ -596,7 +607,4 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 	 * Kicking this off by calling 'get_instance()' method
 	 */
 	Astra_Sites_Importer::get_instance();
-
-endif;
-
-
+}

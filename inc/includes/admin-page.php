@@ -12,50 +12,168 @@
  */
 
 defined( 'ABSPATH' ) or exit;
+
+$import_text = ( 'site-pages' === $global_cpt_meta['cpt_slug'] ) ? __( 'Import Page', 'astra-sites' ) : __( 'Import Site', 'astra-sites' );
+
+$api_args = array(
+	'timeout' => 60,
+);
 ?>
 
-<div class="wrap" id="astra-sites-admin">
+<div class="wrap" id="astra-sites-admin" data-slug="<?php echo $global_cpt_meta['cpt_slug']; ?>">
+
+
+	<?php
+	// DEBUGGING PURPOSE ONLY.
+	if ( isset( $_GET['debug'] ) ) {
+		$crons  = _get_cron_array();
+		$events = array();
+
+		if ( empty( $crons ) ) {
+			return new WP_Error(
+				'no_events',
+				__( 'You currently have no scheduled cron events.', 'wp-crontrol' )
+			);
+		}
+
+		foreach ( $crons as $time => $cron ) {
+			$events[ array_keys( $cron )[0] ] = $time;
+		}
+
+		$expired = get_transient( 'astra-sites-import-check' );
+		if ( $expired ) {
+			global $wpdb;
+			$transient         = 'astra-sites-import-check';
+			$transient_timeout = $wpdb->get_col(
+				"
+		      SELECT option_value
+		      FROM $wpdb->options
+		      WHERE option_name
+		      LIKE '%_transient_timeout_$transient%'
+		    "
+			);
+			$older_date        = $transient_timeout[0];
+			$status            = 'Transient: Not Expired! Recheck in ' . human_time_diff( time(), $older_date );
+		} else {
+			$status = 'Transient: Starting.. Process for each 5 minutes.';
+		}
+		$temp  = get_option( 'astra-sites-batch-status-string', '' );
+		$temp .= isset( $events['wp_astra_site_importer_cron'] ) ? '<br/>Batch: Recheck batch in ' . human_time_diff( time(), $events['wp_astra_site_importer_cron'] ) : '<br/>Batch: Not Started! Until the Transient expire.';
+		?>
+		<div class="batch-log"><?php echo $temp; ?><br> <?php echo $status; ?></div>
+	<?php } ?>
+
+
 
 	<div id="astra-sites-filters">
-
-		<?php if ( apply_filters( 'astra_sites_show_filters', true ) ) { ?>
+		<?php
+		$categories = get_option( 'astra-sites-categories', array() );
+		if ( ! empty( $categories ) ) {
+			?>
 			<div class="wp-filter hide-if-no-js">
 				<div class="section-left">
-
-					<!-- All Filters -->
-					<div class="filter-count">
-						<span class="count"></span>
-					</div>
-					<div class="filters-wrap" style="display: none;">
-						<div id="astra-site-page-builder"></div>
-					</div>				
-					<div class="filters-wrap">
-						<div id="astra-site-category"></div>
-					</div>
-
-				</div>
-
-				<div class="section-right">
-
 					<div class="search-form">
-						<label class="screen-reader-text" for="wp-filter-search-input"><?php _e( 'Search Sites', 'astra-sites' ); ?> </label>
-						<input placeholder="<?php _e( 'Search Sites...', 'astra-sites' ); ?>" type="search" aria-describedby="live-search-desc" id="wp-filter-search-input" class="wp-filter-search">
+						<input autocomplete="off" placeholder="<?php _e( 'Search Sites...', 'astra-sites' ); ?>" type="search" aria-describedby="live-search-desc" id="wp-filter-search-input" class="wp-filter-search">
+						<span class="dashicons-search dashicons search-icon"></span>
+						<div class="filters-wrap filters-wrap-page-categories">
+							<div class="filters-slug" data-id="astra-site-category">
+								<ul class="filter-links astra-site-category" data-category="astra-site-category">
+									<?php if ( $categories ) { ?>
+										<li>
+											<a href="#" data-group="" class="current">All</a>
+										</li>
+										<?php foreach ( $categories as $category_id => $category ) { ?>
+											<li>
+												<a href="#" data-group="category-<?php echo $category['slug']; ?>" class="<?php echo $category['name']; ?>"><?php echo $category['name']; ?></a>
+											</li>
+										<?php } ?>
+									<?php } ?>
+								</ul>
+							</div>
+						</div>
 					</div>
-
+				</div>
+				<div class="section-right">
+					<div class="filters-wrap favorite-filters-wrap">
+						<div class="filters-slug">
+							<ul class="filter-links">
+								<li>
+									<a href="#">
+										<span><i class="dashicons-heart dashicons"></i></span><span class="favorite-filters-title"><span>My Favorites</span></span>
+									</a>
+								</li>
+								<li>
+									<a href="#" class="astra-sites-sync-library-button">
+										<span><i class="dashicons dashicons-update"></i></span><span><span class="astra-sites-sync-library">Sync Library</span></span>
+									</a>
+								</li>
+							</ul>
+						</div>
+					</div>
 				</div>
 			</div>
 		<?php } ?>
-
 	</div>
+
+	<div id="astra-pages-back-wrap"></div>
 
 	<?php do_action( 'astra_sites_before_site_grid' ); ?>
 
 	<div class="theme-browser rendered">
-		<div id="astra-sites" class="themes wp-clearfix"></div>
-	</div>
-
-	<div class="spinner-wrap">
-		<span class="spinner"></span>
+		<div id="astra-sites" class="themes wp-clearfix">
+			<?php
+			$favorite_site_ids = get_option( 'astra-sites-favorites', array() );
+			$sites_and_pages   = Astra_Sites::get_instance()->get_all_sites();
+			if ( ! empty( $sites_and_pages ) ) {
+				foreach ( $sites_and_pages as $site_id => $site ) {
+					$site_page_builder = isset( $site['astra-site-page-builder'] ) ? sanitize_key( $site['astra-site-page-builder'] ) : '';
+					if ( ! empty( $site_page_builder ) ) {
+						if ( $default_page_builder === $site_page_builder ) {
+							$category_classes = isset( $site['astra-site-category'] ) ? 'category-' . implode( ' category-', $site['astra-site-category'] ) : '';
+							$type_classes     = isset( $site['astra-sites-type'] ) ? 'site-type-' . $site['astra-sites-type'] : '';
+							$builder_classes  = isset( $site['astra-site-page-builder'] ) ? 'page-builder-' . $site['astra-site-page-builder'] : '';
+							?>
+							<div class="theme astra-theme site-single publish <?php echo $category_classes; ?> <?php echo $type_classes; ?> <?php echo $builder_classes; ?>" data-site-id="<?php echo $site_id; ?>">
+								<div class="inner">
+									<span class="site-preview" data-href="" data-title="<?php echo $site['title']; ?>">
+										<div class="theme-screenshot one loading" data-src="<?php echo $site['featured-image-url']; ?>" style="background-image: url('<?php echo $site['tiny-image-url']; ?>');"></div>
+									</span>
+									<div class="theme-id-container">
+										<h3 class="theme-name" id="astra-theme-name"><?php echo $site['title']; ?></h3>
+										<?php
+										$class = '';
+										if ( in_array( $site_id, $favorite_site_ids ) ) {
+											$class = 'is-favorite';
+										}
+										?>
+										<div class="favorite-action-wrap <?php echo $class; ?>" data-favorite="false">
+											<span><i class="dashicons-heart dashicons"></i></span>
+										</div>
+									</div>
+								</div>
+								<?php if ( isset( $site['astra-sites-type'] ) && ! empty( $site['astra-sites-type'] ) && 'free' !== $site['astra-sites-type'] ) { ?>
+									<div class="site-type-wrap">
+										<span class="site-type premium"><?php echo str_replace( 'agency-mini', 'agency', $site['astra-sites-type'] ); ?></span>
+									</div>
+								<?php } ?>
+							</div>
+							<?php
+						}
+					}
+				}
+			}
+			?>
+		</div>
+		<div class="astra-sites-no-sites" style="display:none;">
+			<h2><?php _e( 'No Demos found, Try a different search.', 'astra-sites' ); ?></h2>
+			<p class="description">
+				<?php
+				/* translators: %1$s External Link */
+				printf( __( 'Don\'t see a site that you would like to import?<br><a target="_blank" href="%1$s">Please suggest us!</a>', 'astra-sites' ), esc_url( 'https://wpastra.com/sites-suggestions/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=suggestions' ) );
+				?>
+			</p>
+		</div>
+		<div id="site-pages" class="themes wp-clearfix"></div>
 	</div>
 
 	<?php do_action( 'astra_sites_after_site_grid' ); ?>
@@ -106,7 +224,7 @@ defined( 'ABSPATH' ) or exit;
 ?>
 <script type="text/template" id="tmpl-astra-sites-third-party-required-plugins">
 	<div class="astra-sites-third-party-required-plugins-wrap">
-		<h3 class="theme-name"><?php esc_html_e( 'Required Plugins Missing', 'astra-sites' ); ?></h3>
+		<h3 class="theme-name"><?php esc_html_e( 'Required Plugin Missing', 'astra-sites' ); ?></h3>
 		<p><?php esc_html_e( 'This starter site requires premium plugins. As these are third party premium plugins, you\'ll need to purchase, install and activate them first.', 'astra-sites' ); ?></p>
 		<ul class="astra-sites-third-party-required-plugins">
 			<# for ( key in data ) { #>
@@ -118,78 +236,138 @@ defined( 'ABSPATH' ) or exit;
 
 <?php
 /**
- * TMPL - Single Demo Preview
+ * TMPL - Single Site Preview
  */
 ?>
-<script type="text/template" id="tmpl-astra-site-select-page-builder">
-	<div class="select-page-builder">
-		<div class="note-wrap">
-			<h3>
-				<span class="up-arrow dashicons dashicons-editor-break"></span>
-				<div class="note"><?php _e( 'Select Your Favorite Page Builder', 'astra-sites' ); ?></div>
-			</h3>
+<script type="text/template" id="tmpl-astra-sites-single-site-preview">
+	<div class="single-site-wrap">
+		<div class="single-site">
+			<div class="single-site-preview-wrap">
+				<div class="astra-pages-back-wrap">
+					<a class="astra-pages-back" href="javascript:void(0);"><?php _e( 'Back to Layouts', 'astra-sites' ); ?></a>
+				</div>
+				<div class="single-site-preview">
+					<img src="{{data['featured-image-url']}}" />
+				</div>
+			</div>
+			<div class="single-site-pages-wrap">
+				<div class="single-site-pages-header">
+					<h2 class="astra-site-title">{{{data['title']}}}</h2>
+					<span class="count" style="display: none"></span>
+				</div>
+				<div class="single-site-pages">
+					<div id="single-pages">
+						<# for ( page_id in data.pages ) { #>
+							<div class="theme astra-theme site-single" data-page-id="{{page_id}}" >
+								<div class="inner">
+									<#
+									var featured_image_class = '';
+									var featured_image = data.pages[page_id]['featured-image-url'] || '';
+									if( '' === featured_image ) {
+										featured_image = '<?php echo esc_url( ASTRA_SITES_URI . 'inc/assets/images/placeholder.png' ); ?>';
+										featured_image_class = ' no-featured-image ';
+									}
+
+									var featured_tiny_image = data.pages[page_id]['tiny-image-url'] || '';
+									if( '' === featured_tiny_image ) {
+										featured_tiny_image = '<?php echo esc_url( ASTRA_SITES_URI . 'inc/assets/images/placeholder.png' ); ?>';
+										featured_image_class = ' no-featured-tiny-image ';
+									}
+									console.log( featured_image );
+									#>
+									<span class="site-preview" data-href="?TB_iframe=true&width=600&height=550" data-title="{{ data.pages[page_id]['title'] }}">
+										<div class="theme-screenshot one {{ featured_image_class }}" data-src="{{ featured_image }}" style="background-image: url('{{ featured_tiny_image }}');"></div>
+									</span>
+									<div class="theme-id-container">
+										<h3 class="theme-name" id="astra-theme-name">
+											{{{ data.pages[page_id]['title'] }}}
+										</h3>
+										<#
+										/*var fav_class = "";
+										var fav_flag = false;
+										for ( fav_item in data.args.favorites ) {
+											if ( data.items[ page_id ].id.toString() == data.args.favorites[fav_item] ) {
+												fav_class = "is-favorite";
+												fav_flag = true;
+												break;
+											}
+										}*/
+										#>
+									</div>
+								</div>
+							</div>
+						<# } #>
+					</div>
+				</div>
+			</div>
+			<div class="single-site-footer">
+				<# console.log( data ) #>
+				<div class="site-action-buttons-wrap">
+					<a href="{{data['astra-site-url']}}" class="button button-hero site-preview-button" target="_blank">Preview This Site <i class="dashicons dashicons-external"></i></a>
+					<div>
+						<# if( 'free' !== data['astra-sites-type'] && ! astraRenderGrid.license_status ) { #>
+							<a class="button button-hero button-primary" href="{{astraSitesAdmin.getProURL}}" target="_blank">{{astraSitesAdmin.getProText}}<i class="dashicons dashicons-external"></i></a>
+							<# if( ! astraSitesAdmin.isPro ) { #>
+								<span class="dashicons dashicons-editor-help astra-sites-get-agency-bundle-button"></span>
+							<# } #>
+						<# } else { #>
+							<div class="button button-hero button-primary site-import-layout-button disabled">Import Layout</div>
+							<div style="margin-left: 5px;" class="button button-hero button-primary site-import-site-button">Import Complete Site</div>
+						<# } #>
+					</div>
+				</div>
+			</div>
 		</div>
-		<img src="<?php echo esc_url( ASTRA_SITES_URI . 'inc/assets/images/sites-screenshot.jpg' ); ?>" alt="<?php _e( 'Sites List..', 'astra-sites' ); ?>" title="<?php _e( 'Sites List..', 'astra-sites' ); ?>" />
+
+		<div class="astra-sites-result-preview" style="display: none;"></div>
+
+		<div class="astra-sites-result-preview-next-step" style="display: none;">
+			<div class="overlay"></div>
+			<div class="inner">
+				<h2><?php _e( 'We\'re importing your website.', 'astra-sites' ); ?></h2>
+				<p><?php _e( 'The process can take anywhere between 2 to 10 minutes depending on the size of the website and speed of connection.', 'astra-sites' ); ?></p>
+				<p><?php _e( 'Please do not close this browser window until the site is imported completely.', 'astra-sites' ); ?></p>
+				<div class="current-importing-status-wrap">
+					<div class="current-importing-status">
+						<div class="current-importing-status-title"></div>
+						<div class="current-importing-status-description"></div>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
 </script>
 
 <?php
 /**
- * TMPL - Single Demo Preview
+ * TMPL - First Screen
  */
 ?>
-<script type="text/template" id="tmpl-astra-site-preview">
-	<div class="astra-sites-preview theme-install-overlay wp-full-overlay expanded">
-		<div class="wp-full-overlay-sidebar">
-			<div class="wp-full-overlay-header"
-					data-demo-id="{{{data.id}}}"
-					data-demo-type="{{{data.astra_demo_type}}}"
-					data-demo-url="{{{data.astra_demo_url}}}"
-					data-demo-api="{{{data.demo_api}}}"
-					data-demo-name="{{{data.demo_name}}}"
-					data-demo-slug="{{{data.slug}}}"
-					data-screenshot="{{{data.screenshot}}}"
-					data-content="{{{data.content}}}"
-					data-required-plugins="{{data.required_plugins}}">
-				<input type="hidden" class="astra-site-options" value="{{data.astra_site_options}}" >
-				<input type="hidden" class="astra-enabled-extensions" value="{{data.astra_enabled_extensions}}" >
-				<button class="close-full-overlay"><span class="screen-reader-text"><?php esc_html_e( 'Close', 'astra-sites' ); ?></span></button>
-				<button class="previous-theme"><span class="screen-reader-text"><?php esc_html_e( 'Previous', 'astra-sites' ); ?></span></button>
-				<button class="next-theme"><span class="screen-reader-text"><?php esc_html_e( 'Next', 'astra-sites' ); ?></span></button>
-				<!-- <a class="button hide-if-no-customize astra-site-import" href="#" data-import="disabled"><?php esc_html_e( 'Import Site', 'astra-sites' ); ?></a> -->
-				<a class="button hide-if-no-customize button-primary astra-demo-import" href="#" data-import="disabled"><?php esc_html_e( 'Import Site', 'astra-sites' ); ?></a>
+<script type="text/template" id="tmpl-astra-sites-result-preview">
 
-			</div>
-			<div class="wp-full-overlay-sidebar-content">
-				<div class="install-theme-info">
+	<div class="overlay"></div>
+	<div class="inner">
 
-					<span class="site-type {{{data.astra_demo_type}}}">{{{data.astra_demo_type}}}</span>
-					<h3 class="theme-name">{{{data.demo_name}}}</h3>
+		<# if( 'astra-sites' === data ) { #>
+			<h2><?php _e( 'We are importing site!', 'astra-sites' ); ?></h2>
+		<# } else { #>
+			<h2><?php _e( 'We are importing page!', 'astra-sites' ); ?></h2>
+		<# } #>
 
-					<# if ( data.screenshot.length ) { #>
-						<div class="theme-screenshot-wrap">
-							<img class="theme-screenshot" src="{{{data.screenshot}}}" alt="">
-						</div>
-					<# } #>
-
-					<div class="theme-details">
-						{{{data.content}}}
-					</div>
-					<a href="#" class="theme-details-read-more"><?php _e( 'Read more', 'astra-sites' ); ?> &hellip;</a>
-
-					<div class="astra-sites-advanced-options-wrap">
-
-						<div class="astra-sites-advanced-options">
-
-							<ul class="astra-site-contents">
-								<li class="astra-sites-import-plugins">
-									<input type="checkbox" name="plugins" checked="checked" class="disabled checkbox" readonly>
-									<strong><?php _e( 'Install Required Plugins', 'astra-sites' ); ?></strong>
-									<span class="astra-sites-tooltip-icon" data-tip-id="astra-sites-tooltip-plugins-settings"><span class="dashicons dashicons-editor-help"></span></span>
-									<div class="astra-sites-tooltip-message" id="astra-sites-tooltip-plugins-settings" style="display: none;">
-										<ul class="required-plugins-list"><span class="spinner is-active"></span></ul>
-									</div>
-								</li>
+		<div class="astra-sites-import-content">
+			<div class="install-theme-info">
+				<div class="astra-sites-advanced-options-wrap">
+					<div class="astra-sites-advanced-options">
+						<ul class="astra-site-contents">
+							<li class="astra-sites-import-plugins">
+								<input type="checkbox" name="plugins" checked="checked" class="disabled checkbox" readonly>
+								<strong><?php _e( 'Install Required Plugins', 'astra-sites' ); ?></strong>
+								<span class="astra-sites-tooltip-icon" data-tip-id="astra-sites-tooltip-plugins-settings"><span class="dashicons dashicons-editor-help"></span></span>
+								<div class="astra-sites-tooltip-message" id="astra-sites-tooltip-plugins-settings" style="display: none;">
+									<ul class="required-plugins-list"><span class="spinner is-active"></span></ul>
+								</div>
+							</li>
+							<# if( 'astra-sites' === data ) { #>
 								<li class="astra-sites-import-customizer">
 									<label>
 										<input type="checkbox" name="customizer" checked="checked" class="checkbox">
@@ -215,9 +393,10 @@ defined( 'ABSPATH' ) or exit;
 										<strong>Import Widgets</strong>
 									</label>
 								</li>
-							</ul>
-						</div>
-
+							<# } #>
+						</ul>
+					</div>
+					<# if( 'astra-sites' === data ) { #>
 						<ul>
 							<li class="astra-sites-reset-data">
 								<label>
@@ -227,136 +406,25 @@ defined( 'ABSPATH' ) or exit;
 								</label>
 							</li>
 						</ul>
-
-						<!-- <p><a href="#" class="astra-sites-advanced-options-button"><?php _e( 'Advanced Options', 'astra-sites' ); ?></a></p> -->
-
-					</div>
-
-					<!-- <div class="astra-sites-advanced-options">
-						<h4><?php _e( 'Required Plugins', 'astra-sites' ); ?> </h4>
-						<div class="required-plugins"></div>
-					</div> -->
+					<# } #>
 				</div>
 			</div>
-
-			<div class="wp-full-overlay-footer">
-				<div class="footer-import-button-wrap">
-					<a class="button button-hero hide-if-no-customize button-primary astra-demo-import" href="#" data-import="disabled">
-						<?php esc_html_e( 'Import Site', 'astra-sites' ); ?>
-						<span class="percent"></span>
-					</a>
-					<div class="astra-site-import-process-wrap" style="display: none;">
-						<progress class="astra-site-import-process" max="100" value="0"></progress>
-					</div>
-					<!-- <a class="button button-hero hide-if-no-customize astra-site-import" href="#">
-						<?php esc_html_e( 'Import Site', 'astra-sites' ); ?>
-					</a> -->
-				</div>
-				<button type="button" class="collapse-sidebar button" aria-expanded="true"
-						aria-label="Collapse Sidebar">
-					<span class="collapse-sidebar-arrow"></span>
-					<span class="collapse-sidebar-label"><?php esc_html_e( 'Collapse', 'astra-sites' ); ?></span>
-				</button>
-
-				<div class="devices-wrapper">
-					<div class="devices">
-						<button type="button" class="preview-desktop active" aria-pressed="true" data-device="desktop">
-							<span class="screen-reader-text"><?php _e( 'Enter desktop preview mode', 'astra-sites' ); ?></span>
-						</button>
-						<button type="button" class="preview-tablet" aria-pressed="false" data-device="tablet">
-							<span class="screen-reader-text"><?php _e( 'Enter tablet preview mode', 'astra-sites' ); ?></span>
-						</button>
-						<button type="button" class="preview-mobile" aria-pressed="false" data-device="mobile">
-							<span class="screen-reader-text"><?php _e( 'Enter mobile preview mode', 'astra-sites' ); ?></span>
-						</button>
-					</div>
-				</div>
-
-			</div>
-		</div>
-		<div class="wp-full-overlay-main">
-			<iframe src="{{{data.astra_demo_url}}}" title="<?php esc_attr_e( 'Preview', 'astra-sites' ); ?>"></iframe>
-			<div class="astra-sites-result-preview" style="display: none;">
-				<div class="inner">
-					<h2><?php _e( 'We\'re importing your website.', 'astra-sites' ); ?></h2>
-					<p><?php _e( 'The process can take anywhere between 2 to 10 minutes depending on the size of the website and speed of connection.', 'astra-sites' ); ?></p>
-					<p><?php _e( 'Please do not close this browser window until the site is imported completely.', 'astra-sites' ); ?></p>
-					<div class="current-importing-status-wrap">
-						<div class="current-importing-status">
-							<div class="current-importing-status-title"></div>
-							<div class="current-importing-status-description"></div>
-						</div>
+			<div class="ast-importing-wrap">
+				<p><?php _e( 'The process can take anywhere between 2 to 10 minutes depending on the size of the website and speed of connection.', 'astra-sites' ); ?></p>
+				<p><?php _e( 'Please do not close this browser window until the site is imported completely.', 'astra-sites' ); ?></p>
+				<div class="current-importing-status-wrap">
+					<div class="current-importing-status">
+						<div class="current-importing-status-title"></div>
+						<div class="current-importing-status-description"></div>
 					</div>
 				</div>
 			</div>
 		</div>
+		<div class="ast-actioms-wrap">
+			<div class="button button-hero site-import-cancel"><?php _e( 'Cancel', 'astra-sites' ); ?></div>
+			<a href="#" class="button button-hero button-primary astra-demo-import disabled site-install-site-button"><?php _e( 'Import', 'astra-sites' ); ?></a>
+		</div>
 	</div>
-</script>
-
-<?php
-/**
- * TMPL - No more demos
- */
-?>
-<script type="text/template" id="tmpl-astra-site-api-request-failed">
-	<div class="no-themes">
-		<?php
-
-		/* translators: %1$s & %2$s are a Demo API URL */
-		printf( __( '<p> It seems the demo data server, <i><a href="%1$s">%2$s</a></i> is unreachable from your site.</p>', 'astra-sites' ), esc_url( Astra_Sites::$api_url ), esc_url( Astra_Sites::$api_url ) );
-
-		_e( '<p class="left-margin"> 1. Sometimes, simple page reload fixes any temporary issues. No kidding!</p>', 'astra-sites' );
-
-		_e( '<p class="left-margin"> 2. If that does not work, you will need to talk to your server administrator and check if demo server is being blocked by the firewall!</p>', 'astra-sites' );
-
-		/* translators: %1$s is a support link */
-		printf( __( '<p>If that does not help, please open up a <a href="%1$s" target="_blank">Support Ticket</a> and we will be glad take a closer look for you.</p>', 'astra-sites' ), esc_url( 'https://wpastra.com/support/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=api-request-failed' ) );
-		?>
-	</div>
-</script>
-
-<?php
-/**
- * TMPL - Site Down
- */
-?>
-<script type="text/template" id="tmpl-astra-site-down">
-	<div class="postbox astra-site-down">
-		<h2><?php _e( 'Under Maintenance..', 'astra-sites' ); ?></h2>
-		<p><?php _e( 'If you are seeing this message, most likely our servers are under routine maintenance and we will be back shortly. ', 'astra-sites' ); ?></p>
-		<p><?php _e( 'In rare case, it is possible your website is having trouble connecting with ours. If you need help, please feel free to get in touch with us from our website.', 'astra-sites' ); ?></p>
-	</div>
-</script>
-
-<?php
-/**
- * TMPL - Filters
- */
-?>
-<script type="text/template" id="tmpl-astra-site-filters">
-
-	<# if ( data ) { #>
-
-		<ul class="{{ data.args.wrapper_class }} {{ data.args.class }}">
-
-			<# if ( data.args.show_all ) { #>
-				<li>
-					<a href="#" data-group="all"> All </a>
-				</li>
-			<# } #>
-
-			<# for ( key in data.items ) { #>
-				<# if ( data.items[ key ].count ) { #>
-					<li>
-						<a href="#" data-group='{{ data.items[ key ].id }}' class="{{ data.items[ key ].name }}">
-							{{ data.items[ key ].name }}
-						</a>
-					</li>
-				<# } #>
-			<# } #>
-
-		</ul>
-	<# } #>
 </script>
 
 <?php
@@ -366,16 +434,19 @@ defined( 'ABSPATH' ) or exit;
 ?>
 <script type="text/template" id="tmpl-astra-sites-list">
 
+	<# console.log ( data ) #>
 	<# if ( data.items.length ) { #>
 		<# for ( key in data.items ) { #>
 
 			<div class="theme astra-theme site-single {{ data.items[ key ].status }}" tabindex="0" aria-describedby="astra-theme-action astra-theme-name"
 				data-demo-id="{{{ data.items[ key ].id }}}"
+				data-type="{{{ data.type }}}"
 				data-demo-type="{{{ data.items[ key ]['astra-site-type'] }}}"
 				data-demo-url="{{{ data.items[ key ]['astra-site-url'] }}}"
 				data-demo-api="{{{ data.items[ key ]['_links']['self'][0]['href'] }}}"
 				data-demo-name="{{{  data.items[ key ].title.rendered }}}"
 				data-demo-slug="{{{  data.items[ key ].slug }}}"
+				data-demo-parent="{{{  data.items[ key ]['astra-site-parent-id'] }}}"
 				data-screenshot="{{{ data.items[ key ]['featured-image-url'] }}}"
 				data-content="{{{ data.items[ key ].content.rendered }}}"
 				data-required-plugins="{{ JSON.stringify( data.items[ key ]['required-plugins'] ) }}"
@@ -385,7 +456,7 @@ defined( 'ABSPATH' ) or exit;
 
 				<div class="inner">
 					<span class="site-preview" data-href="{{ data.items[ key ]['astra-site-url'] }}?TB_iframe=true&width=600&height=550" data-title="{{ data.items[ key ].title.rendered }}">
-						<div class="theme-screenshot" style="background-image: url('{{ data.items[ key ]['featured-image-url'] }}');"></div>
+						<div class="theme-screenshot one" data-src="{{data.items[ key ]['featured-image-url']}}" style="background-image: url('<?php echo trailingslashit( Astra_Sites::get_instance()->get_api_domain() ); ?>/wp-content/uploads/tiny/image-{{ data.items[ key ].id }}-resized-tiny.jpg');"></div>
 					</span>
 					<# if ( data.items[ key ]['astra-site-type'] ) { #>
 						<# var type = ( data.items[ key ]['astra-site-type'] !== 'premium' ) ? ( data.items[ key ]['astra-site-type'] ) : 'agency'; #>
@@ -395,10 +466,33 @@ defined( 'ABSPATH' ) or exit;
 						<span class="status {{data.items[ key ].status}}">{{data.items[ key ].status}}</span>
 					<# } #>
 					<div class="theme-id-container">
-						<h3 class="theme-name" id="astra-theme-name"> {{{ data.items[ key ].title.rendered }}} </h3>
-						<div class="theme-actions">
-							<button class="button-primary button preview install-theme-preview"><?php esc_html_e( 'Preview', 'astra-sites' ); ?></button>
+						<h3 class="theme-name" id="astra-theme-name">
+							{{{ data.items[ key ].title.rendered }}}
+						</h3>
+						<#
+						var fav_class = "";
+						var fav_flag = false;
+						for ( fav_item in data.args.favorites ) {
+							if ( data.items[ key ].id.toString() == data.args.favorites[fav_item] ) {
+								fav_class = "is-favorite";
+								fav_flag = true;
+								break;
+							}
+						}
+						#>
+						<# if ( data.type != 'site-pages' ) { #>
+						<div class="favorite-action-wrap {{fav_class}}" data-favorite={{fav_flag}}>
+							<span><i class="dashicons-heart dashicons"></i></span>
 						</div>
+						<# } #>
+						<!-- <div class="theme-actions">
+							<div class="theme-action-wrap">
+								<# if ( data.type != 'site-pages' ) { #>
+								<button class="button install-page-preview"><?php esc_html_e( 'Import Pages', 'astra-sites' ); ?></button>
+								<# } #>
+								<button class="button-primary button preview install-theme-preview"><?php esc_html_e( 'Import Site', 'astra-sites' ); ?></button>
+							</div>
+						</div> -->
 					</div>
 				</div>
 			</div>
@@ -416,22 +510,5 @@ defined( 'ABSPATH' ) or exit;
 	<# } #>
 </script>
 
-<?php
-/**
- * TMPL - List
- */
-?>
-<script type="text/template" id="tmpl-astra-sites-suggestions">
-	<div class="theme astra-theme site-single astra-sites-suggestions">
-		<div class="inner">
-			<p>
-			<?php
-			/* translators: %1$s External Link */
-			printf( __( 'Don\'t see a site that you would like to import?<br><a target="_blank" href="%1$s">Please suggest us!</a>', 'astra-sites' ), esc_url( 'https://wpastra.com/sites-suggestions/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=suggestions' ) );
-			?>
-			</p>
-		</div>
-	</div>
-</script>
 <?php
 wp_print_admin_notice_templates();
