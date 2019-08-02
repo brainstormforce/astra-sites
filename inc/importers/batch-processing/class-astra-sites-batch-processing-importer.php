@@ -52,20 +52,20 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Importer' ) ) :
 		 * @return void
 		 */
 		public function import_categories() {
-			error_log( 'Requesting Categories' );
-			update_option( 'astra-sites-batch-status-string', 'Requesting Categories' );
+			error_log( 'Requesting Tags' );
+			update_option( 'astra-sites-batch-status-string', 'Requesting Tags' );
 
-			$api_args           = array(
+			$api_args = array(
 				'timeout' => 30,
 			);
-			$categories_request = wp_remote_get( trailingslashit( Astra_Sites::get_instance()->get_api_domain() ) . '/wp-json/astra-sites/v1/site-categories', $api_args );
-			if ( ! is_wp_error( $categories_request ) && 200 === (int) wp_remote_retrieve_response_code( $categories_request ) ) {
-				$categories = json_decode( wp_remote_retrieve_body( $categories_request ), true );
-				update_option( 'astra-sites-categories', $categories );
+			$tags_request = wp_remote_get( trailingslashit( Astra_Sites::get_instance()->get_api_domain() ) . '/wp-json/wp/v2/astra-sites-tag/?_fields=id,name,slug', $api_args );
+			if ( ! is_wp_error( $tags_request ) && 200 === (int) wp_remote_retrieve_response_code( $tags_request ) ) {
+				$tags = json_decode( wp_remote_retrieve_body( $tags_request ), true );
+				update_option( 'astra-sites-tags', $tags );
 			}
 
-			error_log( 'Categories Imported Successfully!' );
-			update_option( 'astra-sites-batch-status-string', 'Categories Imported Successfully!' );
+			error_log( 'Tags Imported Successfully!' );
+			update_option( 'astra-sites-batch-status-string', 'Tags Imported Successfully!' );
 		}
 
 		/**

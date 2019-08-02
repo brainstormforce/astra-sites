@@ -68,7 +68,7 @@ if ( ! class_exists( 'Astra_Sites_White_Label' ) ) :
 		public function __construct() {
 			add_filter( 'all_plugins', array( $this, 'plugins_page' ) );
 			add_filter( 'astra_addon_branding_options', __CLASS__ . '::settings' );
-			add_action( 'astra_pro_white_label_add_form', __CLASS__ . '::add_white_lavel_form' );
+			add_action( 'astra_pro_white_label_add_form', __CLASS__ . '::add_white_label_form' );
 			add_filter( 'astra_sites_menu_page_title', array( $this, 'page_title' ) );
 			add_filter( 'astra_sites_page_title', array( $this, 'page_title' ) );
 
@@ -181,7 +181,7 @@ if ( ! class_exists( 'Astra_Sites_White_Label' ) ) :
 		 * @param  array $settings White label setting.
 		 * @return void
 		 */
-		public static function add_white_lavel_form( $settings = array() ) {
+		public static function add_white_label_form( $settings = array() ) {
 
 			/* translators: %1$s product name */
 			$plugin_name = sprintf( __( '%1$s Branding', 'astra-sites' ), ASTRA_SITES_NAME );

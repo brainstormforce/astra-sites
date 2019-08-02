@@ -56,7 +56,8 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 			}
 
 			add_action( 'after_setup_theme', array( $this, 'init_admin_settings' ), 99 );
-			add_action( 'admin_init', array( $this, 'save_page_builder' ) );
+			add_action( 'wp_ajax_astra-sites-change-page-builder', array( $this, 'save_page_builder_on_ajax' ) );
+			add_action( 'admin_init', array( $this, 'save_page_builder_on_submit' ) );
 			add_action( 'admin_notices', array( $this, 'getting_started' ) );
 		}
 
@@ -92,8 +93,7 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 		 *
 		 * @return void
 		 */
-		function save_page_builder() {
-
+		function save_page_builder_on_submit() {
 			// Only admins can save settings.
 			if ( ! current_user_can( 'manage_options' ) ) {
 				return;
@@ -101,7 +101,6 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 
 			// Make sure we have a valid nonce.
 			if ( isset( $_REQUEST['astra-sites-page-builder'] ) && wp_verify_nonce( $_REQUEST['astra-sites-page-builder'], 'astra-sites-welcome-screen' ) ) {
-
 				// Stored Settings.
 				$stored_data = $this->get_settings();
 				$slug        = ( isset( $_REQUEST['redirect_page'] ) ) ? $_REQUEST['redirect_page'] : 'astra-sites';
@@ -119,6 +118,52 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 
 				wp_redirect( admin_url( '/themes.php?page=' . $slug ) );
 			}
+		}
+
+		/**
+		 * Save Page Builder
+		 *
+		 * @return void
+		 */
+		function save_page_builder_on_ajax() {
+
+			// Only admins can save settings.
+			if ( ! current_user_can( 'manage_options' ) ) {
+				wp_send_json_error();
+			}
+
+			// Stored Settings.
+			$stored_data = $this->get_settings();
+
+			// New settings.
+			$new_data = array(
+				'page_builder' => ( isset( $_REQUEST['page_builder'] ) ) ? sanitize_key( $_REQUEST['page_builder'] ) : '',
+			);
+
+			// Merge settings.
+			$data = wp_parse_args( $new_data, $stored_data );
+
+			// Update settings.
+			update_option( 'astra_sites_settings', $data );
+
+			$sites = $this->get_sites_by_page_builder( $new_data['page_builder'] );
+
+			wp_send_json_success( $sites );
+		}
+
+		function get_sites_by_page_builder( $default_page_builder = '' ) {
+			$sites_and_pages   = Astra_Sites::get_instance()->get_all_sites();
+
+			$page_builder_keys = wp_list_pluck( $sites_and_pages, 'astra-site-page-builder' );
+
+			$current_page_builder_sites = array();
+			foreach ($page_builder_keys as $site_id => $page_builder) {
+				if( $default_page_builder === $page_builder) {
+					$current_page_builder_sites[ $site_id ] = $sites_and_pages[$site_id];
+				}
+			}
+
+			return $current_page_builder_sites;
 		}
 
 		/**
@@ -148,10 +193,11 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 		 *
 		 * @return array Stored settings.
 		 */
-		function get_settings() {
+		public function get_settings() {
 
 			$defaults = array(
-				'page_builder' => '',
+				'page_builder'     => '',
+				'show-opt-in-form' => 'no',
 			);
 
 			$stored_data = get_option( 'astra_sites_settings', $defaults );
@@ -251,11 +297,56 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 				<?php
 			}
 
+			$current_slug = isset( $_GET['page'] ) ? esc_attr( $_GET['page'] ) : 'astra-sites';
+
 			$default_page_builder = $this->get_setting( 'page_builder' );
-			$current_slug         = isset( $_GET['page'] ) ? esc_attr( $_GET['page'] ) : 'astra-sites';
+			
+			$opt_in = $this->get_setting( 'show-opt-in-form' );
+			if ( 'no' === $opt_in && isset( $_GET['show-form'] ) ) {
+				?>
+				 <div class="astra-sites-welcome">
+					<div class="inner-wrap">
+						<div class="inner">
+							<h1><?php _e( 'Select Page Builder', 'astra-sites' ); ?></h1>
+							
+							<p><?php _e( 'Astra offers starter sites that can be imported in one click. These templates are available in few different page builders. Please choose your preferred page builder from the list below.', 'astra-sites' ); ?></p>
 
-			if ( empty( $default_page_builder ) || isset( $_GET['change-page-builder'] ) ) {
+							<div id="mauticform_wrapper_astrastartersites" class="mauticform_wrapper">
+								<form autocomplete="false" role="form" method="post" action="https://go.brainstormforce.com/form/submit?formId=15" id="mauticform_astrastartersites" data-mautic-form="astrastartersites" enctype="multipart/form-data">
+								    <div class="mauticform-error" id="mauticform_astrastartersites_error"></div>
+								    <div class="mauticform-message" id="mauticform_astrastartersites_message"></div>
+								    <div class="mauticform-innerform">
+								      <div class="mauticform-page-wrapper mauticform-page-1" data-mautic-form-page="1">
 
+								        <div id="mauticform_astrastartersites_f_name" class="mauticform-row mauticform-text mauticform-field-1">
+								            <label id="mauticform_label_astrastartersites_f_name" for="mauticform_input_astrastartersites_f_name" class="mauticform-label">Name</label>
+								            <input id="mauticform_input_astrastartersites_f_name" name="mauticform[f_name]" value="" class="mauticform-input" type="text">
+								            <span class="mauticform-errormsg" style="display: none;"></span>
+								        </div>
+
+								        <div id="mauticform_astrastartersites_email" class="mauticform-row mauticform-email mauticform-field-2">
+								            <label id="mauticform_label_astrastartersites_email" for="mauticform_input_astrastartersites_email" class="mauticform-label">Email</label>
+								            <input id="mauticform_input_astrastartersites_email" name="mauticform[email]" value="" class="mauticform-input" type="email">
+								            <span class="mauticform-errormsg" style="display: none;"></span>
+								        </div>
+
+								        <div id="mauticform_astrastartersites_submit" class="mauticform-row mauticform-button-wrapper mauticform-field-3">
+								            <button type="submit" name="mauticform[submit]" id="mauticform_input_astrastartersites_submit" value="" class="mauticform-button btn btn-default">Submit</button>
+								        </div>
+								        </div>
+								    </div>
+
+								    <input type="hidden" name="mauticform[formId]" id="mauticform_astrastartersites_id" value="15">
+								    <input type="hidden" name="mauticform[return]" id="mauticform_astrastartersites_return" value="">
+								    <input type="hidden" name="mauticform[formName]" id="mauticform_astrastartersites_name" value="astrastartersites">
+
+							    </form>
+							</div>
+
+						</div>
+					</div>
+				</div>
+			<?php } else if ( empty( $default_page_builder ) || isset( $_GET['change-page-builder'] ) ) {
 				$plugins       = get_option( 'active_plugins', array() );
 				$page_builders = array();
 				if ( $plugins ) {
@@ -283,33 +374,20 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 								<p><?php _e( 'Astra offers starter sites that can be imported in one click. These templates are available in few different page builders. Please choose your preferred page builder from the list below.', 'astra-sites' ); ?></p>
 								<div class="fields">
 									<ul class="page-builders">
-										<li>
-											<label>
-												<input type="radio" name="page_builder" value="gutenberg">
-												<img src="<?php echo esc_url( ASTRA_SITES_URI . 'inc/assets/images/gutenberg.jpg' ); ?>" />
-												<div class="title"><?php _e( 'Gutenberg', 'astra-sites' ); ?></div>
-											</label>
-										</li>
-										<li>
-											<label>
-												<input type="radio" name="page_builder" value="elementor">
-												<img src="<?php echo esc_url( ASTRA_SITES_URI . 'inc/assets/images/elementor.jpg' ); ?>" />
-												<div class="title"><?php _e( 'Elementor', 'astra-sites' ); ?></div>
-											</label>
-										</li>
-										<li>
-											<label>
-												<input type="radio" name="page_builder" value="beaver-builder">
-												<img src="<?php echo esc_url( ASTRA_SITES_URI . 'inc/assets/images/beaver-builder.png' ); ?>" />
-												<div class="title"><?php _e( 'Beaver Builder', 'astra-sites' ); ?></div>
+										<?php
+										$default_page_builder = $this->get_setting( 'page_builder' );
+										$page_builders = $this->get_page_builders();
+										foreach ($page_builders as $page_builder_slug => $page_builder) { ?>
+											<li>
+												<label>
+													<input type="radio" name="page_builder" value="<?php echo $page_builder['title']; ?>">
+													<img src="<?php echo $page_builder['img']; ?>" />
+													<div class="title"><?php echo $page_builder['title']; ?></div>
+												</label>
 											</li>
-										<li>
-											<label>
-												<input type="radio" name="page_builder" value="brizy">
-												<img src="<?php echo esc_url( ASTRA_SITES_URI . 'inc/assets/images/brizy.jpg' ); ?>" />
-												<div class="title"><?php _e( 'Brizy', 'astra-sites' ); ?></div>
-											</label>
-										</li>
+											<?php
+										}
+										?>
 									</ul>
 									<?php submit_button( __( 'Next', 'astra-sites' ), 'primary button-hero disabled' ); ?>
 									<div class="astra-sites-page-builder-notice" style="display: none;">
@@ -324,35 +402,85 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 					</div>
 				</div>
 			<?php } else { ?>
-				<?php
-				$page_title = apply_filters( 'astra_sites_page_title', __( 'Astra Starter Sites', 'astra-sites' ) );
-				?>
+
 				<div class="nav-tab-wrapper">
 					<div class="logo">
-						<div class="astra-sites-logo-wrap"><a href="" target="_blank" rel="noopener">
-							<img src="<?php echo esc_url( ASTRA_SITES_URI . 'inc/assets/images/logo.svg' ); ?>" alt="<?php echo $page_title; ?>"></a>
+						<div class="astra-sites-logo-wrap">
+							<img src="<?php echo esc_url( ASTRA_SITES_URI . 'inc/assets/images/logo.svg' ); ?>">
 						</div>
-						<h1 class='astra-sites-title'> <?php echo esc_html( $page_title ); ?> </h1>
 					</div>
+					<div class="back-to-layout" title="Back to Layout"></div>
+					<div id="astra-sites-filters">
+						<div class="wp-filter hide-if-no-js">
+							<div class="section-left">
+								<div class="search-form">
+									<input autocomplete="off" placeholder="<?php _e( 'Search Sites...', 'astra-sites' ); ?>" type="search" aria-describedby="live-search-desc" id="wp-filter-search-input" class="wp-filter-search">
+									<span class="dashicons dashicons-search search-icon"></span>
+									<div class="astra-sites-autocomplete-result"></div>
+								</div>
+							</div>
+						</div>
+					</div>	
+
 					<!-- <div class="menu" style="display:none;">
 						<ul class="astra-sites-nav-items">
 							<li><a href="#"><?php _e( 'Site &amp; Pages', 'astra-sites' ); ?></a></li>
 						</ul>
 					</div> -->
 					<div class="form">
-						<form id="astra-sites-welcome-form-inline" enctype="multipart/form-data" method="post">
-							<div class="fields">
-								<select name="page_builder" required="required">
-									<option value="gutenberg" <?php selected( $default_page_builder, 'gutenberg' ); ?>><?php _e( 'Block Editor (Gutenberg)', 'astra-sites' ); ?></option>
-									<option value="elementor" <?php selected( $default_page_builder, 'elementor' ); ?>><?php _e( 'Elementor', 'astra-sites' ); ?></option>
-									<option value="beaver-builder" <?php selected( $default_page_builder, 'beaver-builder' ); ?>><?php _e( 'Beaver Builder', 'astra-sites' ); ?></option>
-									<option value="brizy" <?php selected( $default_page_builder, 'brizy' ); ?>><?php _e( 'Brizy', 'astra-sites' ); ?></option>
-								</select>
+						<div class="filters-wrap favorite-filters-wrap">
+							<div class="filters-slug">
+								<ul class="filter-links">
+									<li>
+										<a title="<?php _e( 'My Favorite', 'astra-sites'); ?>" href="#" class="astra-sites-show-favorite-button">
+											<i class="icon-heart"></i>
+										</a>
+									</li>
+									<li>
+										<a title="<?php _e( 'Sync Library', 'astra-sites'); ?>" href="#" class="astra-sites-sync-library-button">
+											<i class="icon-refresh"></i>
+										</a>
+									</li>
+								</ul>
 							</div>
-							<input type="hidden" name="message" value="saved" />
-							<input type="hidden" name="redirect_page" value="<?php echo $current_slug; ?>">
-							<?php wp_nonce_field( 'astra-sites-welcome-screen', 'astra-sites-page-builder' ); ?>
-						</form>
+						</div>
+						<span class="page-builder-icon">
+							<div class="selected-page-builder">
+								<?php
+								$page_builder = $this->get_default_page_builder();
+								if( $page_builder ) { ?>
+									<img src="<?php echo esc_url( $page_builder['img'] ); ?>" />
+									<span class="page-builder-title"><?php echo esc_html( $page_builder['title'] ); ?></span>
+									<span class="dashicons dashicons-arrow-down"></span>
+								<?php } ?>
+							</div>
+							<ul class="page-builders">
+								<?php
+								$default_page_builder = $this->get_setting( 'page_builder' );
+								$page_builders = $this->get_page_builders();
+								foreach ($page_builders as $page_builder_slug => $page_builder) {
+									$class = '';
+									if( $default_page_builder === $page_builder_slug ) {
+										$class = 'active';
+									}
+									?>
+									<li data-page-builder="<?php echo $page_builder_slug; ?>" class="<?php echo $class; ?>">
+										<img src="<?php echo $page_builder['img']; ?>" />
+										<div class="title"><?php echo $page_builder['title']; ?></div>
+									</li>
+									<?php
+								}
+								?>
+							</ul>
+							<form id="astra-sites-welcome-form-inline" enctype="multipart/form-data" method="post" style="display: none;">
+								<div class="fields">
+									<input type="hidden" name="page_builder" class="page-builder-input" required="required" />
+								</div>
+								<input type="hidden" name="message" value="saved" />
+								<input type="hidden" name="redirect_page" value="<?php echo $current_slug; ?>">
+								<?php wp_nonce_field( 'astra-sites-welcome-screen', 'astra-sites-page-builder' ); ?>
+							</form>
+						</span>
 					</div>
 					<?php
 					$view_actions = $this->get_view_actions();
@@ -376,6 +504,39 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 				</div><!-- .nav-tab-wrapper -->
 				<?php
 			}
+		}
+
+		function get_default_page_builder() {
+			$default_page_builder = $this->get_setting( 'page_builder' );
+
+			$page_builders = $this->get_page_builders();
+
+			if( isset( $page_builders[ $default_page_builder ] ) ) {
+				return $page_builders[ $default_page_builder ];
+			}
+
+			return '';
+		}
+
+		function get_page_builders() {
+			return array(
+				'elementor' => array(
+					'title' => 'Elementor',
+					'img' => ASTRA_SITES_URI . 'inc/assets/images/elementor.jpg',
+				),
+				'beaver-builder' => array(
+					'title' => 'Beaver Builder',
+					'img' => ASTRA_SITES_URI . 'inc/assets/images/beaver-builder.png',
+				),
+				'gutenberg' => array(
+					'title' => 'Gutenberg',
+					'img' => ASTRA_SITES_URI . 'inc/assets/images/gutenberg.jpg',
+				),
+				'brizy' => array(
+					'title' => 'Brizy',
+					'img' => ASTRA_SITES_URI . 'inc/assets/images/brizy.jpg',
+				),
+			);
 		}
 
 		/**
@@ -522,6 +683,71 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 			}
 
 			return $output;
+		}
+
+		/**
+		 * Check Cron Status
+		 *
+		 * Gets the current cron status by performing a test spawn. Cached for one hour when all is well.
+		 *
+		 * @since 1.7.0
+		 *
+		 * @param bool $cache Whether to use the cached result from previous calls.
+		 * @return true|WP_Error Boolean true if the cron spawner is working as expected, or a WP_Error object if not.
+		 */
+		public static function test_cron( $cache = true ) {
+			global $wp_version;
+
+			if ( defined( 'DISABLE_WP_CRON' ) && DISABLE_WP_CRON ) {
+				return new WP_Error( 'wp_portfolio_cron_error', __( 'ERROR! Cron schedules are disabled by setting constant DISABLE_WP_CRON to true.<br/>To start the import process please enable the cron by setting false. E.g. define( \'DISABLE_WP_CRON\', false );', 'astra-portfolio' ) );
+			}
+
+			if ( defined( 'ALTERNATE_WP_CRON' ) && ALTERNATE_WP_CRON ) {
+				return new WP_Error( 'wp_portfolio_cron_error', __( 'ERROR! Cron schedules are disabled by setting constant ALTERNATE_WP_CRON to true.<br/>To start the import process please enable the cron by setting false. E.g. define( \'ALTERNATE_WP_CRON\', false );', 'astra-portfolio' ) );
+			}
+
+			$cached_status = get_transient( 'astra-portfolio-cron-test-ok' );
+
+			if ( $cache && $cached_status ) {
+				return true;
+			}
+
+			$sslverify     = version_compare( $wp_version, 4.0, '<' );
+			$doing_wp_cron = sprintf( '%.22F', microtime( true ) );
+
+			$cron_request = apply_filters(
+				'cron_request',
+				array(
+					'url'  => site_url( 'wp-cron.php?doing_wp_cron=' . $doing_wp_cron ),
+					'key'  => $doing_wp_cron,
+					'args' => array(
+						'timeout'   => 3,
+						'blocking'  => true,
+						'sslverify' => apply_filters( 'https_local_ssl_verify', $sslverify ),
+					),
+				)
+			);
+
+			$cron_request['args']['blocking'] = true;
+
+			$result = wp_remote_post( $cron_request['url'], $cron_request['args'] );
+
+			if ( is_wp_error( $result ) ) {
+				return $result;
+			} elseif ( wp_remote_retrieve_response_code( $result ) >= 300 ) {
+				return new WP_Error(
+					'unexpected_http_response_code',
+					sprintf(
+						/* translators: 1: The HTTP response code. */
+						__( 'Unexpected HTTP response code: %s', 'astra-portfolio' ),
+						intval( wp_remote_retrieve_response_code( $result ) )
+					)
+				);
+			} else {
+				set_transient( 'astra-portfolio-cron-test-ok', 1, 3600 );
+				return true;
+			}
+
 		}
 	}
 

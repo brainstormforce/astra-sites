@@ -112,20 +112,48 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 			add_filter( 'http_request_timeout', array( $this, 'set_http_timeout' ), 10, 2 );
 			add_action( 'admin_head', array( $this, 'start_importer' ) );
 			add_action( 'wp_ajax_astra-sites-update-library', array( $this, 'update_library' ) );
+			add_action( 'wp_ajax_astra-sites-import-categories', array( $this, 'import_categories' ) );
+			add_action( 'wp_ajax_astra-sites-get-sites-request-count', array( $this, 'sites_requests_count' ) );
+			add_action( 'wp_ajax_astra-sites-import-sites', array( $this, 'import_sites' ) );
+		}
+
+		function import_categories() {
+			Astra_Sites_Batch_Processing_Importer::get_instance()->import_categories();
+			wp_send_json_success( );
+		}
+
+		function import_sites() {
+			$page_no = isset( $_POST['page_no'] ) ? absint( $_POST['page_no'] ) : '';
+			if( $page_no ) {
+				Astra_Sites_Batch_Processing_Importer::get_instance()->import_sites( $page_no );
+				wp_send_json_success();
+			}
+
+			wp_send_json_error();
+		}
+
+		function sites_requests_count() {
+
+			// Get count.
+			$total_requests = $this->get_total_requests();
+			if ( $total_requests ) {
+				wp_send_json_success( $total_requests );
+			}
+
+			wp_send_json_error( $total_requests );
 		}
 
 		function update_library() {
-
-			$status = get_option( 'astra-sites-batch-status' );
-			if ( 'in-process' === $status ) {
-				wp_send_json_success();
-				return;
+			$status = Astra_Sites_Page::get_instance()::test_cron();
+			if ( is_wp_error( $status ) ) {
+				$import_with = 'ajax';
+			} else {
+				$import_with = 'batch';
+				// Process import.
+				$this->process_batch();
 			}
 
-			// Process import.
-			$this->process_batch();
-
-			wp_send_json_success();
+			wp_send_json_success( $import_with );
 		}
 
 		function start_importer() {
@@ -155,6 +183,13 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 		}
 
 		function process_batch() {
+
+			$status = Astra_Sites_Page::get_instance()::test_cron();
+			if ( is_wp_error( $status ) ) {
+				error_log( 'Error! Batch Not Start due to disabled cron events!' );
+				update_option( 'astra-sites-batch-status-string', 'Error! Batch Not Start due to disabled cron events!' );
+				return;
+			}
 
 			error_log( 'Batch Started!' );
 			update_option( 'astra-sites-batch-status-string', 'Batch Started!' );

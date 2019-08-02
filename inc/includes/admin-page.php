@@ -13,17 +13,12 @@
 
 defined( 'ABSPATH' ) or exit;
 
-$import_text = ( 'site-pages' === $global_cpt_meta['cpt_slug'] ) ? __( 'Import Page', 'astra-sites' ) : __( 'Import Site', 'astra-sites' );
-
-$api_args = array(
-	'timeout' => 60,
-);
 ?>
 
 <div class="wrap" id="astra-sites-admin" data-slug="<?php echo $global_cpt_meta['cpt_slug']; ?>">
 
-
 	<?php
+
 	// DEBUGGING PURPOSE ONLY.
 	if ( isset( $_GET['debug'] ) ) {
 		$crons  = _get_cron_array();
@@ -63,122 +58,108 @@ $api_args = array(
 		<div class="batch-log"><?php echo $temp; ?><br> <?php echo $status; ?></div>
 	<?php } ?>
 
-
-
-	<div id="astra-sites-filters">
-		<?php
-		$categories = get_option( 'astra-sites-categories', array() );
-		if ( ! empty( $categories ) ) {
-			?>
-			<div class="wp-filter hide-if-no-js">
-				<div class="section-left">
-					<div class="search-form">
-						<input autocomplete="off" placeholder="<?php _e( 'Search Sites...', 'astra-sites' ); ?>" type="search" aria-describedby="live-search-desc" id="wp-filter-search-input" class="wp-filter-search">
-						<span class="dashicons-search dashicons search-icon"></span>
-						<div class="filters-wrap filters-wrap-page-categories">
-							<div class="filters-slug" data-id="astra-site-category">
-								<ul class="filter-links astra-site-category" data-category="astra-site-category">
-									<?php if ( $categories ) { ?>
-										<li>
-											<a href="#" data-group="" class="current">All</a>
-										</li>
-										<?php foreach ( $categories as $category_id => $category ) { ?>
-											<li>
-												<a href="#" data-group="category-<?php echo $category['slug']; ?>" class="<?php echo $category['name']; ?>"><?php echo $category['name']; ?></a>
-											</li>
-										<?php } ?>
-									<?php } ?>
-								</ul>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="section-right">
-					<div class="filters-wrap favorite-filters-wrap">
-						<div class="filters-slug">
-							<ul class="filter-links">
-								<li>
-									<a href="#">
-										<span><i class="dashicons-heart dashicons"></i></span><span class="favorite-filters-title"><span>My Favorites</span></span>
-									</a>
-								</li>
-								<li>
-									<a href="#" class="astra-sites-sync-library-button">
-										<span><i class="dashicons dashicons-update"></i></span><span><span class="astra-sites-sync-library">Sync Library</span></span>
-									</a>
-								</li>
-							</ul>
-						</div>
-					</div>
-				</div>
-			</div>
-		<?php } ?>
-	</div>
-
-	<div id="astra-pages-back-wrap"></div>
-
 	<?php do_action( 'astra_sites_before_site_grid' ); ?>
 
 	<div class="theme-browser rendered">
-		<div id="astra-sites" class="themes wp-clearfix">
-			<?php
-			$favorite_site_ids = get_option( 'astra-sites-favorites', array() );
-			$sites_and_pages   = Astra_Sites::get_instance()->get_all_sites();
-			if ( ! empty( $sites_and_pages ) ) {
-				foreach ( $sites_and_pages as $site_id => $site ) {
-					$site_page_builder = isset( $site['astra-site-page-builder'] ) ? sanitize_key( $site['astra-site-page-builder'] ) : '';
-					if ( ! empty( $site_page_builder ) ) {
-						if ( $default_page_builder === $site_page_builder ) {
-							$category_classes = isset( $site['astra-site-category'] ) ? 'category-' . implode( ' category-', $site['astra-site-category'] ) : '';
-							$type_classes     = isset( $site['astra-sites-type'] ) ? 'site-type-' . $site['astra-sites-type'] : '';
-							$builder_classes  = isset( $site['astra-site-page-builder'] ) ? 'page-builder-' . $site['astra-site-page-builder'] : '';
-							?>
-							<div class="theme astra-theme site-single publish <?php echo $category_classes; ?> <?php echo $type_classes; ?> <?php echo $builder_classes; ?>" data-site-id="<?php echo $site_id; ?>">
-								<div class="inner">
-									<span class="site-preview" data-href="" data-title="<?php echo $site['title']; ?>">
-										<div class="theme-screenshot one loading" data-src="<?php echo $site['featured-image-url']; ?>" style="background-image: url('<?php echo $site['tiny-image-url']; ?>');"></div>
-									</span>
-									<div class="theme-id-container">
-										<h3 class="theme-name" id="astra-theme-name"><?php echo $site['title']; ?></h3>
-										<?php
-										$class = '';
-										if ( in_array( $site_id, $favorite_site_ids ) ) {
-											$class = 'is-favorite';
-										}
-										?>
-										<div class="favorite-action-wrap <?php echo $class; ?>" data-favorite="false">
-											<span><i class="dashicons-heart dashicons"></i></span>
-										</div>
-									</div>
-								</div>
-								<?php if ( isset( $site['astra-sites-type'] ) && ! empty( $site['astra-sites-type'] ) && 'free' !== $site['astra-sites-type'] ) { ?>
-									<div class="site-type-wrap">
-										<span class="site-type premium"><?php echo str_replace( 'agency-mini', 'agency', $site['astra-sites-type'] ); ?></span>
-									</div>
-								<?php } ?>
-							</div>
-							<?php
-						}
-					}
-				}
-			}
-			?>
-		</div>
-		<div class="astra-sites-no-sites" style="display:none;">
-			<h2><?php _e( 'No Demos found, Try a different search.', 'astra-sites' ); ?></h2>
-			<p class="description">
-				<?php
-				/* translators: %1$s External Link */
-				printf( __( 'Don\'t see a site that you would like to import?<br><a target="_blank" href="%1$s">Please suggest us!</a>', 'astra-sites' ), esc_url( 'https://wpastra.com/sites-suggestions/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=suggestions' ) );
-				?>
-			</p>
-		</div>
+		<div id="astra-sites" class="themes wp-clearfix"></div>
 		<div id="site-pages" class="themes wp-clearfix"></div>
+		<div class="astra-sites-result-preview" style="display: none;"></div>
 	</div>
 
 	<?php do_action( 'astra_sites_after_site_grid' ); ?>
 
 </div>
+
+<script type="text/template" id="tmpl-astra-sites-no-sites">
+	<div class="astra-sites-no-sites">
+		<h2><?php _e( 'No Templates Found, Try a Different Search.', 'astra-sites' ); ?></h2>
+		<p class="description">
+			<?php
+			/* translators: %1$s External Link */
+			printf( __( 'Don\'t see a site that you would like to import?<br><a target="_blank" href="%1$s">Please suggest us!</a>', 'astra-sites' ), esc_url( 'https://wpastra.com/sites-suggestions/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=suggestions' ) );
+			?>
+		</p>
+	</div>
+</script>
+
+<script type="text/template" id="tmpl-astra-sites-no-favorites">
+	<div class="astra-sites-no-favorites">
+		<div class="inner">
+			<h2><?php _e( 'Your Collection is Empty Yet.', 'astra-sites' ); ?></h2>
+			<div class="empty-item">
+				<img class="empty-collection-part" src="<?php echo ASTRA_SITES_URI . 'inc/assets/images/empty-collection.svg'; ?>" alt="empty-collection">
+			</div>
+			<p class="description" style="background: url(<?php echo ASTRA_SITES_URI . 'inc/assets/images/arrow-blue.svg'; ?>) 0 bottom no-repeat;">
+				<?php
+				/* translators: %1$s External Link */
+				_e( 'You can easily add any template to your collection by clicking on the heart icon at the item card, item page or live demo.', 'astra-sites' );
+				?>
+			</p>
+		</div>
+	</div>
+</script>
+<?php
+/**
+ * TMPL - Show Page Builder Sites
+ */
+?>
+<script type="text/template" id="tmpl-astra-sites-page-builder-sites">
+	<# console.log( data ) #>
+	<# for ( site_id in data ) { #>
+	<#
+		var current_site_id     = site_id;
+		var type                = data[site_id]['type'] || 'site';
+		var page_site_id        = data[site_id]['site_id'] || '';
+		var favorite_status     = false;
+		var favorite_class      = '';
+		var type_text      		= 'Import Site';
+		var featured_image_url = data[site_id]['featured-image-url'];
+		var thumbnail_image_url = data[site_id]['thumbnail-image-url'] || featured_image_url;
+		var tiny_image_url      = data[site_id]['tiny-image-url'] || thumbnail_image_url;
+
+		var site_type = data[site_id]['astra-sites-type'] || '';
+		var page_id = '';
+		if ( 'site' === type ) {
+			if( Object.values( astraSitesVars.favorite_data ).indexOf( Number(site_id) ) >= 0 ) {
+				favorite_class = 'is-favorite';
+				favorite_status = true;
+			}
+		} else {
+			type_text = 'Import Template';
+			thumbnail_image_url = featured_image_url;
+			current_site_id = page_site_id;
+			page_id = site_id;
+		}
+
+		var title = data[site_id]['title'] || '';
+
+	#>
+	<div class="theme astra-theme site-single {{favorite_class}} astra-sites-previewing-{{type}}" data-site-id="{{current_site_id}}" data-page-id="{{page_id}}">
+		<div class="inner">
+			<span class="site-preview" data-title="{{{title}}}">
+				<div class="theme-screenshot one loading" data-src="{{thumbnail_image_url}}" data-featured-src="{{featured_image_url}}" style="background-image: url('{{tiny_image_url}}');"></div>
+			</span>
+			<div class="theme-id-container">
+				<div class="theme-name">
+					<span class="title">{{{title}}}</span>
+					<# if ( type ) { #>
+						<span class="type">{{type_text}}</span>
+					<# } #>
+				</div>
+				<# if ( '' === type || 'site' === type ) { #>
+					<div class="favorite-action-wrap" data-favorite="{{favorite_class}}">
+						<i class="icon-heart"></i>
+					</div>
+				<# } #>
+			</div>
+			<# if ( site_type && 'free' !== site_type ) { #>
+				<div class="agency-ribbons" title="Agency"><div class="ribbon ribbon--blue star-ribbon"><span class="icon-crown"></span></div></div>
+			<# } #>
+		</div>
+	</div>
+	<# } #>
+
+</script>
 
 <?php
 /**
@@ -186,7 +167,6 @@ $api_args = array(
  */
 ?>
 <script type="text/template" id="tmpl-astra-sites-pro-site-description">
-	<p><?php _e( 'Liked this demo?', 'astra-sites' ); ?></p>
 	<p>
 		<?php
 			/* translators: %s is pricing page link */
@@ -243,17 +223,17 @@ $api_args = array(
 	<div class="single-site-wrap">
 		<div class="single-site">
 			<div class="single-site-preview-wrap">
-				<div class="astra-pages-back-wrap">
-					<a class="astra-pages-back" href="javascript:void(0);"><?php _e( 'Back to Layouts', 'astra-sites' ); ?></a>
-				</div>
-				<div class="single-site-preview">
-					<img src="{{data['featured-image-url']}}" />
-				</div>
-			</div>
-			<div class="single-site-pages-wrap">
 				<div class="single-site-pages-header">
 					<h2 class="astra-site-title">{{{data['title']}}}</h2>
 					<span class="count" style="display: none"></span>
+				</div>
+				<div class="single-site-preview">
+					<img class="theme-screenshot" data-src="" src="{{data['featured-image-url']}}" />
+				</div>
+			</div>
+			<div class="single-site-pages-wrap">
+				<div class="astra-pages-title-wrap">
+					<span class="astra-pages-title"><?php _e( 'Templates', 'astra-sites' ); ?></span>
 				</div>
 				<div class="single-site-pages">
 					<div id="single-pages">
@@ -273,13 +253,17 @@ $api_args = array(
 										featured_tiny_image = '<?php echo esc_url( ASTRA_SITES_URI . 'inc/assets/images/placeholder.png' ); ?>';
 										featured_image_class = ' no-featured-tiny-image ';
 									}
-									console.log( featured_image );
+
+									var thumbnail_image = data.pages[page_id]['thumbnail-image-url'] || '';
+									if( '' === thumbnail_image ) {
+										thumbnail_image = featured_image;
+									}
 									#>
-									<span class="site-preview" data-href="?TB_iframe=true&width=600&height=550" data-title="{{ data.pages[page_id]['title'] }}">
-										<div class="theme-screenshot one {{ featured_image_class }}" data-src="{{ featured_image }}" style="background-image: url('{{ featured_tiny_image }}');"></div>
+									<span class="site-preview" data-title="{{ data.pages[page_id]['title'] }}">
+										<div class="theme-screenshot one {{ featured_image_class }}" data-src="{{ thumbnail_image }}" data-featured-src="{{ featured_image }}" data-tiny-src="{{ featured_tiny_image }}" style="background-image: url('{{ featured_tiny_image }}');"></div>
 									</span>
 									<div class="theme-id-container">
-										<h3 class="theme-name" id="astra-theme-name">
+										<h3 class="theme-name">
 											{{{ data.pages[page_id]['title'] }}}
 										</h3>
 										<#
@@ -301,13 +285,12 @@ $api_args = array(
 				</div>
 			</div>
 			<div class="single-site-footer">
-				<# console.log( data ) #>
 				<div class="site-action-buttons-wrap">
-					<a href="{{data['astra-site-url']}}" class="button button-hero site-preview-button" target="_blank">Preview This Site <i class="dashicons dashicons-external"></i></a>
-					<div>
-						<# if( 'free' !== data['astra-sites-type'] && ! astraRenderGrid.license_status ) { #>
-							<a class="button button-hero button-primary" href="{{astraSitesAdmin.getProURL}}" target="_blank">{{astraSitesAdmin.getProText}}<i class="dashicons dashicons-external"></i></a>
-							<# if( ! astraSitesAdmin.isPro ) { #>
+					<a href="{{data['astra-site-url']}}" class="button button-hero site-preview-button" target="_blank">Preview "{{{data['title']}}}" Site <i class="dashicons dashicons-external"></i></a>
+					<div class="site-action-buttons-right">
+						<# if( 'free' !== data['astra-sites-type'] && ! astraSitesVars.license_status ) { #>
+							<a class="button button-hero button-primary" href="{{astraSitesVars.getProURL}}" target="_blank">{{astraSitesVars.getProText}}<i class="dashicons dashicons-external"></i></a>
+							<# if( ! astraSitesVars.isPro ) { #>
 								<span class="dashicons dashicons-editor-help astra-sites-get-agency-bundle-button"></span>
 							<# } #>
 						<# } else { #>
@@ -318,8 +301,6 @@ $api_args = array(
 				</div>
 			</div>
 		</div>
-
-		<div class="astra-sites-result-preview" style="display: none;"></div>
 
 		<div class="astra-sites-result-preview-next-step" style="display: none;">
 			<div class="overlay"></div>
@@ -395,18 +376,18 @@ $api_args = array(
 								</li>
 							<# } #>
 						</ul>
+						<# if( 'astra-sites' === data ) { #>
+							<ul>
+								<li class="astra-sites-reset-data">
+									<label>
+										<input type="checkbox" name="reset" class="checkbox">
+										<strong>Delete Previously Imported Site</strong>
+										<div class="astra-sites-tooltip-message" id="astra-sites-tooltip-reset-data" style="display: none;"><p><?php _e( 'WARNING: Selecting this option will delete data from your current website. Choose this option only if this is intended.', 'astra-sites' ); ?></p></div>
+									</label>
+								</li>
+							</ul>
+						<# } #>
 					</div>
-					<# if( 'astra-sites' === data ) { #>
-						<ul>
-							<li class="astra-sites-reset-data">
-								<label>
-									<input type="checkbox" name="reset" class="checkbox">
-									<strong>Delete Previously Imported Site</strong>
-									<div class="astra-sites-tooltip-message" id="astra-sites-tooltip-reset-data" style="display: none;"><p><?php _e( 'WARNING: Selecting this option will delete data from your current website. Choose this option only if this is intended.', 'astra-sites' ); ?></p></div>
-								</label>
-							</li>
-						</ul>
-					<# } #>
 				</div>
 			</div>
 			<div class="ast-importing-wrap">
@@ -434,11 +415,10 @@ $api_args = array(
 ?>
 <script type="text/template" id="tmpl-astra-sites-list">
 
-	<# console.log ( data ) #>
 	<# if ( data.items.length ) { #>
 		<# for ( key in data.items ) { #>
 
-			<div class="theme astra-theme site-single {{ data.items[ key ].status }}" tabindex="0" aria-describedby="astra-theme-action astra-theme-name"
+			<div class="theme astra-theme site-single {{ data.items[ key ].status }}" tabindex="0" aria-describedby="astra-theme-action"
 				data-demo-id="{{{ data.items[ key ].id }}}"
 				data-type="{{{ data.type }}}"
 				data-demo-type="{{{ data.items[ key ]['astra-site-type'] }}}"
@@ -466,7 +446,7 @@ $api_args = array(
 						<span class="status {{data.items[ key ].status}}">{{data.items[ key ].status}}</span>
 					<# } #>
 					<div class="theme-id-container">
-						<h3 class="theme-name" id="astra-theme-name">
+						<h3 class="theme-name">
 							{{{ data.items[ key ].title.rendered }}}
 						</h3>
 						<#
@@ -499,7 +479,7 @@ $api_args = array(
 		<# } #>
 	<# } else { #>
 		<p class="no-themes" style="display:block;">
-			<?php _e( 'No Demos found, Try a different search.', 'astra-sites' ); ?>
+			<?php _e( 'No Demos Found, Try a Different Search.', 'astra-sites' ); ?>
 			<span class="description">
 				<?php
 				/* translators: %1$s External Link */

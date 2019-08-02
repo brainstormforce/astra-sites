@@ -1,15 +1,62 @@
+@font-face {
+  font-family: 'icomoon';
+  src:  url('../fonts/astra-sites.eot?9i8jex');
+  src:  url('../fonts/astra-sites.eot?9i8jex#iefix') format('embedded-opentype'),
+    url('../fonts/astra-sites.ttf?9i8jex') format('truetype'),
+    url('../fonts/astra-sites.woff?9i8jex') format('woff'),
+    url('../fonts/astra-sites.svg?9i8jex#icomoon') format('svg');
+  font-weight: normal;
+  font-style: normal;
+}
+
+[class^="icon-"], [class*=" icon-"] {
+  /* use !important to prevent issues with browser extensions that change fonts */
+  font-family: 'icomoon' !important;
+  speak: none;
+  font-style: normal;
+  font-weight: normal;
+  font-variant: normal;
+  text-transform: none;
+  line-height: 1;
+
+  /* Better Font Rendering =========== */
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+.icon-crown:before {
+  content: "\e903";
+}
+
+.icon-heart:before {
+  content: "\e901";
+}
+
+.icon-refresh:before {
+  content: "\e902";
+}
+
+.icon-star:before {
+  content: "\e900";
+}
+
+.favorite-filters-wrap a {
+    font-size: 1rem;
+}
+
 .wrap .status,
 .wrap .site-type {
 	position: absolute;
-	z-index: 1;
-	color: #fff;
-	top: 10px;
-    right: 10px;
-	text-transform: uppercase;
-	font-size: 11px;
-    letter-spacing: .3px;
-    padding: 0.5em .9em;
-    border-radius: 2px;
+    z-index: 1;
+    text-transform: uppercase;
+    color: #fff;
+    top: 15px;
+    right: 16px;
+    font-size: 10px;
+    letter-spacing: .7px;
+    font-weight: 500;
+    padding: 0.2em .7em;
+    border-radius: 4px;
 }
 
 .astra-sites-get-agency-bundle-button {
@@ -17,48 +64,109 @@
 	display: inline-block;
 }
 
+.preview-page-from-search-result .astra-sites-import-plugins .dashicons,
 .astra-sites-page-import-popup .astra-sites-import-plugins .dashicons {
     display: none;
 }
 
 #astra-sites > .astra-theme .inner {
+	position: relative;
     transition: all 250ms cubic-bezier(0.02, 0.01, 0.47, 1);
     border-radius: 2px;
+    box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.07);
+}
+#astra-sites > .astra-theme:hover .inner {
+	transform: translateY(-1px);
+	box-shadow: 0 3px 10px rgba(0, 0, 0, 0.12);
 }
 
-#astra-sites > .astra-theme:hover .inner {
-    transform: translateY(-2px);
-	box-shadow: 0 4px 20px rgba(0, 0, 0, 0.12);
+#single-pages .inner {
+    border: 1px solid #e2e2e2;
+    transition: all 250ms cubic-bezier(0.02, 0.01, 0.47, 1);
+}
+
+#single-pages .current_page .inner,
+#single-pages .inner:hover {
+    box-shadow: 0 3px 12px rgba(0, 0, 0, 0.14);
 }
 
 #astra-sites-admin.wrap .status,
 #astra-sites-admin.wrap .site-type.premium {
-	background: #0085ba;
+    background: #0073aa;
+    border: 2px solid #ffffff;
+    top: 17px;
+    right: 18px;
 }
 #astra-sites-admin .filter-links .current {
 	border-bottom: none;
     color: #23282d;
 }
 #wp-filter-search-input {
-    width: 100%;
+	width: 100%;
     opacity: 1;
     background: #fff;
     line-height: 32px;
-    padding: 5px 10px;
-    border: 2px solid #d6d6d6;
-    border-radius: 4px;
-    font-size: 14px;
+    border-bottom: 1px solid #ececec;
+    border-radius: 20px;
+    font-size: 13px;
+    padding: 5px 20px;
+    border: 1px solid #dedede;
     box-shadow: none;
 }
-#wp-filter-search-input:focus + .search-icon {
+#wp-filter-search-input:hover,
+#wp-filter-search-input:focus {
+    box-shadow: 0 1px 4px 0 rgba(32,33,36,0.18);
+}
+#wp-filter-search-input.searching {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    border-bottom-color: transparent;
+    border-color: rgba(223,225,229,0);
+    box-shadow: 0 1px 6px 0 rgba(32,33,36,0.28);
+}
+.ui-widget.ui-widget-content {
+    border-top: none;
+    box-shadow: none;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+    border: 1px solid rgba(223,225,229,0);
+    border-top: none;
+    box-shadow: 0 4px 6px 0 rgba(32,33,36,0.28);
+    overflow: hidden;
+}
+
+.ui-autocomplete li,
+.ui-autocomplete li:focus,
+.ui-autocomplete li:hover {
+    outline: none;
+}
+
+.ui-autocomplete li {
+    padding: 2px 20px;
+}
+
+.ui-autocomplete li:last-child {
+    padding-bottom: 10px;
+}
+
+.ui-autocomplete .ui-state-active {
+    border: none;
+    background: #c0c0c0;
+    margin: 0;
+}
+
+#wp-filter-search-input.has-input + .search-icon {
 	display: none;
 }
 .search-icon {
 	position: absolute;
-	top: 8px;
-	left: 0;
-	z-index: -1;
-	color: #9da1a5;
+    top: 0;
+    right: 0;
+    color: #666;
+    opacity: 0.3;
+    padding: 12px 16px 12px 12px;
 }
 #astra-sites-admin .filter-links li > a {
 	border-bottom: none;
@@ -81,19 +189,25 @@
 }
 #astra-sites-admin .theme-browser .theme .theme-name {
 	height: auto;
-	width: 90%;
-	align-self: center;
+    width: 90%;
+    align-self: center;
     box-shadow: none;
     background: none;
-    padding: 14px 15px;
+    padding: 12px 15px;
+    font-size: 14px;
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
 }
 #astra-sites-admin .theme-id-container {
-	background: rgba(255,255,255,0.65);
+	background: #fff;
 	border: none;
 	display: flex;
+	align-items: center;
+    justify-content: center;
 	border-bottom-left-radius: 2px;
     border-bottom-right-radius: 2px;
-	border-top: 1px solid #e6e6e6;
 }
 #astra-sites-admin .sites-page-count {
 	color: #888;
@@ -129,9 +243,21 @@
 .theme-browser .theme .inner:focus {
 	cursor: pointer;
 }
-.astra-sites-sync-library-button.updating-message .dashicons {
+
+.searching .theme-browser .theme .inner:hover .title {
+    opacity: 0;
+    visibility: hidden;
+}
+
+.searching .theme-browser .theme .inner:hover .type {
+    opacity: 1;
+    visibility: visible;
+}
+
+.astra-sites-sync-library-button.updating-message {
     animation: rotation 2s infinite linear;
 }
+
 .astra-sites-sync-library,
 .favorite-filters-title {
 	width: 10%;
@@ -148,22 +274,17 @@
 }
 
 .favorite-action-wrap {
-	width: 10%;
-	padding: 2px 10px;
-	align-self: center;
-	justify-content: center;
-	text-align: center;
+	padding-right: 15px;
 }
-.favorite-action-wrap span {
-	display: inline-block;
-}
-.favorite-action-wrap span i {
-	float: right;
+.favorite-action-wrap i {
 	color: #ccc;
-	display: inline-block;
 	height: 18px;
 	width: 18px;
-	font-size: 18px;
+	font-size: 16px;
+	line-height: 1.5;
+}
+.theme-id-container .icon-star {
+    padding: 0 15px 0 0;
 }
 .wrap .status {
 	left: -0.5em;
@@ -172,7 +293,9 @@
 .wrap .site-type.free {
 	display: none;
 }
-
+.astra-sites-get-agency-bundle .astra-sites-import-content {
+    height: auto;
+}
 .astra-sites-import-content {
 	display: block;
 	padding: 35px 35px 35px 35px;
@@ -350,16 +473,15 @@
 }
 
 #astra-sites-admin #single-pages .site-single .theme-name {
-    font-size: 14px;
     font-weight: 500;
-    padding: 10px 14px;
+    font-size: 13px;
+    padding: 8px 14px;
     background: #fff;
 }
 
 .astra-sites-logo-wrap {
-	width: 34px;
-    height: 34px;
-    margin-right: 9px;
+	width: 42px;
+    height: 42px;
 }
 
 .astra-sites-logo-wrap a,
@@ -421,7 +543,7 @@
 	display: none !important;
 }
 #site-pages {
-	margin: 10px 55px 0 35px;
+	margin: 10px 45px 0 45px;
 }
 .install-theme-info > .notice {
 	margin: 5px 0 10px 0;
@@ -652,34 +774,12 @@ body.loading-content .select-page-builder {
     justify-content: space-between;
     align-items: center;
 }
-#astra-sites-filters,
-#astra-pages-back-wrap {
-	display: inline-block;
-	width: 100%;
-	margin-top: 10px;
-}
 
-#astra-pages-back-wrap {
-	display: none;
-}
-
-#astra-pages-back-wrap .section-left {
-	padding: 0 20px;
-	z-index: 8;
-	display: -ms-flexbox;
-	display: flex;
-	-ms-flex-align: center;
-	align-items: center;
-	height: 50px;
-}
-
-.astra-pages-back {
+.astra-pages-title {
     color: #555d66;
     text-decoration: none;
     font-weight: 500;
     position: relative;
-    padding-left: 22px;
-    padding-right: 6px;
     opacity: 0.7;
 }
 .single-site-pages-header .count {
@@ -689,18 +789,6 @@ body.loading-content .select-page-builder {
 .single-site-pages-header .astra-site-title {
     font-size: 22px;
 }
-.astra-pages-back:hover {
-    opacity: 1;
-}
-.astra-pages-back:before {
-	margin-top: 1px;
-    font-family: dashicons;
-    position: absolute;
-    left: 0;
-    content: "\f340";
-    font-size: 1rem;
-}
-
 .astra-site-down {
 	padding: 1em 2em;
 	margin-top: 1em;
@@ -756,12 +844,49 @@ body.loading-content .select-page-builder {
     margin-left: -22px;
     font-weight: normal;
 }
-
-#astra-sites-menu-page .logo {
-	flex: 1;
-}
 .nav-tab-wrapper .button {
     height: 30px;
+}
+.back-to-layout:before {
+    font: normal 20px/72px dashicons;
+    content: "\f341";
+    background: #fff;
+    color: #777;
+    padding: 3px;
+    border-radius: 100%;
+    font-size: 13px;
+    border: 1px solid #777;
+}
+
+.back-to-layout:hover:before {
+    background: #f7f7f7;
+    border-color: #0073aa;
+    color: #0073aa;
+}
+
+.back-to-layout {
+    border-right: 1px solid #eeeeee;
+    padding: 0 18px;
+    text-align: center;
+    cursor: pointer;
+    visibility: hidden;
+    opacity: 0;
+}
+
+.back-to-layout:hover {
+    background-color: #f7f7f7;
+}
+
+.astra-previewing-single-pages .back-to-layout {
+    visibility: visible;
+    opacity: 1;
+}
+.logo {
+	cursor: pointer;
+}
+#astra-sites-menu-page .logo {
+    border-right: 1px solid #eeeeee;
+    padding: 13px 20px 14px 20px;
 }
 #astra-sites-menu-page .logo,
 #astra-sites-menu-page .form {
@@ -770,28 +895,106 @@ body.loading-content .select-page-builder {
 }
 
 #astra-sites-menu-page .nav-tab-wrapper {
-	border: none;
 	display: flex;
-	align-items: center;
-	margin-left: -20px;
-    margin-top: 0;
-    background: #fff;
-    padding: 10px 35px;
     justify-content: space-between;
-    box-shadow: rgba(0, 0, 0, 0.06) 0px 2px 5px 0px, rgba(0, 0, 0, 0.06) 0px 0px 0px 1px;
+    border: none;
+    background: #fff;
+    padding: 0;
+    align-items: center;
+    box-shadow: 25px 0 30px rgba(28, 39, 60, 0.09);
+    border-bottom: 1px solid #e3e3e3;
+    position: fixed;
+    top: 32px;
+    right: 0;
+    left: 0;
+    margin-left: 160px;
+    z-index: 88;
+}
+.theme-name .title,
+.theme-name .type {
+    transition: all 0.4s linear;
+}
+.theme-name .type {
+    padding: 4px 10px;
+    font-size: 12px;
+    border-radius: 2px;
+    opacity: 0;
+    visibility: hidden;
+    background: #0085ba;
+    border-color: #0073aa #006799 #006799;
+    box-shadow: 0 1px 0 #006799;
+    color: #fff;
+    text-shadow: 0 -1px 1px #006799, 1px 0 1px #006799, 0 1px 1px #006799, -1px 0 1px #006799;
+}
+.favorite-filters-wrap {
+    border-right: 1px solid #eeeeee;
+    padding: 10px;
+}
+
+#astra-sites-menu-page a {
+    text-decoration: none;
+    font-size: 18px;
+    line-height: 1;
+    height: 15px;
+    width: 18px;
+}
+.astra-sites-show-favorite-button:hover,
+.astra-sites-show-favorite-button.active {
+    color: #c34444;
+}
+#astra-sites-menu-page a:focus {
+    box-shadow: none;
+}
+#astra-sites-filters {
+    flex: 1;
 }
 
 #astra-sites-filters .wp-filter {
 	margin-top: 0;
+	justify-content: center;
     box-shadow: none;
     border: none;
-	margin-bottom: 30px;
+	margin-bottom: 0;
  	background: transparent;
  	padding: 0;
 }
 
-.is-favorite span i {
+.is-favorite .favorite-action-wrap i {
 	color : #c34444;
+}
+
+.astra-sites-no-favorites .empty-item {
+    margin-bottom: 40px;
+    padding-top: 300px;
+    background: #dde3e6;
+    border-radius: 3px;
+    display: inline-block;
+}
+
+.astra-sites-no-favorites {
+    padding: 7em 0;
+}
+
+.astra-sites-no-favorites h2 {
+    font-size: 1.3rem;
+    font-weight: normal;
+    margin-top: 0;
+    text-align: center;
+    margin-bottom: 2em;
+}
+
+.astra-sites-no-favorites .description {
+    float: right;
+    width: 43%;
+    padding-bottom: 120px;
+    font-size: 13px;
+    line-height: 1.5;
+    color: #243238;
+}
+
+.astra-sites-no-favorites .inner {
+    margin: 0 auto;
+    width: 610px;
 }
 
 /**
@@ -963,19 +1166,25 @@ body.loading-content .select-page-builder {
 #astra-sites-admin {
     margin-left: 15px;
     margin-right: 35px;
+    margin-top: 120px;
+}
+#astra-sites-welcome-form-inline select {
+    text-align-last: right;
 }
 
+#astra-sites-welcome-form-inline option {
+    direction: rtl;
+}
 #astra-sites-admin .filter-links li > a:first-child {
     margin-left: 0;
 }
 #astra-sites-welcome-form-inline {
-	margin-left: 10px;
+	margin-left: 0;
 	border-radius: 3px;
 	padding: 0px 5px 2px 5px;
 	outline: 2px solid transparent;
 	outline-offset: 0;
 	background: #ffffff;
-	border: 1px solid #ccc;
 	color: #72777c;
 	font-weight: normal;
 	font-size: 13px;
@@ -1086,6 +1295,7 @@ body.loading-content .select-page-builder {
 .astra-sites-result-preview .button {
     margin-top: 1em;
 }
+.preview-page-from-search-result #astra-sites-tooltip-plugins-settings,
 .astra-sites-page-import-popup #astra-sites-tooltip-plugins-settings {
     display: block !important;
 }
@@ -1169,6 +1379,47 @@ body.loading-content .select-page-builder {
 	color: #c1c1c1;
 }
 
+/** Badge */
+.agency-ribbons {
+    position: absolute;
+    top: 0;
+    right: -7px;
+    /* display: flex; */
+}
+.agency-ribbons>* {
+	margin-left: -10px;
+	transform: scale(.5);
+	transform-origin: 0 0;
+	left: 10px;
+}
+.star-ribbon {
+    color: #fff;
+    font-size: 27px;
+}
+.ribbon {
+	width: 48px;
+	height: 45px;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	position: relative;
+	z-index: 10;
+}
+.ribbon--blue:after {
+    border-color: #0d739f;
+    border-bottom-color: transparent;
+}
+.ribbon:after {
+	content: "";
+	display: block;
+	position: absolute;
+	bottom: -10px;
+	left: 0;
+	border-style: solid;
+	border-width: 47px 24px 9px;
+	z-index: -1;
+}
+
 .theme-browser .theme:hover .theme-actions,
 .theme-browser .theme.focus .theme-actions,
 .theme-browser .theme:focus .theme-actions {
@@ -1176,7 +1427,7 @@ body.loading-content .select-page-builder {
 }
 
 .theme-browser .theme .theme-screenshot:after {
-	padding-top: 130%;
+	padding-top: 118%;
 }
 
 @-webkit-keyframes rotation {
@@ -1259,10 +1510,6 @@ body.loading-content .select-page-builder {
     border: none;
 }
 
-#astra-pages-back-wrap {
-    margin-top: 20px;
-}
-
 .single-site {
     display: flex;
 }
@@ -1284,7 +1531,7 @@ body.loading-content .select-page-builder {
 
 .single-site-preview {
     margin-right: 4em;
-    max-height: calc(100vh - 260px);
+    max-height: calc(100vh - 280px);
     overflow-y: auto;
     border-radius: 2px;
     box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.12);
@@ -1297,7 +1544,7 @@ body.loading-content .select-page-builder {
 
 .single-site-footer {
     position: fixed;
-    padding: 15px 55px;
+    padding: 15px 80px 15px 80px;
     bottom: 0;
     background: #fff;
     right: 0;
@@ -1307,6 +1554,7 @@ body.loading-content .select-page-builder {
     box-shadow: 0 -2px 8px rgba( 0, 0, 0, 0.05);
 }
 
+.folded #astra-sites-menu-page .nav-tab-wrapper,
 .folded .single-site-footer {
     margin-left: 36px;
 }
@@ -1320,15 +1568,17 @@ body.loading-content .select-page-builder {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin: 20px 0 30px 0;
+    margin: 0 0 32px 0;
 }
 
 .astra-site-title {
     margin: 0;
 }
 
-.astra-pages-back-wrap {
-    margin: 20px 0 30px 0;
+.astra-pages-title-wrap {
+	margin: 0 0 30px 0;
+	display: flex;
+	justify-content: space-between;
 }
 
 .single-site-preview-wrap {
@@ -1354,21 +1604,22 @@ body.loading-content .select-page-builder {
         margin-right: 0;
     }
 }
+#single-pages .astra-theme {
+    border: none;
+}
 
+#single-pages .current_page .inner {
+    border-color: #5b9dd9;
+    border-radius: 2px;
+}
 .theme-browser #site-pages .theme {
     margin: 0 3.4% 3.4% 0;
     border-radius: 2px;
-    border-width: 1px;
-    border-style: solid;
-    border-color: transparent;
+    border: none;
     box-shadow: none;
 }
 .theme-browser #single-pages .site-single .theme-screenshot:after {
     padding-top: 100%;
-}
-.theme-browser #site-pages .theme.current_page,
-.theme-browser #site-pages .theme:focus {
-    border-color: #5b9dd9;
 }
 
 .site-action-buttons-wrap .dashicons {
@@ -1376,13 +1627,27 @@ body.loading-content .select-page-builder {
     font-size: 1rem;
     margin-left: .2em;
 }
-
+.site-action-buttons-wrap .dashicons.astra-sites-get-agency-bundle-button {
+    font-size: 20px;
+    color: #555d66;
+    margin-left: 10px;
+}
+.site-action-buttons-right {
+    display: flex;
+    align-items: center;
+}
 .astra-sites-result-preview.astra-sites-import-complete .inner {
     overflow: hidden;
     height: auto;
 }
 
-.site-action-buttons-wrap .button-primary.button.button-hero {
+.site-action-buttons-wrap .button.button-primary.button-hero {
+    box-shadow: none;
+}
+.wp-core-ui .astra-sites-result-preview .button.button-hero,
+.wp-core-ui .astra-sites-result-preview .button.button-hero:focus,
+.site-action-buttons-wrap .button.button-hero,
+.site-action-buttons-wrap .button.button-hero:focus {
     font-size: 13px;
     height: 38px;
     line-height: 36px;
@@ -1418,6 +1683,12 @@ body.loading-content .select-page-builder {
 	/* this is needed so Safari keeps sharp edges */
 	/*transform: scale(1);*/
 }
+.searching .theme-browser .theme .theme-screenshot.loading {
+	opacity: .5;
+}
+.searching .theme-browser .theme .theme-screenshot {
+    filter: blur(0);
+}
 .inner {
     overflow: hidden;
 }
@@ -1437,8 +1708,8 @@ body.loading-content .select-page-builder {
 
 .theme-browser .theme {
 	width: 25%;
-    padding: 1%;
-    margin: 0 0 2em 0em;
+    padding: 1.1%;
+    margin: 0 0 1em 0em;
     box-shadow: none;
 }
 
@@ -1490,4 +1761,172 @@ body.loading-content .select-page-builder {
 .filters-wrap-page-categories .filter-links li > a {
     display: block;
     margin: 0 0 5px 5px;
+}
+
+.page-builder-icon .page-builders {
+	position: absolute;
+	top: 100%;
+	background: #fff;
+	z-index: 10;
+	margin: 0;
+	border: 1px solid #ddd;
+	opacity: 0;
+	visibility: hidden;
+	box-shadow: 0px 9px 21px 0px rgba(0, 0, 0, 0.2);
+	border-bottom-left-radius: 3px;
+	border-bottom-right-radius: 3px;
+	left: -1px;
+	right: 0px;
+}
+.page-builder-icon.active .page-builders {
+    opacity: 1;
+    visibility: visible;
+}
+.page-builder-icon .page-builders img {
+    height: 17px;
+    width: 17px;
+    border-radius: 50%;
+    margin-right: 10px;
+}
+
+.page-builder-icon .page-builders li {
+    display: flex;
+    padding: 10px 15px;
+    margin: 0;
+}
+
+.page-builder-icon {
+    display: inline-block;
+    font-size: 12px;
+    padding: 23px 10px;
+    width: 164px;
+    position: relative;
+    cursor: pointer;
+}
+
+.page-builder-icon img {
+    height: auto;
+    width: 22px;
+    border-radius: 50%;
+    margin-right: 8px;
+}
+
+.selected-page-builder {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.selected-page-builder .dashicons {
+    margin-left: 2px;
+}
+
+.page-builder-icon .page-builders .active,
+.page-builder-icon .page-builders li:hover {
+    background-color: #f7f7f7;
+}
+
+
+.astra-loading-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-60%, -60%);
+}
+
+.astra-loading-icon:after {
+  content: " ";
+  display: inline-block;
+  width: 46px;
+  height: 46px;
+  margin: 1px;
+  border-radius: 50%;
+  border: 4px solid #251644;
+  border-color: #0185ba transparent #0185ba transparent;
+  animation: loadingicon 1.2s linear infinite;
+}
+@keyframes loadingicon {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+.preparing .install-theme-info {
+    display: none !important;
+}
+
+
+@media screen and (min-width: 783px and max-width: 1180px) {
+
+    .folded #astra-sites-menu-page .nav-tab-wrapper {
+        margin-left: 36px;
+        top: 32px;
+    }
+    #astra-sites-filters .search-form {
+        width: 100%;
+        min-width:280px;
+    }
+    #astra-sites > .theme {
+        width: 50%;
+    }
+
+    #astra-sites > .theme:nth-child(odd) {
+        margin: 0;
+    }
+    .theme-browser #site-pages .theme {
+        width: 46%;
+    }
+}
+@media screen and (max-width: 782px) {
+    .folded #astra-sites-menu-page .nav-tab-wrapper {
+        top: 46px;
+        margin-left: 0;
+    }
+
+    .page-builder-title {
+        display: none;
+    }
+
+    #astra-sites-filters .search-form {
+        width: 200px;
+    }
+
+    .page-builder-icon {
+        width: 100px;
+    }
+
+    .page-builder-icon .page-builders {
+        width: 140px;
+        margin-left: -20px;
+    }
+    .single-site-footer {
+        margin-left: 0;
+    }
+}
+@media screen and (max-width: 480px) {
+    #astra-sites-menu-page .nav-tab-wrapper {
+        margin: 0;
+    }
+    #astra-sites-filters .search-form {
+        width: auto;
+    }
+    .page-builder-icon {
+        width: auto;
+    }
+    #site-pages {
+        margin: 0;
+    }
+    .theme-browser #site-pages .theme {
+	    width: 46%;
+	}
+	.single-site-footer {
+	    padding: 10px 20px;
+	}
+
+	.site-action-buttons-wrap {flex-direction: column-reverse;}
+
+	}
 }
