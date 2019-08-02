@@ -244,11 +244,6 @@
 	cursor: pointer;
 }
 
-.searching .theme-browser .theme .inner:hover .title {
-    opacity: 0;
-    visibility: hidden;
-}
-
 .searching .theme-browser .theme .inner:hover .type {
     opacity: 1;
     visibility: visible;
@@ -915,16 +910,19 @@ body.loading-content .select-page-builder {
     transition: all 0.4s linear;
 }
 .theme-name .type {
-    padding: 4px 10px;
     font-size: 12px;
-    border-radius: 2px;
     opacity: 0;
     visibility: hidden;
-    background: #0085ba;
-    border-color: #0073aa #006799 #006799;
-    box-shadow: 0 1px 0 #006799;
-    color: #fff;
-    text-shadow: 0 -1px 1px #006799, 1px 0 1px #006799, 0 1px 1px #006799, -1px 0 1px #006799;
+    color: #555;
+    border: 1px solid #cccccc;
+    background: #f7f7f7;
+    vertical-align: top;
+    padding: 4px 8px;
+    border-radius: 2px;
+    font-weight: normal;
+}
+.theme-name .type .dashicons {
+    font-size: 16px;
 }
 .favorite-filters-wrap {
     border-right: 1px solid #eeeeee;
@@ -1381,45 +1379,23 @@ body.loading-content .select-page-builder {
 
 /** Badge */
 .agency-ribbons {
+    color: #ffffff;
+    transform: rotate(44deg);
+    text-align: center;
+    display: inline-block;
     position: absolute;
-    top: 0;
-    right: -7px;
-    /* display: flex; */
+    z-index: 9;
+    top: 8px;
+    text-transform: uppercase;
+    font-weight: 600;
+    font-size: 9px;
+    letter-spacing: 0.5px;
+    right: -32px;
+    line-height: 15px;
+    background: #0073aa;
+    padding: 2px 30px;
+    text-shadow: 0 -1px 1px #006799, 1px 0 1px #006799, 0 1px 1px #006799, -1px 0 1px #006799;
 }
-.agency-ribbons>* {
-	margin-left: -10px;
-	transform: scale(.5);
-	transform-origin: 0 0;
-	left: 10px;
-}
-.star-ribbon {
-    color: #fff;
-    font-size: 27px;
-}
-.ribbon {
-	width: 48px;
-	height: 45px;
-	display: flex;
-	align-items: center;
-	justify-content: center;
-	position: relative;
-	z-index: 10;
-}
-.ribbon--blue:after {
-    border-color: #0d739f;
-    border-bottom-color: transparent;
-}
-.ribbon:after {
-	content: "";
-	display: block;
-	position: absolute;
-	bottom: -10px;
-	left: 0;
-	border-style: solid;
-	border-width: 47px 24px 9px;
-	z-index: -1;
-}
-
 .theme-browser .theme:hover .theme-actions,
 .theme-browser .theme.focus .theme-actions,
 .theme-browser .theme:focus .theme-actions {

@@ -147,7 +147,7 @@ if ( ! class_exists( 'Astra_Pro_Sites' ) ) :
 					'type'    => 'error',
 					'show_if' => ( is_plugin_active( 'astra-sites/astra-sites.php' ) ) ? true : false,
 					/* translators: %1$s white label plugin name and %2$s deactivation link */
-					'message' => sprintf( __( 'You have two versions of the %1$s activated, click here to <a href="%2$s">deactivate one</a>.', 'astra-sites' ), Astra_Pro_Sites_White_Label::get_option( 'astra-sites', 'name', ASTRA_SITES_NAME ), esc_url( $this->deactivation_link() ) ),
+					'message' => sprintf( __( '<p>You have two versions of the %1$s activated, click here to <a href="%2$s">deactivate one</a></p>.', 'astra-sites' ), Astra_Pro_Sites_White_Label::get_option( 'astra-sites', 'name', ASTRA_SITES_NAME ), esc_url( $this->deactivation_link() ) ),
 				)
 			);
 

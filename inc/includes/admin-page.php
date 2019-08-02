@@ -112,7 +112,7 @@ defined( 'ABSPATH' ) or exit;
 		var page_site_id        = data[site_id]['site_id'] || '';
 		var favorite_status     = false;
 		var favorite_class      = '';
-		var type_text      		= 'Import Site';
+		var type_text      		= 'Preview Site';
 		var featured_image_url = data[site_id]['featured-image-url'];
 		var thumbnail_image_url = data[site_id]['thumbnail-image-url'] || featured_image_url;
 		var tiny_image_url      = data[site_id]['tiny-image-url'] || thumbnail_image_url;
@@ -125,7 +125,7 @@ defined( 'ABSPATH' ) or exit;
 				favorite_status = true;
 			}
 		} else {
-			type_text = 'Import Template';
+			type_text = 'Preview Template';
 			thumbnail_image_url = featured_image_url;
 			current_site_id = page_site_id;
 			page_id = site_id;
@@ -143,7 +143,7 @@ defined( 'ABSPATH' ) or exit;
 				<div class="theme-name">
 					<span class="title">{{{title}}}</span>
 					<# if ( type ) { #>
-						<span class="type">{{type_text}}</span>
+						<span class="type">{{type_text}} <i class="dashicons dashicons-external"></i></span>
 					<# } #>
 				</div>
 				<# if ( '' === type || 'site' === type ) { #>
@@ -153,7 +153,7 @@ defined( 'ABSPATH' ) or exit;
 				<# } #>
 			</div>
 			<# if ( site_type && 'free' !== site_type ) { #>
-				<div class="agency-ribbons" title="Agency"><div class="ribbon ribbon--blue star-ribbon"><span class="icon-crown"></span></div></div>
+				<div class="agency-ribbons" title="Agency">Agency</div>
 			<# } #>
 		</div>
 	</div>

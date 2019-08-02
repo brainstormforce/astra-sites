@@ -311,6 +311,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			Astra_Notices::add_notice(
 				array(
 					'id'               => 'astra-theme-activation-nag',
+					'class'            => 'astra-theme-activation-nag',
 					'type'             => 'error',
 					'show_if'          => ( ! defined( 'ASTRA_THEME_SETTINGS' ) ) ? true : false,
 					/* translators: 1: theme.php file*/
