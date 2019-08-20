@@ -107,7 +107,7 @@ module.exports = function( grunt ) {
 
 		clean: {
             main: ["astra-sites"],
-            zip: ["astra-sites.zip"]
+            zip: ["*.zip"]
 
         },
 
