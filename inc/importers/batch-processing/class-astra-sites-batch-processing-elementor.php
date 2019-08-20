@@ -89,6 +89,16 @@ class Astra_Sites_Batch_Processing_Elementor extends Source_Local {
 					}
 				}
 
+				// Replace the site urls.
+				$demo_data = get_option( 'astra_sites_import_data', array() );
+				if ( isset( $demo_data['astra-site-url'] ) ) {
+					$site_url      = get_site_url();
+					$site_url      = str_replace( '/', '\/', $site_url );
+					$demo_site_url = 'https:' . $demo_data['astra-site-url'];
+					$demo_site_url = str_replace( '/', '\/', $demo_site_url );
+					$data          = str_replace( $demo_site_url, $site_url, $data );
+				}
+
 				$data = json_decode( $data, true );
 
 				// Import the data.

@@ -88,7 +88,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			$new_favorites = array();
 			$site_id       = isset( $_POST['site_id'] ) ? sanitize_key( $_POST['site_id'] ) : '';
 
-			if( empty( $site_id ) ) {
+			if ( empty( $site_id ) ) {
 				wp_send_json_error();
 			}
 
@@ -161,6 +161,13 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				$this->import_post_meta( $new_page_id, $post_meta );
 			}
 
+			if ( isset( $_POST['data']['astra-page-options-data'] ) && ! empty( $_POST['data']['astra-page-options-data'] ) ) {
+
+				foreach ( $_POST['data']['astra-page-options-data'] as $option => $value ) {
+					update_option( $option, $value );
+				}
+			}
+
 			do_action( 'astra_sites_process_single', $new_page_id );
 
 			wp_send_json_success(
@@ -216,8 +223,24 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 					}
 
 					if ( '_elementor_page_settings' === $meta_key ) {
-						if ( is_array( $raw_data ) && isset( $raw_data['astra_sites_page_setting_enable'] ) ) {
-							$raw_data['astra_sites_page_setting_enable'] = 'yes';
+
+						if ( is_array( $raw_data ) ) {
+
+							if ( isset( $raw_data['astra_sites_page_setting_enable'] ) ) {
+								$raw_data['astra_sites_page_setting_enable'] = 'yes';
+							}
+
+							if ( isset( $raw_data['astra_sites_body_font_family'] ) ) {
+								$raw_data['astra_sites_body_font_family'] = str_replace( "'", '', $raw_data['astra_sites_body_font_family'] );
+							}
+
+							for ( $i = 1; $i < 7; $i++ ) {
+
+								if ( isset( $raw_data[ 'astra_sites_heading_' . $i . '_font_family' ] ) ) {
+
+									$raw_data[ 'astra_sites_heading_' . $i . '_font_family' ] = str_replace( "'", '', $raw_data[ 'astra_sites_heading_' . $i . '_font_family' ] );
+								}
+							}
 						}
 					}
 
@@ -432,7 +455,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			);
 			wp_localize_script( 'astra-sites-install-theme', 'AstraSitesInstallThemeVars', $data );
 
-			if ( 'appearance_page_astra-sites' !== $hook && 'appearance_page_site-pages' !== $hook ) {
+			if ( 'appearance_page_astra-sites' !== $hook ) {
 				return;
 			}
 
@@ -445,12 +468,15 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			// Fetch.
 			wp_register_script( 'astra-sites-fetch', ASTRA_SITES_URI . 'inc/assets/js/fetch.umd.js', array( 'jquery' ), ASTRA_SITES_VER, true );
 
+			// History.
+			wp_register_script( 'astra-sites-history', ASTRA_SITES_URI . 'inc/assets/js/history.js', array( 'jquery' ), ASTRA_SITES_VER, true );
+
 			// API.
 			wp_register_script( 'astra-sites-api', ASTRA_SITES_URI . 'inc/assets/js/astra-sites-api.js', array( 'jquery', 'astra-sites-fetch' ), ASTRA_SITES_VER, true );
 
 			// Admin Page.
 			wp_enqueue_style( 'astra-sites-admin', ASTRA_SITES_URI . 'inc/assets/css/admin.css', ASTRA_SITES_VER, true );
-			wp_enqueue_script( 'astra-sites-admin-page', ASTRA_SITES_URI . 'inc/assets/js/admin-page.js', array( 'jquery', 'wp-util', 'updates', 'jquery-ui-autocomplete', 'astra-sites-api' ), ASTRA_SITES_VER, true );
+			wp_enqueue_script( 'astra-sites-admin-page', ASTRA_SITES_URI . 'inc/assets/js/admin-page.js', array( 'jquery', 'wp-util', 'updates', 'jquery-ui-autocomplete', 'astra-sites-api', 'astra-sites-history' ), ASTRA_SITES_VER, true );
 
 			$stored_data = array(
 				'astra-site-category'        => array(),
@@ -492,20 +518,20 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			$data = apply_filters(
 				'astra_sites_localize_vars',
 				array(
-					'debug'             => ( ( defined( 'WP_DEBUG' ) && WP_DEBUG ) || isset( $_GET['debug'] ) ) ? true : false,
-					'isPro'             => defined( 'ASTRA_PRO_SITES_NAME' ) ? true : false,
-					'isWhiteLabeled'    => Astra_Sites_White_Label::get_instance()->is_white_labeled(),
-					'ajaxurl'           => esc_url( admin_url( 'admin-ajax.php' ) ),
-					'siteURL'           => site_url(),
-					'docUrl'            => 'https://wpastra.com/',
-					'getProText'        => __( 'Get Agency Bundle', 'astra-sites' ),
-					'getProURL'         => esc_url( 'https://wpastra.com/agency/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=wp-dashboard' ),
-					'getUpgradeText'    => __( 'Upgrade', 'astra-sites' ),
-					'getUpgradeURL'     => esc_url( 'https://wpastra.com/agency/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=wp-dashboard' ),
-					'_ajax_nonce'       => wp_create_nonce( 'astra-sites' ),
-					'requiredPlugins'   => array(),
-					'XMLReaderDisabled' => ! class_exists( 'XMLReader' ) ? true : false,
-					'strings'           => array(
+					'debug'                      => ( ( defined( 'WP_DEBUG' ) && WP_DEBUG ) || isset( $_GET['debug'] ) ) ? true : false,
+					'isPro'                      => defined( 'ASTRA_PRO_SITES_NAME' ) ? true : false,
+					'isWhiteLabeled'             => Astra_Sites_White_Label::get_instance()->is_white_labeled(),
+					'ajaxurl'                    => esc_url( admin_url( 'admin-ajax.php' ) ),
+					'siteURL'                    => site_url(),
+					'docUrl'                     => 'https://wpastra.com/',
+					'getProText'                 => __( 'Get Agency Bundle', 'astra-sites' ),
+					'getProURL'                  => esc_url( 'https://wpastra.com/agency/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=wp-dashboard' ),
+					'getUpgradeText'             => __( 'Upgrade', 'astra-sites' ),
+					'getUpgradeURL'              => esc_url( 'https://wpastra.com/agency/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=wp-dashboard' ),
+					'_ajax_nonce'                => wp_create_nonce( 'astra-sites' ),
+					'requiredPlugins'            => array(),
+					'XMLReaderDisabled'          => ! class_exists( 'XMLReader' ) ? true : false,
+					'strings'                    => array(
 						/* translators: %s are HTML tags. */
 						'warningXMLReader'         => sprintf( __( '%1$sRequired XMLReader PHP extension is missing on your server!%2$sAstra Sites import requires XMLReader extension to be installed. Please contact your web hosting provider and ask them to install and activate the XMLReader PHP extension.', 'astra-sites' ), '<div class="notice astra-sites-xml-notice notice-error"><p><b>', '</b></p><p>', '</p></div>' ),
 						'warningBeforeCloseWindow' => __( 'Warning! Astra Site Import process is not complete. Don\'t close the window until import process complete. Do you still want to leave the window?', 'astra-sites' ),
@@ -517,7 +543,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 						'importDemo'               => __( 'Import This Site', 'astra-sites' ),
 						'importingDemo'            => __( 'Importing..', 'astra-sites' ),
 					),
-					'log'               => array(
+					'log'                        => array(
 						'bulkInstall'          => __( 'Installing Required Plugins..', 'astra-sites' ),
 						'serverConfiguration'  => esc_url( 'https://wpastra.com/docs/?p=1314&utm_source=demo-import-panel&utm_campaign=import-error&utm_medium=wp-dashboard' ),
 						'importWidgetsSuccess' => __( 'Imported Widgets!', 'astra-sites' ),
@@ -525,21 +551,21 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 					'default_page_builder'       => $default_page_builder,
 					'default_page_builder_sites' => Astra_Sites_Page::get_instance()->get_sites_by_page_builder( $default_page_builder ),
 
-					'sites'                => $request_params,
-					'settings'             => array(),
-					'page-builders'        => array(),
-					'categories'           => array(),
-					'parent_categories'    => array(),
-					'api_sites_and_pages_tags'  => get_option( 'astra-sites-tags', array() ),
-					'license_status'       => $license_status,
+					'sites'                      => $request_params,
+					'settings'                   => array(),
+					'page-builders'              => array(),
+					'categories'                 => array(),
+					'parent_categories'          => array(),
+					'api_sites_and_pages_tags'   => get_option( 'astra-sites-tags', array() ),
+					'license_status'             => $license_status,
 
-					'ApiURL'          => $this->api_url,
-					'stored_data'    => $stored_data,
-					'favorite_data'  => $favorite_data,
-					'category_slug'   => 'astra-site-category',
-					'page_builder'    => 'astra-site-page-builder',
-					'cpt_slug'        => 'astra-sites',
-					'parent_category' => '',
+					'ApiURL'                     => $this->api_url,
+					'stored_data'                => $stored_data,
+					'favorite_data'              => $favorite_data,
+					'category_slug'              => 'astra-site-category',
+					'page_builder'               => 'astra-site-page-builder',
+					'cpt_slug'                   => 'astra-sites',
+					'parent_category'            => '',
 				)
 			);
 

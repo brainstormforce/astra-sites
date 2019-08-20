@@ -41,8 +41,8 @@ if ( class_exists( 'WP_Background_Process' ) ) :
 			$method  = $object['method'];
 
 			if ( 'import_categories' === $method ) {
-				error_log( 'Importing Categories' );
-				update_option( 'astra-sites-batch-status-string', 'Importing Categories' );
+				error_log( 'Importing Tags' );
+				update_option( 'astra-sites-batch-status-string', 'Importing Tags' );
 				$process->import_categories();
 			} elseif ( 'import_sites' === $method ) {
 				$page = $object['page'];

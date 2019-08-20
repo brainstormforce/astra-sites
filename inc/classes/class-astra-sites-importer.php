@@ -52,8 +52,8 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) {
 			require_once ASTRA_SITES_DIR . 'inc/importers/class-astra-site-options-import.php';
 
 			// Import AJAX.
-			add_action( 'wp_ajax_astra-sites-import-set-site-data', array( $this, 'import_start' ) );
 			add_action( 'wp_ajax_astra-sites-import-wpforms', array( $this, 'import_wpforms' ) );
+			add_action( 'wp_ajax_astra-sites-import-cartflows', array( $this, 'import_cartflows' ) );
 			add_action( 'wp_ajax_astra-sites-import-customizer-settings', array( $this, 'import_customizer_settings' ) );
 			add_action( 'wp_ajax_astra-sites-import-prepare-xml', array( $this, 'prepare_xml_data' ) );
 			add_action( 'wp_ajax_astra-sites-import-options', array( $this, 'import_options' ) );
@@ -114,42 +114,52 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) {
 			require_once ASTRA_SITES_DIR . 'inc/importers/wxr-importer/class-astra-wxr-importer.php';
 		}
 
+		function change_flow_status( $args ) {
+			$args['post_status'] = 'publish';
+			return $args;
+		}
+
+		function track_flows( $flow_id ) {
+			error_log( '$flow_id ' . $flow_id );
+			Astra_WXR_Importer::instance()->track_post( $flow_id );
+		}
+
 		/**
-		 * Start Site Import
+		 * Import CartFlows
 		 *
-		 * @since 1.1.0
+		 * @since x.x.x
+		 *
 		 * @return void
 		 */
-		function import_start() {
+		function import_cartflows() {
 
-			if ( ! current_user_can( 'customize' ) ) {
-				wp_send_json_error( __( 'You have not "customize" access to import the Astra site.', 'astra-sites' ) );
-			}
+			// Make the flow publish.
+			add_action( 'cartflows_flow_importer_args', array( $this, 'change_flow_status' ) );
+			add_action( 'cartflows_flow_imported', array( $this, 'track_flows' ) );
+			add_action( 'cartflows_step_imported', array( $this, 'track_flows' ) );
 
-			$demo_api_uri = isset( $_POST['api_url'] ) ? esc_url( $_POST['api_url'] ) : '';
+			$cartflows_url = ( isset( $_REQUEST['cartflows_url'] ) ) ? urldecode( $_REQUEST['cartflows_url'] ) : '';
+			if ( ! empty( $cartflows_url ) && is_callable( 'CartFlows_Importer::get_instance' ) ) {
 
-			if ( ! empty( $demo_api_uri ) ) {
+				// Download JSON file.
+				$file_path = Astra_Sites_Helper::download_file( $cartflows_url );
 
-				$demo_data = self::get_astra_single_demo( $demo_api_uri );
+				if ( $file_path['success'] ) {
+					if ( isset( $file_path['data']['file'] ) ) {
 
-				update_option( 'astra_sites_import_data', $demo_data );
+						$ext = strtolower( pathinfo( $file_path['data']['file'], PATHINFO_EXTENSION ) );
 
-				if ( is_wp_error( $demo_data ) ) {
-					wp_send_json_error( $demo_data->get_error_message() );
-				} else {
-					$log_file = Astra_Sites_Importer_Log::add_log_file_url();
-					if ( isset( $log_file['url'] ) && ! empty( $log_file['url'] ) ) {
-						$demo_data['log_file'] = $log_file['url'];
+						if ( 'json' === $ext ) {
+							$flows = json_decode( file_get_contents( $file_path['data']['file'] ), true );
+
+							if ( ! empty( $flows ) ) {
+								CartFlows_Importer::get_instance()->import_from_json_data( $flows );
+							}
+						}
 					}
-					do_action( 'astra_sites_import_start', $demo_data, $demo_api_uri );
 				}
-
-				wp_send_json_success( $demo_data );
-
-			} else {
-				wp_send_json_error( __( 'Request site API URL is empty. Try again!', 'astra-sites' ) );
 			}
-
+			wp_send_json_success( $cartflows_url );
 		}
 
 		/**
@@ -166,16 +176,16 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) {
 
 			if ( ! empty( $wpforms_url ) && function_exists( 'wpforms_encode' ) ) {
 
-				// Download XML file.
-				$xml_path = Astra_Sites_Helper::download_file( $wpforms_url );
+				// Download JSON file.
+				$file_path = Astra_Sites_Helper::download_file( $wpforms_url );
 
-				if ( $xml_path['success'] ) {
-					if ( isset( $xml_path['data']['file'] ) ) {
+				if ( $file_path['success'] ) {
+					if ( isset( $file_path['data']['file'] ) ) {
 
-						$ext = strtolower( pathinfo( $xml_path['data']['file'], PATHINFO_EXTENSION ) );
+						$ext = strtolower( pathinfo( $file_path['data']['file'], PATHINFO_EXTENSION ) );
 
 						if ( 'json' === $ext ) {
-							$forms = json_decode( file_get_contents( $xml_path['data']['file'] ), true );
+							$forms = json_decode( file_get_contents( $file_path['data']['file'] ), true );
 
 							if ( ! empty( $forms ) ) {
 
@@ -364,7 +374,10 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) {
 		 * @return void
 		 */
 		function import_end() {
-			do_action( 'astra_sites_import_complete' );
+			$demo_data = isset( $_POST['data'] ) ? $_POST['data'] : array();
+			update_option( 'astra_sites_import_data', $demo_data );
+
+			do_action( 'astra_sites_import_complete', $demo_data );
 		}
 
 

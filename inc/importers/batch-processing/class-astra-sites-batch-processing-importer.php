@@ -55,7 +55,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Importer' ) ) :
 			error_log( 'Requesting Tags' );
 			update_option( 'astra-sites-batch-status-string', 'Requesting Tags' );
 
-			$api_args = array(
+			$api_args     = array(
 				'timeout' => 30,
 			);
 			$tags_request = wp_remote_get( trailingslashit( Astra_Sites::get_instance()->get_api_domain() ) . '/wp-json/wp/v2/astra-sites-tag/?_fields=id,name,slug', $api_args );

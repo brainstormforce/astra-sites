@@ -28,6 +28,10 @@
   content: "\e903";
 }
 
+.icon-search:before {
+  content: "\e900";
+}
+
 .icon-heart:before {
   content: "\e901";
 }
@@ -36,8 +40,8 @@
   content: "\e902";
 }
 
-.icon-star:before {
-  content: "\e900";
+.icon-chevron-left:before {
+  content: "\e904";
 }
 
 .favorite-filters-wrap a {
@@ -117,24 +121,34 @@
 #wp-filter-search-input:focus {
     box-shadow: 0 1px 4px 0 rgba(32,33,36,0.18);
 }
-#wp-filter-search-input.searching {
+.searching #wp-filter-search-input {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
     border-bottom-color: transparent;
-    border-color: rgba(223,225,229,0);
-    box-shadow: 0 1px 6px 0 rgba(32,33,36,0.28);
 }
 .ui-widget.ui-widget-content {
-    border-top: none;
-    box-shadow: none;
-    border-top-left-radius: 0;
-    border-top-right-radius: 0;
-    border-bottom-left-radius: 15px;
-    border-bottom-right-radius: 15px;
-    border: 1px solid rgba(223,225,229,0);
-    border-top: none;
-    box-shadow: 0 4px 6px 0 rgba(32,33,36,0.28);
-    overflow: hidden;
+	border-top-left-radius: 0;
+	border-top-right-radius: 0;
+	border-bottom-left-radius: 15px;
+	border-bottom-right-radius: 15px;
+	border: 1px solid rgba(32,33,36,0.18);
+	border-top: none;
+	overflow: hidden;
+	box-shadow: 0 3px 4px 0 rgba(32,33,36,0.18);
+	background: transparent;
+	padding-top: 10px;
+	padding-bottom: 10px;
+    background: #fff;
+}
+
+#astra-sites-filters .search-form.searching:before {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    right: 20px;
+    left: 20px;
+    height: 1px;
+    background: #dedede;
 }
 
 .ui-autocomplete li,
@@ -147,13 +161,9 @@
     padding: 2px 20px;
 }
 
-.ui-autocomplete li:last-child {
-    padding-bottom: 10px;
-}
-
 .ui-autocomplete .ui-state-active {
-    border: none;
     background: #c0c0c0;
+    border-color: #c0c0c0;
     margin: 0;
 }
 
@@ -166,7 +176,7 @@
     right: 0;
     color: #666;
     opacity: 0.3;
-    padding: 12px 16px 12px 12px;
+    padding: 15px 19px 12px 12px;
 }
 #astra-sites-admin .filter-links li > a {
 	border-bottom: none;
@@ -293,7 +303,7 @@
 }
 .astra-sites-import-content {
 	display: block;
-	padding: 35px 35px 35px 35px;
+	padding: 20px 35px;
 	background: #f3f3f3;
 	height: 200px;
 	overflow: auto;
@@ -843,8 +853,8 @@ body.loading-content .select-page-builder {
     height: 30px;
 }
 .back-to-layout:before {
-    font: normal 20px/72px dashicons;
-    content: "\f341";
+    /*font: normal 20px/72px dashicons;
+    content: "\f341";*/
     background: #fff;
     color: #777;
     padding: 3px;
@@ -860,12 +870,14 @@ body.loading-content .select-page-builder {
 }
 
 .back-to-layout {
-    border-right: 1px solid #eeeeee;
-    padding: 0 18px;
-    text-align: center;
-    cursor: pointer;
-    visibility: hidden;
-    opacity: 0;
+	border-right: 1px solid #eeeeee;
+	padding: 20px 14px;
+	text-align: center;
+	cursor: pointer;
+	visibility: hidden;
+	opacity: 0;
+	font-size: 24px;
+	line-height: normal;
 }
 
 .back-to-layout:hover {
@@ -909,6 +921,9 @@ body.loading-content .select-page-builder {
 .theme-name .type {
     transition: all 0.4s linear;
 }
+.searching .theme-name .type {
+    padding: 4px 8px;
+}
 .theme-name .type {
     font-size: 12px;
     opacity: 0;
@@ -917,7 +932,6 @@ body.loading-content .select-page-builder {
     border: 1px solid #cccccc;
     background: #f7f7f7;
     vertical-align: top;
-    padding: 4px 8px;
     border-radius: 2px;
     font-weight: normal;
 }
@@ -988,6 +1002,7 @@ body.loading-content .select-page-builder {
     font-size: 13px;
     line-height: 1.5;
     color: #243238;
+    padding-top: 160px;
 }
 
 .astra-sites-no-favorites .inner {
@@ -1002,6 +1017,22 @@ body.loading-content .select-page-builder {
     position: relative;
     height: 100vh;
 }
+.astra-sites-welcome .header img {
+    width: 30px;
+}
+.astra-sites-welcome .header {
+    text-align: left;
+    padding: 10px 15px;
+    display: flex;
+    align-items: center;
+    border-bottom: 1px solid #e5e5e5;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+}
+.astra-sites-welcome .header .title {
+    margin: 0 0 0 10px;
+    font-size: 13px;
+    text-transform: uppercase;
+}
 .ast-importing-wrap {
 	display: none;
 }
@@ -1013,15 +1044,14 @@ body.loading-content .select-page-builder {
     border-radius: 2px;
     box-shadow: 0 1px 1px rgba(0, 0, 0, 0.04);
     border: 1px solid #e5e5e5;
+    overflow: hidden;
 }
 .astra-sites-welcome .inner {
 	vertical-align: middle;
 	margin: 0 auto;
 	display: inline-block;
-	width: 700px;
-	width: 700px;
+	width: 750px;
 	background: #fff;
-	padding: 6.5em 6em;
     text-align: center;
 }
 
@@ -1036,7 +1066,7 @@ body.loading-content .select-page-builder {
 }
 
 #astra-sites-welcome-form {
-    padding: 0 20px;
+    padding: 6em 4em 2em 4em;
 }
 
 .astra-sites-welcome select {
@@ -1062,10 +1092,14 @@ body.loading-content .select-page-builder {
 
 .required-plugins-list,
 .astra-sites-third-party-required-plugins {
-	margin-left: 2em;
+	margin-left: 16px;
 	margin-top: .5em;
 	margin-bottom: .5em;
 	list-style-type: disc;
+}
+
+.astra-sites-tooltip-message {
+    margin-left: 24px;
 }
 
 .astra-sites-third-party-required-plugins .plugin-card,
@@ -1110,7 +1144,8 @@ body.loading-content .select-page-builder {
 }
 
 .astra-sites-result-preview .dashicons {
-    vertical-align: text-bottom;
+    vertical-align: middle;
+    font-size: 1rem;
 }
 
 .astra-site-import-process-wrap progress::-webkit-progress-value {
@@ -1234,7 +1269,7 @@ body.loading-content .select-page-builder {
 .page-builders li {
 	cursor: pointer;
 	display: inline-block;
-	padding: 1em;
+	padding: 1.2em;
 }
 
 .page-builders [type=radio] {
@@ -1244,31 +1279,20 @@ body.loading-content .select-page-builder {
 	height: 0;
 }
 
+.page-builders [type=radio] + img.active,
 .page-builders [type=radio] + img:hover {
     transform: translateY(-1px);
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.09);
+    box-shadow: 0 2px 6px rgba(0, 115, 170, 0.18);
+    border-color: #0073aa;
 }
 
 .page-builders [type=radio] + img {
 	cursor: pointer;
-	opacity: .9;
-	border: 3px solid transparent;
-	border-radius: 10px;
-	transition: all linear 0.2s;
-	height: 122px;
-}
-
-.page-builders [type=radio]:hover + img,
-.page-builders [type=radio]:checked + img {
-	opacity: 1;
-}
-
-.astra-sites-page-builder-notice {
-	text-align: center;
-	margin: 1em 0 2em 0;
-    position: absolute;
-    left: 0;
-    right: 0;
+    border: 1px solid #dcdcdc;
+    border-radius: 4px;
+    transition: all linear 0.2s;
+    height: 100px;
+    padding: 6px;
 }
 
 .astra-demo-import.button.updating-message:before,
@@ -1301,24 +1325,45 @@ body.loading-content .select-page-builder {
     padding: 1em 1em 1em 2.9em;
     z-index: 30;
     box-sizing: border-box;
-    border-top: 1px solid #eee;
+    border-top: 1px solid #dcdcdc;
 }
 .ast-actioms-wrap .button {
     margin: 0;
 }
 .ast-actioms-wrap .site-install-site-button {
-    margin-left: .5em;
+    margin-right: .5em;
 }
 .astra-site-contents > li {
-    margin-bottom: 10px;
+    margin-bottom: 12px;
 }
 .astra-sites-result-preview h2 {
-    background: #ffffff;
-    padding: 1em 1em 1em 1.5em;
+    font-size: 1.4em;
+    margin: 0;
+}
+.astra-sites-result-preview .heading {
+	background: #ffffff;
+    padding: 18px 35px;
     margin-top: 0;
-    border-bottom: 1px solid #ddd;
-    font-size: 1.7em;
-    margin-bottom: 0;
+    box-shadow: 0 0 8px rgba(0, 0, 0, 0.1);
+    margin-bottom: 10px;
+	display: flex;
+	justify-content: space-between;
+}
+.astra-sites-result-preview .close {
+    position: absolute;
+    right: 0;
+    top: 0;
+    bottom: 0;
+    height: 53px;
+    line-height: 53px;
+    width: 53px;
+    cursor: pointer;
+    border-left: 1px solid #eee;
+    color: #aaa;
+    font-size: 21px;
+}
+.astra-sites-result-preview .close:hover {
+    color: #444;
 }
 .astra-sites-result-preview .overlay {
     background: rgba(0, 0, 0, 0.7);
@@ -1337,12 +1382,11 @@ body.loading-content .select-page-builder {
     -webkit-transform: translate(-50%, -50%);
     -ms-transform: translate(-50%, -50%);
     transform: translate(-50%, -50%);
-    background: #fff;
     -webkit-box-sizing: border-box;
     -moz-box-sizing: border-box;
     box-sizing: border-box;
     position: fixed;
-    background-color: #fff;
+    background-color: #f3f3f3;
     z-index: 100059;
     text-align: left;
     top: 50%;
@@ -1625,8 +1669,8 @@ body.loading-content .select-page-builder {
 .site-action-buttons-wrap .button.button-hero,
 .site-action-buttons-wrap .button.button-hero:focus {
     font-size: 13px;
-    height: 38px;
-    line-height: 36px;
+    height: 36px;
+    line-height: 34px;
     padding: 0 20px;
     box-shadow: none;
 }
@@ -1653,11 +1697,24 @@ body.loading-content .select-page-builder {
 .astra-sites-import-plugins .disabled {
     pointer-events: none;
 }
-
+.theme-browser .theme .site-preview > .theme-screenshot.loading,
 .theme-browser .theme .theme-screenshot.loading {
-	filter: blur(50px);
-	/* this is needed so Safari keeps sharp edges */
-	/*transform: scale(1);*/
+	animation-duration: 2s;
+    animation-fill-mode: forwards;
+    animation-iteration-count: infinite;
+    animation-name: image-placeholder;
+    animation-timing-function: linear;
+    background: #f6f7f8;
+    background: linear-gradient(to right, #fafafa 8%, #f4f4f4 38%, #fafafa 54%);
+    position: relative;
+}
+@keyframes image-placeholder{
+    0%{
+        background-position: -150px 0;
+    }
+    100%{
+        background-position: 150px 0;
+    }
 }
 .searching .theme-browser .theme .theme-screenshot.loading {
 	opacity: .5;
@@ -1803,29 +1860,47 @@ body.loading-content .select-page-builder {
 }
 
 
-.astra-loading-icon {
-  position: absolute;
-  top: 50%;
-  left: 50%;
-  transform: translate(-60%, -60%);
+.astra-loading-wrap {
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-60%, -60%);
 }
 
+.astra-loading-icon,
 .astra-loading-icon:after {
-  content: " ";
-  display: inline-block;
-  width: 46px;
-  height: 46px;
-  margin: 1px;
-  border-radius: 50%;
-  border: 4px solid #251644;
-  border-color: #0185ba transparent #0185ba transparent;
-  animation: loadingicon 1.2s linear infinite;
+	border-radius: 50%;
+	width: 20px;
+	height: 20px;
 }
-@keyframes loadingicon {
+.astra-loading-icon {
+	border-top: 3px solid rgb(192, 192, 192);
+	border-right: 3px solid rgb(192, 192, 192);
+	border-bottom: 3px solid rgb(192, 192, 192);
+	border-left: 3px solid #0185ba;
+	-webkit-transform: translateZ(0);
+	-ms-transform: translateZ(0);
+	transform: translateZ(0);
+	-webkit-animation: load8 1.1s infinite linear;
+	animation: load8 1.1s infinite linear;
+}
+@-webkit-keyframes load8 {
   0% {
+    -webkit-transform: rotate(0deg);
     transform: rotate(0deg);
   }
   100% {
+    -webkit-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes load8 {
+  0% {
+    -webkit-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -webkit-transform: rotate(360deg);
     transform: rotate(360deg);
   }
 }

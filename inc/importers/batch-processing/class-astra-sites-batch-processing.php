@@ -119,12 +119,12 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 
 		function import_categories() {
 			Astra_Sites_Batch_Processing_Importer::get_instance()->import_categories();
-			wp_send_json_success( );
+			wp_send_json_success();
 		}
 
 		function import_sites() {
 			$page_no = isset( $_POST['page_no'] ) ? absint( $_POST['page_no'] ) : '';
-			if( $page_no ) {
+			if ( $page_no ) {
 				Astra_Sites_Batch_Processing_Importer::get_instance()->import_sites( $page_no );
 				wp_send_json_success();
 			}

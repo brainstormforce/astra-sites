@@ -152,14 +152,14 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 		}
 
 		function get_sites_by_page_builder( $default_page_builder = '' ) {
-			$sites_and_pages   = Astra_Sites::get_instance()->get_all_sites();
+			$sites_and_pages = Astra_Sites::get_instance()->get_all_sites();
 
 			$page_builder_keys = wp_list_pluck( $sites_and_pages, 'astra-site-page-builder' );
 
 			$current_page_builder_sites = array();
-			foreach ($page_builder_keys as $site_id => $page_builder) {
-				if( $default_page_builder === $page_builder) {
-					$current_page_builder_sites[ $site_id ] = $sites_and_pages[$site_id];
+			foreach ( $page_builder_keys as $site_id => $page_builder ) {
+				if ( $default_page_builder === $page_builder ) {
+					$current_page_builder_sites[ $site_id ] = $sites_and_pages[ $site_id ];
 				}
 			}
 
@@ -300,7 +300,7 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 			$current_slug = isset( $_GET['page'] ) ? esc_attr( $_GET['page'] ) : 'astra-sites';
 
 			$default_page_builder = $this->get_setting( 'page_builder' );
-			
+
 			$opt_in = $this->get_setting( 'show-opt-in-form' );
 			if ( 'no' === $opt_in && isset( $_GET['show-form'] ) ) {
 				?>
@@ -313,40 +313,41 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 
 							<div id="mauticform_wrapper_astrastartersites" class="mauticform_wrapper">
 								<form autocomplete="false" role="form" method="post" action="https://go.brainstormforce.com/form/submit?formId=15" id="mauticform_astrastartersites" data-mautic-form="astrastartersites" enctype="multipart/form-data">
-								    <div class="mauticform-error" id="mauticform_astrastartersites_error"></div>
-								    <div class="mauticform-message" id="mauticform_astrastartersites_message"></div>
-								    <div class="mauticform-innerform">
-								      <div class="mauticform-page-wrapper mauticform-page-1" data-mautic-form-page="1">
+									<div class="mauticform-error" id="mauticform_astrastartersites_error"></div>
+									<div class="mauticform-message" id="mauticform_astrastartersites_message"></div>
+									<div class="mauticform-innerform">
+									  <div class="mauticform-page-wrapper mauticform-page-1" data-mautic-form-page="1">
 
-								        <div id="mauticform_astrastartersites_f_name" class="mauticform-row mauticform-text mauticform-field-1">
-								            <label id="mauticform_label_astrastartersites_f_name" for="mauticform_input_astrastartersites_f_name" class="mauticform-label">Name</label>
-								            <input id="mauticform_input_astrastartersites_f_name" name="mauticform[f_name]" value="" class="mauticform-input" type="text">
-								            <span class="mauticform-errormsg" style="display: none;"></span>
-								        </div>
+										<div id="mauticform_astrastartersites_f_name" class="mauticform-row mauticform-text mauticform-field-1">
+											<label id="mauticform_label_astrastartersites_f_name" for="mauticform_input_astrastartersites_f_name" class="mauticform-label">Name</label>
+											<input id="mauticform_input_astrastartersites_f_name" name="mauticform[f_name]" value="" class="mauticform-input" type="text">
+											<span class="mauticform-errormsg" style="display: none;"></span>
+										</div>
 
-								        <div id="mauticform_astrastartersites_email" class="mauticform-row mauticform-email mauticform-field-2">
-								            <label id="mauticform_label_astrastartersites_email" for="mauticform_input_astrastartersites_email" class="mauticform-label">Email</label>
-								            <input id="mauticform_input_astrastartersites_email" name="mauticform[email]" value="" class="mauticform-input" type="email">
-								            <span class="mauticform-errormsg" style="display: none;"></span>
-								        </div>
+										<div id="mauticform_astrastartersites_email" class="mauticform-row mauticform-email mauticform-field-2">
+											<label id="mauticform_label_astrastartersites_email" for="mauticform_input_astrastartersites_email" class="mauticform-label">Email</label>
+											<input id="mauticform_input_astrastartersites_email" name="mauticform[email]" value="" class="mauticform-input" type="email">
+											<span class="mauticform-errormsg" style="display: none;"></span>
+										</div>
 
-								        <div id="mauticform_astrastartersites_submit" class="mauticform-row mauticform-button-wrapper mauticform-field-3">
-								            <button type="submit" name="mauticform[submit]" id="mauticform_input_astrastartersites_submit" value="" class="mauticform-button btn btn-default">Submit</button>
-								        </div>
-								        </div>
-								    </div>
+										<div id="mauticform_astrastartersites_submit" class="mauticform-row mauticform-button-wrapper mauticform-field-3">
+											<button type="submit" name="mauticform[submit]" id="mauticform_input_astrastartersites_submit" value="" class="mauticform-button btn btn-default">Submit</button>
+										</div>
+										</div>
+									</div>
 
-								    <input type="hidden" name="mauticform[formId]" id="mauticform_astrastartersites_id" value="15">
-								    <input type="hidden" name="mauticform[return]" id="mauticform_astrastartersites_return" value="">
-								    <input type="hidden" name="mauticform[formName]" id="mauticform_astrastartersites_name" value="astrastartersites">
+									<input type="hidden" name="mauticform[formId]" id="mauticform_astrastartersites_id" value="15">
+									<input type="hidden" name="mauticform[return]" id="mauticform_astrastartersites_return" value="">
+									<input type="hidden" name="mauticform[formName]" id="mauticform_astrastartersites_name" value="astrastartersites">
 
-							    </form>
+								</form>
 							</div>
 
 						</div>
 					</div>
 				</div>
-			<?php } else if ( empty( $default_page_builder ) || isset( $_GET['change-page-builder'] ) ) {
+				<?php
+			} elseif ( empty( $default_page_builder ) || isset( $_GET['change-page-builder'] ) ) {
 				$plugins       = get_option( 'active_plugins', array() );
 				$page_builders = array();
 				if ( $plugins ) {
@@ -369,6 +370,10 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 				<div class="astra-sites-welcome" data-plugins="<?php echo esc_attr( $page_builders ); ?>">
 					<div class="inner-wrap">
 						<div class="inner">
+							<div class="header">
+								<img src="<?php echo esc_url( ASTRA_SITES_URI . 'inc/assets/images/logo.svg' ); ?>">
+								<h3 class="title"><?php _e( 'Getting Started', 'astra-sites' ); ?></h3>
+							</div>
 							<form id="astra-sites-welcome-form" enctype="multipart/form-data" method="post">
 								<h1><?php _e( 'Select Page Builder', 'astra-sites' ); ?></h1>
 								<p><?php _e( 'Astra offers starter sites that can be imported in one click. These templates are available in few different page builders. Please choose your preferred page builder from the list below.', 'astra-sites' ); ?></p>
@@ -376,9 +381,10 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 									<ul class="page-builders">
 										<?php
 										$default_page_builder = $this->get_setting( 'page_builder' );
-										$page_builders = $this->get_page_builders();
-										foreach ($page_builders as $page_builder_slug => $page_builder) { ?>
-											<li>
+										$page_builders        = $this->get_page_builders();
+										foreach ( $page_builders as $page_builder_slug => $page_builder ) {
+											?>
+											<li data-page-builder="<?php echo $page_builder_slug; ?>">
 												<label>
 													<input type="radio" name="page_builder" value="<?php echo $page_builder['title']; ?>">
 													<img src="<?php echo $page_builder['img']; ?>" />
@@ -389,10 +395,6 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 										}
 										?>
 									</ul>
-									<?php submit_button( __( 'Next', 'astra-sites' ), 'primary button-hero disabled' ); ?>
-									<div class="astra-sites-page-builder-notice" style="display: none;">
-										<p class="description"><?php _e( 'Please select your favorite page builder to continue..', 'astra-sites' ); ?></p>
-									</div>
 								</div>
 								<input type="hidden" name="redirect_page" value="<?php echo $current_slug; ?>">
 								<input type="hidden" name="message" value="saved" />
@@ -404,18 +406,34 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 			<?php } else { ?>
 
 				<div class="nav-tab-wrapper">
+					<?php
+
+					$while_label = false;
+
+					if ( is_callable( 'Astra_Ext_White_Label_Markup::get_whitelabel_string' ) ) {
+						$while_label_title = Astra_Ext_White_Label_Markup::get_whitelabel_string( 'astra-sites', 'name' );
+						if ( $while_label_title ) {
+							$while_label = true;
+						}
+					}
+
+					if ( ! $while_label ) {
+						?>
 					<div class="logo">
 						<div class="astra-sites-logo-wrap">
 							<img src="<?php echo esc_url( ASTRA_SITES_URI . 'inc/assets/images/logo.svg' ); ?>">
 						</div>
 					</div>
-					<div class="back-to-layout" title="Back to Layout"></div>
+						<?php
+					}
+					?>
+					<div class="back-to-layout" title="Back to Layout"><i class="icon-chevron-left"></i></div>
 					<div id="astra-sites-filters">
 						<div class="wp-filter hide-if-no-js">
 							<div class="section-left">
 								<div class="search-form">
 									<input autocomplete="off" placeholder="<?php _e( 'Search Sites...', 'astra-sites' ); ?>" type="search" aria-describedby="live-search-desc" id="wp-filter-search-input" class="wp-filter-search">
-									<span class="dashicons dashicons-search search-icon"></span>
+									<span class="icon-search search-icon"></span>
 									<div class="astra-sites-autocomplete-result"></div>
 								</div>
 							</div>
@@ -428,16 +446,16 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 						</ul>
 					</div> -->
 					<div class="form">
-						<div class="filters-wrap favorite-filters-wrap">
+						<div class="filters-wrap favorite-filters-wrap header-actions">
 							<div class="filters-slug">
 								<ul class="filter-links">
 									<li>
-										<a title="<?php _e( 'My Favorite', 'astra-sites'); ?>" href="#" class="astra-sites-show-favorite-button">
+										<a title="<?php _e( 'My Favorite', 'astra-sites' ); ?>" href="#" class="astra-sites-show-favorite-button">
 											<i class="icon-heart"></i>
 										</a>
 									</li>
 									<li>
-										<a title="<?php _e( 'Sync Library', 'astra-sites'); ?>" href="#" class="astra-sites-sync-library-button">
+										<a title="<?php _e( 'Sync Library', 'astra-sites' ); ?>" href="#" class="astra-sites-sync-library-button">
 											<i class="icon-refresh"></i>
 										</a>
 									</li>
@@ -448,7 +466,8 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 							<div class="selected-page-builder">
 								<?php
 								$page_builder = $this->get_default_page_builder();
-								if( $page_builder ) { ?>
+								if ( $page_builder ) {
+									?>
 									<img src="<?php echo esc_url( $page_builder['img'] ); ?>" />
 									<span class="page-builder-title"><?php echo esc_html( $page_builder['title'] ); ?></span>
 									<span class="dashicons dashicons-arrow-down"></span>
@@ -457,10 +476,10 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 							<ul class="page-builders">
 								<?php
 								$default_page_builder = $this->get_setting( 'page_builder' );
-								$page_builders = $this->get_page_builders();
-								foreach ($page_builders as $page_builder_slug => $page_builder) {
+								$page_builders        = $this->get_page_builders();
+								foreach ( $page_builders as $page_builder_slug => $page_builder ) {
 									$class = '';
-									if( $default_page_builder === $page_builder_slug ) {
+									if ( $default_page_builder === $page_builder_slug ) {
 										$class = 'active';
 									}
 									?>
@@ -511,7 +530,7 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 
 			$page_builders = $this->get_page_builders();
 
-			if( isset( $page_builders[ $default_page_builder ] ) ) {
+			if ( isset( $page_builders[ $default_page_builder ] ) ) {
 				return $page_builders[ $default_page_builder ];
 			}
 
@@ -520,21 +539,21 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 
 		function get_page_builders() {
 			return array(
-				'elementor' => array(
+				'elementor'      => array(
 					'title' => 'Elementor',
-					'img' => ASTRA_SITES_URI . 'inc/assets/images/elementor.jpg',
+					'img'   => ASTRA_SITES_URI . 'inc/assets/images/elementor.jpg',
 				),
 				'beaver-builder' => array(
 					'title' => 'Beaver Builder',
-					'img' => ASTRA_SITES_URI . 'inc/assets/images/beaver-builder.png',
+					'img'   => ASTRA_SITES_URI . 'inc/assets/images/beaver-builder.png',
 				),
-				'gutenberg' => array(
+				'gutenberg'      => array(
 					'title' => 'Gutenberg',
-					'img' => ASTRA_SITES_URI . 'inc/assets/images/gutenberg.jpg',
+					'img'   => ASTRA_SITES_URI . 'inc/assets/images/gutenberg.jpg',
 				),
-				'brizy' => array(
+				'brizy'          => array(
 					'title' => 'Brizy',
-					'img' => ASTRA_SITES_URI . 'inc/assets/images/brizy.jpg',
+					'img'   => ASTRA_SITES_URI . 'inc/assets/images/brizy.jpg',
 				),
 			);
 		}
