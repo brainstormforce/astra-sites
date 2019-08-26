@@ -3,7 +3,7 @@
  * Single Page Background Process
  *
  * @package Astra Sites
- * @since x.x.x
+ * @since 2.0.0
  */
 
 if ( class_exists( 'WP_Background_Process' ) ) :
@@ -11,7 +11,7 @@ if ( class_exists( 'WP_Background_Process' ) ) :
 	/**
 	 * Image Background Process
 	 *
-	 * @since x.x.x
+	 * @since 2.0.0
 	 */
 	class WP_Background_Process_Astra_Site_Importer extends WP_Background_Process {
 
@@ -30,7 +30,7 @@ if ( class_exists( 'WP_Background_Process' ) ) :
 		 * in the next pass through. Or, return false to remove the
 		 * item from the queue.
 		 *
-		 * @since x.x.x
+		 * @since 2.0.0
 		 *
 		 * @param object $object Queue item object.
 		 * @return mixed
@@ -61,7 +61,7 @@ if ( class_exists( 'WP_Background_Process' ) ) :
 		 * Override if applicable, but ensure that the below actions are
 		 * performed, or, call parent::complete().
 		 *
-		 * @since x.x.x
+		 * @since 2.0.0
 		 */
 		protected function complete() {
 			parent::complete();

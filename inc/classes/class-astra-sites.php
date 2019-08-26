@@ -57,7 +57,6 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 
 			$this->includes();
 
-			add_action( 'admin_notices', array( $this, 'add_notice' ), 1 );
 			add_action( 'admin_notices', array( $this, 'admin_notices' ) );
 			add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
 			add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue' ) );
@@ -182,7 +181,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		/**
 		 * Import Post Meta
 		 *
-		 * @since x.x.x
+		 * @since 2.0.0
 		 *
 		 * @param  integer $post_id  Post ID.
 		 * @param  array   $metadata  Post meta.
@@ -322,27 +321,6 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			}
 
 			wp_send_json_success();
-		}
-
-		/**
-		 * Add Admin Notice.
-		 */
-		function add_notice() {
-
-			$theme_status = 'astra-sites-theme-' . $this->get_theme_status();
-
-			Astra_Notices::add_notice(
-				array(
-					'id'               => 'astra-theme-activation-nag',
-					'class'            => 'astra-theme-activation-nag',
-					'type'             => 'error',
-					'show_if'          => ( ! defined( 'ASTRA_THEME_SETTINGS' ) ) ? true : false,
-					/* translators: 1: theme.php file*/
-					'message'          => sprintf( __( '<p>Astra Theme needs to be active for you to use currently installed "%1$s" plugin. <a href="#" class="%3$s" data-theme-slug="astra">Install & Activate Now</a></p>', 'astra-sites' ), ASTRA_SITES_NAME, esc_url( admin_url( 'themes.php?theme=astra' ) ), $theme_status ),
-					'dismissible'      => true,
-					'dismissible-time' => WEEK_IN_SECONDS,
-				)
-			);
 		}
 
 		/**

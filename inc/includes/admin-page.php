@@ -170,13 +170,47 @@ defined( 'ABSPATH' ) or exit;
 	<p>
 		<?php
 			/* translators: %s is pricing page link */
-			printf( __( 'It is a premium website demo which is available only with the Agency Bundles <a href="%s" target="_blank">Buy Now!</a>', 'astra-sites' ), 'https://wpastra.com/pricing/' );
+			printf( __( 'This is a premium website demo available only with the Agency Bundles you can purchase it from <a href="%s" target="_blank">here</a>', 'astra-sites' ), 'https://wpastra.com/pricing/' );
 		?>
 	</p>
 	<p>
 		<?php
 			/* translators: %s is article link */
 			printf( __( 'Already own an Agency Bundle? Read an article to know how you can <a href="%s" target="_blank">import a premium website demo</a>.', 'astra-sites' ), 'https://wpastra.com/docs/import-astra-agency-website-demos/' );
+		?>
+	</p>
+</script>
+
+<?php
+/**
+ * TMPL - Install & Activate Theme
+ */
+?>
+<script type="text/template" id="tmpl-astra-sites-install-activate-theme">
+	<div id="astra-theme-activation-nag">
+		<p><?php
+		esc_html_e('Your starter site has been imported successfully in {{data}}! Now go ahead, customize the text, images, and design to make it yours!', 'astra-sites'); ?></p>
+		<p><?php esc_html_e('You can now start making changes according to your requirements.','astra-sites'); ?></p>
+		<?php
+		$theme_status = Astra_Sites::get_instance()->get_theme_status();
+		if( 'installed-and-active' !== $theme_status ) {
+			$link_class = 'astra-sites-theme-' . $theme_status;
+			printf( __( '<p>Astra Theme needs to be active for you to use currently installed "%1$s" plugin.</p><p><a href="#" class="%3$s" data-theme-slug="astra">Install & Activate Now</a></p>', 'astra-sites' ), ASTRA_SITES_NAME, esc_url( admin_url( 'themes.php?theme=astra' ) ), $link_class );
+		}
+		?>
+	</div>
+</script>
+
+<?php
+/**
+ * TMPL - Activate License
+ */
+?>
+<script type="text/template" id="tmpl-astra-sites-activate-license">
+	<p>
+		<?php
+			/* translators: %s is pricing page link */
+			printf( __( 'This is a premium template available with Astra \'Agency\' packages. <a href="%s">Validate Your License</a> Key to import this template.', 'astra-sites' ), admin_url( 'plugins.php?bsf-inline-license-form=astra-pro-sites' ) );
 		?>
 	</p>
 </script>
@@ -233,7 +267,7 @@ defined( 'ABSPATH' ) or exit;
 			</div>
 			<div class="single-site-pages-wrap">
 				<div class="astra-pages-title-wrap">
-					<span class="astra-pages-title"><?php _e( 'Templates', 'astra-sites' ); ?></span>
+					<span class="astra-pages-title"><?php _e( 'Single Page Templates', 'astra-sites' ); ?></span>
 				</div>
 				<div class="single-site-pages">
 					<div id="single-pages">
@@ -292,26 +326,13 @@ defined( 'ABSPATH' ) or exit;
 							<a class="button button-hero button-primary" href="{{astraSitesVars.getProURL}}" target="_blank">{{astraSitesVars.getProText}}<i class="dashicons dashicons-external"></i></a>
 							<# if( ! astraSitesVars.isPro ) { #>
 								<span class="dashicons dashicons-editor-help astra-sites-get-agency-bundle-button"></span>
+							<# } else { #>
+								<span class="dashicons dashicons-editor-help astra-sites-activate-license-button"></span>
 							<# } #>
 						<# } else { #>
-							<div class="button button-hero button-primary site-import-layout-button disabled">Import Layout</div>
-							<div style="margin-left: 5px;" class="button button-hero button-primary site-import-site-button">Import Complete Site</div>
+							<div class="button button-hero button-primary site-import-layout-button disabled"><?php _e( 'Import Template', 'astra-sites' ); ?></div>
+							<div style="margin-left: 5px;" class="button button-hero button-primary site-import-site-button">Import Site</div>
 						<# } #>
-					</div>
-				</div>
-			</div>
-		</div>
-
-		<div class="astra-sites-result-preview-next-step" style="display: none;">
-			<div class="overlay"></div>
-			<div class="inner">
-				<h2><?php _e( 'We\'re importing your website.', 'astra-sites' ); ?></h2>
-				<p><?php _e( 'The process can take anywhere between 2 to 10 minutes depending on the size of the website and speed of connection.', 'astra-sites' ); ?></p>
-				<p><?php _e( 'Please do not close this browser window until the site is imported completely.', 'astra-sites' ); ?></p>
-				<div class="current-importing-status-wrap">
-					<div class="current-importing-status">
-						<div class="current-importing-status-title"></div>
-						<div class="current-importing-status-description"></div>
 					</div>
 				</div>
 			</div>
@@ -333,7 +354,7 @@ defined( 'ABSPATH' ) or exit;
 			<# if( 'astra-sites' === data ) { #>
 				<h2><?php _e( 'We are importing site!', 'astra-sites' ); ?></h2>
 			<# } else { #>
-				<h2><?php _e( 'We are importing page!', 'astra-sites' ); ?></h2>
+				<h2><?php _e( 'We are importing template for you!', 'astra-sites' ); ?></h2>
 			<# } #>
 			<span class="dashicons close dashicons-no-alt"></span>
 		</div>
@@ -394,8 +415,16 @@ defined( 'ABSPATH' ) or exit;
 				</div>
 			</div>
 			<div class="ast-importing-wrap">
-				<p><?php _e( 'The process can take anywhere between 2 to 10 minutes depending on the size of the website and speed of connection.', 'astra-sites' ); ?></p>
-				<p><?php _e( 'Please do not close this browser window until the site is imported completely.', 'astra-sites' ); ?></p>
+				<#
+				if( 'astra-sites' === data ) {
+					var string = 'site';
+				} else {
+					var string = 'template';
+				}
+				console.log( data ); #>
+				<p><?php printf( __( 'Import process can take anywhere between 2 to 10 minutes depending on the size of the %s and speed of the connection.', 'astra-sites' ), '{{string}}' ); ?></p>
+				<p><?php printf( __( 'Please do not close this browser window until the %s is imported completely.', 'astra-sites' ), '{{string}}' ); ?></p>
+
 				<div class="current-importing-status-wrap">
 					<div class="current-importing-status">
 						<div class="current-importing-status-title"></div>

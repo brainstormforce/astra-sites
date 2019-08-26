@@ -164,7 +164,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Gutenberg' ) ) :
 		/**
 		 * Download and Replace hotlink images
 		 *
-		 * @since x.x.x
+		 * @since 2.0.0
 		 *
 		 * @param  string $content Mixed post content.
 		 * @return array           Hotlink image array.

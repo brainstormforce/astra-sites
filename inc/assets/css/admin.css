@@ -63,6 +63,7 @@
     border-radius: 4px;
 }
 
+.astra-sites-activate-license-button,
 .astra-sites-get-agency-bundle-button {
 	cursor: pointer;
 	display: inline-block;
@@ -298,6 +299,7 @@
 .wrap .site-type.free {
 	display: none;
 }
+.astra-sites-activate-license .astra-sites-import-content,
 .astra-sites-get-agency-bundle .astra-sites-import-content {
     height: auto;
 }
@@ -1647,6 +1649,7 @@ body.loading-content .select-page-builder {
     font-size: 1rem;
     margin-left: .2em;
 }
+.site-action-buttons-wrap .dashicons.astra-sites-activate-license-button,
 .site-action-buttons-wrap .dashicons.astra-sites-get-agency-bundle-button {
     font-size: 20px;
     color: #555d66;

@@ -127,7 +127,7 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) {
 		/**
 		 * Import CartFlows
 		 *
-		 * @since x.x.x
+		 * @since 2.0.0
 		 *
 		 * @return void
 		 */

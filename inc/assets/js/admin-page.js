@@ -343,7 +343,8 @@ var AstraSitesAjaxQueue = (function() {
 			
 			// Site.
 			$( document ).on( 'click'                     , '.site-import-site-button', AstraSitesAdmin._show_site_popup);
-			$( document ).on( 'click'                     , '.astra-sites-get-agency-bundle-button', AstraSitesAdmin._show_agency_bundle);
+			$( document ).on( 'click'                     , '.astra-sites-get-agency-bundle-button', AstraSitesAdmin._show_get_agency_bundle_notice);
+			$( document ).on( 'click'                     , '.astra-sites-activate-license-button', AstraSitesAdmin._show_activate_license_notice);
 			$( document ).on( 'click', '.astra-sites-site-import-popup .site-install-site-button', AstraSitesAdmin._resetData);
 
 			// Skip & Import.
@@ -413,16 +414,7 @@ var AstraSitesAjaxQueue = (function() {
 
 			AstraSitesAdmin.close_pages_popup();
 
-			AstraSitesAdmin._clean_url_params( 'search' );
-
 			if( search_term.length ) {
-
-				if( ! AstraSitesAdmin._getParamFromURL('search') ) {
-					var url_params = {
-						'search' : search_term
-					};
-					AstraSitesAdmin._changeAndSetURL( url_params );
-				}
 
 				search_input.addClass('has-input');
 
@@ -460,7 +452,7 @@ var AstraSitesAjaxQueue = (function() {
 		 */
 		_changeURL: function( url )
 		{
-			History.pushState(null, null, url);
+			History.pushState(null, 'Starter Templates ‹ Fresh — WordPress', url);
 		},
 
 		/**
@@ -567,7 +559,6 @@ var AstraSitesAjaxQueue = (function() {
 
 					for( page_id in pages ) {
 
-
 						// Check in site title.
 						if( pages[page_id]['title'] ) {
 
@@ -586,11 +577,10 @@ var AstraSitesAjaxQueue = (function() {
 							for( page_tag_id in pages[page_id]['astra-sites-tag'] ) {
 								var page_tag_title = AstraSitesAdmin._unescape_lower( pages[page_id]['astra-sites-tag'][page_tag_id] );
 								if( page_tag_title.toLowerCase().includes( search_term ) ) {
-									var temp_page = pages[page_id];
-									temp_page['type'] = 'page';
-									temp_page['site_id'] = site_id;
-									temp_page['astra-sites-type'] = current_site['astra-sites-type'] || '';
-									items[site_id] = temp_page;
+									items[page_id] = pages[page_id];
+									items[page_id]['type'] = 'page';
+									items[page_id]['site_id'] = site_id;
+									items[page_id]['astra-sites-type'] = current_site['astra-sites-type'] || '';
 								}
 							}
 						}
@@ -799,7 +789,7 @@ var AstraSitesAjaxQueue = (function() {
 		/**
 		 * Go back to all sites view
 		 *
-		 * @since x.x.x
+		 * @since 2.0.0
 		 * @return null
 		 */
 		_go_back: function( event ) {
@@ -940,7 +930,7 @@ var AstraSitesAjaxQueue = (function() {
 
 			$( '.site-import-layout-button' ).removeClass( 'disabled' );
 			if( page_name ) {
-				$( '.site-import-layout-button' ).text('Import "'+page_name.trim()+'" Layout');
+				$( '.site-import-layout-button' ).text('Import "'+page_name.trim()+'" Template');
 			}
 
 			if( url ) {
@@ -960,7 +950,7 @@ var AstraSitesAjaxQueue = (function() {
 		/**
 		 * Preview Inner Pages for the Site
 		 *
-		 * @since x.x.x
+		 * @since 2.0.0
 		 * @return null
 		 */
 		_change_site_preview_screenshot: function( event ) {
@@ -1492,18 +1482,15 @@ var AstraSitesAjaxQueue = (function() {
 						time += seconds + ' Seconds';
 					}
 
-					var	output  = '<p>Your starter site has been imported successfully in '+time+'! Now go ahead, customize the text, images, and design to make it yours!</p>';
-						output += '<p>You can now start making changes according to your requirements.</p>';
-
+					var template = wp.template( 'astra-sites-install-activate-theme' );
 					$('.rotating,.current-importing-status-wrap,.notice-warning').remove();
 					$('.astra-sites-result-preview').addClass('astra-sites-result-preview');
-					$('.astra-sites-result-preview .astra-sites-import-content').html(output);
+					$('.astra-sites-result-preview .astra-sites-import-content').html( template( time ) );
 						
 					var button = '<a class="button button-primary button-hero" href="'+astraSitesVars.siteURL+'" target="_blank">View Site <i class="dashicons dashicons-external"></i></a>';
 					$('.astra-sites-result-preview .ast-actioms-wrap').html(button);
 
-					var heading = 'Done 🎉';
-					$('.astra-sites-result-preview .inner > h2').text(heading);
+					$('.astra-sites-result-preview .inner > h2').text( 'Done 🎉' );
 
 					// 5. Pass - Import Complete.
 					AstraSitesAdmin._importSuccessButton();
@@ -2079,7 +2066,7 @@ var AstraSitesAjaxQueue = (function() {
 			wp.updates.queueChecker();
 		},
 
-		_show_agency_bundle: function(event) {
+		_show_get_agency_bundle_notice: function(event) {
 			event.preventDefault();
 			$('.astra-sites-result-preview')
 				.removeClass('astra-sites-site-import-popup astra-sites-page-import-popup')
@@ -2087,6 +2074,21 @@ var AstraSitesAjaxQueue = (function() {
 				.show();
 
 			var template = wp.template( 'astra-sites-pro-site-description' );
+	        var output  = '<div class="overlay"></div>';
+	        	output += '<div class="inner"><div class="heading"><h2>Liked this demo?</h2></div><span class="dashicons close dashicons-no-alt"></span><div class="astra-sites-import-content">';
+                output += '</div></div>';
+			$('.astra-sites-result-preview').html( output );
+	        $('.astra-sites-import-content').html( template );
+		},
+
+		_show_activate_license_notice: function(event) {
+			event.preventDefault();
+			$('.astra-sites-result-preview')
+				.removeClass('astra-sites-site-import-popup astra-sites-page-import-popup')
+				.addClass('astra-sites-activate-license')
+				.show();
+
+			var template = wp.template( 'astra-sites-activate-license' );
 	        var output  = '<div class="overlay"></div>';
 	        	output += '<div class="inner"><div class="heading"><h2>Liked this demo?</h2></div><span class="dashicons close dashicons-no-alt"></span><div class="astra-sites-import-content">';
                 output += '</div></div>';
@@ -2492,7 +2494,7 @@ var AstraSitesAjaxQueue = (function() {
 
 							$('.rotating,.current-importing-status-wrap,.notice-warning').remove();
 
-							var button = '<a class="button button-primary button-hero" href="'+data.data['link']+'" target="_blank">View Page <i class="dashicons dashicons-external"></i></a>';
+							var button = '<a class="button button-primary button-hero" href="'+data.data['link']+'" target="_blank">View Imported Template <i class="dashicons dashicons-external"></i></a>';
 							$('.astra-sites-result-preview .ast-actioms-wrap').html(button);
 
 							var heading = 'Done 🎉';

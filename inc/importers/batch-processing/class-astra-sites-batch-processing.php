@@ -36,7 +36,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 		/**
 		 * Sites Importer
 		 *
-		 * @since x.x.x
+		 * @since 2.0.0
 		 * @var object Class object.
 		 * @access public
 		 */
@@ -45,7 +45,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 		/**
 		 * Process Single Page
 		 *
-		 * @since x.x.x
+		 * @since 2.0.0
 		 * @var object Class object.
 		 * @access public
 		 */
@@ -307,7 +307,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 		 * Start Single Page Import
 		 *
 		 * @param  int $page_id Page ID .
-		 * @since x.x.x
+		 * @since 2.0.0
 		 * @return void
 		 */
 		public function start_process_single( $page_id ) {

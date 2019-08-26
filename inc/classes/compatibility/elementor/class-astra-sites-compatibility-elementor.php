@@ -3,7 +3,7 @@
  * Astra Sites Compatibility for 'Elementor'
  *
  * @package Astra Sites
- * @since x.x.x
+ * @since 2.0.0
  */
 
 namespace AstraSites\Elementor;
@@ -22,7 +22,7 @@ if ( ! class_exists( 'Astra_Sites_Compatibility_Elementor' ) ) :
 	/**
 	 * WooCommerce Compatibility
 	 *
-	 * @since x.x.x
+	 * @since 2.0.0
 	 */
 	class Astra_Sites_Compatibility_Elementor {
 
@@ -31,14 +31,14 @@ if ( ! class_exists( 'Astra_Sites_Compatibility_Elementor' ) ) :
 		 *
 		 * @access private
 		 * @var object Class object.
-		 * @since x.x.x
+		 * @since 2.0.0
 		 */
 		private static $instance;
 
 		/**
 		 * Initiator
 		 *
-		 * @since x.x.x
+		 * @since 2.0.0
 		 * @return object initialized object of class.
 		 */
 		public static function instance() {
@@ -51,7 +51,7 @@ if ( ! class_exists( 'Astra_Sites_Compatibility_Elementor' ) ) :
 		/**
 		 * Constructor
 		 *
-		 * @since x.x.x
+		 * @since 2.0.0
 		 */
 		public function __construct() {
 			add_action( 'elementor/element/after_section_end', array( $this, 'register_page_typography' ), 10, 2 );

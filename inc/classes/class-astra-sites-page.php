@@ -197,7 +197,6 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 
 			$defaults = array(
 				'page_builder'     => '',
-				'show-opt-in-form' => 'no',
 			);
 
 			$stored_data = get_option( 'astra_sites_settings', $defaults );
@@ -301,53 +300,7 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 
 			$default_page_builder = $this->get_setting( 'page_builder' );
 
-			$opt_in = $this->get_setting( 'show-opt-in-form' );
-			if ( 'no' === $opt_in && isset( $_GET['show-form'] ) ) {
-				?>
-				 <div class="astra-sites-welcome">
-					<div class="inner-wrap">
-						<div class="inner">
-							<h1><?php _e( 'Select Page Builder', 'astra-sites' ); ?></h1>
-							
-							<p><?php _e( 'Astra offers starter sites that can be imported in one click. These templates are available in few different page builders. Please choose your preferred page builder from the list below.', 'astra-sites' ); ?></p>
-
-							<div id="mauticform_wrapper_astrastartersites" class="mauticform_wrapper">
-								<form autocomplete="false" role="form" method="post" action="https://go.brainstormforce.com/form/submit?formId=15" id="mauticform_astrastartersites" data-mautic-form="astrastartersites" enctype="multipart/form-data">
-									<div class="mauticform-error" id="mauticform_astrastartersites_error"></div>
-									<div class="mauticform-message" id="mauticform_astrastartersites_message"></div>
-									<div class="mauticform-innerform">
-									  <div class="mauticform-page-wrapper mauticform-page-1" data-mautic-form-page="1">
-
-										<div id="mauticform_astrastartersites_f_name" class="mauticform-row mauticform-text mauticform-field-1">
-											<label id="mauticform_label_astrastartersites_f_name" for="mauticform_input_astrastartersites_f_name" class="mauticform-label">Name</label>
-											<input id="mauticform_input_astrastartersites_f_name" name="mauticform[f_name]" value="" class="mauticform-input" type="text">
-											<span class="mauticform-errormsg" style="display: none;"></span>
-										</div>
-
-										<div id="mauticform_astrastartersites_email" class="mauticform-row mauticform-email mauticform-field-2">
-											<label id="mauticform_label_astrastartersites_email" for="mauticform_input_astrastartersites_email" class="mauticform-label">Email</label>
-											<input id="mauticform_input_astrastartersites_email" name="mauticform[email]" value="" class="mauticform-input" type="email">
-											<span class="mauticform-errormsg" style="display: none;"></span>
-										</div>
-
-										<div id="mauticform_astrastartersites_submit" class="mauticform-row mauticform-button-wrapper mauticform-field-3">
-											<button type="submit" name="mauticform[submit]" id="mauticform_input_astrastartersites_submit" value="" class="mauticform-button btn btn-default">Submit</button>
-										</div>
-										</div>
-									</div>
-
-									<input type="hidden" name="mauticform[formId]" id="mauticform_astrastartersites_id" value="15">
-									<input type="hidden" name="mauticform[return]" id="mauticform_astrastartersites_return" value="">
-									<input type="hidden" name="mauticform[formName]" id="mauticform_astrastartersites_name" value="astrastartersites">
-
-								</form>
-							</div>
-
-						</div>
-					</div>
-				</div>
-				<?php
-			} elseif ( empty( $default_page_builder ) || isset( $_GET['change-page-builder'] ) ) {
+			if ( empty( $default_page_builder ) || isset( $_GET['change-page-builder'] ) ) {
 				$plugins       = get_option( 'active_plugins', array() );
 				$page_builders = array();
 				if ( $plugins ) {
@@ -376,7 +329,7 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 							</div>
 							<form id="astra-sites-welcome-form" enctype="multipart/form-data" method="post">
 								<h1><?php _e( 'Select Page Builder', 'astra-sites' ); ?></h1>
-								<p><?php _e( 'Astra offers starter sites that can be imported in one click. These templates are available in few different page builders. Please choose your preferred page builder from the list below.', 'astra-sites' ); ?></p>
+								<p><?php _e( 'Astra offers starter sites that can be imported in one click. These sites are available in the following page builders. Please choose your preferred page builder from the list below.', 'astra-sites' ); ?></p>
 								<div class="fields">
 									<ul class="page-builders">
 										<?php
