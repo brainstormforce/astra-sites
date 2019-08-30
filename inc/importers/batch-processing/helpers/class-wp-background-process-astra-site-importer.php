@@ -69,6 +69,7 @@ if ( class_exists( 'WP_Background_Process' ) ) :
 			error_log( 'All processes are complete' );
 			update_option( 'astra-sites-batch-status-string', 'All processes are complete' );
 			delete_option( 'astra-sites-batch-status' );
+			update_option( 'astra-sites-batch-is-complete', 'yes' );
 		}
 
 	}

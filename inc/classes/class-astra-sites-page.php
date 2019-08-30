@@ -324,8 +324,11 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 					<div class="inner-wrap">
 						<div class="inner">
 							<div class="header">
-								<img src="<?php echo esc_url( ASTRA_SITES_URI . 'inc/assets/images/logo.svg' ); ?>">
-								<h3 class="title"><?php _e( 'Getting Started', 'astra-sites' ); ?></h3>
+								<span class="logo">
+									<img src="<?php echo esc_url( ASTRA_SITES_URI . 'inc/assets/images/logo.svg' ); ?>">
+									<h3 class="title"><?php _e( 'Getting Started', 'astra-sites' ); ?></h3>
+								</span>
+								<a href="<?php echo esc_url( admin_url() ); ?>" class="close"><span class="dashicons dashicons-no-alt"></span></a>
 							</div>
 							<form id="astra-sites-welcome-form" enctype="multipart/form-data" method="post">
 								<h1><?php _e( 'Select Page Builder', 'astra-sites' ); ?></h1>
@@ -411,6 +414,14 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 										<a title="<?php _e( 'Sync Library', 'astra-sites' ); ?>" href="#" class="astra-sites-sync-library-button">
 											<i class="icon-refresh"></i>
 										</a>
+
+										<?php
+										$status = get_option( 'astra-sites-batch-is-complete', 'no' );
+										if( 'yes' === $status ) { ?>
+											<div class="astra-sites-sync-library-message success notice notice-alt notice-success is-dismissible">
+												<p><?php _e( 'Template library refreshed!', 'astra-sites' ); ?> <button type="button" class="notice-dismiss"><span class="screen-reader-text"><?php _e( 'Dismiss', 'astra-sites' ); ?></span></button></p>
+											</div>
+										<?php } ?>
 									</li>
 								</ul>
 							</div>

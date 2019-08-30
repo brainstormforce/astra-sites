@@ -112,6 +112,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 			add_filter( 'http_request_timeout', array( $this, 'set_http_timeout' ), 10, 2 );
 			add_action( 'admin_head', array( $this, 'start_importer' ) );
 			add_action( 'wp_ajax_astra-sites-update-library', array( $this, 'update_library' ) );
+			add_action( 'wp_ajax_astra-sites-update-library-complete', array( $this, 'update_library_complete' ) );
 			add_action( 'wp_ajax_astra-sites-import-categories', array( $this, 'import_categories' ) );
 			add_action( 'wp_ajax_astra-sites-get-sites-request-count', array( $this, 'sites_requests_count' ) );
 			add_action( 'wp_ajax_astra-sites-import-sites', array( $this, 'import_sites' ) );
@@ -141,6 +142,11 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 			}
 
 			wp_send_json_error( $total_requests );
+		}
+
+		function update_library_complete() {
+			update_option( 'astra-sites-batch-is-complete', 'no' );
+			wp_send_json_success( );
 		}
 
 		function update_library() {
@@ -249,7 +255,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 			}
 
 			// For 1 hour.
-			set_transient( 'astra-sites-import-check', 'true', HOUR_IN_SECONDS );
+			set_transient( 'astra-sites-import-check', 'true', WEEK_IN_SECONDS );
 
 			update_option( 'astra-sites-batch-status', 'in-process' );
 
@@ -289,12 +295,15 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 			$response = wp_remote_get( trailingslashit( Astra_Sites::get_instance()->get_api_domain() ) . '/wp-json/astra-sites/v1/get-total-pages/?per_page=30', $api_args );
 			if ( ! is_wp_error( $response ) || wp_remote_retrieve_response_code( $response ) === 200 ) {
 				$total_requests = json_decode( wp_remote_retrieve_body( $response ), true );
-				error_log( 'Updated requests ' . $total_requests );
-				update_option( 'astra-sites-batch-status-string', 'Updated requests ' . $total_requests );
 
-				update_option( 'astra-sites-requests', $total_requests );
+				if( isset( $total_requests['pages'] ) ) {
+					error_log( 'Updated requests ' . $total_requests['pages'] );
+					update_option( 'astra-sites-batch-status-string', 'Updated requests ' . $total_requests['pages'] );
+					update_option( 'astra-sites-requests', $total_requests['pages'] );
 
-				return $total_requests;
+					return $total_requests['pages'];
+				}
+
 			}
 
 			error_log( 'Request Failed! Still Calling..' );

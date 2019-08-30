@@ -27,7 +27,7 @@ defined( 'ABSPATH' ) or exit;
 		if ( empty( $crons ) ) {
 			return new WP_Error(
 				'no_events',
-				__( 'You currently have no scheduled cron events.', 'wp-crontrol' )
+				__( 'You currently have no scheduled cron events.', 'astra-sites' )
 			);
 		}
 
@@ -89,13 +89,14 @@ defined( 'ABSPATH' ) or exit;
 			<div class="empty-item">
 				<img class="empty-collection-part" src="<?php echo ASTRA_SITES_URI . 'inc/assets/images/empty-collection.svg'; ?>" alt="empty-collection">
 			</div>
-			<p class="description" style="background: url(<?php echo ASTRA_SITES_URI . 'inc/assets/images/arrow-blue.svg'; ?>) 0 bottom no-repeat;">
-				<?php
+			<div class="description">
+				<p><?php
 				/* translators: %1$s External Link */
 				_e( 'You can easily add any template to your collection by clicking on the heart icon at the item card, item page or live demo.', 'astra-sites' );
-				?>
-			</p>
-			<div class="button astra-sites-back">Back to Layouts</div>
+				?></p>
+				<img src="<?php echo ASTRA_SITES_URI . 'inc/assets/images/arrow-blue.svg'; ?>" class="arrow-img">
+				<div><span class="button astra-sites-back">Back to Layouts</span></div>
+			</div>
 		</div>
 	</div>
 </script>
@@ -112,7 +113,6 @@ defined( 'ABSPATH' ) or exit;
 		var page_site_id        = data[site_id]['site_id'] || '';
 		var favorite_status     = false;
 		var favorite_class      = '';
-		var type_text      		= 'Preview Site';
 		var featured_image_url = data[site_id]['featured-image-url'];
 		var thumbnail_image_url = data[site_id]['thumbnail-image-url'] || featured_image_url;
 		var tiny_image_url      = data[site_id]['tiny-image-url'] || thumbnail_image_url;
@@ -125,13 +125,14 @@ defined( 'ABSPATH' ) or exit;
 				favorite_status = true;
 			}
 		} else {
-			type_text = 'Preview Template';
 			thumbnail_image_url = featured_image_url;
 			current_site_id = page_site_id;
 			page_id = site_id;
 		}
 
 		var title = data[site_id]['title'] || '';
+		var pages_count = data[site_id]['pages-count'] || 0;
+		var site_title = data[site_id]['site-title'] || '';
 
 	#>
 	<div class="theme astra-theme site-single {{favorite_class}} astra-sites-previewing-{{type}}" data-site-id="{{current_site_id}}" data-page-id="{{page_id}}">
@@ -141,10 +142,17 @@ defined( 'ABSPATH' ) or exit;
 			</span>
 			<div class="theme-id-container">
 				<div class="theme-name">
-					<span class="title">{{{title}}}</span>
-					<# if ( type ) { #>
-						<span class="type">{{type_text}} <i class="dashicons dashicons-external"></i></span>
-					<# } #>
+					<span class="title">
+						<# if ( 'site' === type ) { #>
+							<div class='site-title'>{{{title}}}</div>
+							<# if ( pages_count ) { #>
+								<div class='pages-count'>{{{pages_count}}} Templates</div>
+							<# } #>
+						<# } else { #>
+							<div class='site-title'>{{{site_title}}}</div>
+							<div class='page-title'>{{{title}}}</div>
+						<# } #>
+					</span>
 				</div>
 				<# if ( '' === type || 'site' === type ) { #>
 					<div class="favorite-action-wrap" data-favorite="{{favorite_class}}">
@@ -170,7 +178,7 @@ defined( 'ABSPATH' ) or exit;
 	<p>
 		<?php
 			/* translators: %s is pricing page link */
-			printf( __( 'This is a premium website demo available only with the Agency Bundles you can purchase it from <a href="%s" target="_blank">here</a>', 'astra-sites' ), 'https://wpastra.com/pricing/' );
+			printf( __( 'This is a premium website demo available only with the Agency Bundles you can purchase it from <a href="%s" target="_blank">here</a>.', 'astra-sites' ), 'https://wpastra.com/pricing/' );
 		?>
 	</p>
 	<p>
