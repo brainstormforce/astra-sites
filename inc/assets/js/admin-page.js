@@ -545,7 +545,8 @@ var AstraSitesAjaxQueue = (function() {
 				// Check in site tags.
 				if( Object.keys( current_site['astra-sites-tag'] ).length ) {
 					for( site_tag_id in current_site['astra-sites-tag'] ) {
-						var tag_title = AstraSitesAdmin._unescape_lower( current_site['astra-sites-tag'][site_tag_id] );
+						var tag_title = current_site['astra-sites-tag'][site_tag_id];
+							tag_title = AstraSitesAdmin._unescape_lower( tag_title.replace('-', ' ') );
 
 						if( tag_title.toLowerCase().includes( search_term ) ) {
 							items[site_id] = current_site;
@@ -579,7 +580,8 @@ var AstraSitesAjaxQueue = (function() {
 						// Check in site tags.
 						if( Object.keys( pages[page_id]['astra-sites-tag'] ).length ) {
 							for( page_tag_id in pages[page_id]['astra-sites-tag'] ) {
-								var page_tag_title = AstraSitesAdmin._unescape_lower( pages[page_id]['astra-sites-tag'][page_tag_id] );
+								var page_tag_title = pages[page_id]['astra-sites-tag'][page_tag_id];
+									page_tag_title = AstraSitesAdmin._unescape_lower( page_tag_title.replace('-', ' ') );
 								if( page_tag_title.toLowerCase().includes( search_term ) ) {
 									items[page_id] = pages[page_id];
 									items[page_id]['type'] = 'page';
@@ -2532,8 +2534,7 @@ var AstraSitesAjaxQueue = (function() {
 
 							$('body').removeClass('importing-site');
 
-							var	output  = '<p>Your page imported successfully! Now go ahead, customize the text, images, and design to make it yours!</p>';
-								output += '<p>You can now start making changes according to your requirements.</p>';
+							$('.astra-sites-import-content').html( wp.template('astra-sites-page-import-success') );
 
 							$('.rotating,.current-importing-status-wrap,.notice-warning').remove();
 

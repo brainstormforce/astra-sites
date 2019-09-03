@@ -70,15 +70,28 @@ defined( 'ABSPATH' ) or exit;
 
 </div>
 
+
+
+
 <script type="text/template" id="tmpl-astra-sites-no-sites">
 	<div class="astra-sites-no-sites">
-		<h2><?php _e( 'No Templates Found, Try a Different Search.', 'astra-sites' ); ?></h2>
-		<p class="description">
-			<?php
-			/* translators: %1$s External Link */
-			printf( __( 'Don\'t see a site that you would like to import?<br><a target="_blank" href="%1$s">Please suggest us!</a>', 'astra-sites' ), esc_url( 'https://wpastra.com/sites-suggestions/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=suggestions' ) );
-			?>
-		</p>
+		<div class="inner">
+			<h2><?php _e( 'No Templates Found, Try a Different Search.', 'astra-sites' ); ?></h2>
+			<div class="content">
+				<div class="empty-item">
+					<img class="empty-collection-part" src="<?php echo ASTRA_SITES_URI . 'inc/assets/images/empty-collection.svg'; ?>" alt="empty-collection">
+				</div>
+				<div class="description">
+					<p>
+					<?php
+					/* translators: %1$s External Link */
+					printf( __( 'Don\'t see a site that you would like to import?<br><a target="_blank" href="%1$s">Please suggest us!</a>', 'astra-sites' ), esc_url( 'https://wpastra.com/sites-suggestions/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=suggestions' ) );
+					?>
+					</p>
+					<div class="back-to-layout-button"><span class="button astra-sites-back">Back to Layouts</span></div>
+				</div>
+			</div>
+		</div>
 	</div>
 </script>
 
@@ -86,16 +99,18 @@ defined( 'ABSPATH' ) or exit;
 	<div class="astra-sites-no-favorites">
 		<div class="inner">
 			<h2><?php _e( 'Your Collection is Empty Yet.', 'astra-sites' ); ?></h2>
-			<div class="empty-item">
-				<img class="empty-collection-part" src="<?php echo ASTRA_SITES_URI . 'inc/assets/images/empty-collection.svg'; ?>" alt="empty-collection">
-			</div>
-			<div class="description">
-				<p><?php
-				/* translators: %1$s External Link */
-				_e( 'You can easily add any template to your collection by clicking on the heart icon at the item card, item page or live demo.', 'astra-sites' );
-				?></p>
-				<img src="<?php echo ASTRA_SITES_URI . 'inc/assets/images/arrow-blue.svg'; ?>" class="arrow-img">
-				<div><span class="button astra-sites-back">Back to Layouts</span></div>
+			<div class="content">
+				<div class="empty-item">
+					<img class="empty-collection-part" src="<?php echo ASTRA_SITES_URI . 'inc/assets/images/empty-collection.svg'; ?>" alt="empty-collection">
+				</div>
+				<div class="description">
+					<p><?php
+					/* translators: %1$s External Link */
+					_e( 'You can easily add any template to your collection by clicking on the heart icon at the item card, item page or live demo.', 'astra-sites' );
+					?></p>
+					<img src="<?php echo ASTRA_SITES_URI . 'inc/assets/images/arrow-blue.svg'; ?>" class="arrow-img">
+					<div class="back-to-layout-button"><span class="button astra-sites-back">Back to Layouts</span></div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -348,6 +363,12 @@ defined( 'ABSPATH' ) or exit;
 	</div>
 </script>
 
+<script type="text/template" id="tmpl-astra-sites-site-import-success">
+</script>
+<script type="text/template" id="tmpl-astra-sites-page-import-success">
+	<p><?php esc_html_e( 'Your page imported successfully! Now go ahead, customize the text, images, and design to make it yours!', 'astra-sites' ); ?></p>
+	<p><?php esc_html_e( 'You can now start making changes according to your requirements.', 'astra-sites' ); ?></p>
+</script>
 <?php
 /**
  * TMPL - First Screen

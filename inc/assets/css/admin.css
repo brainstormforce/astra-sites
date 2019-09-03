@@ -981,40 +981,52 @@ body.loading-content .select-page-builder {
 	color : #c34444;
 }
 
-.astra-sites-no-favorites .empty-item {
-    margin-bottom: 40px;
-    padding-top: 300px;
-    background: #dde3e6;
-    border-radius: 3px;
-    display: inline-block;
-}
-
+.astra-sites-no-sites,
 .astra-sites-no-favorites {
     padding: 7em 0;
 }
 
+.astra-sites-no-sites h2,
 .astra-sites-no-favorites h2 {
     font-size: 1.3rem;
     font-weight: normal;
     margin-top: 0;
     text-align: center;
-    margin-bottom: 2em;
+    margin-bottom: 3em;
+    color: #666;
 }
 
+.astra-sites-no-sites .back-to-layout-button {
+    margin-top: 25px;
+}
+
+.back-to-layout-button {
+    margin-top: 15px;
+}
+
+.empty-collection-part {
+    width: 220px;
+}
+
+.astra-sites-no-sites .arrow-img,
 .astra-sites-no-favorites .arrow-img {
-    width: 80px;
+    width: 56px;
     margin-bottom: 1em;
+    transform: rotate(-18deg);
 }
 
+.astra-sites-no-sites .content,
+.astra-sites-no-favorites .content {
+    display: flex;
+    align-items: center;
+}
+
+.astra-sites-no-sites .description,
 .astra-sites-no-favorites .description {
-    float: right;
-    width: 43%;
-    font-size: 13px;
-    line-height: 1.5;
-    color: #243238;
-    padding-top: 80px;
+    margin-left: 3em;
 }
 
+.astra-sites-no-sites .inner,
 .astra-sites-no-favorites .inner {
     margin: 0 auto;
     width: 610px;
@@ -1581,6 +1593,31 @@ body.loading-content .select-page-builder {
 .single-site {
     display: flex;
 }
+.astra-previewing-single-pages {
+    overflow: hidden;
+}
+
+.single-site-pages {
+    overflow-y: scroll;
+    height: 100vh;
+    max-height: calc(100vh - 280px);
+}
+
+.single-site-pages::-webkit-scrollbar {
+    width: 5px;
+    background-color: #f1f1f1;
+}
+
+.single-site-pages::-webkit-scrollbar-thumb {
+    border-radius: 0;
+    background-color: #d8d8d8;
+}
+
+.single-site-pages::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 0 rgba(0,0,0,.3);
+    width: 20px;
+}
+
 
 .single-site-preview::-webkit-scrollbar {
     width: 5px;
@@ -1600,6 +1637,7 @@ body.loading-content .select-page-builder {
 .single-site-preview {
     margin-right: 4em;
     max-height: calc(100vh - 280px);
+    height: 100vh;
     overflow-y: auto;
     border-radius: 2px;
     box-shadow: 0 0 16px 0 rgba(0, 0, 0, 0.12);
@@ -1727,13 +1765,11 @@ body.loading-content .select-page-builder {
 .astra-hide-site {
     display: none;
 }
-.astra-sites-no-sites {
-    text-align: center;
-    padding: 14em 0;
-}
 
-.astra-sites-no-sites p {
-    font-size: 1rem;
+.astra-sites-no-sites .button.astra-sites-back,
+.astra-sites-no-favorites .button.astra-sites-back {
+    box-shadow: none;
+    height: 30px;
 }
 
 .astra-sites-no-sites h2 {
@@ -1908,14 +1944,27 @@ body.loading-content .select-page-builder {
     background-color: #f7f7f7;
 }
 
+.astra-sites-sync-library-message.notice p {
+    margin: .3em 0;
+    font-size: 12px;
+}
+
+.astra-sites-sync-library-message.notice .notice-dismiss {
+    padding: 5px;
+}
+
+.astra-sites-sync-library-message.notice .notice-dismiss:before {
+    font-size: 14px;
+}
+
 .appearance_page_astra-sites .astra-sites-sync-library-message.notice {
 	position: absolute;
-	top: 120%;
-	right: 2%;
-	background: #fff;
-	font-size: 1rem;
-	margin: 0;
-	box-shadow: 0px 0px 3px 0px #9c9c9c;
+    top: 112%;
+    right: 2%;
+    background: #fff;
+    margin: 0;
+    box-shadow: 0px 0px 1px 0px #585858;
+    border-radius: 2px;
 }
 
 .astra-loading-wrap {
