@@ -41,15 +41,21 @@ if ( class_exists( 'WP_Background_Process' ) ) :
 			$method  = $object['method'];
 
 			if ( 'import_categories' === $method ) {
-				error_log( 'Importing Tags' );
+				error_log( '-------- Importing Tags --------' );
 				update_option( 'astra-sites-batch-status-string', 'Importing Tags' );
 				$process->import_categories();
 			} elseif ( 'import_sites' === $method ) {
+				error_log( '-------- Importing Sites --------' );
 				$page = $object['page'];
-
 				error_log( 'Inside Batch ' . $page );
 				update_option( 'astra-sites-batch-status-string', 'Inside Batch ' . $page );
 				$process->import_sites( $page );
+			} elseif ( 'import_blocks' === $method ) {
+				error_log( '-------- Importing Blocks --------' );
+				$page = $object['page'];
+				error_log( 'Inside Batch ' . $page );
+				update_option( 'astra-sites-batch-status-string', 'Inside Batch ' . $page );
+				$process->import_blocks( $page );
 			}
 
 			return false;

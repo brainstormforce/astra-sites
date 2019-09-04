@@ -151,6 +151,14 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 			wp_send_json_success( $sites );
 		}
 
+		/**
+		 * Get Page Builder Sites
+		 *
+		 * @since x.x.x
+		 *
+		 * @param  string $default_page_builder default page builder slug.
+		 * @return array page builder sites.
+		 */
 		function get_sites_by_page_builder( $default_page_builder = '' ) {
 			$sites_and_pages = Astra_Sites::get_instance()->get_all_sites();
 
@@ -196,7 +204,7 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 		public function get_settings() {
 
 			$defaults = array(
-				'page_builder'     => '',
+				'page_builder' => '',
 			);
 
 			$stored_data = get_option( 'astra_sites_settings', $defaults );
@@ -398,7 +406,7 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 
 					<!-- <div class="menu" style="display:none;">
 						<ul class="astra-sites-nav-items">
-							<li><a href="#"><?php _e( 'Site &amp; Pages', 'astra-sites' ); ?></a></li>
+							<li><a href="#"><?php // _e( 'Site &amp; Pages', 'astra-sites' ); ?></a></li>
 						</ul>
 					</div> -->
 					<div class="form">
@@ -417,7 +425,8 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 
 										<?php
 										$status = get_option( 'astra-sites-batch-is-complete', 'no' );
-										if( 'yes' === $status ) { ?>
+										if ( 'yes' === $status ) {
+											?>
 											<div class="astra-sites-sync-library-message success notice notice-alt notice-success is-dismissible">
 												<p><?php _e( 'Template library refreshed!', 'astra-sites' ); ?> <button type="button" class="notice-dismiss"><span class="screen-reader-text"><?php _e( 'Dismiss', 'astra-sites' ); ?></span></button></p>
 											</div>
@@ -489,6 +498,13 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 			}
 		}
 
+		/**
+		 * Get Default Page Builder
+		 *
+		 * @since x.x.x
+		 *
+		 * @return mixed page builders or empty string.
+		 */
 		function get_default_page_builder() {
 			$default_page_builder = $this->get_setting( 'page_builder' );
 
@@ -501,6 +517,13 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 			return '';
 		}
 
+		/**
+		 * Get Page Builders
+		 *
+		 * @since x.x.x
+		 *
+		 * @return array page builders.
+		 */
 		function get_page_builders() {
 			return array(
 				'elementor'      => array(

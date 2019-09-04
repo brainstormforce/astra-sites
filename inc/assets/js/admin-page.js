@@ -81,15 +81,15 @@ var AstraSitesAjaxQueue = (function() {
 	$.fn.isInViewport = function() {
 
 		// If not have the element then return false!
-		if( ! $(this).length ) {
+		if( ! $( this ).length ) {
 			return false;
 		}
 
-	    var elementTop = $(this).offset().top;
-	    var elementBottom = elementTop + $(this).outerHeight();
+	    var elementTop = $( this ).offset().top;
+	    var elementBottom = elementTop + $( this ).outerHeight();
 
-	    var viewportTop = $(window).scrollTop();
-	    var viewportBottom = viewportTop + $(window).height();
+	    var viewportTop = $( window ).scrollTop();
+	    var viewportBottom = viewportTop + $( window ).height();
 
 	    return elementBottom > viewportTop && elementTop < viewportBottom;
 	};
@@ -201,6 +201,16 @@ var AstraSitesAjaxQueue = (function() {
 			this._bind();
 			this._autocomplete();
 			this._load_large_images();
+			this._auto_close_notice();
+		},
+
+		_auto_close_notice: function() {
+			if( $('.astra-sites-sync-library-message.success').length ) {
+				AstraSitesAdmin._sync_library_complete();
+				setTimeout(function() {
+					$('.astra-sites-sync-library-message.success').remove();
+				}, 3000);
+			}
 		},
 
 		/**
@@ -381,7 +391,7 @@ var AstraSitesAjaxQueue = (function() {
 
 
 			$( document ).on('click', '#astra-sites > .astra-sites-previewing-site .theme-screenshot, #astra-sites > .astra-sites-previewing-site .theme-name', AstraSitesAdmin._show_pages );
-			$( document ).on('click'                     , '#single-pages .theme-screenshot', AstraSitesAdmin._change_site_preview_screenshot);
+			$( document ).on('click'                     , '#single-pages .site-single', AstraSitesAdmin._change_site_preview_screenshot);
 			$( document ).on('click'                     , '.astra-sites-show-favorite-button', AstraSitesAdmin._show_favorite);
 
 			$( document ).on('click'                     , '.favorite-action-wrap', AstraSitesAdmin._toggle_favorite);
@@ -396,7 +406,7 @@ var AstraSitesAjaxQueue = (function() {
 			$( document ).on('click', '.astra-sites-sync-library-message.success .notice-dismiss', AstraSitesAdmin._sync_library_complete );
 			$( document ).on('click', '.page-builder-icon', AstraSitesAdmin._toggle_page_builder_list );
 			$( document ).on('click', '.showing-page-builders #wpbody-content', AstraSitesAdmin._close_page_builder_list );
-			$( document ).on('keyup input'                     , '#wp-filter-search-input', AstraSitesAdmin._search );
+			$( document ).on('keyup'                     , '#wp-filter-search-input', AstraSitesAdmin._search );
 			$( document ).on('click'                     , '.ui-autocomplete .ui-menu-item', AstraSitesAdmin._show_search_term );
 		},
 
@@ -406,7 +416,13 @@ var AstraSitesAjaxQueue = (function() {
 			$('#wp-filter-search-input').trigger( 'keyup' );
 		},
 
-		_search: function() {
+		_search: function(event) {
+
+			if( 13 === event.keyCode ) {
+				$('.astra-sites-autocomplete-result .ui-autocomplete').hide();
+				$('.search-form').removeClass('searching');
+				$('#astra-sites-admin').removeClass('searching');
+			}
 
 			var search_input  = $( this ),
 				search_term   = search_input.val() || '',
@@ -611,9 +627,7 @@ var AstraSitesAjaxQueue = (function() {
 			$('body').toggleClass( 'showing-page-builders' );
 		},
 
-		_sync_library_complete: function( event ) {
-			event.preventDefault();
-
+		_sync_library_complete: function() {
 			$.ajax({
 				url  : astraSitesVars.ajaxurl,
 				type : 'POST',
@@ -672,7 +686,19 @@ var AstraSitesAjaxQueue = (function() {
 					})
 					.fail(function( jqXHR ){
 						console.log( jqXHR );
-				    });
+					});
+
+					// Import Blocks.
+					$.ajax({
+						url  : astraSitesVars.ajaxurl,
+						type : 'POST',
+						data : {
+							action : 'astra-sites-import-blocks',
+						},
+					})
+					.fail(function( jqXHR ){
+						console.log( jqXHR );
+					});
 
 					$.ajax({
 						url  : astraSitesVars.ajaxurl,
@@ -991,7 +1017,7 @@ var AstraSitesAjaxQueue = (function() {
 		_change_site_preview_screenshot: function( event ) {
 			event.preventDefault();
 
-			var item = $(this).parents('.site-single');
+			var item = $(this);
 
 			AstraSitesAdmin._set_preview_screenshot_by_page( item );
 		},

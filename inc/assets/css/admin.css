@@ -24,24 +24,23 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-crown:before {
-  content: "\e903";
-}
-
 .icon-search:before {
   content: "\e900";
 }
-
 .icon-heart:before {
   content: "\e901";
 }
-
 .icon-refresh:before {
   content: "\e902";
 }
-
 .icon-chevron-left:before {
   content: "\e904";
+}
+.icon-file:before {
+  content: "\e903";
+}
+.icon-layers:before {
+  content: "\e905";
 }
 
 .favorite-filters-wrap a {
@@ -282,12 +281,20 @@
 .favorite-action-wrap {
 	padding-right: 15px;
 }
+
+.favorite-action-wrap .icon-heart:hover {
+    color: #c34444;
+}
+
 .favorite-action-wrap i {
 	color: #ccc;
 	height: 18px;
 	width: 18px;
 	font-size: 16px;
 	line-height: 1.5;
+	transition-property: border, background, color;
+    transition-duration: .05s;
+    transition-timing-function: ease-in-out;
 }
 .theme-id-container .icon-star {
     padding: 0 15px 0 0;
@@ -534,7 +541,6 @@
 	margin-left: 0;
 	width: auto;
 	float: none;
-	margin-right: 220px;
 }
 
 .filters-wrap {
@@ -550,8 +556,17 @@
 	display: none !important;
 }
 #site-pages {
-	margin: 10px 45px 0 45px;
+    position: fixed;
+    left: 0;
+    right: 0;
+    margin: 0 45px 0 195px;
+    z-index: 10;
 }
+
+.folded #site-pages {
+    margin-left: 73px;
+}
+
 .install-theme-info > .notice {
 	margin: 5px 0 10px 0;
 }
@@ -1076,6 +1091,7 @@ body.loading-content .select-page-builder {
     height: auto;
     width: auto;
     vertical-align: middle;
+    font-size: 22px;
 }
 
 .astra-sites-welcome .header {
@@ -1972,6 +1988,16 @@ body.loading-content .select-page-builder {
     left: 50%;
     top: 50%;
     transform: translate(-60%, -60%);
+}
+
+.appearance_page_astra-sites #wpbody-content > .updated:nth-child(2),
+.appearance_page_astra-sites #wpbody-content > .notice:nth-child(2) {
+    margin-top: 7em;
+}
+
+.appearance_page_astra-sites #wpbody-content > .updated + .astra-sites-menu-page-wrapper #astra-sites-admin,
+.appearance_page_astra-sites #wpbody-content > .notice + .astra-sites-menu-page-wrapper #astra-sites-admin {
+    margin-top: 2em;
 }
 
 .pages-count,
