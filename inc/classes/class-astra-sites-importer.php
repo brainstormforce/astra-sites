@@ -114,11 +114,27 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) {
 			require_once ASTRA_SITES_DIR . 'inc/importers/wxr-importer/class-astra-wxr-importer.php';
 		}
 
+		/**
+		 * Change flow status
+		 *
+		 * @since x.x.x
+		 *
+		 * @param  array $args Flow query args.
+		 * @return array Flow query args.
+		 */
 		function change_flow_status( $args ) {
 			$args['post_status'] = 'publish';
 			return $args;
 		}
 
+		/**
+		 * Track Flow
+		 *
+		 * @since x.x.x
+		 *
+		 * @param  integer $flow_id Flow ID.
+		 * @return void
+		 */
 		function track_flows( $flow_id ) {
 			error_log( '$flow_id ' . $flow_id );
 			Astra_WXR_Importer::instance()->track_post( $flow_id );
@@ -339,19 +355,12 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) {
 
 			$widgets_data = ( isset( $_POST['widgets_data'] ) ) ? (object) json_decode( stripslashes( $_POST['widgets_data'] ) ) : '';
 
-			// $widgets_data = stripslashes(json_encode($widgets_data->scalar));
-			// $widgets_data = json_decode( $widget_data );
-			// vl( $widgets_data );
-			// wp_die();
-
 			Astra_Sites_Importer_Log::add( 'Imported - Widgets ' . json_encode( $widgets_data ) );
 
 			if ( ! empty( $widgets_data ) ) {
 
 				$widgets_importer = Astra_Widget_Importer::instance();
 				$status           = $widgets_importer->import_widgets_data( $widgets_data );
-				// vl( $status );
-				// wp_die();
 
 				// Set meta for tracking the post.
 				if ( is_object( $widgets_data ) ) {

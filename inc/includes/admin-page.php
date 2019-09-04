@@ -38,17 +38,20 @@ defined( 'ABSPATH' ) or exit;
 		$expired = get_transient( 'astra-sites-import-check' );
 		if ( $expired ) {
 			global $wpdb;
-			$transient         = 'astra-sites-import-check';
+			$transient = 'astra-sites-import-check';
+
 			$transient_timeout = $wpdb->get_col(
-				"
-		      SELECT option_value
-		      FROM $wpdb->options
-		      WHERE option_name
-		      LIKE '%_transient_timeout_$transient%'
-		    "
+				$wpdb->prepare(
+					"SELECT option_value
+				FROM $wpdb->options
+				WHERE option_name
+				LIKE %s",
+					'%_transient_timeout_' . $transient . '%'
+				)
 			);
-			$older_date        = $transient_timeout[0];
-			$status            = 'Transient: Not Expired! Recheck in ' . human_time_diff( time(), $older_date );
+
+			$older_date = $transient_timeout[0];
+			$status     = 'Transient: Not Expired! Recheck in ' . human_time_diff( time(), $older_date );
 		} else {
 			$status = 'Transient: Starting.. Process for each 5 minutes.';
 		}
@@ -70,15 +73,28 @@ defined( 'ABSPATH' ) or exit;
 
 </div>
 
+
+
+
 <script type="text/template" id="tmpl-astra-sites-no-sites">
 	<div class="astra-sites-no-sites">
-		<h2><?php _e( 'No Templates Found, Try a Different Search.', 'astra-sites' ); ?></h2>
-		<p class="description">
-			<?php
-			/* translators: %1$s External Link */
-			printf( __( 'Don\'t see a site that you would like to import?<br><a target="_blank" href="%1$s">Please suggest us!</a>', 'astra-sites' ), esc_url( 'https://wpastra.com/sites-suggestions/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=suggestions' ) );
-			?>
-		</p>
+		<div class="inner">
+			<h2><?php _e( 'No Templates Found, Try a Different Search.', 'astra-sites' ); ?></h2>
+			<div class="content">
+				<div class="empty-item">
+					<img class="empty-collection-part" src="<?php echo ASTRA_SITES_URI . 'inc/assets/images/empty-collection.svg'; ?>" alt="empty-collection">
+				</div>
+				<div class="description">
+					<p>
+					<?php
+					/* translators: %1$s External Link */
+					printf( __( 'Don\'t see a site that you would like to import?<br><a target="_blank" href="%1$s">Please suggest us!</a>', 'astra-sites' ), esc_url( 'https://wpastra.com/sites-suggestions/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=suggestions' ) );
+					?>
+					</p>
+					<div class="back-to-layout-button"><span class="button astra-sites-back">Back to Layouts</span></div>
+				</div>
+			</div>
+		</div>
 	</div>
 </script>
 
@@ -86,16 +102,20 @@ defined( 'ABSPATH' ) or exit;
 	<div class="astra-sites-no-favorites">
 		<div class="inner">
 			<h2><?php _e( 'Your Collection is Empty Yet.', 'astra-sites' ); ?></h2>
-			<div class="empty-item">
-				<img class="empty-collection-part" src="<?php echo ASTRA_SITES_URI . 'inc/assets/images/empty-collection.svg'; ?>" alt="empty-collection">
-			</div>
-			<div class="description">
-				<p><?php
-				/* translators: %1$s External Link */
-				_e( 'You can easily add any template to your collection by clicking on the heart icon at the item card, item page or live demo.', 'astra-sites' );
-				?></p>
-				<img src="<?php echo ASTRA_SITES_URI . 'inc/assets/images/arrow-blue.svg'; ?>" class="arrow-img">
-				<div><span class="button astra-sites-back">Back to Layouts</span></div>
+			<div class="content">
+				<div class="empty-item">
+					<img class="empty-collection-part" src="<?php echo ASTRA_SITES_URI . 'inc/assets/images/empty-collection.svg'; ?>" alt="empty-collection">
+				</div>
+				<div class="description">
+					<p>
+					<?php
+					/* translators: %1$s External Link */
+					_e( 'You can easily add any template to your collection by clicking on the heart icon at the item card, item page or live demo.', 'astra-sites' );
+					?>
+					</p>
+					<img src="<?php echo ASTRA_SITES_URI . 'inc/assets/images/arrow-blue.svg'; ?>" class="arrow-img">
+					<div class="back-to-layout-button"><span class="button astra-sites-back"><?php _e( 'Back to Layouts', 'astra-sites' ); ?></span></div>
+				</div>
 			</div>
 		</div>
 	</div>
@@ -196,14 +216,18 @@ defined( 'ABSPATH' ) or exit;
 ?>
 <script type="text/template" id="tmpl-astra-sites-install-activate-theme">
 	<div id="astra-theme-activation-nag">
-		<p><?php
-		esc_html_e('Your starter site has been imported successfully in {{data}}! Now go ahead, customize the text, images, and design to make it yours!', 'astra-sites'); ?></p>
-		<p><?php esc_html_e('You can now start making changes according to your requirements.','astra-sites'); ?></p>
+		<p>
+		<?php
+		esc_html_e( 'Your starter site has been imported successfully in {{data}}! Now go ahead, customize the text, images, and design to make it yours!', 'astra-sites' );
+		?>
+		</p>
+		<p><?php esc_html_e( 'You can now start making changes according to your requirements.', 'astra-sites' ); ?></p>
 		<?php
 		$theme_status = Astra_Sites::get_instance()->get_theme_status();
-		if( 'installed-and-active' !== $theme_status ) {
+		if ( 'installed-and-active' !== $theme_status ) {
 			$link_class = 'astra-sites-theme-' . $theme_status;
-			printf( __( '<p>Astra Theme needs to be active for you to use currently installed "%1$s" plugin.</p><p><a href="#" class="%3$s" data-theme-slug="astra">Install & Activate Now</a></p>', 'astra-sites' ), ASTRA_SITES_NAME, esc_url( admin_url( 'themes.php?theme=astra' ) ), $link_class );
+			/* translators: %1$s is the plugin name, %2$s is the CSS class name.  */
+			printf( __( '<p>Astra Theme needs to be active for you to use currently installed "%1$s" plugin.</p><p><a href="#" class="%2$s" data-theme-slug="astra">Install & Activate Now</a></p>', 'astra-sites' ), ASTRA_SITES_NAME, $link_class );
 		}
 		?>
 	</div>
@@ -348,6 +372,12 @@ defined( 'ABSPATH' ) or exit;
 	</div>
 </script>
 
+<script type="text/template" id="tmpl-astra-sites-site-import-success">
+</script>
+<script type="text/template" id="tmpl-astra-sites-page-import-success">
+	<p><?php esc_html_e( 'Your page imported successfully! Now go ahead, customize the text, images, and design to make it yours!', 'astra-sites' ); ?></p>
+	<p><?php esc_html_e( 'You can now start making changes according to your requirements.', 'astra-sites' ); ?></p>
+</script>
 <?php
 /**
  * TMPL - First Screen
@@ -430,8 +460,18 @@ defined( 'ABSPATH' ) or exit;
 					var string = 'template';
 				}
 				console.log( data ); #>
-				<p><?php printf( __( 'Import process can take anywhere between 2 to 10 minutes depending on the size of the %s and speed of the connection.', 'astra-sites' ), '{{string}}' ); ?></p>
-				<p><?php printf( __( 'Please do not close this browser window until the %s is imported completely.', 'astra-sites' ), '{{string}}' ); ?></p>
+				<p>
+				<?php
+				/* translators: %s is the dynamic string. */
+				printf( __( 'Import process can take anywhere between 2 to 10 minutes depending on the size of the %s and speed of the connection.', 'astra-sites' ), '{{string}}' );
+				?>
+				</p>
+				<p>
+				<?php
+				/* translators: %s is the dynamic string. */
+				printf( __( 'Please do not close this browser window until the %s is imported completely.', 'astra-sites' ), '{{string}}' );
+				?>
+				</p>
 
 				<div class="current-importing-status-wrap">
 					<div class="current-importing-status">

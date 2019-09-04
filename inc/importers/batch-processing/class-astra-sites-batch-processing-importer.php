@@ -69,9 +69,44 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Importer' ) ) :
 		}
 
 		/**
+		 * Import Blocks
+		 *
+		 * @since x.x.x
+		 * @param  integer $page Page number.
+		 * @return void
+		 */
+		public function import_blocks( $page = 1 ) {
+
+			error_log( 'BLOCK: -------- ACTUAL IMPORT --------' );
+			$api_args   = array(
+				'timeout' => 30,
+			);
+			$all_blocks = array();
+			error_log( 'BLOCK: Requesting ' . $page );
+			update_option( 'astra-blocks-batch-status-string', 'Requesting for blocks page - ' . $page );
+			$response = wp_remote_get( trailingslashit( Astra_Sites::get_instance()->get_api_domain() ) . '/wp-json/astra-blocks/v1/blocks?per_page=100&page=' . $page, $api_args );
+			if ( ! is_wp_error( $response ) || wp_remote_retrieve_response_code( $response ) === 200 ) {
+				$astra_blocks = json_decode( wp_remote_retrieve_body( $response ), true );
+
+				error_log( 'BLOCK: Storing data for page ' . $page . ' in option astra-blocks-' . $page );
+				update_option( 'astra-blocks-batch-status-string', 'Storing data for page ' . $page . ' in option astra-blocks-' . $page );
+
+				update_option( 'astra-blocks-' . $page, $astra_blocks );
+			} else {
+				error_log( 'BLOCK: API Error: ' . $response->get_error_message() );
+			}
+
+			error_log( 'BLOCK: Complete storing data for blocks ' . $page );
+			update_option( 'astra-blocks-batch-status-string', 'Complete storing data for page ' . $page );
+		}
+
+		/**
 		 * Import
 		 *
 		 * @since 1.0.14
+		 * @since 2.0.0 Added page no.
+		 *
+		 * @param  integer $page Page number.
 		 * @return void
 		 */
 		public function import_sites( $page = 1 ) {
