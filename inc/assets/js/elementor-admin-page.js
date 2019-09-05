@@ -110,6 +110,7 @@ var AstraSitesAjaxQueue = (function() {
 		block_id : 0,
 		requiredPlugins : [],
 		canImport : false,
+		canInsert : false,
 		type : 'pages',
 		action : '',
 		masonryObj : [],
@@ -172,6 +173,7 @@ var AstraSitesAjaxQueue = (function() {
 						$( document ).on( "astra-sites__elementor-open-before", AstraElementorSitesAdmin._beforeOpen );
 						$( document ).on( "astra-sites__elementor-plugin-check", AstraElementorSitesAdmin._pluginCheck );
 						$( document ).on( 'ast-site-elementor-page-import-done', AstraElementorSitesAdmin._invokeBatchProcess );
+						$( document ).on( 'astra-sites__elementor-close-before', AstraElementorSitesAdmin._beforeClose );
 
 						$( document ).on( 'astra-sites__elementor-do-step-1', AstraElementorSitesAdmin._step1 );
 						$( document ).on( 'astra-sites__elementor-do-step-2', AstraElementorSitesAdmin._step2 );
@@ -190,6 +192,25 @@ var AstraSitesAjaxQueue = (function() {
 				}
 			}
 
+		},
+
+		_done: function( data ) {
+
+			var str = ( AstraElementorSitesAdmin.type == 'pages' ) ? 'Template' : 'Block';
+			$scope.find( '.ast-import-elementor-template' ).removeClass( 'installing' );
+			$scope.find( '.ast-import-elementor-template' ).attr( 'data-demo-link', data.data.link );
+			setTimeout( function() {
+				$scope.find( '.ast-import-elementor-template' ).text( 'View Saved ' + str );
+				$scope.find( '.ast-import-elementor-template' ).addClass( 'action-done' );
+			}, 200 );
+		},
+
+		_beforeClose: function() {
+			if ( AstraElementorSitesAdmin.action == 'insert' ) {
+				$scope.find( '.ast-library-template-insert' ).removeClass( 'installing' );
+				$scope.find( '.ast-library-template-insert' ).text( 'Imported' );
+				$scope.find( '.ast-library-template-insert' ).addClass( 'action-done' );
+			}
 		},
 
 		_closeTooltip: function( event ) {
@@ -215,6 +236,8 @@ var AstraSitesAjaxQueue = (function() {
 			}
 
 			button.addClass( 'updating-message');
+			$scope.find( '.ast-sites-floating-notice' ).html( 'Syncing template library in the background! We will notify you once it is done.' );
+			$scope.find( '.ast-sites-floating-notice-wrap' ).addClass( 'slide-in' );
 
 			$.ajax({
 				url  : astraElementorSites.ajaxurl,
@@ -228,8 +251,6 @@ var AstraSitesAjaxQueue = (function() {
 		    })
 			.done(function ( response ) {
 				button.removeClass( 'updating-message');
-				$scope.find( '.ast-sites-floating-notice' ).html( 'Syncing template library in the background! We will notify you once it done.' );
-				$scope.find( '.ast-sites-floating-notice-wrap' ).addClass( 'slide-in' );
 
 				setTimeout( function() {
 					$scope.find( '.ast-sites-floating-notice-wrap' ).removeClass( 'slide-in' );
@@ -408,7 +429,7 @@ var AstraSitesAjaxQueue = (function() {
 			})
 			.done(function ( data ) {
 				console.log(data);
-				AstraElementorSitesAdmin._close();
+				AstraElementorSitesAdmin._done( data );
 			});
 		},
 
@@ -521,11 +542,17 @@ var AstraSitesAjaxQueue = (function() {
 		_importTemplate: function( e ) {
 
 			if ( ! AstraElementorSitesAdmin.canImport ) {
+				if ( $( this ).attr( 'data-demo-link' ) != undefined ) {
+					window.open( $( this ).attr( 'data-demo-link' ), '_blank' );
+				}
 				return;
 			}
 
+			AstraElementorSitesAdmin.canImport = false;
+
 			var str = ( AstraElementorSitesAdmin.type == 'pages' ) ? 'Template' : 'Block';
 
+			$( this ).addClass( 'installing' );
 			$( this ).text( 'Saving ' + str + '...' );
 
 			AstraElementorSitesAdmin.action = 'import';
@@ -804,12 +831,14 @@ var AstraSitesAjaxQueue = (function() {
 
 		_insert: function( e ) {
 
-			if ( ! AstraElementorSitesAdmin.canImport ) {
+			if ( ! AstraElementorSitesAdmin.canInsert ) {
 				return;
 			}
 
+			AstraElementorSitesAdmin.canInsert = false;
 			var str = ( AstraElementorSitesAdmin.type == 'pages' ) ? 'Template' : 'Block';
 
+			$( this ).addClass( 'installing' );
 			$( this ).text( 'Importing ' + str + '...' );
 
 			AstraElementorSitesAdmin.action = 'insert';
@@ -912,6 +941,7 @@ var AstraSitesAjaxQueue = (function() {
 			AstraElementorSitesAdmin.requiredPlugins = [];
 			AstraElementorSitesAdmin.templateData = {};
 			AstraElementorSitesAdmin.canImport = false;
+			AstraElementorSitesAdmin.canInsert = false;
 
 			// Hide Back button.
 			$scope.find( '.back-to-layout' ).css( 'visibility', 'hidden' );
@@ -1142,6 +1172,29 @@ var AstraSitesAjaxQueue = (function() {
 				return;
 			}
 
+			if (
+				AstraElementorSitesAdmin.type == 'pages' &&
+				astraElementorSites.default_page_builder_sites[AstraElementorSitesAdmin.site_id]['astra-sites-type'] != undefined &&
+				astraElementorSites.default_page_builder_sites[AstraElementorSitesAdmin.site_id]['astra-sites-type'] != 'free'
+			) {
+
+				output = '<p class="ast-validate">This is a premium template available with Astra \'Agency\' packages. <a href="plugins.php?bsf-inline-license-form=astra-pro-sites">Validate Your License</a> Key to import this template.</p>';
+
+				$scope.find('.required-plugins-list').html( output );
+				$scope.find('.ast-tooltip-wrap').css( 'opacity', 1 );
+				$scope.find('.astra-sites-tooltip').css( 'opacity', 1 );
+
+				/**
+				 * Enable Demo Import Button
+				 * @type number
+				 */
+				AstraElementorSitesAdmin.requiredPlugins = [];
+				AstraElementorSitesAdmin.canImport = true;
+				AstraElementorSitesAdmin.canInsert = true;
+				$scope.find( '.astra-sites-import-template-action > div' ).removeClass( 'disabled' );
+				return;
+			}
+
 		 	// Required Required.
 			$.ajax({
 				url  : astraElementorSites.ajaxurl,
@@ -1248,6 +1301,7 @@ var AstraSitesAjaxQueue = (function() {
 				 */
 				AstraElementorSitesAdmin.requiredPlugins = response.data['required_plugins'];
 				AstraElementorSitesAdmin.canImport = true;
+				AstraElementorSitesAdmin.canInsert = true;
 				$scope.find( '.astra-sites-import-template-action > div' ).removeClass( 'disabled' );
 			});
 		},
@@ -1285,7 +1339,7 @@ var AstraSitesAjaxQueue = (function() {
 
 		_close: function( e ) {
 			$( document ).trigger( 'astra-sites__elementor-close-before' );
-			$scope.fadeOut();
+			setTimeout( function() { $scope.fadeOut(); }, 300 );
 			$( document ).trigger( 'astra-sites__elementor-close-after' );
 		},
 

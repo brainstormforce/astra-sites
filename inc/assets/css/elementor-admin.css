@@ -356,6 +356,10 @@
     border-left: 1px solid #e6e9ec;
 }
 
+#ast-sites-modal .ast-sites-modal__header__close--normal:hover i {
+    color: #495157;
+}
+
 #ast-sites-modal .ast-sites-modal__header__close--normal i {
     font-size: 18px;
 }
@@ -489,7 +493,97 @@
 #ast-sites-modal .theme-preview,
 #ast-sites-modal .theme-preview-block {
     display: none;
-    margin: 0 50px;
+    margin: 0;
+}
+
+#ast-sites-modal .ast-validate {
+    font-size: 13px;
+    line-height: 1.5;
+}
+
+#ast-sites-modal .ast-library-template-insert.action-done:before {
+    content: "\f147";
+    display: inline-block;
+    margin-right: 10px;
+    font: normal 20px/1 'dashicons';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    vertical-align: middle;
+}
+
+#ast-sites-modal .ast-import-elementor-template.action-done:after {
+    content: "\f504";
+    display: inline-block;
+    margin-left: 10px;
+    font: normal 20px/1 'dashicons';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    vertical-align: middle;
+}
+
+#ast-sites-modal .ast-library-template-insert.installing:before,
+#ast-sites-modal .ast-import-elementor-template.installing:before {
+    content: "\f463";
+    display: inline-block;
+    margin-right: 10px;
+    font: normal 20px/1 'dashicons';
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    vertical-align: middle;
+    -webkit-animation: cssAnimation .72s ease infinite;
+    -moz-animation: cssAnimation .72s ease infinite;
+    -o-animation: cssAnimation .72s ease infinite;
+    -ms-animation: cssAnimation .72s ease infinite;
+    animation: cssAnimation .72s ease infinite;
+}
+
+@-webkit-keyframes cssAnimation {
+    from {
+        -webkit-transform: rotate(0);
+        -moz-transform: rotate(0);
+        -o-transform: rotate(0);
+        -ms-transform: rotate(0);
+        transform: rotate(0);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+ }
+ @-moz-keyframes cssAnimation {
+    from {
+        -webkit-transform: rotate(0);
+        -moz-transform: rotate(0);
+        -o-transform: rotate(0);
+        -ms-transform: rotate(0);
+        transform: rotate(0);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+ }
+ @-o-keyframes cssAnimation {
+    from {
+        -webkit-transform: rotate(0);
+        -moz-transform: rotate(0);
+        -o-transform: rotate(0);
+        -ms-transform: rotate(0);
+        transform: rotate(0);
+    }
+    to {
+        -webkit-transform: rotate(360deg);
+        -moz-transform: rotate(360deg);
+        -o-transform: rotate(360deg);
+        -ms-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
 }
 
 #ast-sites-modal .astra-sites-library-template {
@@ -684,6 +778,7 @@
 #ast-sites-modal .single-site-preview {
     margin-right: 0;
     max-height: calc( 100vh - 160px );
+    height: auto;
 }
 
 .ast-sites-floating-notice-wrap {
@@ -693,7 +788,7 @@
     background: #ffffff;
     padding: 10px 20px;
     box-shadow: 0 3px 10px rgba(25, 30, 35, 0.12);
-    border-left: 5px solid #46b450;
+    border-left: 5px solid #00a0d2;
      transform: translateX(100%);
     -webkit-transform: translateX(100%);
 }

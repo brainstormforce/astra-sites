@@ -84,6 +84,9 @@ defined( 'ABSPATH' ) or exit;
 		var count = 0;
 		for ( key in data ) {
 			var page_data = data[ key ][ 'pages' ];
+			if ( 0 == Object.keys( page_data ).length ) {
+				continue;
+			}
 			var type_class = ' site-type-' + data[ key ]['astra-sites-type'];
 			var site_type = data[ key ][ 'astra-sites-type' ] || '';
 			var site_title = data[ key ]['title'].slice( 0, 25 );
