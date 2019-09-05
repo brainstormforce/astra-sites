@@ -131,7 +131,6 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 			if ( ! empty( $demo_api_uri ) ) {
 
 				$demo_data = self::get_astra_single_demo( $demo_api_uri );
-
 				update_option( 'astra_sites_import_data', $demo_data );
 
 				if ( is_wp_error( $demo_data ) ) {
@@ -412,6 +411,10 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 				} else {
 					return new WP_Error( 'api_invalid_response_code', $response->get_error_message() );
 				}
+			}
+
+			if ( wp_remote_retrieve_response_code( $response ) !== 200 ) {
+				return new WP_Error( 'api_invalid_response_code', wp_remote_retrieve_body( $response ) );
 			} else {
 				$data = json_decode( wp_remote_retrieve_body( $response ), true );
 			}

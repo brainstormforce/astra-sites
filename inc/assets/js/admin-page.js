@@ -930,7 +930,7 @@ var AstraSitesAjaxQueue = (function() {
 		 * 
 		 * @param  {string} data Error message.
 		 */
-		_importFailMessage: function( message, from ) {
+		_importFailMessage: function( message ) {
 
 			$('.astra-demo-import')
 				.addClass('go-pro button-primary')
@@ -940,40 +940,10 @@ var AstraSitesAjaxQueue = (function() {
 				.append('<i class="dashicons dashicons-external"></i>')
 				.removeClass('astra-demo-import');
 
-			// Add the doc link due to import log file not generated.
-			if( 'undefined' === from ) {
+			AstraSitesAdmin._log_title( message );
 
-				$('.wp-full-overlay-header .go-pro').text( astraSitesAdmin.strings.importFailedBtnSmall );
-				$('.wp-full-overlay-footer .go-pro').text( astraSitesAdmin.strings.importFailedBtnLarge );
-				$('.go-pro').attr('href', astraSitesAdmin.log.serverConfiguration );
-
-			// Add the import log file link.
-			} else {
-				
-				$('.wp-full-overlay-header .go-pro').text( astraSitesAdmin.strings.importFailBtn );
-				$('.wp-full-overlay-footer .go-pro').text( astraSitesAdmin.strings.importFailBtnLarge )
-				
-				// Add the import log file link.
-				if( 'undefined' !== AstraSitesAdmin.log_file_url ) {
-					$('.go-pro').attr('href', AstraSitesAdmin.log_file_url );
-				} else {
-					$('.go-pro').attr('href', astraSitesAdmin.log.serverConfiguration );
-				}
-			}
-
-			var output  = '<div class="astra-api-error notice notice-error notice-alt is-dismissible">';
-				output += '	<p>'+message+'</p>';
-				output += '	<button type="button" class="notice-dismiss">';
-				output += '		<span class="screen-reader-text">'+commonL10n.dismiss+'</span>';
-				output += '	</button>';
-				output += '</div>';
-
-			// Fail Notice.
-			$('.install-theme-info').append( output );
-			
-			// !important to add trigger.
-			// Which reinitialize the dismiss error message events.
-			$(document).trigger('wp-updates-notice-added');
+			$('.wp-full-overlay-header .go-pro').text( astraSitesAdmin.strings.importFailBtn );
+			$('.wp-full-overlay-footer .go-pro').text( astraSitesAdmin.strings.importFailBtnLarge )
 		},
 
 
@@ -1376,8 +1346,7 @@ var AstraSitesAjaxQueue = (function() {
 
 				// 1. Fail - Request Site Import
 				if( false === demo_data.success ) {
-
-
+					AstraSitesAdmin._importFailMessage( demo_data.data );
 				} else {
 
 					// Set log file URL.
