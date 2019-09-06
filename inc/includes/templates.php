@@ -51,7 +51,7 @@ defined( 'ABSPATH' ) or exit;
 			<div class="ast-sites-modal__header__menu-area astra-sites-step-1-wrap">
 				<div class="elementor-template-library-header-menu">
 					<div class="search-form">
-						<input autocomplete="off" placeholder="<?php _e( 'Search Sites...', 'astra-sites' ); ?>" type="search" aria-describedby="live-search-desc" id="wp-filter-search-input" class="wp-filter-search">
+						<input autocomplete="off" placeholder="<?php _e( 'Search...', 'astra-sites' ); ?>" type="search" aria-describedby="live-search-desc" id="wp-filter-search-input" class="wp-filter-search">
 						<span class="icon-search search-icon"></span>
 						<div class="astra-sites-autocomplete-result"></div>
 					</div>
@@ -179,7 +179,7 @@ defined( 'ABSPATH' ) or exit;
 			<p class="description">
 				<?php
 				/* translators: %1$s External Link */
-				printf( __( 'Don\'t see a site that you would like to import?<br><a target="_blank" href="%1$s">Please suggest us!</a>', 'astra-sites' ), esc_url( 'https://wpastra.com/sites-suggestions/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=suggestions' ) );
+				printf( __( 'Don\'t see a template you would like to import?<br><a target="_blank" href="%1$s">Please Suggest Us!</a>', 'astra-sites' ), esc_url( 'https://wpastra.com/sites-suggestions/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=suggestions' ) );
 				?>
 			</p>
 		</div>
@@ -245,7 +245,7 @@ defined( 'ABSPATH' ) or exit;
 			<p class="description">
 				<?php
 				/* translators: %1$s External Link */
-				printf( __( 'Don\'t see a site that you would like to import?<br><a target="_blank" href="%1$s">Please suggest us!</a>', 'astra-sites' ), esc_url( 'https://wpastra.com/sites-suggestions/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=suggestions' ) );
+				printf( __( 'Don\'t see a template you would like to import?<br><a target="_blank" href="%1$s">Please Suggest Us!</a>', 'astra-sites' ), esc_url( 'https://wpastra.com/sites-suggestions/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=suggestions' ) );
 				?>
 			</p>
 		</div>
@@ -282,11 +282,11 @@ defined( 'ABSPATH' ) or exit;
 
 <script type="text/template" id="tmpl-astra-sites-no-sites">
 	<div class="astra-sites-no-sites">
-		<h2><?php _e( 'No Templates Found, Try a Different Search.', 'astra-sites' ); ?></h2>
+		<h2><?php _e( 'Sorry No Result Found.', 'astra-sites' ); ?></h2>
 		<p class="description">
 			<?php
 			/* translators: %1$s External Link */
-			printf( __( 'Don\'t see a site that you would like to import?<br><a target="_blank" href="%1$s">Please suggest us!</a>', 'astra-sites' ), esc_url( 'https://wpastra.com/sites-suggestions/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=suggestions' ) );
+			printf( __( 'Don\'t see a template you would like to import?<br><a target="_blank" href="%1$s">Please Suggest Us!</a>', 'astra-sites' ), esc_url( 'https://wpastra.com/sites-suggestions/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=suggestions' ) );
 			?>
 		</p>
 	</div>

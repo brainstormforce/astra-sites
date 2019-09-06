@@ -79,7 +79,7 @@ defined( 'ABSPATH' ) or exit;
 <script type="text/template" id="tmpl-astra-sites-no-sites">
 	<div class="astra-sites-no-sites">
 		<div class="inner">
-			<h2><?php _e( 'No Templates Found, Try a Different Search.', 'astra-sites' ); ?></h2>
+			<h2><?php _e( 'Sorry No Result Found.', 'astra-sites' ); ?></h2>
 			<div class="content">
 				<div class="empty-item">
 					<img class="empty-collection-part" src="<?php echo ASTRA_SITES_URI . 'inc/assets/images/empty-collection.svg'; ?>" alt="empty-collection">
@@ -88,10 +88,10 @@ defined( 'ABSPATH' ) or exit;
 					<p>
 					<?php
 					/* translators: %1$s External Link */
-					printf( __( 'Don\'t see a site that you would like to import?<br><a target="_blank" href="%1$s">Please suggest us!</a>', 'astra-sites' ), esc_url( 'https://wpastra.com/sites-suggestions/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=suggestions' ) );
+					printf( __( 'Don\'t see a template you would like to import?<br><a target="_blank" href="%1$s">Please Suggest Us!</a>', 'astra-sites' ), esc_url( 'https://wpastra.com/sites-suggestions/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=suggestions' ) );
 					?>
 					</p>
-					<div class="back-to-layout-button"><span class="button astra-sites-back">Back to Layouts</span></div>
+					<div class="back-to-layout-button"><span class="button astra-sites-back">Back to Templates</span></div>
 				</div>
 			</div>
 		</div>
@@ -101,7 +101,7 @@ defined( 'ABSPATH' ) or exit;
 <script type="text/template" id="tmpl-astra-sites-no-favorites">
 	<div class="astra-sites-no-favorites">
 		<div class="inner">
-			<h2><?php _e( 'Your Collection is Empty Yet.', 'astra-sites' ); ?></h2>
+			<h2><?php _e( 'Favorite template list is empty.', 'astra-sites' ); ?></h2>
 			<div class="content">
 				<div class="empty-item">
 					<img class="empty-collection-part" src="<?php echo ASTRA_SITES_URI . 'inc/assets/images/empty-collection.svg'; ?>" alt="empty-collection">
@@ -110,11 +110,11 @@ defined( 'ABSPATH' ) or exit;
 					<p>
 					<?php
 					/* translators: %1$s External Link */
-					_e( 'You can easily add any template to your collection by clicking on the heart icon at the item card, item page or live demo.', 'astra-sites' );
+					_e( 'You\'ll notice a heart-shaped symbol on every template card. Simply tap this icon to add template as Favorite.', 'astra-sites' );
 					?>
 					</p>
 					<img src="<?php echo ASTRA_SITES_URI . 'inc/assets/images/arrow-blue.svg'; ?>" class="arrow-img">
-					<div class="back-to-layout-button"><span class="button astra-sites-back"><?php _e( 'Back to Layouts', 'astra-sites' ); ?></span></div>
+					<div class="back-to-layout-button"><span class="button astra-sites-back"><?php _e( 'Back to Templates', 'astra-sites' ); ?></span></div>
 				</div>
 			</div>
 		</div>
@@ -152,10 +152,18 @@ defined( 'ABSPATH' ) or exit;
 
 		var title = data[site_id]['title'] || '';
 		var pages_count = data[site_id]['pages-count'] || 0;
+		var pages_count_class = '';
+		if( 'site' === type ) {
+			if( pages_count ) {
+				pages_count_class = 'has-pages';
+			} else {
+				pages_count_class = 'no-pages';
+			}
+		}
 		var site_title = data[site_id]['site-title'] || '';
 
 	#>
-	<div class="theme astra-theme site-single {{favorite_class}} astra-sites-previewing-{{type}}" data-site-id="{{current_site_id}}" data-page-id="{{page_id}}">
+	<div class="theme astra-theme site-single {{favorite_class}} {{pages_count_class}} astra-sites-previewing-{{type}}" data-site-id="{{current_site_id}}" data-page-id="{{page_id}}">
 		<div class="inner">
 			<span class="site-preview" data-title="{{{title}}}">
 				<div class="theme-screenshot one loading" data-src="{{thumbnail_image_url}}" data-featured-src="{{featured_image_url}}"></div>
@@ -299,7 +307,7 @@ defined( 'ABSPATH' ) or exit;
 			</div>
 			<div class="single-site-pages-wrap">
 				<div class="astra-pages-title-wrap">
-					<span class="astra-pages-title"><?php _e( 'Single Page Templates', 'astra-sites' ); ?></span>
+					<span class="astra-pages-title"><?php _e( 'Page Templates', 'astra-sites' ); ?></span>
 				</div>
 				<div class="single-site-pages">
 					<div id="single-pages">
@@ -390,7 +398,7 @@ defined( 'ABSPATH' ) or exit;
 
 		<div class="heading">
 			<# if( 'astra-sites' === data ) { #>
-				<h2><?php _e( 'We are importing site!', 'astra-sites' ); ?></h2>
+				<h2><?php _e( 'We are importing site for you!', 'astra-sites' ); ?></h2>
 			<# } else { #>
 				<h2><?php _e( 'We are importing template for you!', 'astra-sites' ); ?></h2>
 			<# } #>

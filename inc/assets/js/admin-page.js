@@ -406,7 +406,7 @@ var AstraSitesAjaxQueue = (function() {
 			$( document ).on('click', '.astra-sites-sync-library-message.success .notice-dismiss', AstraSitesAdmin._sync_library_complete );
 			$( document ).on('click', '.page-builder-icon', AstraSitesAdmin._toggle_page_builder_list );
 			$( document ).on('click', '.showing-page-builders #wpbody-content', AstraSitesAdmin._close_page_builder_list );
-			$( document ).on('keyup'                     , '#wp-filter-search-input', AstraSitesAdmin._search );
+			$( document ).on('input'                     , '#wp-filter-search-input', AstraSitesAdmin._search );
 			$( document ).on('click'                     , '.ui-autocomplete .ui-menu-item', AstraSitesAdmin._show_search_term );
 		},
 
@@ -528,6 +528,7 @@ var AstraSitesAjaxQueue = (function() {
 
 			// @todo check why below character not escape with function _.unescape();
 			title = title.replace('&#8211;', '-' );
+			title = title.replace('&#8217;', "'" );
 
 			return title;
 		},
@@ -590,6 +591,7 @@ var AstraSitesAjaxQueue = (function() {
 								items[page_id]['site_id'] = site_id;
 								items[page_id]['astra-sites-type'] = current_site['astra-sites-type'] || '';
 								items[page_id]['site-title'] = current_site['title'] || '';
+								items[page_id]['pages-count'] = 0;
 							}
 						}
 
@@ -604,6 +606,7 @@ var AstraSitesAjaxQueue = (function() {
 									items[page_id]['site_id'] = site_id;
 									items[page_id]['astra-sites-type'] = current_site['astra-sites-type'] || '';
 									items[page_id]['site-title'] = current_site['title'] || '';
+									items[page_id]['pages-count'] = 0;
 								}
 							}
 						}
@@ -649,7 +652,7 @@ var AstraSitesAjaxQueue = (function() {
 
 			var noticeContent = wp.updates.adminNotice( {
 				className: 'astra-sites-sync-library-message notice notice-alt notice-info is-dismissible',
-				message:   'Syncing template library in the background! We will notify you once it done. <button type="button" class="notice-dismiss"><span class="screen-reader-text">'+commonL10n.dismiss+'</span></button>',
+				message:   'Syncing template library in the background! We will notify you once done. <button type="button" class="notice-dismiss"><span class="screen-reader-text">'+commonL10n.dismiss+'</span></button>',
 			} );
 
 			button.parents('li').append( noticeContent );
@@ -842,6 +845,7 @@ var AstraSitesAjaxQueue = (function() {
 			AstraSitesAdmin.add_sites( astraSitesVars.default_page_builder_sites );
 
 			$('#wp-filter-search-input').val( '' );
+			$('#astra-sites-admin').removeClass('searching');
 			AstraSitesAdmin.close_pages_popup();
 		},
 
@@ -2564,7 +2568,7 @@ var AstraSitesAjaxQueue = (function() {
 
 							$('.rotating,.current-importing-status-wrap,.notice-warning').remove();
 
-							var button = '<a class="button button-primary button-hero" href="'+data.data['link']+'" target="_blank">View Imported Template <i class="dashicons dashicons-external"></i></a>';
+							var button = '<a class="button button-primary button-hero" href="'+data.data['link']+'" target="_blank">View Template <i class="dashicons dashicons-external"></i></a>';
 							$('.astra-sites-result-preview .ast-actioms-wrap').html(button);
 
 							var heading = 'Done 🎉';

@@ -197,6 +197,13 @@
 	padding: 0;
 	margin-right: 20%;
 }
+.searching .pages-count,
+.searching .page-title {
+    display: block;
+}
+.searching .no-pages .theme-name {
+    min-height: 36px;
+}
 #astra-sites-admin .theme-browser .theme .theme-name {
 	height: auto;
     width: 90%;
@@ -2004,6 +2011,7 @@ body.loading-content .select-page-builder {
 .page-title {
     font-weight: 300;
     font-size: 13px;
+    display: none;
 }
 
 .astra-loading-icon,
