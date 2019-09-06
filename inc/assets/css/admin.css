@@ -289,10 +289,6 @@
 	padding-right: 15px;
 }
 
-.favorite-action-wrap .icon-heart:hover {
-    color: #c34444;
-}
-
 .favorite-action-wrap i {
 	color: #ccc;
 	height: 18px;
@@ -980,7 +976,17 @@ body.loading-content .select-page-builder {
 .filter-links li > .astra-sites-show-favorite-button:hover,
 .filter-links li > .astra-sites-show-favorite-button:focus,
 .astra-sites-show-favorite-button.active {
+    color: transparent;
+}
+.filter-links li > .astra-sites-show-favorite-button.current:hover .icon-heart,
+.filter-links li > .astra-sites-show-favorite-button.current .icon-heart,
+.filter-links li > .astra-sites-show-favorite-button:hover .icon-heart,
+.astra-sites-show-favorite-button.active .icon-heart {
     color: #c34444;
+}
+
+.icon-heart {
+    color: #666;
 }
 .header-actions a:focus {
     box-shadow: none;

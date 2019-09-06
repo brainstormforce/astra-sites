@@ -32,9 +32,7 @@ defined( 'ABSPATH' ) or exit;
 		}
 
 		foreach ( $crons as $time => $cron ) {
-			$keys           = array_keys( $cron );
-			$key            = $keys[0];
-			$events[ $key ] = $time;
+			$events[ array_keys( $cron )[0] ] = $time;
 		}
 
 		$expired = get_transient( 'astra-sites-import-check' );
@@ -135,6 +133,7 @@ defined( 'ABSPATH' ) or exit;
 		var page_site_id        = data[site_id]['site_id'] || '';
 		var favorite_status     = false;
 		var favorite_class      = '';
+		var favorite_title      = '<?php _e( 'Make as Favorite', 'astra-sites' ); ?>';
 		var featured_image_url = data[site_id]['featured-image-url'];
 		var thumbnail_image_url = data[site_id]['thumbnail-image-url'] || featured_image_url;
 		var tiny_image_url      = data[site_id]['tiny-image-url'] || thumbnail_image_url;
@@ -145,6 +144,7 @@ defined( 'ABSPATH' ) or exit;
 			if( Object.values( astraSitesVars.favorite_data ).indexOf( String(site_id) ) >= 0 ) {
 				favorite_class = 'is-favorite';
 				favorite_status = true;
+				favorite_title = '<?php _e( 'Make as Unfavorite', 'astra-sites' ); ?>';
 			}
 		} else {
 			thumbnail_image_url = featured_image_url;
@@ -185,7 +185,7 @@ defined( 'ABSPATH' ) or exit;
 					</span>
 				</div>
 				<# if ( '' === type || 'site' === type ) { #>
-					<div class="favorite-action-wrap" data-favorite="{{favorite_class}}">
+					<div class="favorite-action-wrap" data-favorite="{{favorite_class}}" title="{{favorite_title}}">
 						<i class="icon-heart"></i>
 					</div>
 				<# } #>
