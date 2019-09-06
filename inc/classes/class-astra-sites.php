@@ -707,7 +707,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 						'importFailedBtnLarge'     => __( 'Error! Read Possibilities.', 'astra-sites' ),
 						'viewSite'                 => __( 'Done! View Site', 'astra-sites' ),
 						'importFailBtn'            => __( 'Import failed.', 'astra-sites' ),
-						'importFailBtnLarge'       => __( 'Import failed. See error log.', 'astra-sites' ),
+						'importFailBtnLarge'       => __( 'Import failed.', 'astra-sites' ),
 						'importDemo'               => __( 'Import This Site', 'astra-sites' ),
 						'importingDemo'            => __( 'Importing..', 'astra-sites' ),
 					),

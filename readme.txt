@@ -5,7 +5,7 @@ Tags: Elementor,Beaver Builder,Templates,Gutenberg,Astra Starter Sites
 Requires at least: 4.4
 Requires PHP: 5.3
 Tested up to: 5.2
-Stable tag: 1.3.17
+Stable tag: 1.3.18
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -117,8 +117,11 @@ We are open to suggestions and would love to work on topics that our users are l
 
 == Changelog ==
 
+v1.3.18 - 5-September-2019
+- Improvement: Error handling while getting import data from API request.
+
 v1.3.17 - 28-June-2019
-- Minor changes in Links
+- Improvement: Minor changes in Links
 
 v1.3.16 - 21-June-2019
 - Fix: WooCommerce onboarding setup blocked issue fixed.

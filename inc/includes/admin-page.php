@@ -32,7 +32,9 @@ defined( 'ABSPATH' ) or exit;
 		}
 
 		foreach ( $crons as $time => $cron ) {
-			$events[ array_keys( $cron )[0] ] = $time;
+			$keys           = array_keys( $cron );
+			$key            = $keys[0];
+			$events[ $key ] = $time;
 		}
 
 		$expired = get_transient( 'astra-sites-import-check' );
