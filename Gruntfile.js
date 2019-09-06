@@ -59,7 +59,7 @@ module.exports = function( grunt ) {
                     },
                     src: [
                         '**',
-                        '*.zip',
+                        '!*.zip',
                         '!node_modules/**',
                         '!build/**',
                         '!css/sourcemap/**',
