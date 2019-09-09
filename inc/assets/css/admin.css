@@ -904,6 +904,7 @@ body.loading-content .select-page-builder {
     background-color: #f7f7f7;
 }
 
+.astra-sites-no-search-result .back-to-layout,
 .astra-sites-showing-favorites .back-to-layout,
 .astra-previewing-single-pages .back-to-layout {
     visibility: visible;

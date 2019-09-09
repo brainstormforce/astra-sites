@@ -225,22 +225,7 @@ defined( 'ABSPATH' ) or exit;
  */
 ?>
 <script type="text/template" id="tmpl-astra-sites-install-activate-theme">
-	<div id="astra-theme-activation-nag">
-		<p>
-		<?php
-		esc_html_e( 'Your starter site has been imported successfully in {{data}}! Now go ahead, customize the text, images, and design to make it yours!', 'astra-sites' );
-		?>
-		</p>
-		<p><?php esc_html_e( 'You can now start making changes according to your requirements.', 'astra-sites' ); ?></p>
-		<?php
-		$theme_status = Astra_Sites::get_instance()->get_theme_status();
-		if ( 'installed-and-active' !== $theme_status ) {
-			$link_class = 'astra-sites-theme-' . $theme_status;
-			/* translators: %1$s is the plugin name, %2$s is the CSS class name.  */
-			printf( __( '<p>Astra Theme needs to be active for you to use currently installed "%1$s" plugin.</p><p><a href="#" class="%2$s" data-theme-slug="astra">Install & Activate Now</a></p>', 'astra-sites' ), ASTRA_SITES_NAME, $link_class );
-		}
-		?>
-	</div>
+	
 </script>
 
 <?php
@@ -383,10 +368,42 @@ defined( 'ABSPATH' ) or exit;
 </script>
 
 <script type="text/template" id="tmpl-astra-sites-site-import-success">
+	<div class="heading">
+		<h2><?php _e( 'Imported Successfully!', 'astra-sites' ); ?></h2>
+		<span class="dashicons close dashicons-no-alt"></span>
+	</div>
+	<div class="astra-sites-import-content">
+		<p><?php _e( 'Hurray! The Template is imported successfully! 🎉', 'astra-sites' ); ?></p>
+		<p><?php _e( 'Now go ahead, customize the text, images, and design to make it yours!', 'astra-sites' ); ?></p>
+		<p><?php _e( 'You can now start making changes according to your requirements.', 'astra-sites' ); ?></p>
+
+		<?php
+		$theme_status = Astra_Sites::get_instance()->get_theme_status();
+		if ( 'installed-and-active' !== $theme_status ) {
+			$link_class = 'astra-sites-theme-' . $theme_status;
+			/* translators: %1$s is the plugin name, %2$s is the CSS class name.  */
+			printf( __( '<div id="astra-theme-activation-nag"><p>Astra Theme needs to be active for you to use currently installed "%1$s" plugin.</p><p><a href="#" class="%2$s" data-theme-slug="astra">Install & Activate Now</a></p></div>', 'astra-sites' ), ASTRA_SITES_NAME, $link_class );
+		}
+		?>
+	</div>
+	<div class="ast-actioms-wrap">
+		<a class="button button-primary button-hero" href="<?php echo esc_url( site_url() ); ?>" target="_blank"><?php _e( 'View Site', 'astra-sites' ); ?> <i class="dashicons dashicons-external"></i></a>
+	</div>
 </script>
+
 <script type="text/template" id="tmpl-astra-sites-page-import-success">
-	<p><?php esc_html_e( 'Your page imported successfully! Now go ahead, customize the text, images, and design to make it yours!', 'astra-sites' ); ?></p>
-	<p><?php esc_html_e( 'You can now start making changes according to your requirements.', 'astra-sites' ); ?></p>
+	<div class="heading">
+		<h2><?php _e( 'Imported Successfully!', 'astra-sites' ); ?></h2>
+		<span class="dashicons close dashicons-no-alt"></span>
+	</div>
+	<div class="astra-sites-import-content">
+		<p><?php _e( 'Hurray! The Template is imported successfully! 🎉', 'astra-sites' ); ?></p>
+		<p><?php _e( 'Now go ahead, customize the text, images, and design to make it yours!', 'astra-sites' ); ?></p>
+		<p><?php _e( 'You can now start making changes according to your requirements.', 'astra-sites' ); ?></p>
+	</div>
+	<div class="ast-actioms-wrap">
+		<a class="button button-primary button-hero" href="{{data['link']}}" target="_blank"><?php _e( 'View Template', 'astra-sites' ); ?> <i class="dashicons dashicons-external"></i></a>
+	</div>
 </script>
 <?php
 /**
@@ -469,7 +486,7 @@ defined( 'ABSPATH' ) or exit;
 				} else {
 					var string = 'template';
 				}
-				console.log( data ); #>
+				#>
 				<p>
 				<?php
 				/* translators: %s is the dynamic string. */
