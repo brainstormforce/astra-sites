@@ -423,8 +423,24 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 					}
 
 					if ( '_elementor_page_settings' === $meta_key ) {
-						if ( is_array( $raw_data ) && isset( $raw_data['astra_sites_page_setting_enable'] ) ) {
-							$raw_data['astra_sites_page_setting_enable'] = 'yes';
+
+						if ( is_array( $raw_data ) ) {
+
+							if ( isset( $raw_data['astra_sites_page_setting_enable'] ) ) {
+								$raw_data['astra_sites_page_setting_enable'] = 'yes';
+							}
+
+							if ( isset( $raw_data['astra_sites_body_font_family'] ) ) {
+								$raw_data['astra_sites_body_font_family'] = str_replace( "'", '', $raw_data['astra_sites_body_font_family'] );
+							}
+
+							for ( $i = 1; $i < 7; $i++ ) {
+
+								if ( isset( $raw_data[ 'astra_sites_heading_' . $i . '_font_family' ] ) ) {
+
+									$raw_data[ 'astra_sites_heading_' . $i . '_font_family' ] = str_replace( "'", '', $raw_data[ 'astra_sites_heading_' . $i . '_font_family' ] );
+								}
+							}
 						}
 					}
 
@@ -707,7 +723,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 						'importFailedBtnLarge'     => __( 'Error! Read Possibilities.', 'astra-sites' ),
 						'viewSite'                 => __( 'Done! View Site', 'astra-sites' ),
 						'importFailBtn'            => __( 'Import failed.', 'astra-sites' ),
-						'importFailBtnLarge'       => __( 'Import failed.', 'astra-sites' ),
+						'importFailBtnLarge'       => __( 'Import failed. See error log.', 'astra-sites' ),
 						'importDemo'               => __( 'Import This Site', 'astra-sites' ),
 						'importingDemo'            => __( 'Importing..', 'astra-sites' ),
 					),
@@ -772,6 +788,14 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				$license_status = BSF_License_Manager::bsf_is_active_license( 'astra-pro-sites' );
 			}
 
+			/* translators: %s are link. */
+			$license_msg = sprintf( __( 'This is a premium website demo available only with the Agency Bundles you can purchase it from <a href="%s" target="_blank">here</a>.', 'astra-sites' ), 'https://wpastra.com/pricing/' );
+
+			if ( defined( 'ASTRA_PRO_SITES_NAME' ) ) {
+				/* translators: %s are link. */
+				$license_msg = sprintf( __( 'This is a premium template available with Astra \'Agency\' packages. <a href="%s">Validate Your License</a> Key to import this template.', 'astra-sites' ), esc_url( admin_url( 'plugins.php?bsf-inline-license-form=astra-pro-sites' ) ) );
+			}
+
 			$data = apply_filters(
 				'astra_sites_render_localize_vars',
 				array(
@@ -790,6 +814,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 					'ApiURL'                     => $this->api_url,
 					'_ajax_nonce'                => wp_create_nonce( 'astra-sites' ),
 					'isPro'                      => defined( 'ASTRA_PRO_SITES_NAME' ) ? true : false,
+					'license_msg'                => $license_msg,
 					'isWhiteLabeled'             => Astra_Sites_White_Label::get_instance()->is_white_labeled(),
 					'getProText'                 => __( 'Get Agency Bundle', 'astra-sites' ),
 					'getProURL'                  => esc_url( 'https://wpastra.com/agency/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=wp-dashboard' ),

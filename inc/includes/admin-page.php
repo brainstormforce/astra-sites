@@ -32,9 +32,7 @@ defined( 'ABSPATH' ) or exit;
 		}
 
 		foreach ( $crons as $time => $cron ) {
-			$keys           = array_keys( $cron );
-			$key            = $keys[0];
-			$events[ $key ] = $time;
+			$events[ array_keys( $cron )[0] ] = $time;
 		}
 
 		$expired = get_transient( 'astra-sites-import-check' );
@@ -81,7 +79,7 @@ defined( 'ABSPATH' ) or exit;
 <script type="text/template" id="tmpl-astra-sites-no-sites">
 	<div class="astra-sites-no-sites">
 		<div class="inner">
-			<h2><?php _e( 'No Templates Found, Try a Different Search.', 'astra-sites' ); ?></h2>
+			<h2><?php _e( 'Sorry No Result Found.', 'astra-sites' ); ?></h2>
 			<div class="content">
 				<div class="empty-item">
 					<img class="empty-collection-part" src="<?php echo ASTRA_SITES_URI . 'inc/assets/images/empty-collection.svg'; ?>" alt="empty-collection">
@@ -90,10 +88,10 @@ defined( 'ABSPATH' ) or exit;
 					<p>
 					<?php
 					/* translators: %1$s External Link */
-					printf( __( 'Don\'t see a site that you would like to import?<br><a target="_blank" href="%1$s">Please suggest us!</a>', 'astra-sites' ), esc_url( 'https://wpastra.com/sites-suggestions/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=suggestions' ) );
+					printf( __( 'Don\'t see a template you would like to import?<br><a target="_blank" href="%1$s">Please Suggest Us!</a>', 'astra-sites' ), esc_url( 'https://wpastra.com/sites-suggestions/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=suggestions' ) );
 					?>
 					</p>
-					<div class="back-to-layout-button"><span class="button astra-sites-back">Back to Layouts</span></div>
+					<div class="back-to-layout-button"><span class="button astra-sites-back">Back to Templates</span></div>
 				</div>
 			</div>
 		</div>
@@ -103,7 +101,7 @@ defined( 'ABSPATH' ) or exit;
 <script type="text/template" id="tmpl-astra-sites-no-favorites">
 	<div class="astra-sites-no-favorites">
 		<div class="inner">
-			<h2><?php _e( 'Your Collection is Empty Yet.', 'astra-sites' ); ?></h2>
+			<h2><?php _e( 'Favorite template list is empty.', 'astra-sites' ); ?></h2>
 			<div class="content">
 				<div class="empty-item">
 					<img class="empty-collection-part" src="<?php echo ASTRA_SITES_URI . 'inc/assets/images/empty-collection.svg'; ?>" alt="empty-collection">
@@ -112,11 +110,11 @@ defined( 'ABSPATH' ) or exit;
 					<p>
 					<?php
 					/* translators: %1$s External Link */
-					_e( 'You can easily add any template to your collection by clicking on the heart icon at the item card, item page or live demo.', 'astra-sites' );
+					_e( 'You\'ll notice a heart-shaped symbol on every template card. Simply tap this icon to add template as Favorite.', 'astra-sites' );
 					?>
 					</p>
 					<img src="<?php echo ASTRA_SITES_URI . 'inc/assets/images/arrow-blue.svg'; ?>" class="arrow-img">
-					<div class="back-to-layout-button"><span class="button astra-sites-back"><?php _e( 'Back to Layouts', 'astra-sites' ); ?></span></div>
+					<div class="back-to-layout-button"><span class="button astra-sites-back"><?php _e( 'Back to Templates', 'astra-sites' ); ?></span></div>
 				</div>
 			</div>
 		</div>
@@ -135,6 +133,7 @@ defined( 'ABSPATH' ) or exit;
 		var page_site_id        = data[site_id]['site_id'] || '';
 		var favorite_status     = false;
 		var favorite_class      = '';
+		var favorite_title      = '<?php _e( 'Make as Favorite', 'astra-sites' ); ?>';
 		var featured_image_url = data[site_id]['featured-image-url'];
 		var thumbnail_image_url = data[site_id]['thumbnail-image-url'] || featured_image_url;
 		var tiny_image_url      = data[site_id]['tiny-image-url'] || thumbnail_image_url;
@@ -145,6 +144,7 @@ defined( 'ABSPATH' ) or exit;
 			if( Object.values( astraSitesVars.favorite_data ).indexOf( String(site_id) ) >= 0 ) {
 				favorite_class = 'is-favorite';
 				favorite_status = true;
+				favorite_title = '<?php _e( 'Make as Unfavorite', 'astra-sites' ); ?>';
 			}
 		} else {
 			thumbnail_image_url = featured_image_url;
@@ -154,10 +154,18 @@ defined( 'ABSPATH' ) or exit;
 
 		var title = data[site_id]['title'] || '';
 		var pages_count = data[site_id]['pages-count'] || 0;
+		var pages_count_class = '';
+		if( 'site' === type ) {
+			if( pages_count ) {
+				pages_count_class = 'has-pages';
+			} else {
+				pages_count_class = 'no-pages';
+			}
+		}
 		var site_title = data[site_id]['site-title'] || '';
 
 	#>
-	<div class="theme astra-theme site-single {{favorite_class}} astra-sites-previewing-{{type}}" data-site-id="{{current_site_id}}" data-page-id="{{page_id}}">
+	<div class="theme astra-theme site-single {{favorite_class}} {{pages_count_class}} astra-sites-previewing-{{type}}" data-site-id="{{current_site_id}}" data-page-id="{{page_id}}">
 		<div class="inner">
 			<span class="site-preview" data-title="{{{title}}}">
 				<div class="theme-screenshot one loading" data-src="{{thumbnail_image_url}}" data-featured-src="{{featured_image_url}}"></div>
@@ -177,7 +185,7 @@ defined( 'ABSPATH' ) or exit;
 					</span>
 				</div>
 				<# if ( '' === type || 'site' === type ) { #>
-					<div class="favorite-action-wrap" data-favorite="{{favorite_class}}">
+					<div class="favorite-action-wrap" data-favorite="{{favorite_class}}" title="{{favorite_title}}">
 						<i class="icon-heart"></i>
 					</div>
 				<# } #>
@@ -217,22 +225,6 @@ defined( 'ABSPATH' ) or exit;
  */
 ?>
 <script type="text/template" id="tmpl-astra-sites-install-activate-theme">
-	<div id="astra-theme-activation-nag">
-		<p>
-		<?php
-		esc_html_e( 'Your starter site has been imported successfully in {{data}}! Now go ahead, customize the text, images, and design to make it yours!', 'astra-sites' );
-		?>
-		</p>
-		<p><?php esc_html_e( 'You can now start making changes according to your requirements.', 'astra-sites' ); ?></p>
-		<?php
-		$theme_status = Astra_Sites::get_instance()->get_theme_status();
-		if ( 'installed-and-active' !== $theme_status ) {
-			$link_class = 'astra-sites-theme-' . $theme_status;
-			/* translators: %1$s is the plugin name, %2$s is the CSS class name.  */
-			printf( __( '<p>Astra Theme needs to be active for you to use currently installed "%1$s" plugin.</p><p><a href="#" class="%2$s" data-theme-slug="astra">Install & Activate Now</a></p>', 'astra-sites' ), ASTRA_SITES_NAME, $link_class );
-		}
-		?>
-	</div>
 </script>
 
 <?php
@@ -244,7 +236,7 @@ defined( 'ABSPATH' ) or exit;
 	<p>
 		<?php
 			/* translators: %s is pricing page link */
-			printf( __( 'This is a premium template available with Astra \'Agency\' packages. <a href="%s">Validate Your License</a> Key to import this template.', 'astra-sites' ), admin_url( 'plugins.php?bsf-inline-license-form=astra-pro-sites' ) );
+			printf( __( 'This is a premium template available with Astra \'Agency\' packages. <a href="%s" target="_blank">Validate Your License</a> Key to import this template.', 'astra-sites' ), admin_url( 'plugins.php?bsf-inline-license-form=astra-pro-sites' ) );
 		?>
 	</p>
 </script>
@@ -301,7 +293,7 @@ defined( 'ABSPATH' ) or exit;
 			</div>
 			<div class="single-site-pages-wrap">
 				<div class="astra-pages-title-wrap">
-					<span class="astra-pages-title"><?php _e( 'Single Page Templates', 'astra-sites' ); ?></span>
+					<span class="astra-pages-title"><?php _e( 'Page Templates', 'astra-sites' ); ?></span>
 				</div>
 				<div class="single-site-pages">
 					<div id="single-pages">
@@ -375,10 +367,42 @@ defined( 'ABSPATH' ) or exit;
 </script>
 
 <script type="text/template" id="tmpl-astra-sites-site-import-success">
+	<div class="heading">
+		<h2><?php _e( 'Imported Successfully!', 'astra-sites' ); ?></h2>
+		<span class="dashicons close dashicons-no-alt"></span>
+	</div>
+	<div class="astra-sites-import-content">
+		<p><?php _e( 'Hurray! The Template is imported successfully! 🎉', 'astra-sites' ); ?></p>
+		<p><?php _e( 'Now go ahead, customize the text, images, and design to make it yours!', 'astra-sites' ); ?></p>
+		<p><?php _e( 'You can now start making changes according to your requirements.', 'astra-sites' ); ?></p>
+
+		<?php
+		$theme_status = Astra_Sites::get_instance()->get_theme_status();
+		if ( 'installed-and-active' !== $theme_status ) {
+			$link_class = 'astra-sites-theme-' . $theme_status;
+			/* translators: %1$s is the plugin name, %2$s is the CSS class name.  */
+			printf( __( '<div id="astra-theme-activation-nag"><p>Astra Theme needs to be active for you to use currently installed "%1$s" plugin.</p><p><a href="#" class="%2$s" data-theme-slug="astra">Install & Activate Now</a></p></div>', 'astra-sites' ), ASTRA_SITES_NAME, $link_class );
+		}
+		?>
+	</div>
+	<div class="ast-actioms-wrap">
+		<a class="button button-primary button-hero" href="<?php echo esc_url( site_url() ); ?>" target="_blank"><?php _e( 'View Site', 'astra-sites' ); ?> <i class="dashicons dashicons-external"></i></a>
+	</div>
 </script>
+
 <script type="text/template" id="tmpl-astra-sites-page-import-success">
-	<p><?php esc_html_e( 'Your page imported successfully! Now go ahead, customize the text, images, and design to make it yours!', 'astra-sites' ); ?></p>
-	<p><?php esc_html_e( 'You can now start making changes according to your requirements.', 'astra-sites' ); ?></p>
+	<div class="heading">
+		<h2><?php _e( 'Imported Successfully!', 'astra-sites' ); ?></h2>
+		<span class="dashicons close dashicons-no-alt"></span>
+	</div>
+	<div class="astra-sites-import-content">
+		<p><?php _e( 'Hurray! The Template is imported successfully! 🎉', 'astra-sites' ); ?></p>
+		<p><?php _e( 'Now go ahead, customize the text, images, and design to make it yours!', 'astra-sites' ); ?></p>
+		<p><?php _e( 'You can now start making changes according to your requirements.', 'astra-sites' ); ?></p>
+	</div>
+	<div class="ast-actioms-wrap">
+		<a class="button button-primary button-hero" href="{{data['link']}}" target="_blank"><?php _e( 'View Template', 'astra-sites' ); ?> <i class="dashicons dashicons-external"></i></a>
+	</div>
 </script>
 <?php
 /**
@@ -392,7 +416,7 @@ defined( 'ABSPATH' ) or exit;
 
 		<div class="heading">
 			<# if( 'astra-sites' === data ) { #>
-				<h2><?php _e( 'We are importing site!', 'astra-sites' ); ?></h2>
+				<h2><?php _e( 'We are importing site for you!', 'astra-sites' ); ?></h2>
 			<# } else { #>
 				<h2><?php _e( 'We are importing template for you!', 'astra-sites' ); ?></h2>
 			<# } #>
@@ -461,7 +485,7 @@ defined( 'ABSPATH' ) or exit;
 				} else {
 					var string = 'template';
 				}
-				console.log( data ); #>
+				#>
 				<p>
 				<?php
 				/* translators: %s is the dynamic string. */

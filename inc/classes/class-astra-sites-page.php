@@ -340,7 +340,7 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 							</div>
 							<form id="astra-sites-welcome-form" enctype="multipart/form-data" method="post">
 								<h1><?php _e( 'Select Page Builder', 'astra-sites' ); ?></h1>
-								<p><?php _e( 'Astra offers starter sites that can be imported in one click. These sites are available in the following page builders. Please choose your preferred page builder from the list below.', 'astra-sites' ); ?></p>
+								<p><?php _e( 'Astra offers starter templates that can be imported in one click. These sites are available in the following page builders. Please choose your preferred page builder from the list below.', 'astra-sites' ); ?></p>
 								<div class="fields">
 									<ul class="page-builders">
 										<?php
@@ -396,7 +396,7 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 						<div class="wp-filter hide-if-no-js">
 							<div class="section-left">
 								<div class="search-form">
-									<input autocomplete="off" placeholder="<?php _e( 'Search Sites...', 'astra-sites' ); ?>" type="search" aria-describedby="live-search-desc" id="wp-filter-search-input" class="wp-filter-search">
+									<input autocomplete="off" placeholder="<?php _e( 'Search...', 'astra-sites' ); ?>" type="search" aria-describedby="live-search-desc" id="wp-filter-search-input" class="wp-filter-search">
 									<span class="icon-search search-icon"></span>
 									<div class="astra-sites-autocomplete-result"></div>
 								</div>
@@ -576,7 +576,7 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 		 * @since 1.0.6
 		 */
 		public function add_admin_menu() {
-			$page_title = apply_filters( 'astra_sites_menu_page_title', __( 'Astra Starter Sites', 'astra-sites' ) );
+			$page_title = apply_filters( 'astra_sites_menu_page_title', __( 'Starter Templates', 'astra-sites' ) );
 
 			$page = add_theme_page( $page_title, $page_title, 'manage_options', 'astra-sites', array( $this, 'menu_callback' ) );
 		}
@@ -705,11 +705,11 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 			global $wp_version;
 
 			if ( defined( 'DISABLE_WP_CRON' ) && DISABLE_WP_CRON ) {
-				return new WP_Error( 'wp_portfolio_cron_error', __( 'ERROR! Cron schedules are disabled by setting constant DISABLE_WP_CRON to true.<br/>To start the import process please enable the cron by setting false. E.g. define( \'DISABLE_WP_CRON\', false );', 'astra-portfolio' ) );
+				return new WP_Error( 'wp_portfolio_cron_error', __( 'ERROR! Cron schedules are disabled by setting constant DISABLE_WP_CRON to true.<br/>To start the import process please enable the cron by setting false. E.g. define( \'DISABLE_WP_CRON\', false );', 'astra-sites' ) );
 			}
 
 			if ( defined( 'ALTERNATE_WP_CRON' ) && ALTERNATE_WP_CRON ) {
-				return new WP_Error( 'wp_portfolio_cron_error', __( 'ERROR! Cron schedules are disabled by setting constant ALTERNATE_WP_CRON to true.<br/>To start the import process please enable the cron by setting false. E.g. define( \'ALTERNATE_WP_CRON\', false );', 'astra-portfolio' ) );
+				return new WP_Error( 'wp_portfolio_cron_error', __( 'ERROR! Cron schedules are disabled by setting constant ALTERNATE_WP_CRON to true.<br/>To start the import process please enable the cron by setting false. E.g. define( \'ALTERNATE_WP_CRON\', false );', 'astra-sites' ) );
 			}
 
 			$cached_status = get_transient( 'astra-portfolio-cron-test-ok' );
@@ -745,7 +745,7 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 					'unexpected_http_response_code',
 					sprintf(
 						/* translators: 1: The HTTP response code. */
-						__( 'Unexpected HTTP response code: %s', 'astra-portfolio' ),
+						__( 'Unexpected HTTP response code: %s', 'astra-sites' ),
 						intval( wp_remote_retrieve_response_code( $result ) )
 					)
 				);
