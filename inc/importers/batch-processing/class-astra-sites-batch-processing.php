@@ -235,7 +235,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 			} elseif ( 'no' === $is_fresh_user ) {
 
 				// Process import.
-				$this->process_import();
+				$this->process_batch();
 
 				update_option( 'astra-sites-fresh-user', 'yes' );
 
