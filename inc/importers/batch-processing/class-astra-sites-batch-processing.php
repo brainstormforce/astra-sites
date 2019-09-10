@@ -162,8 +162,19 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 		function import_sites() {
 			$page_no = isset( $_POST['page_no'] ) ? absint( $_POST['page_no'] ) : '';
 			if ( $page_no ) {
-				Astra_Sites_Batch_Processing_Importer::get_instance()->import_sites( $page_no );
-				wp_send_json_success();
+				$sites_and_pages = Astra_Sites_Batch_Processing_Importer::get_instance()->import_sites( $page_no );
+
+				$page_builder_keys = wp_list_pluck( $sites_and_pages, 'astra-site-page-builder' );
+				$default_page_builder = Astra_Sites_Page::get_instance()->get_setting( 'page_builder' );
+
+				$current_page_builder_sites = array();
+				foreach ( $page_builder_keys as $site_id => $page_builder ) {
+					if ( $default_page_builder === $page_builder ) {
+						$current_page_builder_sites[ $site_id ] = $sites_and_pages[ $site_id ];
+					}
+				}
+
+				wp_send_json_success( $current_page_builder_sites );
 			}
 
 			wp_send_json_error();
@@ -376,7 +387,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 				'timeout' => 60,
 			);
 
-			$response = wp_remote_get( trailingslashit( Astra_Sites::get_instance()->get_api_domain() ) . '/wp-json/astra-sites/v1/get-total-pages/?per_page=30', $api_args );
+			$response = wp_remote_get( trailingslashit( Astra_Sites::get_instance()->get_api_domain() ) . '/wp-json/astra-sites/v1/get-total-pages/?per_page=15', $api_args );
 			if ( ! is_wp_error( $response ) || wp_remote_retrieve_response_code( $response ) === 200 ) {
 				$total_requests = json_decode( wp_remote_retrieve_body( $response ), true );
 

@@ -143,9 +143,10 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Importer' ) ) :
 			$api_args = array(
 				'timeout' => 30,
 			);
+			$sites_and_pages = array();
 			error_log( 'Requesting ' . $page );
 			update_option( 'astra-sites-batch-status-string', 'Requesting ' . $page );
-			$response = wp_remote_get( trailingslashit( Astra_Sites::get_instance()->get_api_domain() ) . '/wp-json/astra-sites/v1/sites-and-pages?per_page=30&page=' . $page, $api_args );
+			$response = wp_remote_get( trailingslashit( Astra_Sites::get_instance()->get_api_domain() ) . '/wp-json/astra-sites/v1/sites-and-pages?per_page=15&page=' . $page, $api_args );
 			if ( ! is_wp_error( $response ) || wp_remote_retrieve_response_code( $response ) === 200 ) {
 				$sites_and_pages = json_decode( wp_remote_retrieve_body( $response ), true );
 
@@ -153,12 +154,15 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Importer' ) ) :
 				update_option( 'astra-sites-batch-status-string', 'Storing data for page ' . $page . ' in option astra-sites-and-pages-page-' . $page );
 
 				update_option( 'astra-sites-and-pages-page-' . $page, $sites_and_pages );
+
 			} else {
 				error_log( 'API Error: ' . $response->get_error_message() );
 			}
 
 			error_log( 'Complete storing data for page ' . $page );
 			update_option( 'astra-sites-batch-status-string', 'Complete storing data for page ' . $page );
+
+			return $sites_and_pages;
 		}
 	}
 

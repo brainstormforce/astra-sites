@@ -2068,6 +2068,13 @@ body.loading-content .select-page-builder {
     display: none !important;
 }
 
+#astra-sites.temp .theme-id-container .title {
+    background: #f1f1f1;
+}
+
+#astra-sites.temp .theme-id-container .site-title {
+    color: transparent;
+}
 
 @media screen and (min-width: 783px and max-width: 1180px) {
 

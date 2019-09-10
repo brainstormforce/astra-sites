@@ -719,7 +719,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				array(
 					'purchase_key' => '',
 					'site_url'     => '',
-					'per-page'     => 30,
+					'per-page'     => 15,
 				)
 			);
 
@@ -810,7 +810,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				array(
 					'purchase_key' => '',
 					'site_url'     => '',
-					'per-page'     => 30,
+					'per-page'     => 15,
 				)
 			);
 
