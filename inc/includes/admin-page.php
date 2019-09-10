@@ -32,7 +32,9 @@ defined( 'ABSPATH' ) or exit;
 		}
 
 		foreach ( $crons as $time => $cron ) {
-			$events[ array_keys( $cron )[0] ] = $time;
+			$keys           = array_keys( $cron );
+			$key            = $keys[0];
+			$events[ $key ] = $time;
 		}
 
 		$expired = get_transient( 'astra-sites-import-check' );
@@ -72,9 +74,6 @@ defined( 'ABSPATH' ) or exit;
 	<?php do_action( 'astra_sites_after_site_grid' ); ?>
 
 </div>
-
-
-
 
 <script type="text/template" id="tmpl-astra-sites-no-sites">
 	<div class="astra-sites-no-sites">
@@ -221,15 +220,6 @@ defined( 'ABSPATH' ) or exit;
 
 <?php
 /**
- * TMPL - Install & Activate Theme
- */
-?>
-<script type="text/template" id="tmpl-astra-sites-install-activate-theme">
-	
-</script>
-
-<?php
-/**
  * TMPL - Activate License
  */
 ?>
@@ -237,7 +227,7 @@ defined( 'ABSPATH' ) or exit;
 	<p>
 		<?php
 			/* translators: %s is pricing page link */
-			printf( __( 'This is a premium template available with Astra \'Agency\' packages. <a href="%s">Validate Your License</a> Key to import this template.', 'astra-sites' ), admin_url( 'plugins.php?bsf-inline-license-form=astra-pro-sites' ) );
+			printf( __( 'This is a premium template available with Astra \'Agency\' packages. <a href="%s" target="_blank">Validate Your License</a> Key to import this template.', 'astra-sites' ), admin_url( 'plugins.php?bsf-inline-license-form=astra-pro-sites' ) );
 		?>
 	</p>
 </script>

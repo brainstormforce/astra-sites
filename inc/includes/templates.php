@@ -63,7 +63,7 @@ defined( 'ABSPATH' ) or exit;
 					<div class="elementor-template-library-menu-item" data-template-source="remote" data-template-type="blocks"><span class="icon-layers"></span><?php _e( 'Blocks', 'astra-sites' ); ?></div>
 					<div class="astra-sites__sync-wrap">
 						<div class="astra-sites-sync-library-button">
-							<span class="icon-refresh" aria-hidden="true" title="<?php _e( 'Sync', 'astra-sites' ); ?>"></span>
+							<span class="icon-refresh" aria-hidden="true" title="<?php _e( 'Sync Library', 'astra-sites' ); ?>"></span>
 						</div>
 					</div>
 				</div>
@@ -101,7 +101,7 @@ defined( 'ABSPATH' ) or exit;
 						<div class="theme-screenshot one loading" data-step="1" data-src={{data[ key ]['thumbnail-image-url']}} data-featured-src={{data[ key ]['featured-image-url']}}></div>
 					</span>
 					<div class="theme-id-container">
-						<h3 class="theme-name">{{site_title}}</h3>
+						<h3 class="theme-name">{{{site_title}}}</h3>
 					</div>
 					<# if ( site_type && 'free' !== site_type ) { #>
 						<div class="agency-ribbons" title="<?php _e( 'Agency', 'astra-sites' ); ?>"><?php _e( 'Agency', 'astra-sites' ); ?></div>
@@ -121,12 +121,12 @@ defined( 'ABSPATH' ) or exit;
 			var site_title = ( undefined == data[ key ]['category'][0] ) ? data[ key ]['title'] : data[ key ]['category'][0];
 	#>
 		<div class="astra-sites-library-template astra-theme" data-block-id={{key}}>
-			<div class="astra-sites-library-template-inner">
-				<div class="elementor-template-library-template-body theme-screenshot" data-step="1">
+			<div class="astra-sites-library-template-inner theme-screenshot" data-step="1">
+				<div class="elementor-template-library-template-body">
 					<img src="{{data[ key ]['featured-image-url']}}">
 				</div>
 				<div class="theme-id-container">
-					<h3 class="theme-name">{{site_title}}</h3>
+					<h3 class="theme-name">{{{site_title}}}</h3>
 				</div>
 			</div>
 		</div>
@@ -162,7 +162,7 @@ defined( 'ABSPATH' ) or exit;
 					<div class="theme-screenshot one loading" data-step="2" data-src={{data[ ind ]['thumbnail-image-url']}} data-featured-src={{data[ ind ]['featured-image-url']}}></div>
 				</span>
 				<div class="theme-id-container">
-					<h3 class="theme-name">{{site_title}}</h3>
+					<h3 class="theme-name">{{{site_title}}}</h3>
 				</div>
 				<# if ( site_type && 'free' !== site_type ) { #>
 					<div class="agency-ribbons" title="<?php _e( 'Agency', 'astra-sites' ); ?>"><?php _e( 'Agency', 'astra-sites' ); ?></div>
@@ -175,13 +175,23 @@ defined( 'ABSPATH' ) or exit;
 		if ( count == 0 ) {
 	#>
 		<div class="astra-sites-no-sites">
-			<h2><?php _e( 'No Templates Found, Try a Different Site.', 'astra-sites' ); ?></h2>
-			<p class="description">
-				<?php
-				/* translators: %1$s External Link */
-				printf( __( 'Don\'t see a template you would like to import?<br><a target="_blank" href="%1$s">Please Suggest Us!</a>', 'astra-sites' ), esc_url( 'https://wpastra.com/sites-suggestions/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=suggestions' ) );
-				?>
-			</p>
+			<div class="inner">
+				<h2><?php _e( 'Sorry No Result Found.', 'astra-sites' ); ?></h2>
+				<div class="content">
+					<div class="empty-item">
+						<img class="empty-collection-part" src="<?php echo ASTRA_SITES_URI . 'inc/assets/images/empty-collection.svg'; ?>" alt="empty-collection">
+					</div>
+					<div class="description">
+						<p>
+						<?php
+						/* translators: %1$s External Link */
+						printf( __( 'Don\'t see a template you would like to import?<br><a target="_blank" href="%1$s">Please Suggest Us!</a>', 'astra-sites' ), esc_url( 'https://wpastra.com/sites-suggestions/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=suggestions' ) );
+						?>
+						</p>
+						<div class="back-to-layout-button"><span class="button astra-sites-back"><?php _e( 'Back to Templates', 'astra-sites' ); ?></span></div>
+					</div>
+				</div>
+			</div>
 		</div>
 	<#
 		}
@@ -204,11 +214,18 @@ defined( 'ABSPATH' ) or exit;
 			if ( 'site' == data[ind]['type'] ) {
 				site_type = data[ ind ]['astra-sites-type'];
 			}
-			var complete_title = data[ind]['parent-site-name'] + ' - ' + data[ ind ]['title'];
+
+			var parent_name = '';
+			if ( undefined != data[ind]['parent-site-name'] ) {
+				var parent_name = $( "<textarea/>") .html( data[ind]['parent-site-name'] ).text();
+			}
+
+			var complete_title = parent_name + ' - ' + data[ ind ]['title'];
 			var site_title = complete_title.slice( 0, 25 );
 			if ( complete_title.length > 25 ) {
 				site_title += '...';
 			}
+
 			var tmp = site_title.split(' - ');
 			var title1 = site_title;
 			var title2 = '';
@@ -219,12 +236,13 @@ defined( 'ABSPATH' ) or exit;
 				title1 = tmp[0];
 				title2 = '';
 			}
+
 			var type_class = ' site-type-' + site_type;
 			count++;
 	#> 
 		<div class="theme astra-theme site-single publish page-builder-elementor {{type_class}}" data-template-id={{ind}} data-site-id={{site_id}}>
 			<div class="inner">
-				<span class="site-preview" data-href="" data-title={{data[ ind ]['title']}}>
+				<span class="site-preview" data-href="" data-title={{title2}}>
 					<div class="theme-screenshot one loading" data-type={{data[ind]['type']}} data-step={{data[ind]['step']}} data-show="search" data-src={{data[ ind ]['thumbnail-image-url']}} data-featured-src={{data[ ind ]['featured-image-url']}}></div>
 				</span>
 				<div class="theme-id-container">
@@ -241,13 +259,23 @@ defined( 'ABSPATH' ) or exit;
 		if ( count == 0 ) {
 	#>
 		<div class="astra-sites-no-sites">
-			<h2><?php _e( 'No Templates Found, Try a Different Site.', 'astra-sites' ); ?></h2>
-			<p class="description">
-				<?php
-				/* translators: %1$s External Link */
-				printf( __( 'Don\'t see a template you would like to import?<br><a target="_blank" href="%1$s">Please Suggest Us!</a>', 'astra-sites' ), esc_url( 'https://wpastra.com/sites-suggestions/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=suggestions' ) );
-				?>
-			</p>
+			<div class="inner">
+				<h2><?php _e( 'Sorry No Result Found.', 'astra-sites' ); ?></h2>
+				<div class="content">
+					<div class="empty-item">
+						<img class="empty-collection-part" src="<?php echo ASTRA_SITES_URI . 'inc/assets/images/empty-collection.svg'; ?>" alt="empty-collection">
+					</div>
+					<div class="description">
+						<p>
+						<?php
+						/* translators: %1$s External Link */
+						printf( __( 'Don\'t see a template you would like to import?<br><a target="_blank" href="%1$s">Please Suggest Us!</a>', 'astra-sites' ), esc_url( 'https://wpastra.com/sites-suggestions/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=suggestions' ) );
+						?>
+						</p>
+						<div class="back-to-layout-button"><span class="button astra-sites-back"><?php _e( 'Back to Templates', 'astra-sites' ); ?></span></div>
+					</div>
+				</div>
+			</div>
 		</div>
 	<#
 		}
@@ -282,14 +310,25 @@ defined( 'ABSPATH' ) or exit;
 
 <script type="text/template" id="tmpl-astra-sites-no-sites">
 	<div class="astra-sites-no-sites">
-		<h2><?php _e( 'Sorry No Result Found.', 'astra-sites' ); ?></h2>
-		<p class="description">
-			<?php
-			/* translators: %1$s External Link */
-			printf( __( 'Don\'t see a template you would like to import?<br><a target="_blank" href="%1$s">Please Suggest Us!</a>', 'astra-sites' ), esc_url( 'https://wpastra.com/sites-suggestions/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=suggestions' ) );
-			?>
-		</p>
+		<div class="inner">
+			<h2><?php _e( 'Sorry No Result Found.', 'astra-sites' ); ?></h2>
+			<div class="content">
+				<div class="empty-item">
+					<img class="empty-collection-part" src="<?php echo ASTRA_SITES_URI . 'inc/assets/images/empty-collection.svg'; ?>" alt="empty-collection">
+				</div>
+				<div class="description">
+					<p>
+					<?php
+					/* translators: %1$s External Link */
+					printf( __( 'Don\'t see a template you would like to import?<br><a target="_blank" href="%1$s">Please Suggest Us!</a>', 'astra-sites' ), esc_url( 'https://wpastra.com/sites-suggestions/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=suggestions' ) );
+					?>
+					</p>
+					<div class="back-to-layout-button"><span class="button astra-sites-back"><?php _e( 'Back to Templates', 'astra-sites' ); ?></span></div>
+				</div>
+			</div>
+		</div>
 	</div>
+	<#
 </script>
 
 <script type="text/template" id="tmpl-astra-sites-elementor-preview">

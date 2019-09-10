@@ -40,7 +40,11 @@ if ( class_exists( 'WP_Background_Process' ) ) :
 			$process = $object['instance'];
 			$method  = $object['method'];
 
-			if ( 'import_categories' === $method ) {
+			if ( 'import_page_builders' === $method ) {
+				error_log( '-------- Importing Page Builders --------' );
+				update_option( 'astra-sites-batch-status-string', 'Importing Page Builders' );
+				$process->import_page_builders();
+			} elseif ( 'import_categories' === $method ) {
 				error_log( '-------- Importing Tags --------' );
 				update_option( 'astra-sites-batch-status-string', 'Importing Tags' );
 				$process->import_categories();

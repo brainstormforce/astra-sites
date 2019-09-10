@@ -1387,7 +1387,8 @@ body.loading-content .select-page-builder {
 
 .astra-demo-import.button.updating-message:before,
 .astra-demo-import.button.installing:before {
-    vertical-align: text-bottom;
+    vertical-align: text-top;
+    margin: 0 5px 0 0;
 }
 
 .current-importing-status-wrap hr {
@@ -1649,16 +1650,19 @@ body.loading-content .select-page-builder {
 }
 
 
+.astra-sites-import-content::-webkit-scrollbar,
 .single-site-preview::-webkit-scrollbar {
     width: 5px;
     background-color: #f1f1f1;
 }
 
+.astra-sites-import-content::-webkit-scrollbar-thumb,
 .single-site-preview::-webkit-scrollbar-thumb {
     border-radius: 0;
     background-color: #d8d8d8;
 }
 
+.astra-sites-import-content::-webkit-scrollbar-track,
 .single-site-preview::-webkit-scrollbar-track {
     -webkit-box-shadow: inset 0 0 0 rgba(0,0,0,.3);
     width: 20px;
@@ -1680,7 +1684,7 @@ body.loading-content .select-page-builder {
 
 .single-site-footer {
     position: fixed;
-    padding: 15px 80px 15px 80px;
+    padding: 15px 50px 15px 35px;
     bottom: 0;
     background: #fff;
     right: 0;

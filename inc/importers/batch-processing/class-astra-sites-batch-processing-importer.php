@@ -46,9 +46,9 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Importer' ) ) :
 		}
 
 		/**
-		 * Import
+		 * Import Categories
 		 *
-		 * @since 1.0.14
+		 * @since x.x.x
 		 * @return void
 		 */
 		public function import_categories() {
@@ -66,6 +66,36 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Importer' ) ) :
 
 			error_log( 'Tags Imported Successfully!' );
 			update_option( 'astra-sites-batch-status-string', 'Tags Imported Successfully!' );
+		}
+
+		/**
+		 * Import Page Builders
+		 *
+		 * @since x.x.x
+		 * @return void
+		 */
+		public function import_page_builders() {
+			error_log( 'Requesting Page Builders' );
+			update_option( 'astra-sites-batch-status-string', 'Requesting Page Builders' );
+
+			$page_builders = Astra_Sites::get_instance()->get_page_builders();
+			$purchase_key  = Astra_Pro_Sites::set_instance()->get_license_key();
+			$site_url      = get_site_url();
+
+			$api_args = array(
+				'timeout' => 30,
+			);
+
+			error_log( $purchase_key );
+			$page_builder_request = wp_remote_get( trailingslashit( Astra_Sites::get_instance()->get_api_domain() ) . '/wp-json/wp/v2/astra-site-page-builder/?_fields=id,name,slug&site_url=' . $site_url . '&purchase_key=' . $purchase_key, $api_args );
+			if ( ! is_wp_error( $page_builder_request ) && 200 === (int) wp_remote_retrieve_response_code( $page_builder_request ) ) {
+				$page_builders = json_decode( wp_remote_retrieve_body( $page_builder_request ), true );
+			}
+
+			update_option( 'astra-sites-page-builders', $page_builders );
+
+			error_log( 'Page Builders Imported Successfully!' );
+			update_option( 'astra-sites-batch-status-string', 'Page Builders Imported Successfully!' );
 		}
 
 		/**

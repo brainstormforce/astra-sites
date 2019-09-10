@@ -163,6 +163,8 @@ var AstraSitesAjaxQueue = (function() {
 						$( 'body' ).on( "click", "#ast-sites-modal .astra-sites-tooltip-icon", AstraElementorSitesAdmin._toggleTooltip );
 						$( document ).on( "click", ".elementor-template-library-menu-item", AstraElementorSitesAdmin._toggle );
 						$( document ).on( 'click', '#ast-sites-modal .astra-sites__sync-wrap', AstraElementorSitesAdmin._sync );
+						$( document ).on( 'click', '#ast-sites-modal .ast-sites-modal__header__logo__icon-wrapper, #ast-sites-modal .back-to-layout-button', AstraElementorSitesAdmin._home );
+						$( document ).on( 'click', '#ast-sites-modal .notice-dismiss', AstraElementorSitesAdmin._dismiss );
 
 						// Other events.
 						$scope.find( '.astra-sites-content-wrap' ).scroll( AstraElementorSitesAdmin._loadLargeImages );
@@ -192,6 +194,18 @@ var AstraSitesAjaxQueue = (function() {
 				}
 			}
 
+		},
+
+		_dismiss: function() {
+
+			setTimeout( function() {
+				$scope.find( '.ast-sites-floating-notice-wrap' ).removeClass( 'slide-in' );
+				$scope.find( '.ast-sites-floating-notice-wrap' ).addClass( 'slide-out' );
+			}, 500 );
+
+			setTimeout( function() {
+				$scope.find( '.ast-sites-floating-notice-wrap' ).removeClass( 'slide-out' );
+			}, 700 );
 		},
 
 		_done: function( data ) {
@@ -236,7 +250,7 @@ var AstraSitesAjaxQueue = (function() {
 			}
 
 			button.addClass( 'updating-message');
-			$scope.find( '.ast-sites-floating-notice' ).html( 'Syncing template library in the background! We will notify you once it is done.' );
+			$scope.find( '.ast-sites-floating-notice' ).html( 'Syncing template library in the background! We will notify you once it is done.<button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss</span></button>' );
 			$scope.find( '.ast-sites-floating-notice-wrap' ).addClass( 'slide-in' );
 
 			$.ajax({
@@ -350,6 +364,10 @@ var AstraSitesAjaxQueue = (function() {
 
 			AstraElementorSitesAdmin.type = data_type;
 			AstraElementorSitesAdmin._switchTo( data_type );
+		},
+
+		_home: function() {
+			$scope.find( '.elementor-template-library-menu-item:first-child' ).trigger( 'click' );
 		},
 
 		_switchTo: function( type ) {
@@ -570,6 +588,7 @@ var AstraSitesAjaxQueue = (function() {
 		},
 
 		_unescape_lower( input_string ) {
+			input_string = $( "<textarea/>") .html( input_string ).text()
 			var input_string = AstraElementorSitesAdmin._unescape( input_string );
 			return input_string.toLowerCase();
 		},
@@ -605,53 +624,95 @@ var AstraSitesAjaxQueue = (function() {
 		},
 
 		_getSearchedPages: function( search_term ) {
-
 			var items = [];
+			search_term = search_term.toLowerCase();
 
-			if( search_term.length ) {
+			for( site_id in astraElementorSites.default_page_builder_sites ) {
 
-				for( site_id in astraElementorSites.default_page_builder_sites ) {
+				var current_site = astraElementorSites.default_page_builder_sites[site_id];
 
-					var current_site = astraElementorSites.default_page_builder_sites[site_id];
+				// Check in site title.
+				if( current_site['title'] ) {
+					var site_title = AstraElementorSitesAdmin._unescape_lower( current_site['title'] );
 
-					// Check in page title.
-					if( Object.keys( current_site['pages'] ).length ) {
-						var pages = current_site['pages'];
+					if( site_title.toLowerCase().includes( search_term ) ) {
 
-						for( page_id in pages ) {
+						for( page_id in current_site['pages'] ) {
 
-							// Check in site title.
-							if( pages[page_id]['title'] ) {
+							items[page_id] = current_site['pages'][page_id];
+							items[page_id]['type'] = 'page';
+							items[page_id]['site_id'] = site_id;
+							items[page_id]['astra-sites-type'] = current_site['astra-sites-type'] || '';
+							items[page_id]['parent-site-name'] = current_site['title'] || '';
+							items[page_id]['pages-count'] = 0;
+						}
+					}
+				}
 
-								var page_title = AstraElementorSitesAdmin._unescape_lower( pages[page_id]['title'] );
+				// Check in site tags.
+				if ( undefined != current_site['astra-sites-tag'] ) {
 
-								if( page_title.toLowerCase().includes( search_term ) ) {
-									items[page_id] = pages[page_id];
+					if( Object.keys( current_site['astra-sites-tag'] ).length ) {
+						for( site_tag_id in current_site['astra-sites-tag'] ) {
+							var tag_title = current_site['astra-sites-tag'][site_tag_id];
+								tag_title = AstraElementorSitesAdmin._unescape_lower( tag_title.replace('-', ' ') );
+
+							if( tag_title.toLowerCase().includes( search_term ) ) {
+
+								for( page_id in current_site['pages'] ) {
+
+									items[page_id] = current_site['pages'][page_id];
 									items[page_id]['type'] = 'page';
-									items[page_id]['step'] = 2;
 									items[page_id]['site_id'] = site_id;
 									items[page_id]['astra-sites-type'] = current_site['astra-sites-type'] || '';
-									items[page_id]['parent-site-name'] = current_site['title'];
+									items[page_id]['parent-site-name'] = current_site['title'] || '';
+									items[page_id]['pages-count'] = 0;
 								}
 							}
+						}
+					}
+				}
 
-							if ( undefined != pages[page_id]['astra-sites-tag'] ) {
+				// Check in page title.
+				if( Object.keys( current_site['pages'] ).length ) {
+					var pages = current_site['pages'];
 
-								// Check in site tags.
-								if( Object.keys( pages[page_id]['astra-sites-tag'] ).length ) {
-									for( page_tag_id in pages[page_id]['astra-sites-tag'] ) {
-										var page_tag_title = AstraElementorSitesAdmin._unescape_lower( pages[page_id]['astra-sites-tag'][page_tag_id] );
-										if( page_tag_title.toLowerCase().includes( search_term ) ) {
-											items[page_id] = pages[page_id];
-											items[page_id]['type'] = 'page';
-											items[page_id]['step'] = 2;
-											items[page_id]['site_id'] = site_id;
-											items[page_id]['astra-sites-type'] = current_site['astra-sites-type'] || '';
-										}
+					for( page_id in pages ) {
+
+						// Check in site title.
+						if( pages[page_id]['title'] ) {
+
+							var page_title = AstraElementorSitesAdmin._unescape_lower( pages[page_id]['title'] );
+
+							if( page_title.toLowerCase().includes( search_term ) ) {
+								items[page_id] = pages[page_id];
+								items[page_id]['type'] = 'page';
+								items[page_id]['site_id'] = site_id;
+								items[page_id]['astra-sites-type'] = current_site['astra-sites-type'] || '';
+								items[page_id]['parent-site-name'] = current_site['title'] || '';
+								items[page_id]['pages-count'] = 0;
+							}
+						}
+
+						// Check in site tags.
+						if ( undefined != pages[page_id]['astra-sites-tag'] ) {
+
+							if( Object.keys( pages[page_id]['astra-sites-tag'] ).length ) {
+								for( page_tag_id in pages[page_id]['astra-sites-tag'] ) {
+									var page_tag_title = pages[page_id]['astra-sites-tag'][page_tag_id];
+										page_tag_title = AstraElementorSitesAdmin._unescape_lower( page_tag_title.replace('-', ' ') );
+									if( page_tag_title.toLowerCase().includes( search_term ) ) {
+										items[page_id] = pages[page_id];
+										items[page_id]['type'] = 'page';
+										items[page_id]['site_id'] = site_id;
+										items[page_id]['astra-sites-type'] = current_site['astra-sites-type'] || '';
+										items[page_id]['parent-site-name'] = current_site['title'] || '';
+										items[page_id]['pages-count'] = 0;
 									}
 								}
 							}
 						}
+
 					}
 				}
 			}
@@ -1178,21 +1239,25 @@ var AstraSitesAjaxQueue = (function() {
 				astraElementorSites.default_page_builder_sites[AstraElementorSitesAdmin.site_id]['astra-sites-type'] != 'free'
 			) {
 
-				output = '<p class="ast-validate">This is a premium template available with Astra \'Agency\' packages. <a href="plugins.php?bsf-inline-license-form=astra-pro-sites">Validate Your License</a> Key to import this template.</p>';
+				if ( ! astraElementorSites.license_status ) {
 
-				$scope.find('.required-plugins-list').html( output );
-				$scope.find('.ast-tooltip-wrap').css( 'opacity', 1 );
-				$scope.find('.astra-sites-tooltip').css( 'opacity', 1 );
+					output = '<p class="ast-validate">' + astraElementorSites.license_msg + '</p>';
 
-				/**
-				 * Enable Demo Import Button
-				 * @type number
-				 */
-				AstraElementorSitesAdmin.requiredPlugins = [];
-				AstraElementorSitesAdmin.canImport = true;
-				AstraElementorSitesAdmin.canInsert = true;
-				$scope.find( '.astra-sites-import-template-action > div' ).removeClass( 'disabled' );
-				return;
+					$scope.find('.required-plugins-list').html( output );
+					$scope.find('.ast-tooltip-wrap').css( 'opacity', 1 );
+					$scope.find('.astra-sites-tooltip').css( 'opacity', 1 );
+
+					/**
+					 * Enable Demo Import Button
+					 * @type number
+					 */
+					AstraElementorSitesAdmin.requiredPlugins = [];
+					AstraElementorSitesAdmin.canImport = true;
+					AstraElementorSitesAdmin.canInsert = true;
+					$scope.find( '.astra-sites-import-template-action > div' ).removeClass( 'disabled' );
+					return;
+				}
+
 			}
 
 		 	// Required Required.
@@ -1210,22 +1275,6 @@ var AstraSitesAjaxQueue = (function() {
 			})
 			.done(function ( response ) {
 
-				required_plugins = response.data['required_plugins'];				
-
-				if( response.data['third_party_required_plugins'].length ) {
-					// $('.astra-demo-import').removeClass('button-primary').addClass('disabled');
-
-					// $('.astra-sites-third-party-required-plugins-wrap').remove();
-					// var template = wp.template('astra-sites-third-party-required-plugins');
-					// $('.astra-sites-advanced-options-wrap .astra-sites-advanced-options').hide();
-					// $('.astra-sites-advanced-options-wrap').append( template( response.data['third_party_required_plugins'] ) );
-
-					// // Release disabled class from import button.
-					// $('.astra-demo-import').addClass('button-primary').hide();
-					// $('.astra-sites-result-preview').addClass('skip-plugins');
-					// $('.astra-sites-skip-and-import').show();
-				}
-
 				var output = '';
 
 				/**
@@ -1235,6 +1284,11 @@ var AstraSitesAjaxQueue = (function() {
 				var remaining_plugins = 0;
 				var required_plugins_markup = '';
 
+				required_plugins = response.data['required_plugins'];				
+
+				if( response.data['third_party_required_plugins'].length ) {
+					output += '<li class="plugin-card plugin-card-'+plugin.slug+'" data-slug="'+plugin.slug+'" data-init="'+plugin.init+'" data-name="'+plugin.name+'">'+plugin.name+'</li>';
+				}
 
 				/**
 				 * Not Installed

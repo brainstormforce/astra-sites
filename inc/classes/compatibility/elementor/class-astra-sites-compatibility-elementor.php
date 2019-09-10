@@ -186,7 +186,7 @@ if ( ! class_exists( 'Astra_Sites_Compatibility_Elementor' ) ) :
 				Group_Control_Typography::get_type(),
 				array(
 					'name'      => 'astra_sites_body',
-					'label'     => __( 'Body Typography', 'astra-sites' ),
+					'label'     => __( 'Body', 'astra-sites' ),
 					'selector'  => 'body',
 					'scheme'    => Scheme_Typography::TYPOGRAPHY_3,
 					'condition' => array(
@@ -204,7 +204,7 @@ if ( ! class_exists( 'Astra_Sites_Compatibility_Elementor' ) ) :
 			$element->add_control(
 				'astra_sites_default_heading_font_family',
 				array(
-					'label'     => __( 'Default Headings Font', 'astra-sites' ),
+					'label'     => __( 'Headings', 'astra-sites' ),
 					'type'      => Controls_Manager::FONT,
 					'default'   => '',
 					'selectors' => array(

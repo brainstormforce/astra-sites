@@ -345,14 +345,14 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 									<ul class="page-builders">
 										<?php
 										$default_page_builder = $this->get_setting( 'page_builder' );
-										$page_builders        = $this->get_page_builders();
-										foreach ( $page_builders as $page_builder_slug => $page_builder ) {
+										$page_builders        = Astra_Sites::get_instance()->get_page_builders();
+										foreach ( $page_builders as $key => $page_builder ) {
 											?>
-											<li data-page-builder="<?php echo $page_builder_slug; ?>">
+											<li data-page-builder="<?php echo $page_builder['slug']; ?>">
 												<label>
-													<input type="radio" name="page_builder" value="<?php echo $page_builder['title']; ?>">
-													<img src="<?php echo $page_builder['img']; ?>" />
-													<div class="title"><?php echo $page_builder['title']; ?></div>
+													<input type="radio" name="page_builder" value="<?php echo $page_builder['name']; ?>">
+													<img src="<?php echo $this->get_page_builder_image( $page_builder['slug'] ); ?>" />
+													<div class="title"><?php echo $page_builder['name']; ?></div>
 												</label>
 											</li>
 											<?php
@@ -441,24 +441,24 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 								$page_builder = $this->get_default_page_builder();
 								if ( $page_builder ) {
 									?>
-									<img src="<?php echo esc_url( $page_builder['img'] ); ?>" />
-									<span class="page-builder-title"><?php echo esc_html( $page_builder['title'] ); ?></span>
+									<img src="<?php echo esc_url( $this->get_page_builder_image( $page_builder['slug'] ) ); ?>" />
+									<span class="page-builder-title"><?php echo esc_html( $page_builder['name'] ); ?></span>
 									<span class="dashicons dashicons-arrow-down"></span>
 								<?php } ?>
 							</div>
 							<ul class="page-builders">
 								<?php
 								$default_page_builder = $this->get_setting( 'page_builder' );
-								$page_builders        = $this->get_page_builders();
-								foreach ( $page_builders as $page_builder_slug => $page_builder ) {
+								$page_builders        = Astra_Sites::get_instance()->get_page_builders();
+								foreach ( $page_builders as $key => $page_builder ) {
 									$class = '';
-									if ( $default_page_builder === $page_builder_slug ) {
+									if ( $default_page_builder === $page_builder['slug'] ) {
 										$class = 'active';
 									}
 									?>
-									<li data-page-builder="<?php echo $page_builder_slug; ?>" class="<?php echo $class; ?>">
-										<img src="<?php echo $page_builder['img']; ?>" />
-										<div class="title"><?php echo $page_builder['title']; ?></div>
+									<li data-page-builder="<?php echo $page_builder['slug']; ?>" class="<?php echo $class; ?>">
+										<img src="<?php echo $this->get_page_builder_image( $page_builder['slug'] ); ?>" />
+										<div class="title"><?php echo $page_builder['name']; ?></div>
 									</li>
 									<?php
 								}
@@ -508,10 +508,12 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 		function get_default_page_builder() {
 			$default_page_builder = $this->get_setting( 'page_builder' );
 
-			$page_builders = $this->get_page_builders();
+			$page_builders = Astra_Sites::get_instance()->get_page_builders();
 
-			if ( isset( $page_builders[ $default_page_builder ] ) ) {
-				return $page_builders[ $default_page_builder ];
+			foreach ( $page_builders as $key => $page_builder ) {
+				if ( $page_builder['slug'] === $default_page_builder ) {
+					return $page_builder;
+				}
 			}
 
 			return '';
@@ -522,27 +524,33 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 		 *
 		 * @since x.x.x
 		 *
+		 * @param  string $slug Page Builder Slug.
 		 * @return array page builders.
 		 */
-		function get_page_builders() {
-			return array(
-				'elementor'      => array(
-					'title' => 'Elementor',
-					'img'   => ASTRA_SITES_URI . 'inc/assets/images/elementor.jpg',
-				),
-				'beaver-builder' => array(
-					'title' => 'Beaver Builder',
-					'img'   => ASTRA_SITES_URI . 'inc/assets/images/beaver-builder.png',
-				),
-				'gutenberg'      => array(
-					'title' => 'Gutenberg',
-					'img'   => ASTRA_SITES_URI . 'inc/assets/images/gutenberg.jpg',
-				),
-				'brizy'          => array(
-					'title' => 'Brizy',
-					'img'   => ASTRA_SITES_URI . 'inc/assets/images/brizy.jpg',
-				),
-			);
+		function get_page_builder_image( $slug ) {
+
+			$image = '';
+
+			switch ( $slug ) {
+
+				case 'elementor':
+					$image = ASTRA_SITES_URI . 'inc/assets/images/elementor.jpg';
+					break;
+
+				case 'beaver-builder':
+					$image = ASTRA_SITES_URI . 'inc/assets/images/beaver-builder.png';
+					break;
+
+				case 'gutenberg':
+					$image = ASTRA_SITES_URI . 'inc/assets/images/gutenberg.jpg';
+					break;
+
+				case 'brizy':
+					$image = ASTRA_SITES_URI . 'inc/assets/images/brizy.jpg';
+					break;
+			}
+
+			return $image;
 		}
 
 		/**
@@ -705,11 +713,11 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 			global $wp_version;
 
 			if ( defined( 'DISABLE_WP_CRON' ) && DISABLE_WP_CRON ) {
-				return new WP_Error( 'wp_portfolio_cron_error', __( 'ERROR! Cron schedules are disabled by setting constant DISABLE_WP_CRON to true.<br/>To start the import process please enable the cron by setting false. E.g. define( \'DISABLE_WP_CRON\', false );', 'astra-portfolio', 'astra-sites' ) );
+				return new WP_Error( 'wp_portfolio_cron_error', __( 'ERROR! Cron schedules are disabled by setting constant DISABLE_WP_CRON to true.<br/>To start the import process please enable the cron by setting false. E.g. define( \'DISABLE_WP_CRON\', false );', 'astra-sites' ) );
 			}
 
 			if ( defined( 'ALTERNATE_WP_CRON' ) && ALTERNATE_WP_CRON ) {
-				return new WP_Error( 'wp_portfolio_cron_error', __( 'ERROR! Cron schedules are disabled by setting constant ALTERNATE_WP_CRON to true.<br/>To start the import process please enable the cron by setting false. E.g. define( \'ALTERNATE_WP_CRON\', false );', 'astra-portfolio', 'astra-sites' ) );
+				return new WP_Error( 'wp_portfolio_cron_error', __( 'ERROR! Cron schedules are disabled by setting constant ALTERNATE_WP_CRON to true.<br/>To start the import process please enable the cron by setting false. E.g. define( \'ALTERNATE_WP_CRON\', false );', 'astra-sites' ) );
 			}
 
 			$cached_status = get_transient( 'astra-portfolio-cron-test-ok' );
@@ -745,7 +753,7 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 					'unexpected_http_response_code',
 					sprintf(
 						/* translators: 1: The HTTP response code. */
-						__( 'Unexpected HTTP response code: %s', 'astra-portfolio', 'astra-sites' ),
+						__( 'Unexpected HTTP response code: %s', 'astra-sites' ),
 						intval( wp_remote_retrieve_response_code( $result ) )
 					)
 				);

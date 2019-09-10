@@ -694,6 +694,18 @@ var AstraSitesAjaxQueue = (function() {
 						console.log( jqXHR );
 					});
 
+					// Import page builders.
+					$.ajax({
+						url  : astraSitesVars.ajaxurl,
+						type : 'POST',
+						data : {
+							action : 'astra-sites-import-page-builders',
+						},
+					})
+					.fail(function( jqXHR ){
+						console.log( jqXHR );
+					});
+
 					// Import Blocks.
 					$.ajax({
 						url  : astraSitesVars.ajaxurl,
@@ -872,6 +884,7 @@ var AstraSitesAjaxQueue = (function() {
 			AstraSitesAdmin._clean_url_params( 'search' );
 			AstraSitesAdmin._clean_url_params( 'favorites' );
 			AstraSitesAdmin.close_pages_popup();
+			AstraSitesAdmin._load_large_images();
 		},
 
 		close_pages_popup: function( ) {
@@ -2135,7 +2148,7 @@ var AstraSitesAjaxQueue = (function() {
 		_show_get_agency_bundle_notice: function(event) {
 			event.preventDefault();
 			$('.astra-sites-result-preview')
-				.removeClass('astra-sites-site-import-popup astra-sites-page-import-popup')
+				.removeClass('astra-sites-activate-license astra-sites-site-import-popup astra-sites-page-import-popup')
 				.addClass('astra-sites-get-agency-bundle')
 				.show();
 
@@ -2243,7 +2256,7 @@ var AstraSitesAjaxQueue = (function() {
 		show_page_popup: function( page_id, site_id ) {
 
 			$('.astra-sites-result-preview')
-				.removeClass('astra-sites-get-agency-bundle astra-sites-site-import-popup astra-sites-page-import-popup')
+				.removeClass('astra-sites-activate-license astra-sites-get-agency-bundle astra-sites-site-import-popup astra-sites-page-import-popup')
 				.addClass('preview-page-from-search-result')
 				.show();
 
