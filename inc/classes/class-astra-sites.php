@@ -1164,6 +1164,23 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			return $this->get_default_page_builders();
 		}
 
+		/**
+		 * Get License Key
+		 *
+		 * @since x.x.x
+		 * @return array
+		 */
+		function get_license_key() {
+
+			if ( class_exists( 'BSF_License_Manager' ) ) {
+				if ( BSF_License_Manager::bsf_is_active_license( 'astra-pro-sites' ) ) {
+					return BSF_License_Manager::instance()->bsf_get_product_info( 'astra-pro-sites', 'purchase_key' );
+				}
+			}
+
+			return '';
+		}
+
 	}
 
 	/**

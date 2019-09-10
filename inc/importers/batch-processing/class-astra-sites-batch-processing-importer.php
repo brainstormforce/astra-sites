@@ -79,7 +79,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Importer' ) ) :
 			update_option( 'astra-sites-batch-status-string', 'Requesting Page Builders' );
 
 			$page_builders = Astra_Sites::get_instance()->get_page_builders();
-			$purchase_key  = Astra_Pro_Sites::set_instance()->get_license_key();
+			$purchase_key  = Astra_Sites::get_instance()->get_license_key();
 			$site_url      = get_site_url();
 
 			$api_args = array(
