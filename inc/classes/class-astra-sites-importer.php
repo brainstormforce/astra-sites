@@ -383,8 +383,7 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) {
 		 * @return void
 		 */
 		function import_end() {
-			$demo_data = isset( $_POST['data'] ) ? $_POST['data'] : array();
-			update_option( 'astra_sites_import_data', $demo_data );
+			$demo_data = get_option( 'astra_sites_import_data', array() );
 
 			do_action( 'astra_sites_import_complete', $demo_data );
 		}
