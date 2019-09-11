@@ -438,10 +438,25 @@
 
 #ast-sites-modal .astra-sites-no-sites .description {
     font-size: 13px;
+    margin: 0;
+}
+
+#ast-sites-modal .astra-sites-no-sites .description a,
+#ast-sites-modal .ast-tooltip-inner-wrap a {
+    color: #0073aa;
+}
+
+#ast-sites-modal .astra-sites-no-sites .description a:hover,
+#ast-sites-modal .astra-sites-no-sites .description a:active,
+#ast-sites-modal .astra-sites-no-sites .description a:focus,
+#ast-sites-modal .ast-tooltip-inner-wrap a:hover,
+#ast-sites-modal .ast-tooltip-inner-wrap a:active,
+#ast-sites-modal .ast-tooltip-inner-wrap a:focus {
+    color: #00a0d2;
 }
 
 #ast-sites-modal .astra-sites-no-sites .content {
-    text-align: left;
+    justify-content: center;
 }
 
 #ast-sites-modal .astra-sites-no-sites .inner {
@@ -781,6 +796,16 @@
     width: 20px;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+}
+
+#ast-sites-modal .notice-dismiss:hover:before,
+#ast-sites-modal .notice-dismiss:active:before,
+#ast-sites-modal .notice-dismiss:focus:before {
+    color: #c00;
+}
+
+#ast-sites-modal .ast-sites-floating-notice-wrap.refreshed-notice {
+    border-left: 5px solid #46b450;
 }
 
 #ast-sites-modal button.notice-dismiss {

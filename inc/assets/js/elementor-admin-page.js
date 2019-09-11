@@ -199,14 +199,22 @@ var AstraSitesAjaxQueue = (function() {
 
 		_dismiss: function() {
 
-			setTimeout( function() {
-				$scope.find( '.ast-sites-floating-notice-wrap' ).removeClass( 'slide-in' );
-				$scope.find( '.ast-sites-floating-notice-wrap' ).addClass( 'slide-out' );
-			}, 500 );
+			$( this ).closest( '.ast-sites-floating-notice-wrap' ).removeClass( 'slide-in' );
+			$( this ).closest( '.ast-sites-floating-notice-wrap' ).addClass( 'slide-out' );
 
 			setTimeout( function() {
-				$scope.find( '.ast-sites-floating-notice-wrap' ).removeClass( 'slide-out' );
-			}, 700 );
+				$( this ).closest( '.ast-sites-floating-notice-wrap' ).removeClass( 'slide-out' );
+			}, 200 );
+
+			if ( $( this ).closest( '.ast-sites-floating-notice-wrap' ).hasClass( 'refreshed-notice' ) ) {
+				$.ajax({
+					url  : astraElementorSites.ajaxurl,
+					type : 'POST',
+					data : {
+						action : 'astra-sites-update-library-complete',
+					},
+				});
+			}
 		},
 
 		_done: function( data ) {
@@ -251,8 +259,8 @@ var AstraSitesAjaxQueue = (function() {
 			}
 
 			button.addClass( 'updating-message');
-			$scope.find( '.ast-sites-floating-notice' ).html( 'Syncing template library in the background! We will notify you once it is done.<button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss</span></button>' );
-			$scope.find( '.ast-sites-floating-notice-wrap' ).addClass( 'slide-in' );
+			$scope.find( '#ast-sites-floating-notice-wrap-id .ast-sites-floating-notice' ).html( 'Syncing template library in the background! We will notify you once it is done.<button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss</span></button>' );
+			$scope.find( '#ast-sites-floating-notice-wrap-id' ).addClass( 'slide-in' );
 
 			$.ajax({
 				url  : astraElementorSites.ajaxurl,
@@ -268,12 +276,12 @@ var AstraSitesAjaxQueue = (function() {
 				button.removeClass( 'updating-message');
 
 				setTimeout( function() {
-					$scope.find( '.ast-sites-floating-notice-wrap' ).removeClass( 'slide-in' );
-					$scope.find( '.ast-sites-floating-notice-wrap' ).addClass( 'slide-out' );
+					$scope.find( '#ast-sites-floating-notice-wrap-id' ).removeClass( 'slide-in' );
+					$scope.find( '#ast-sites-floating-notice-wrap-id' ).addClass( 'slide-out' );
 				}, 5000 );
 
 				setTimeout( function() {
-					$scope.find( '.ast-sites-floating-notice-wrap' ).removeClass( 'slide-out' );
+					$scope.find( '#ast-sites-floating-notice-wrap-id' ).removeClass( 'slide-out' );
 				}, 5200 );
 
 				if( 'ajax' === response.data ) {
@@ -447,7 +455,6 @@ var AstraSitesAjaxQueue = (function() {
 				console.log( jqXHR );
 			})
 			.done(function ( data ) {
-				console.log(data);
 				AstraElementorSitesAdmin._done( data );
 			});
 		},

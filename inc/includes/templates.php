@@ -29,7 +29,19 @@ defined( 'ABSPATH' ) or exit;
 				</div>
 			</div>
 			<div class="dialog-buttons-wrapper dialog-lightbox-buttons-wrapper"></div>
-			<div class="ast-sites-floating-notice-wrap"><div class="ast-sites-floating-notice"></div></div>
+			<div id="ast-sites-floating-notice-wrap-id" class="ast-sites-floating-notice-wrap"><div class="ast-sites-floating-notice"></div></div>
+			<?php
+			$status = get_option( 'astra-sites-batch-is-complete', 'no' );
+			if ( 'yes' === $status ) {
+				?>
+				<div class="ast-sites-floating-notice-wrap refreshed-notice slide-in">
+					<div class="ast-sites-floating-notice">
+						<div class="astra-sites-sync-library-message success notice notice-alt notice-success is-dismissible">
+							<?php _e( 'Template library refreshed!', 'astra-sites' ); ?> <button type="button" class="notice-dismiss"><span class="screen-reader-text"><?php _e( 'Dismiss', 'astra-sites' ); ?></span></button>
+						</div>
+					</div>
+				</div>
+			<?php } ?>
 		</div>
 		<div class="dialog-background-lightbox"></div>
 	</div>
@@ -139,9 +151,6 @@ defined( 'ABSPATH' ) or exit;
 			<div class="inner">
 				<h2><?php _e( 'Sorry No Result Found.', 'astra-sites' ); ?></h2>
 				<div class="content">
-					<div class="empty-item">
-						<img class="empty-collection-part" src="<?php echo ASTRA_SITES_URI . 'inc/assets/images/empty-collection.svg'; ?>" alt="empty-collection">
-					</div>
 					<div class="description">
 						<p>
 						<?php
@@ -202,9 +211,6 @@ defined( 'ABSPATH' ) or exit;
 			<div class="inner">
 				<h2><?php _e( 'Sorry No Result Found.', 'astra-sites' ); ?></h2>
 				<div class="content">
-					<div class="empty-item">
-						<img class="empty-collection-part" src="<?php echo ASTRA_SITES_URI . 'inc/assets/images/empty-collection.svg'; ?>" alt="empty-collection">
-					</div>
 					<div class="description">
 						<p>
 						<?php
@@ -286,9 +292,6 @@ defined( 'ABSPATH' ) or exit;
 			<div class="inner">
 				<h2><?php _e( 'Sorry No Result Found.', 'astra-sites' ); ?></h2>
 				<div class="content">
-					<div class="empty-item">
-						<img class="empty-collection-part" src="<?php echo ASTRA_SITES_URI . 'inc/assets/images/empty-collection.svg'; ?>" alt="empty-collection">
-					</div>
 					<div class="description">
 						<p>
 						<?php

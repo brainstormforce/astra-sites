@@ -90,7 +90,7 @@ defined( 'ABSPATH' ) or exit;
 					printf( __( 'Don\'t see a template you would like to import?<br><a target="_blank" href="%1$s">Please Suggest Us!</a>', 'astra-sites' ), esc_url( 'https://wpastra.com/sites-suggestions/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=suggestions' ) );
 					?>
 					</p>
-					<div class="back-to-layout-button"><span class="button astra-sites-back">Back to Templates</span></div>
+					<div class="back-to-layout-button"><span class="button astra-sites-back"><?php _e( 'Back to Templates', 'astra-sites' ); ?></span></div>
 				</div>
 			</div>
 		</div>
