@@ -97,23 +97,23 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		public function api_request() {
 			$url = isset( $_POST['url'] ) ? $_POST['url'] : '';
 
-			if( empty( $url ) ) {
+			if ( empty( $url ) ) {
 				wp_send_json_error( __( 'Provided API URL is empty! Please try again!', 'astra-sites' ) );
 			}
 
-			$api_args     = array(
+			$api_args = array(
 				'timeout' => 30,
 			);
-			$request = wp_remote_get( trailingslashit( Astra_Sites::get_instance()->get_api_domain() ) . '/wp-json/wp/v2/' . $url, $api_args );
+			$request  = wp_remote_get( trailingslashit( Astra_Sites::get_instance()->get_api_domain() ) . '/wp-json/wp/v2/' . $url, $api_args );
 			if ( ! is_wp_error( $request ) && 200 === (int) wp_remote_retrieve_response_code( $request ) ) {
 
 				$demo_data = json_decode( wp_remote_retrieve_body( $request ), true );
 				update_option( 'astra_sites_import_data', $demo_data );
 
 				wp_send_json_success( $demo_data );
-			} else if( is_wp_error( $request ) ) {
+			} elseif ( is_wp_error( $request ) ) {
 				wp_send_json_error( 'API Request is failed due to ' . $request->get_error_message() );
-			} else if( 200 !== (int) wp_remote_retrieve_response_code( $request ) ) {
+			} elseif ( 200 !== (int) wp_remote_retrieve_response_code( $request ) ) {
 				wp_send_json_error( wp_remote_retrieve_body( $request ) );
 			}
 		}
@@ -199,6 +199,12 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		public function start_batch_process() {
 
 			$post_id = isset( $_POST['id'] ) ? absint( $_POST['id'] ) : 0;
+
+			$post = $_POST['post'];
+
+			if ( isset( $post['astra-page-options-data'] ) && isset( $post['astra-page-options-data']['elementor_load_fa4_shim'] ) ) {
+				update_option( 'elementor_load_fa4_shim', $post['astra-page-options-data']['elementor_load_fa4_shim'] );
+			}
 
 			if ( 0 === $post_id ) {
 				wp_send_json_success(
@@ -301,6 +307,12 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				$content = isset( $_POST['data']['original_content'] ) ? $_POST['data']['original_content'] : '';
 			} else {
 				$content = isset( $_POST['data']['content']['rendered'] ) ? $_POST['data']['content']['rendered'] : '';
+			}
+
+			if ( 'elementor' === $default_page_builder ) {
+				if ( isset( $_POST['data']['astra-page-options-data'] ) && isset( $_POST['data']['astra-page-options-data']['elementor_load_fa4_shim'] ) ) {
+					update_option( 'elementor_load_fa4_shim', $_POST['data']['astra-page-options-data']['elementor_load_fa4_shim'] );
+				}
 			}
 
 			$data = isset( $_POST['data'] ) ? $_POST['data'] : array();
@@ -824,7 +836,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 
 			if ( defined( 'ASTRA_PRO_SITES_NAME' ) ) {
 				/* translators: %s are link. */
-				$license_msg = sprintf( __( 'This is a premium template available with Astra \'Agency\' packages. <a href="%s">Validate Your License</a> Key to import this template.', 'astra-sites' ), esc_url( admin_url( 'plugins.php?bsf-inline-license-form=astra-pro-sites' ) ) );
+				$license_msg = sprintf( __( 'This is a premium template available with Astra \'Agency\' packages. <a href="%s" target="_blank">Validate Your License</a> Key to import this template.', 'astra-sites' ), esc_url( admin_url( 'plugins.php?bsf-inline-license-form=astra-pro-sites' ) ) );
 			}
 
 			$data = apply_filters(

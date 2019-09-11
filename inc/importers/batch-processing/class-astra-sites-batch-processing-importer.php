@@ -137,10 +137,10 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Importer' ) ) :
 		 * @since 2.0.0 Added page no.
 		 *
 		 * @param  integer $page Page number.
-		 * @return void
+		 * @return array
 		 */
 		public function import_sites( $page = 1 ) {
-			$api_args = array(
+			$api_args        = array(
 				'timeout' => 30,
 			);
 			$sites_and_pages = array();

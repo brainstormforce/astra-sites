@@ -102,6 +102,7 @@ var AstraSitesAjaxQueue = (function() {
 		site_imported_data: null,
 		backup_taken: false,
 		templateData: {},
+		insertData: {},
 		log_file        : '',
 		pages_list      : '',
 		insertActionFlag : false,
@@ -866,6 +867,7 @@ var AstraSitesAjaxQueue = (function() {
 					fetch( AstraElementorSitesAdmin.templateData['astra-page-api-url'] ).then(response => {
 						return response.json();
 					}).then( data => {
+						AstraElementorSitesAdmin.insertData = data;
 						if ( 'insert' == AstraElementorSitesAdmin.action ) {
 							AstraElementorSitesAdmin._insertDemo( data );
 						} else {
@@ -879,6 +881,7 @@ var AstraSitesAjaxQueue = (function() {
 			} else {
 
 				AstraElementorSitesAdmin._importWPForm( AstraElementorSitesAdmin.templateData['post-meta']['astra-site-wpforms-path'], function( form_response ) {
+					AstraElementorSitesAdmin.insertData = AstraElementorSitesAdmin.templateData;
 					if ( 'insert' == AstraElementorSitesAdmin.action ) {
 						AstraElementorSitesAdmin._insertDemo( AstraElementorSitesAdmin.templateData );
 					} else {
@@ -956,6 +959,7 @@ var AstraSitesAjaxQueue = (function() {
 				data : {
 					action : 'astra-sites-elementor-start-batch-process',
 					id : attr.id,
+					post : AstraElementorSitesAdmin.insertData
 				},
 			})
 			.fail(function( jqXHR ){

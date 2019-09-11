@@ -119,6 +119,7 @@ defined( 'ABSPATH' ) or exit;
 		var count = 0;
 		for ( key in data ) {
 			var site_title = ( undefined == data[ key ]['category'][0] ) ? data[ key ]['title'] : data[ key ]['category'][0];
+			count++;
 	#>
 		<div class="astra-sites-library-template astra-theme" data-block-id={{key}}>
 			<div class="astra-sites-library-template-inner theme-screenshot" data-step="1">
@@ -127,6 +128,29 @@ defined( 'ABSPATH' ) or exit;
 				</div>
 				<div class="theme-id-container">
 					<h3 class="theme-name">{{{site_title}}}</h3>
+				</div>
+			</div>
+		</div>
+	<#
+		}
+		if ( count == 0 ) {
+	#>
+		<div class="astra-sites-no-sites">
+			<div class="inner">
+				<h2><?php _e( 'Sorry No Result Found.', 'astra-sites' ); ?></h2>
+				<div class="content">
+					<div class="empty-item">
+						<img class="empty-collection-part" src="<?php echo ASTRA_SITES_URI . 'inc/assets/images/empty-collection.svg'; ?>" alt="empty-collection">
+					</div>
+					<div class="description">
+						<p>
+						<?php
+						/* translators: %1$s External Link */
+						printf( __( 'Don\'t see a template you would like to import?<br><a target="_blank" href="%1$s">Please Suggest Us!</a>', 'astra-sites' ), esc_url( 'https://wpastra.com/sites-suggestions/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=suggestions' ) );
+						?>
+						</p>
+						<div class="back-to-layout-button"><span class="button astra-sites-back"><?php _e( 'Back to Templates', 'astra-sites' ); ?></span></div>
+					</div>
 				</div>
 			</div>
 		</div>
