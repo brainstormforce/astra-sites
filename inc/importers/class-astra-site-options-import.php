@@ -283,6 +283,7 @@ class Astra_Site_Options_Import {
 	private function insert_logo( $image_url = '' ) {
 		$attachment_id = $this->download_image( $image_url );
 		if ( $attachment_id ) {
+			Astra_WXR_Importer::instance()->track_post( $attachment_id );
 			set_theme_mod( 'custom_logo', $attachment_id );
 		}
 	}

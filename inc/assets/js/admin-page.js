@@ -406,7 +406,7 @@ var AstraSitesAjaxQueue = (function() {
 			$( document ).on('click', '.astra-sites-sync-library-message.success .notice-dismiss', AstraSitesAdmin._sync_library_complete );
 			$( document ).on('click', '.page-builder-icon', AstraSitesAdmin._toggle_page_builder_list );
 			$( document ).on('click', '.showing-page-builders #wpbody-content', AstraSitesAdmin._close_page_builder_list );
-			$( document ).on('input'                     , '#wp-filter-search-input', AstraSitesAdmin._search );
+			$( document ).on('keypress input'                     , '#wp-filter-search-input', AstraSitesAdmin._search );
 			$( document ).on('click'                     , '.ui-autocomplete .ui-menu-item', AstraSitesAdmin._show_search_term );
 		},
 
@@ -894,6 +894,8 @@ var AstraSitesAjaxQueue = (function() {
 			AstraSitesAdmin.close_pages_popup();
 
 			AstraSitesAdmin._clean_url_params( 'favorites' );
+
+			AstraSitesAdmin._load_large_images();
 		},
 
 		/**

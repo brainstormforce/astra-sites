@@ -224,6 +224,8 @@ if ( ! class_exists( 'Astra_Sites_Image_Importer' ) ) :
 			);
 			update_post_meta( $post_id, '_astra_sites_image_hash', $this->get_hash_image( $attachment['url'] ) );
 
+			Astra_WXR_Importer::instance()->track_post( $post_id );
+
 			$new_attachment = array(
 				'id'  => $post_id,
 				'url' => $upload['url'],

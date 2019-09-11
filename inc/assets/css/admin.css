@@ -106,6 +106,7 @@
     color: #23282d;
 }
 #wp-filter-search-input {
+	font-weight: 400;
 	width: 100%;
     opacity: 1;
     background: #fff;
