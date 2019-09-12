@@ -485,7 +485,7 @@
 }
 
 #ast-sites-modal .astra-sites-no-sites h2 {
-    margin-bottom: 2em;
+    margin-bottom: 1.2em;
 }
 
 .theme-browser .theme .theme-screenshot:after {
@@ -779,7 +779,7 @@
 
 #ast-sites-modal .ast-sites-floating-notice {
     margin-right: 15px;
-    font-size: 12px;
+    font-size: 13px;
     line-height: normal;
 }
 

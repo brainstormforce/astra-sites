@@ -1251,7 +1251,6 @@ var AstraSitesAjaxQueue = (function() {
 		},
 
 		_ajax_change_page_builder: function() {
-			// $(this).attr('data-page-builder') || '';
 		
 			var page_builder_slug = $(this).attr('data-page-builder') || '';
 			var page_builder_img = $(this).find('img').attr('src') || '';
@@ -1274,6 +1273,9 @@ var AstraSitesAjaxQueue = (function() {
 
 			if( page_builder_slug ) {
 
+				AstraSitesAdmin._clean_url_params( 'astra-site' );
+				AstraSitesAdmin._clean_url_params( 'astra-page' );
+
 				$('#astra-sites').show();
 				$('#site-pages').hide();
 
@@ -1287,6 +1289,7 @@ var AstraSitesAjaxQueue = (function() {
 				})
 				.done(function ( response ) {
 					if( response.success ) {
+
 						// Set changed page builder data as a default page builder object.
 						astraSitesVars.default_page_builder_sites = response.data;
 						$('.astra-sites-show-favorite-button').removeClass('active');
