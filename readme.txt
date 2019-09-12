@@ -118,7 +118,7 @@ We are open to suggestions and would love to work on topics that our users are l
 == Changelog ==
 
 v1.3.19 - 12-September-2019
-- Improvement: Added siteground query parameter support for siteground sites.
+- Improvement: Allow extra query parameters to be added to the API calls for Astra Sites using filters.
 
 v1.3.18 - 5-September-2019
 - Improvement: Error handling while getting import data from API request.
