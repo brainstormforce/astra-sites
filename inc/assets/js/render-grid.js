@@ -212,6 +212,12 @@
 			}
 		},
 
+		_apiAddParam_siteground: function() {
+			if( astraSitesAdmin['siteground'] ) {
+				AstraRender._api_params['siteground'] = astraSitesAdmin['siteground'];
+			}
+		},
+
 		_apiAddParam_astra_site_page_builder: function() {
 			// Add 'astra-site-page-builder'
 			var selected_page_builder_id = jQuery('.filter-links.astra-site-page-builder').find('.current').data('group') || '';
@@ -273,6 +279,7 @@
 			AstraRender._apiAddParam_search();
 			AstraRender._apiAddParam_per_page();
 			AstraRender._apiAddParam_astra_site_category();
+			AstraRender._apiAddParam_siteground();
 			AstraRender._apiAddParam_page();
 			AstraRender._apiAddParam_astra_site_page_builder();
 			AstraRender._apiAddParam_site_url();
