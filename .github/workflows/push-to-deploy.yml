@@ -1,8 +1,8 @@
 name: Deploy to WordPress.org
 on:
   push:
-    branches:
-    - refs/tags/*
+    tags:
+    - "*"
 jobs:
   tag:
     name: New tag
@@ -12,7 +12,5 @@ jobs:
     - name: WordPress Plugin Deploy
       uses: 10up/action-wordpress-plugin-deploy@master
       env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         SVN_PASSWORD: ${{ secrets.SVN_PASSWORD }}
         SVN_USERNAME: ${{ secrets.SVN_USERNAME }}
-        SLUG: astra-sites
