@@ -76,10 +76,6 @@
 				.done(function (result) {
 					if( result.success ) {
 						$('#astra-theme-activation-nag a').text( AstraSitesInstallThemeVars.activated );
-
-						setTimeout(function() {
-							location.reload();
-						}, 1000);
 					}
 
 				});

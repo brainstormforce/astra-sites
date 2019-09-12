@@ -670,7 +670,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				array(
 					'installed'  => __( 'Installed! Activating..', 'astra-sites' ),
 					'activating' => __( 'Activating..', 'astra-sites' ),
-					'activated'  => __( 'Activated! Reloading..', 'astra-sites' ),
+					'activated'  => __( 'Activated!', 'astra-sites' ),
 					'installing' => __( 'Installing..', 'astra-sites' ),
 					'ajaxurl'    => esc_url( admin_url( 'admin-ajax.php' ) ),
 				)
