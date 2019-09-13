@@ -18,8 +18,6 @@ defined( 'ABSPATH' ) or exit;
 <div class="wrap" id="astra-sites-admin" data-slug="<?php echo $global_cpt_meta['cpt_slug']; ?>">
 
 	<?php
-
-	// DEBUGGING PURPOSE ONLY.
 	if ( isset( $_GET['debug'] ) ) {
 		$crons  = _get_cron_array();
 		$events = array();
@@ -60,7 +58,7 @@ defined( 'ABSPATH' ) or exit;
 		$temp  = get_option( 'astra-sites-batch-status-string', '' );
 		$temp .= isset( $events['wp_astra_site_importer_cron'] ) ? '<br/>Batch: Recheck batch in ' . human_time_diff( time(), $events['wp_astra_site_importer_cron'] ) : '<br/>Batch: Not Started! Until the Transient expire.';
 		?>
-		<div class="batch-log"><?php echo $temp; ?><br> <?php echo $status; ?></div>
+		<div class="batch-log"><?php echo wp_kses_post( $temp ); ?><br> <?php echo wp_kses_post( $status ); ?></div>
 	<?php } ?>
 
 	<?php do_action( 'astra_sites_before_site_grid' ); ?>
@@ -255,7 +253,7 @@ defined( 'ABSPATH' ) or exit;
 ?>
 <script type="text/template" id="tmpl-astra-sites-third-party-required-plugins">
 	<div class="astra-sites-third-party-required-plugins-wrap">
-		<h3 class="theme-name"><?php esc_html_e( 'Required Plugin Missing', 'astra-sites' ); ?></h3>
+		<h3 class="theme-name"><?php esc_html_e( 'Required Plugins Missing', 'astra-sites' ); ?></h3>
 		<p><?php esc_html_e( 'This starter site requires premium plugins. As these are third party premium plugins, you\'ll need to purchase, install and activate them first.', 'astra-sites' ); ?></p>
 		<ul class="astra-sites-third-party-required-plugins">
 			<# for ( key in data ) { #>
@@ -317,17 +315,6 @@ defined( 'ABSPATH' ) or exit;
 										<h3 class="theme-name">
 											{{{ data.pages[page_id]['title'] }}}
 										</h3>
-										<#
-										/*var fav_class = "";
-										var fav_flag = false;
-										for ( fav_item in data.args.favorites ) {
-											if ( data.items[ page_id ].id.toString() == data.args.favorites[fav_item] ) {
-												fav_class = "is-favorite";
-												fav_flag = true;
-												break;
-											}
-										}*/
-										#>
 									</div>
 								</div>
 							</div>

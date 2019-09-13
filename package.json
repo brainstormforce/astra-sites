@@ -1,6 +1,6 @@
 {
   "name": "astra-sites",
-  "version": "1.3.18",
+  "version": "2.0.0",
   "main": "Gruntfile.js",
   "author": "Import Astra Starter Sites with just one click.",
   "devDependencies": {

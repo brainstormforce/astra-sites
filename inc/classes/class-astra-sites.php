@@ -34,7 +34,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		/**
 		 * Localization variable
 		 *
-		 * @since  x.x.x
+		 * @since  2.0.0
 		 * @var (Array) $local_vars
 		 */
 		public static $local_vars = array();
@@ -92,7 +92,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		/**
 		 * API Request
 		 *
-		 * @since x.x.x
+		 * @since 2.0.0
 		 */
 		public function api_request() {
 			$url = isset( $_POST['url'] ) ? $_POST['url'] : '';
@@ -121,7 +121,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		/**
 		 * Add Predefined Variables
 		 *
-		 * @since x.x.x
+		 * @since 2.0.0
 		 */
 		public function add_predefined_variables() {
 
@@ -150,7 +150,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		/**
 		 * Add/Remove Favorite.
 		 *
-		 * @since  x.x.x
+		 * @since  2.0.0
 		 */
 		public function add_to_favorite() {
 
@@ -194,7 +194,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		/**
 		 * Start Batch Process after Elementor Page Import.
 		 *
-		 * @since  x.x.x
+		 * @since  2.0.0
 		 */
 		public function start_batch_process() {
 
@@ -228,7 +228,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		/**
 		 * Import Template.
 		 *
-		 * @since  x.x.x
+		 * @since  2.0.0
 		 */
 		public function create_template() {
 
@@ -294,7 +294,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		/**
 		 * Import Page.
 		 *
-		 * @since  x.x.x
+		 * @since  2.0.0
 		 */
 		public function create_page() {
 			if ( ! current_user_can( 'manage_options' ) ) {
@@ -431,7 +431,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		/**
 		 * Import Post Meta
 		 *
-		 * @since x.x.x
+		 * @since 2.0.0
 		 *
 		 * @param  integer $post_id  Post ID.
 		 * @param  array   $metadata  Post meta.
@@ -708,7 +708,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		/**
 		 * Returns Localization Variables.
 		 *
-		 * @since x.x.x
+		 * @since 2.0.0
 		 */
 		public function get_local_vars() {
 
@@ -766,7 +766,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 						'importFailedBtnLarge'     => __( 'Error! Read Possibilities.', 'astra-sites' ),
 						'viewSite'                 => __( 'Done! View Site', 'astra-sites' ),
 						'importFailBtn'            => __( 'Import failed.', 'astra-sites' ),
-						'importFailBtnLarge'       => __( 'Import failed. See error log.', 'astra-sites' ),
+						'importFailBtnLarge'       => __( 'Import failed.', 'astra-sites' ),
 						'importDemo'               => __( 'Import This Site', 'astra-sites' ),
 						'importingDemo'            => __( 'Importing..', 'astra-sites' ),
 					),
@@ -802,7 +802,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		/**
 		 * Register module required js on elementor's action.
 		 *
-		 * @since x.x.x
+		 * @since 2.0.0
 		 */
 		function register_widget_scripts() {
 
@@ -869,7 +869,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		/**
 		 * Register module required js on elementor's action.
 		 *
-		 * @since x.x.x
+		 * @since 2.0.0
 		 */
 		function popup_styles() {
 
@@ -901,7 +901,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		/**
 		 * Get all blocks
 		 *
-		 * @since x.x.x
+		 * @since 2.0.0
 		 * @return array All Elementor Blocks.
 		 */
 		function get_all_blocks() {
@@ -982,7 +982,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		/**
 		 * Required Plugins
 		 *
-		 * @since x.x.x
+		 * @since 2.0.0
 		 *
 		 * @return void
 		 */
@@ -1007,17 +1007,17 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				'learndash-course-grid' => array(
 					'init' => 'learndash-course-grid/learndash_course_grid.php',
 					'name' => 'LearnDash Course Grid',
-					'link' => 'https://www.learndash.com/add-on/course-grid/',
+					'link' => 'https://www.brainstormforce.com/go/learndash-course-grid/',
 				),
 				'sfwd-lms'              => array(
 					'init' => 'sfwd-lms/sfwd_lms.php',
 					'name' => 'LearnDash LMS',
-					'link' => 'https://www.learndash.com/',
+					'link' => 'https://brainstormforce.com/go/learndash/',
 				),
 				'learndash-woocommerce' => array(
 					'init' => 'learndash-woocommerce/learndash_woocommerce.php',
 					'name' => 'LearnDash WooCommerce Integration',
-					'link' => 'https://www.learndash.com/add-on/woocommerce/',
+					'link' => 'https://www.brainstormforce.com/go/learndash-woocommerce/',
 				),
 			);
 
@@ -1130,7 +1130,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		/**
 		 * Get Default Page Builders
 		 *
-		 * @since x.x.x
+		 * @since 2.0.0
 		 * @return array
 		 */
 		function get_default_page_builders() {
@@ -1161,7 +1161,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		/**
 		 * Get Page Builders
 		 *
-		 * @since x.x.x
+		 * @since 2.0.0
 		 * @return array
 		 */
 		function get_page_builders() {
@@ -1178,7 +1178,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		/**
 		 * Get License Key
 		 *
-		 * @since x.x.x
+		 * @since 2.0.0
 		 * @return array
 		 */
 		function get_license_key() {

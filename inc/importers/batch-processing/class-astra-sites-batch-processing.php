@@ -123,7 +123,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 		/**
 		 * Import Categories
 		 *
-		 * @since x.x.x
+		 * @since 2.0.0
 		 * @return void
 		 */
 		function import_categories() {
@@ -134,7 +134,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 		/**
 		 * Import Page Builders
 		 *
-		 * @since x.x.x
+		 * @since 2.0.0
 		 * @return void
 		 */
 		function import_page_builders() {
@@ -145,7 +145,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 		/**
 		 * Import Blocks
 		 *
-		 * @since x.x.x
+		 * @since 2.0.0
 		 * @return void
 		 */
 		function import_blocks() {
@@ -156,7 +156,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 		/**
 		 * Import Sites
 		 *
-		 * @since x.x.x
+		 * @since 2.0.0
 		 * @return void
 		 */
 		function import_sites() {
@@ -183,7 +183,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 		/**
 		 * Sites Requests Count
 		 *
-		 * @since x.x.x
+		 * @since 2.0.0
 		 * @return void
 		 */
 		function sites_requests_count() {
@@ -200,7 +200,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 		/**
 		 * Update Library Complete
 		 *
-		 * @since x.x.x
+		 * @since 2.0.0
 		 * @return void
 		 */
 		function update_library_complete() {
@@ -211,7 +211,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 		/**
 		 * Update Library
 		 *
-		 * @since x.x.x
+		 * @since 2.0.0
 		 * @return void
 		 */
 		function update_library() {
@@ -230,7 +230,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 		/**
 		 * Start Importer
 		 *
-		 * @since x.x.x
+		 * @since 2.0.0
 		 * @return void
 		 */
 		function start_importer() {
@@ -262,7 +262,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 		/**
 		 * Process Batch
 		 *
-		 * @since x.x.x
+		 * @since 2.0.0
 		 * @return mixed
 		 */
 		function process_batch() {
@@ -345,7 +345,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 		/**
 		 * Process Import
 		 *
-		 * @since x.x.x
+		 * @since 2.0.0
 		 *
 		 * @return mixed Null if process is already started.
 		 */

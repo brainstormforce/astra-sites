@@ -48,7 +48,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Importer' ) ) :
 		/**
 		 * Import Categories
 		 *
-		 * @since x.x.x
+		 * @since 2.0.0
 		 * @return void
 		 */
 		public function import_categories() {
@@ -71,7 +71,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Importer' ) ) :
 		/**
 		 * Import Page Builders
 		 *
-		 * @since x.x.x
+		 * @since 2.0.0
 		 * @return void
 		 */
 		public function import_page_builders() {
@@ -100,7 +100,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Importer' ) ) :
 		/**
 		 * Import Blocks
 		 *
-		 * @since x.x.x
+		 * @since 2.0.0
 		 * @param  integer $page Page number.
 		 * @return void
 		 */

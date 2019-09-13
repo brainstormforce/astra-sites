@@ -1944,7 +1944,7 @@ var AstraSitesAjaxQueue = (function() {
 		 *
 		 * @param  {string} data Error message.
 		 */
-		_importFailMessage: function( message, from ) {
+		_importFailMessage: function( message ) {
 
 			$('.astra-demo-import')
 				.addClass('go-pro button-primary')
@@ -1954,39 +1954,12 @@ var AstraSitesAjaxQueue = (function() {
 				.append('<i class="dashicons dashicons-external"></i>')
 				.removeClass('astra-demo-import');
 
-			// Add the doc link due to import log file not generated.
-			if( 'undefined' === from ) {
+			AstraSitesAdmin._log_title( message );
 
-				$('.wp-full-overlay-header .go-pro').text( astraSitesVars.strings.importFailedBtnSmall );
-				$('.wp-full-overlay-footer .go-pro').text( astraSitesVars.strings.importFailedBtnLarge );
-				$('.go-pro').attr('href', astraSitesVars.log.serverConfiguration );
 
-			// Add the import log file link.
-			} else {
+			$('.wp-full-overlay-header .go-pro').text( astraSitesAdmin.strings.importFailBtn );
+			$('.wp-full-overlay-footer .go-pro').text( astraSitesAdmin.strings.importFailBtnLarge )
 
-				$('.wp-full-overlay-header .go-pro').text( astraSitesVars.strings.importFailBtn );
-				$('.wp-full-overlay-footer .go-pro').text( astraSitesVars.strings.importFailBtnLarge )
-
-				// Add the import log file link.
-				if( 'undefined' !== AstraSitesAdmin.log_file_url ) {
-					$('.go-pro').attr('href', AstraSitesAdmin.log_file_url );
-				} else {
-					$('.go-pro').attr('href', astraSitesVars.log.serverConfiguration );
-				}
-			}
-
-			var output  = '<div class="astra-api-error notice notice-error notice-alt is-dismissible">';
-				output += '	<p>'+message+'</p>';
-				output += '	<button type="button" class="notice-dismiss">';
-				output += '		<span class="screen-reader-text">'+commonL10n.dismiss+'</span>';
-				output += '	</button>';
-				output += '</div>';
-
-			// Fail Notice.
-			$('.install-theme-info').append( output );
-			// !important to add trigger.
-			// Which reinitialize the dismiss error message events.
-			$(document).trigger('wp-updates-notice-added');
 		},
 
 		ucwords: function( str ) {
@@ -2337,7 +2310,6 @@ var AstraSitesAjaxQueue = (function() {
 			// .attr('data-slug', 'site-pages');
 			AstraSitesAdmin.action_slug = 'site-pages';
 			astraSitesVars.cpt_slug = 'site-pages';
-
 
 			if( AstraSitesAdmin.visited_sites_and_pages[ page_id ] ) {
 

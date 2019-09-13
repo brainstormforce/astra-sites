@@ -154,7 +154,7 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 		/**
 		 * Get Page Builder Sites
 		 *
-		 * @since x.x.x
+		 * @since 2.0.0
 		 *
 		 * @param  string $default_page_builder default page builder slug.
 		 * @return array page builder sites.
@@ -215,7 +215,7 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 		/**
 		 * Update Settings
 		 *
-		 * @return array Stored settings.
+		 * @param  array $args Arguments.
 		 */
 		public function update_settings( $args = array() ) {
 
@@ -515,7 +515,7 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 		/**
 		 * Get Default Page Builder
 		 *
-		 * @since x.x.x
+		 * @since 2.0.0
 		 *
 		 * @return mixed page builders or empty string.
 		 */
@@ -536,7 +536,7 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 		/**
 		 * Get Page Builders
 		 *
-		 * @since x.x.x
+		 * @since 2.0.0
 		 *
 		 * @param  string $slug Page Builder Slug.
 		 * @return array page builders.

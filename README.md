@@ -5,7 +5,7 @@
 **Requires at least:** 4.4  
 **Requires PHP:** 5.3  
 **Tested up to:** 5.2  
-**Stable tag:** 1.3.18  
+**Stable tag:** 2.0.0  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -116,6 +116,14 @@ We are open to suggestions and would love to work on topics that our users are l
 3. Click the import site button to start the import process.
 
 ## Changelog ##
+
+v2.0.0 - Unreleased
+- New: Improve the sites and pages loading time speed.
+- New: Added block import support with 200+ blocks in elementor editor window.
+- New: Added single page import as elementor template in elementor editor window.
+- New: Added single page import support from any demo site with 1800+ pages.
+- Improvement: Showing all Astra sites with more user friendly and interactive UI.
+- Improvement: Updated the Astra Notices library.
 
 v1.3.18 - 5-September-2019
 - Improvement: Error handling while getting import data from API request.

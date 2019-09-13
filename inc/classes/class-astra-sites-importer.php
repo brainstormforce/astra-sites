@@ -117,7 +117,7 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) {
 		/**
 		 * Change flow status
 		 *
-		 * @since x.x.x
+		 * @since 2.0.0
 		 *
 		 * @param  array $args Flow query args.
 		 * @return array Flow query args.
@@ -130,7 +130,7 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) {
 		/**
 		 * Track Flow
 		 *
-		 * @since x.x.x
+		 * @since 2.0.0
 		 *
 		 * @param  integer $flow_id Flow ID.
 		 * @return void
@@ -443,6 +443,10 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) {
 				} else {
 					return new WP_Error( 'api_invalid_response_code', $response->get_error_message() );
 				}
+			}
+
+			if ( wp_remote_retrieve_response_code( $response ) !== 200 ) {
+				return new WP_Error( 'api_invalid_response_code', wp_remote_retrieve_body( $response ) );
 			} else {
 				$data = json_decode( wp_remote_retrieve_body( $response ), true );
 			}
