@@ -115,6 +115,7 @@ var AstraSitesAjaxQueue = (function() {
 		type : 'pages',
 		action : '',
 		masonryObj : [],
+		index : 0,
 
 		init: function() {
 			this._bind();
@@ -175,7 +176,6 @@ var AstraSitesAjaxQueue = (function() {
 						$( document ).on( "astra-sites__elementor-open-after", AstraElementorSitesAdmin._initSites );
 						$( document ).on( "astra-sites__elementor-open-before", AstraElementorSitesAdmin._beforeOpen );
 						$( document ).on( "astra-sites__elementor-plugin-check", AstraElementorSitesAdmin._pluginCheck );
-						$( document ).on( 'ast-site-elementor-page-import-done', AstraElementorSitesAdmin._invokeBatchProcess );
 						$( document ).on( 'astra-sites__elementor-close-before', AstraElementorSitesAdmin._beforeClose );
 
 						$( document ).on( 'astra-sites__elementor-do-step-1', AstraElementorSitesAdmin._step1 );
@@ -183,8 +183,6 @@ var AstraSitesAjaxQueue = (function() {
 
 						$( document ).on( 'astra-sites__elementor-goback-step-1', AstraElementorSitesAdmin._goStep1 );
 						$( document ).on( 'astra-sites__elementor-goback-step-2', AstraElementorSitesAdmin._goStep2 );
-
-						elementor.channels.editor.on( 'saved', AstraElementorSitesAdmin._afterSave );
 
 						// Plugin install & activate.
 						$( document ).on( 'wp-plugin-installing' , AstraElementorSitesAdmin._pluginInstalling );
@@ -388,16 +386,6 @@ var AstraSitesAjaxQueue = (function() {
 				$scope.find( '.dialog-lightbox-content-block' ).show();
 			}
 			$scope.find( '.astra-sites-content-wrap' ).trigger( 'scroll' );
-		},
-
-		_afterSave: function( e, data ) {
-
-			if ( true === AstraElementorSitesAdmin.insertActionFlag ) {
-
-				AstraElementorSitesAdmin.insertActionFlag = false;
-				$( document ).trigger( 'ast-site-elementor-page-import-done', { id: elementor.config.document.id } );
-			}
-
 		},
 
 		_importWPForm: function( wpforms_url, callback ) {
@@ -924,57 +912,63 @@ var AstraSitesAjaxQueue = (function() {
 				// let templateModel = elementor.getPanelView().getCurrentPageView();
 				let page_content = JSON.parse( data[ 'post-meta' ][ '_elementor_data' ]);
 				let page_settings = '';
+				let api_url = '';
 
-				if ( undefined !== data[ 'post-meta' ][ '_elementor_page_settings' ] ) {
-					page_settings = PHP.parse( data[ 'post-meta' ][ '_elementor_page_settings' ] );
+				if ( 'blocks' == AstraElementorSitesAdmin.type ) {
+					api_url = astraElementorSites.ApiURL + 'astra-blocks/' + data['id'];
+				} else {
+					api_url = AstraElementorSitesAdmin.templateData['astra-page-api-url'];
 				}
 
-				if ( '' != page_settings ) {
-					if ( undefined != page_settings.astra_sites_page_setting_enable ) {
-							page_settings.astra_sites_page_setting_enable = 'yes';
+				$.ajax({
+					url  : astraElementorSites.ajaxurl,
+					type : 'POST',
+					data : {
+						action : 'astra-page-elementor-batch-process',
+						id : elementor.config.document.id,
+						url : api_url
+					},
+				})
+				.fail(function( jqXHR ){
+					console.log( jqXHR );
+				})
+				.done(function ( response ) {
+
+					page_content = response.data;
+
+					console.log(page_content);
+
+					if ( undefined !== data[ 'post-meta' ][ '_elementor_page_settings' ] ) {
+						page_settings = PHP.parse( data[ 'post-meta' ][ '_elementor_page_settings' ] );
 					}
 
-					if ( undefined != page_settings.astra_sites_body_font_family ) {
-						page_settings.astra_sites_body_font_family = page_settings.astra_sites_body_font_family.replace( /'/g, '' );
-					}
+					if ( '' != page_settings ) {
+						if ( undefined != page_settings.astra_sites_page_setting_enable ) {
+								page_settings.astra_sites_page_setting_enable = 'yes';
+						}
 
-					for ( var i = 1; i < 7; i++ ) {
+						if ( undefined != page_settings.astra_sites_body_font_family ) {
+							page_settings.astra_sites_body_font_family = page_settings.astra_sites_body_font_family.replace( /'/g, '' );
+						}
 
-						if ( undefined != page_settings['astra_sites_heading_' + i + '_font_family'] ) {
-							page_settings['astra_sites_heading_' + i + '_font_family'] = page_settings['astra_sites_heading_' + i + '_font_family'].replace( /'/g, '' );
+						for ( var i = 1; i < 7; i++ ) {
+
+							if ( undefined != page_settings['astra_sites_heading_' + i + '_font_family'] ) {
+								page_settings['astra_sites_heading_' + i + '_font_family'] = page_settings['astra_sites_heading_' + i + '_font_family'].replace( /'/g, '' );
+							}
 						}
 					}
-				}
 
-				if ( undefined !== page_content ) {
-					//elementor.channels.data.trigger('template:before:insert', templateModel);
-					elementor.getPreviewView().addChildModel(page_content, { at : 0 } || {});
-					//elementor.channels.data.trigger('template:after:insert', templateModel);
-					elementor.settings.page.model.setExternalChange(page_settings);
-				}
-				AstraElementorSitesAdmin.insertActionFlag = true;
-				AstraElementorSitesAdmin._close();
-				$( '#elementor-panel-saver-button-publish' ).click();
+					if ( undefined !== page_content && '' !== page_content ) {
+						//elementor.channels.data.trigger('template:before:insert', templateModel);
+						elementor.getPreviewView().addChildModel( page_content, { at : AstraElementorSitesAdmin.index } || {} );
+						//elementor.channels.data.trigger('template:after:insert', templateModel);
+						elementor.settings.page.model.setExternalChange( page_settings );
+					}
+					AstraElementorSitesAdmin.insertActionFlag = true;
+					AstraElementorSitesAdmin._close();
+				});
 			}
-		},
-
-		_invokeBatchProcess: function( e, attr ) {
-
-			$.ajax({
-				url  : astraElementorSites.ajaxurl,
-				type : 'POST',
-				data : {
-					action : 'astra-sites-elementor-start-batch-process',
-					id : attr.id,
-					post : AstraElementorSitesAdmin.insertData
-				},
-			})
-			.fail(function( jqXHR ){
-				console.log( jqXHR );
-		    })
-			.done(function ( response ) {
-				console.log(response);
-			});
 		},
 
 		_goBack: function( e ) {
@@ -1232,8 +1226,10 @@ var AstraSitesAjaxQueue = (function() {
 			})
 			.then(data => {
 				if( 'object' === typeof data ) {
-					AstraElementorSitesAdmin.templateData = data['items'];
-					AstraElementorSitesAdmin._requiredPluginsMarkup( data['items']['site-pages-required-plugins'] );
+					if ( undefined !== data && undefined !== data['items'] ) {
+						AstraElementorSitesAdmin.templateData = data['items'];
+						AstraElementorSitesAdmin._requiredPluginsMarkup( data['items']['site-pages-required-plugins'] );
+					}
 			   	}
 			});
 		},
@@ -1410,6 +1406,8 @@ var AstraSitesAjaxQueue = (function() {
 
 		_open: function( e ) {
 			$( document ).trigger( 'astra-sites__elementor-open-before' );
+			AstraElementorSitesAdmin.index = $( this ).closest( '.elementor-add-section' ).prevAll().length;
+			AstraElementorSitesAdmin._home();
 			$scope.fadeIn();
 			$( document ).trigger( 'astra-sites__elementor-open-after' );
 		},

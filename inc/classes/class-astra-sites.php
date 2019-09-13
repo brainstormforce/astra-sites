@@ -84,9 +84,48 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			add_action( 'wp_ajax_astra-sites-create-template', array( $this, 'create_template' ) );
 			add_action( 'wp_ajax_astra-sites-getting-started-notice', array( $this, 'getting_started_notice' ) );
 			add_action( 'wp_ajax_astra-sites-favorite', array( $this, 'add_to_favorite' ) );
-			add_action( 'wp_ajax_astra-sites-elementor-start-batch-process', array( $this, 'start_batch_process' ) );
-
 			add_action( 'wp_ajax_astra-sites-api-request', array( $this, 'api_request' ) );
+			add_action( 'wp_ajax_astra-page-elementor-batch-process', array( $this, 'elementor_batch_process' ) );
+		}
+
+		/**
+		 * Elementor Batch Process via AJAX
+		 *
+		 * @since x.x.x
+		 */
+		public function elementor_batch_process() {
+
+			if ( ! isset( $_POST['url'] ) ) {
+				wp_send_json_error( __( 'Invalid API URL', 'astra-sites' ) );
+			}
+
+			$response = wp_remote_get( $_POST['url'] );
+
+			if ( is_wp_error( $response ) ) {
+				wp_send_json_error( wp_remote_retrieve_body( $response ) );
+			}
+
+			$body = wp_remote_retrieve_body( $response );
+			$data = json_decode( $body, true );
+			if ( ! isset( $data['post-meta']['_elementor_data'] ) ) {
+				wp_send_json_error( __( 'Invalid Post Meta', 'astra-sites' ) );
+			}
+
+			$meta    = json_decode( $data['post-meta']['_elementor_data'], true );
+			$post_id = $_POST['id'];
+
+			if ( empty( $post_id ) || empty( $meta ) ) {
+				wp_send_json_error( __( 'Invalid Post ID or Elementor Meta', 'astra-sites' ) );
+			}
+
+			if ( isset( $data['astra-page-options-data'] ) && isset( $data['astra-page-options-data']['elementor_load_fa4_shim'] ) ) {
+				update_option( 'elementor_load_fa4_shim', $data['astra-page-options-data']['elementor_load_fa4_shim'] );
+			}
+
+			$import      = new \Elementor\TemplateLibrary\Astra_Elementor_Pages();
+			$import_data = $import->import( $post_id, $meta );
+
+			wp_send_json_success( $import_data );
 		}
 
 		/**
@@ -189,40 +228,6 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 					'all_favorites' => $new_favorites,
 				)
 			);
-		}
-
-		/**
-		 * Start Batch Process after Elementor Page Import.
-		 *
-		 * @since  2.0.0
-		 */
-		public function start_batch_process() {
-
-			$post_id = isset( $_POST['id'] ) ? absint( $_POST['id'] ) : 0;
-
-			$post = $_POST['post'];
-
-			if ( isset( $post['astra-page-options-data'] ) && isset( $post['astra-page-options-data']['elementor_load_fa4_shim'] ) ) {
-				update_option( 'elementor_load_fa4_shim', $post['astra-page-options-data']['elementor_load_fa4_shim'] );
-			}
-
-			if ( 0 === $post_id ) {
-				wp_send_json_success(
-					array(
-						'success' => false,
-					)
-				);
-				exit;
-			}
-
-			do_action( 'astra_sites_process_single', $post_id );
-
-			wp_send_json_success(
-				array(
-					'success' => true,
-				)
-			);
-			exit;
 		}
 
 		/**
@@ -929,6 +934,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			require_once ASTRA_SITES_DIR . 'inc/lib/astra-notices/class-astra-notices.php';
 			require_once ASTRA_SITES_DIR . 'inc/classes/class-astra-sites-white-label.php';
 			require_once ASTRA_SITES_DIR . 'inc/classes/class-astra-sites-page.php';
+			require_once ASTRA_SITES_DIR . 'inc/classes/class-astra-elementor-pages.php';
 			require_once ASTRA_SITES_DIR . 'inc/classes/compatibility/class-astra-sites-compatibility.php';
 			require_once ASTRA_SITES_DIR . 'inc/classes/class-astra-sites-importer.php';
 		}
