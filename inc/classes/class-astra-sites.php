@@ -782,7 +782,6 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 					'page-builders'              => array(),
 					'categories'                 => array(),
 					'parent_categories'          => array(),
-					'default_page_builder'       => $default_page_builder,
 					'api_sites_and_pages'        => (array) $this->get_all_sites(),
 					'api_sites_and_pages_tags'   => get_option( 'astra-sites-tags', array() ),
 					'license_status'             => $license_status,

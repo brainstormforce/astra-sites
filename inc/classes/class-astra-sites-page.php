@@ -213,6 +213,20 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 		}
 
 		/**
+		 * Update Settings
+		 *
+		 * @return array Stored settings.
+		 */
+		public function update_settings( $args = array() ) {
+
+			$stored_data = get_option( 'astra_sites_settings', array() );
+
+			$new_data = wp_parse_args( $args, $stored_data );
+
+			update_option( 'astra_sites_settings', $new_data );
+		}
+
+		/**
 		 * Admin settings init
 		 */
 		public function init_admin_settings() {

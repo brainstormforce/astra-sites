@@ -1188,8 +1188,6 @@ var AstraSitesAjaxQueue = (function() {
 				return;
 			}
 
-			console.log( astraSitesVars.default_page_builder_sites );
-
 			if( Object.keys( astraSitesVars.default_page_builder_sites ).length ) {
 				var favorites = AstraSitesAdmin._getParamFromURL('favorites');
 				var search_term = AstraSitesAdmin._getParamFromURL('search');
@@ -1210,7 +1208,11 @@ var AstraSitesAjaxQueue = (function() {
 				}
 
 				// Show single site preview.
+				console.log( astraSitesVars.default_page_builder );
+				
 				var site_id = AstraSitesAdmin._getParamFromURL('astra-site');
+
+				console.log( astraSitesVars.default_page_builder_sites[ site_id ] );
 				if( site_id ) {
 					AstraSitesAdmin.show_pages_by_site_id( site_id );
 				}
@@ -1245,6 +1247,8 @@ var AstraSitesAjaxQueue = (function() {
 				},
 			})
 			.done(function ( response ) {
+				AstraSitesAdmin._clean_url_params( 'astra-site' );
+				AstraSitesAdmin._clean_url_params( 'astra-page' );
 				AstraSitesAdmin._clean_url_params( 'change-page-builder' );
 				location.reload();
 			});

@@ -1987,6 +1987,7 @@ body.loading-content .select-page-builder {
 
 .astra-sites-sync-library-message.notice .notice-dismiss {
     padding: 5px;
+    bottom: 0;
 }
 
 .astra-sites-sync-library-message.notice .notice-dismiss:before {
