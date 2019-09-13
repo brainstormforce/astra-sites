@@ -75,7 +75,7 @@
 				})
 				.done(function (result) {
 					if( result.success ) {
-						$('#astra-theme-activation-nag a').text( AstraSitesInstallThemeVars.activated );
+						$('.astra-sites-theme-action-link').parent().html( AstraSitesInstallThemeVars.activated + ' 🎉' );
 					}
 
 				});

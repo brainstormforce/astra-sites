@@ -372,7 +372,7 @@ defined( 'ABSPATH' ) or exit;
 		if ( 'installed-and-active' !== $theme_status ) {
 			$link_class = 'astra-sites-theme-' . $theme_status;
 			/* translators: %1$s is the plugin name, %2$s is the CSS class name.  */
-			printf( __( '<div id="astra-theme-activation-nag"><p>Astra Theme needs to be active for you to use currently installed "%1$s" plugin.</p><p><a href="#" class="%2$s" data-theme-slug="astra">Install & Activate Now</a></p></div>', 'astra-sites' ), ASTRA_SITES_NAME, $link_class );
+			printf( __( '<hr /><div id="astra-theme-activation-nag"><p>Astra Theme needs to be active for you to use currently installed "%1$s" plugin.</p><p><a href="#" class="astra-sites-theme-action-link %2$s" data-theme-slug="astra">Install & Activate Now</a></p></div>', 'astra-sites' ), ASTRA_SITES_NAME, $link_class );
 		}
 		?>
 	</div>

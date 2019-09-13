@@ -2580,6 +2580,7 @@ var AstraSitesAjaxQueue = (function() {
 				return;
 			}
 
+			
 			$( '.astra-sites-page-import-popup .site-install-site-button, .preview-page-from-search-result .site-install-site-button' ).addClass('updating-message installing').text( 'Importing..' );
 	
 			AstraSitesAdmin.import_start_time = new Date();
