@@ -118,6 +118,7 @@ We are open to suggestions and would love to work on topics that our users are l
 ## Changelog ##
 
 v2.0.0 - Unreleased
+- New: Added favorite or unfavorite the demo site.
 - New: Improve the sites and pages loading time speed.
 - New: Added block import support with 200+ blocks in elementor editor window.
 - New: Added single page import as elementor template in elementor editor window.
