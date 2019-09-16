@@ -187,7 +187,7 @@ if ( ! class_exists( 'Astra_Sites_Compatibility_Elementor' ) ) :
 				array(
 					'name'      => 'astra_sites_body',
 					'label'     => __( 'Body', 'astra-sites' ),
-					'selector'  => 'body',
+					'selector'  => 'body, button, input, select, textarea',
 					'scheme'    => Scheme_Typography::TYPOGRAPHY_3,
 					'condition' => array(
 						'astra_sites_page_setting_enable' => 'yes',
@@ -208,7 +208,12 @@ if ( ! class_exists( 'Astra_Sites_Compatibility_Elementor' ) ) :
 					'type'      => Controls_Manager::FONT,
 					'default'   => '',
 					'selectors' => array(
-						'h1, h2, h3, h4, h5, h6' => 'font-family: "{{VALUE}}"' . $default_fonts . ';',
+						'h1, .entry-content h1, .entry-content h1 a' => 'font-family: "{{VALUE}}"' . $default_fonts . ';',
+						'h2, .entry-content h2, .entry-content h2 a' => 'font-family: "{{VALUE}}"' . $default_fonts . ';',
+						'h3, .entry-content h3, .entry-content h3 a' => 'font-family: "{{VALUE}}"' . $default_fonts . ';',
+						'h4, .entry-content h4, .entry-content h4 a' => 'font-family: "{{VALUE}}"' . $default_fonts . ';',
+						'h5, .entry-content h5, .entry-content h5 a' => 'font-family: "{{VALUE}}"' . $default_fonts . ';',
+						'h6, .entry-content h6, .entry-content h6 a' => 'font-family: "{{VALUE}}"' . $default_fonts . ';',
 					),
 					'condition' => array(
 						'astra_sites_page_setting_enable' => 'yes',
@@ -223,7 +228,7 @@ if ( ! class_exists( 'Astra_Sites_Compatibility_Elementor' ) ) :
 						'name'      => 'astra_sites_heading_' . $i,
 						/* translators: %s: Heading 1-6 type */
 						'label'     => sprintf( __( 'Heading %s', 'astra-sites' ), $i ),
-						'selector'  => "body h{$i}, body .elementor-widget-heading h{$i}.elementor-heading-title",
+						'selector'  => "body .entry-content h{$i}, body .entry-content .elementor-widget-heading h{$i}.elementor-heading-title",
 						'scheme'    => Scheme_Typography::TYPOGRAPHY_1,
 						'condition' => array(
 							'astra_sites_page_setting_enable' => 'yes',

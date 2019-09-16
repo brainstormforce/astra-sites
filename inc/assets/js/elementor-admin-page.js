@@ -231,6 +231,16 @@ var AstraSitesAjaxQueue = (function() {
 				$scope.find( '.ast-library-template-insert' ).removeClass( 'installing' );
 				$scope.find( '.ast-library-template-insert' ).text( 'Imported' );
 				$scope.find( '.ast-library-template-insert' ).addClass( 'action-done' );
+
+				if ( $scope.find( '.ast-sites-floating-notice-wrap' ).hasClass( 'slide-in' ) ) {
+
+					$scope.find( '.ast-sites-floating-notice-wrap' ).removeClass( 'slide-in' );
+					$scope.find( '.ast-sites-floating-notice-wrap' ).addClass( 'slide-out' );
+
+					setTimeout( function() {
+						$scope.find( '.ast-sites-floating-notice-wrap' ).removeClass( 'slide-out' );
+					}, 200 );
+				}
 			}
 		},
 
@@ -438,6 +448,9 @@ var AstraSitesAjaxQueue = (function() {
 					'title'  : ( AstraElementorSitesAdmin.type == 'pages' ) ? astraElementorSites.default_page_builder_sites[ AstraElementorSitesAdmin.site_id ]['title'] : '',
 					'type'   : AstraElementorSitesAdmin.type
 				},
+				beforeSend: function() {
+					console.log( 'Creating Template..' );
+				}
 			})
 			.fail(function( jqXHR ){
 				console.log( jqXHR );
@@ -532,6 +545,8 @@ var AstraSitesAjaxQueue = (function() {
 			if( 0 === AstraElementorSitesAdmin.requiredPlugins.length ) {
 				return;
 			}
+
+			console.log( 'Bulk Plugin Install Process Started' );
 
 			// If has class the skip-plugins then,
 			// Avoid installing 3rd party plugins.
@@ -855,6 +870,8 @@ var AstraSitesAjaxQueue = (function() {
 
 		_enableImport: function() {
 
+			console.log( 'Import Enabled' );
+
 			if ( 'pages' == AstraElementorSitesAdmin.type ) {
 
 				AstraElementorSitesAdmin._importWPForm( AstraElementorSitesAdmin.templateData['astra-site-wpforms-path'], function( form_response ) {
@@ -894,6 +911,15 @@ var AstraSitesAjaxQueue = (function() {
 				return;
 			}
 
+			console.log( 'Insert Process Started' );
+
+			if ( 'pages' == AstraElementorSitesAdmin.type ) {
+
+				$scope.find( '#ast-sites-floating-notice-wrap-id .ast-sites-floating-notice' ).html( 'Inserting this Page will add a common Page Setting as <strong>Astra Site Settings</strong>. You can turn the setting off if you do not wish to use them. <button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss</span></button>' );
+				$scope.find( '#ast-sites-floating-notice-wrap-id' ).addClass( 'slide-in' );
+			}
+
+
 			AstraElementorSitesAdmin.canInsert = false;
 			var str = ( AstraElementorSitesAdmin.type == 'pages' ) ? 'Template' : 'Block';
 
@@ -928,6 +954,9 @@ var AstraSitesAjaxQueue = (function() {
 						id : elementor.config.document.id,
 						url : api_url
 					},
+					beforeSend: function() {
+						console.log( 'Demo Batch Process Started..' );
+					},
 				})
 				.fail(function( jqXHR ){
 					console.log( jqXHR );
@@ -936,7 +965,7 @@ var AstraSitesAjaxQueue = (function() {
 
 					page_content = response.data;
 
-					console.log(page_content);
+					console.log( page_content );
 
 					if ( undefined !== data[ 'post-meta' ][ '_elementor_page_settings' ] ) {
 						page_settings = PHP.parse( data[ 'post-meta' ][ '_elementor_page_settings' ] );
@@ -1424,6 +1453,18 @@ var AstraSitesAjaxQueue = (function() {
 			// Hide Back button.
 			$scope.find( '.back-to-layout' ).css( 'visibility', 'hidden' );
 			$scope.find( '.back-to-layout' ).css( 'opacity', '0' );
+
+			AstraElementorSitesAdmin._autoCloseNotice();
+		},
+
+		_autoCloseNotice: function( e ) {
+			
+			if( $scope.find('.ast-sites-floating-notice-wrap.refreshed-notice').length ) {
+
+				setTimeout(function() {
+					$scope.find('.ast-sites-floating-notice-wrap.refreshed-notice').find( '.notice-dismiss' ).click();
+				}, 6000);
+			}
 		},
 
 		_initSites: function( e ) {

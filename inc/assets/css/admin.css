@@ -1849,11 +1849,6 @@ body.loading-content .select-page-builder {
     pointer-events: none;
 }
 
-.theme-browser .theme .site-preview > .theme-screenshot.no-featured-tiny-image {
-    background-position: center center;
-    background-size: 80%;
-}
-
 .theme-browser .themes {
     clear: both;
     margin: -1%;

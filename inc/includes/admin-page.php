@@ -133,7 +133,6 @@ defined( 'ABSPATH' ) or exit;
 		var favorite_title      = '<?php _e( 'Make as Favorite', 'astra-sites' ); ?>';
 		var featured_image_url = data[site_id]['featured-image-url'];
 		var thumbnail_image_url = data[site_id]['thumbnail-image-url'] || featured_image_url;
-		var tiny_image_url      = data[site_id]['tiny-image-url'] || thumbnail_image_url;
 
 		var site_type = data[site_id]['astra-sites-type'] || '';
 		var page_id = '';
@@ -297,19 +296,13 @@ defined( 'ABSPATH' ) or exit;
 										featured_image_class = ' no-featured-image ';
 									}
 
-									var featured_tiny_image = data.pages[page_id]['tiny-image-url'] || '';
-									if( '' === featured_tiny_image ) {
-										featured_tiny_image = '<?php echo esc_url( ASTRA_SITES_URI . 'inc/assets/images/placeholder.png' ); ?>';
-										featured_image_class = ' no-featured-tiny-image ';
-									}
-
 									var thumbnail_image = data.pages[page_id]['thumbnail-image-url'] || '';
 									if( '' === thumbnail_image ) {
 										thumbnail_image = featured_image;
 									}
 									#>
 									<span class="site-preview" data-title="{{ data.pages[page_id]['title'] }}">
-										<div class="theme-screenshot one loading {{ featured_image_class }}" data-src="{{ thumbnail_image }}" data-featured-src="{{ featured_image }}" data-tiny-src="{{ featured_tiny_image }}" ></div>
+										<div class="theme-screenshot one loading {{ featured_image_class }}" data-src="{{ thumbnail_image }}" data-featured-src="{{ featured_image }}"></div>
 									</span>
 									<div class="theme-id-container">
 										<h3 class="theme-name">
