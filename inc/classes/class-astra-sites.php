@@ -303,7 +303,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		 */
 		public function create_page() {
 			if ( ! current_user_can( 'manage_options' ) ) {
-				return;
+				wp_send_json_error( 'User not have permissions to manage site option.' );
 			}
 
 			$default_page_builder = Astra_Sites_Page::get_instance()->get_setting( 'page_builder' );

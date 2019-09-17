@@ -194,7 +194,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 				wp_send_json_success( $total_requests );
 			}
 
-			wp_send_json_error( $total_requests );
+			wp_send_json_error();
 		}
 
 		/**

@@ -343,7 +343,7 @@ defined( 'ABSPATH' ) or exit;
 		<span class="dashicons close dashicons-no-alt"></span>
 	</div>
 	<div class="astra-sites-import-content">
-		<p><b><?php _e( 'Hurray! The Template is imported successfully! 🎉', 'astra-sites' ); ?></b></p>
+		<p><b><?php _e( 'Hurray! The Site is imported successfully! 🎉', 'astra-sites' ); ?></b></p>
 		<p><?php _e( 'Now go ahead, customize the text, images, and design to make it yours!', 'astra-sites' ); ?></p>
 		<p><?php _e( 'You can now start making changes according to your requirements.', 'astra-sites' ); ?></p>
 

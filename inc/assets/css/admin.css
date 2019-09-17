@@ -1290,7 +1290,7 @@ body.loading-content .select-page-builder {
 #astra-sites-admin {
     margin-left: 15px;
     margin-right: 35px;
-    margin-top: 110px;
+    margin-top: 115px;
 }
 #astra-sites-welcome-form-inline select {
     text-align-last: right;
@@ -1624,9 +1624,6 @@ body.loading-content .select-page-builder {
 
 .single-site {
     display: flex;
-}
-.astra-previewing-single-pages {
-    overflow: hidden;
 }
 
 .single-site-pages {
@@ -1991,7 +1988,7 @@ body.loading-content .select-page-builder {
 
 .appearance_page_astra-sites .astra-sites-sync-library-message.notice {
 	position: absolute;
-    top: 112%;
+    top: 107%;
     right: 2%;
     background: #fff;
     margin: 0;
