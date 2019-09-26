@@ -191,6 +191,7 @@ var AstraSitesAjaxQueue = (function() {
 		cartflows_url     : '',
 		options_data    : '',
 		widgets_data    : '',
+		enabled_extensions    : '',
 		action_slug		: '',
 		import_start_time  : '',
 		import_end_time    : '',
@@ -361,6 +362,7 @@ var AstraSitesAjaxQueue = (function() {
 			$( document ).on( 'click'                     , '.site-import-site-button', AstraSitesAdmin._show_site_popup);
 			$( document ).on( 'click'                     , '.astra-sites-get-agency-bundle-button', AstraSitesAdmin._show_get_agency_bundle_notice);
 			$( document ).on( 'click'                     , '.astra-sites-activate-license-button', AstraSitesAdmin._show_activate_license_notice);
+			$( document ).on( 'click'                     , '.astra-sites-templates-not-available', AstraSitesAdmin._show_skip_templates_notice);
 			$( document ).on( 'click', '.astra-sites-site-import-popup .site-install-site-button', AstraSitesAdmin._resetData);
 
 			// Skip & Import.
@@ -1978,11 +1980,6 @@ var AstraSitesAjaxQueue = (function() {
 
 			event.preventDefault();
 
-
-			var $siteOptions = $( '.wp-full-overlay-header').find('.astra-site-options').val();
-
-			var $enabledExtensions = $( '.wp-full-overlay-header').find('.astra-enabled-extensions').val();
-
 			// Transform the 'Install' button into an 'Activate' button.
 			var $init = $( '.plugin-card-' + response.slug ).data('init');
 			var $name = $( '.plugin-card-' + response.slug ).data('name');
@@ -2002,8 +1999,8 @@ var AstraSitesAjaxQueue = (function() {
 					data: {
 						'action'            : 'astra-required-plugin-activate',
 						'init'              : $init,
-						'options'           : $siteOptions,
-						'enabledExtensions' : $enabledExtensions,
+						'options'           : AstraSitesAdmin.options_data,
+						'enabledExtensions' : AstraSitesAdmin.enabled_extensions,
 					},
 				})
 				.done(function (result) {
@@ -2101,18 +2098,14 @@ var AstraSitesAjaxQueue = (function() {
 
 			$.each( activate_plugins, function(index, single_plugin) {
 
-				var $card    	 = $( '.plugin-card-' + single_plugin.slug ),
-					$siteOptions = $( '.wp-full-overlay-header').find('.astra-site-options').val(),
-					$enabledExtensions = $( '.wp-full-overlay-header').find('.astra-enabled-extensions').val();
-
 				AstraSitesAjaxQueue.add({
 					url: astraSitesVars.ajaxurl,
 					type: 'POST',
 					data: {
 						'action'            : 'astra-required-plugin-activate',
 						'init'              : single_plugin.init,
-						'options'           : $siteOptions,
-						'enabledExtensions' : $enabledExtensions,
+						'options'           : AstraSitesAdmin.options_data,
+						'enabledExtensions' : AstraSitesAdmin.enabled_extensions,
 					},
 					success: function( result ){
 
@@ -2178,13 +2171,28 @@ var AstraSitesAjaxQueue = (function() {
 		_show_activate_license_notice: function(event) {
 			event.preventDefault();
 			$('.astra-sites-result-preview')
-				.removeClass('astra-sites-site-import-popup astra-sites-page-import-popup')
+				.removeClass('astra-sites-site-import-popup astra-sites-skip-templates astra-sites-page-import-popup')
 				.addClass('astra-sites-activate-license')
 				.show();
 
 			var template = wp.template( 'astra-sites-activate-license' );
 	        var output  = '<div class="overlay"></div>';
 	        	output += '<div class="inner"><div class="heading"><h2>Liked this demo?</h2></div><span class="dashicons close dashicons-no-alt"></span><div class="astra-sites-import-content">';
+                output += '</div></div>';
+			$('.astra-sites-result-preview').html( output );
+	        $('.astra-sites-import-content').html( template );
+		},
+
+		_show_skip_templates_notice: function(event) {
+			event.preventDefault();
+			$('.astra-sites-result-preview')
+				.removeClass('astra-sites-activate-license astra-sites-site-import-popup astra-sites-page-import-popup')
+				.addClass('astra-sites-skip-templates')
+				.show();
+
+			var template = wp.template( 'astra-sites-skip-templates' );
+	        var output  = '<div class="overlay"></div>';
+	        	output += '<div class="inner"><div class="heading"><h2>Templates Not Available!?</h2></div><span class="dashicons close dashicons-no-alt"></span><div class="astra-sites-import-content">';
                 output += '</div></div>';
 			$('.astra-sites-result-preview').html( output );
 	        $('.astra-sites-import-content').html( template );
@@ -2671,12 +2679,13 @@ var AstraSitesAjaxQueue = (function() {
 			}
 
 			// 1. Pass - Request Site Import
-			AstraSitesAdmin.customizer_data = JSON.stringify( data['astra-site-customizer-data'] ) || '';
-			AstraSitesAdmin.wxr_url         = encodeURI( data['astra-site-wxr-path'] ) || '';
-			AstraSitesAdmin.wpforms_url     = encodeURI( data['astra-site-wpforms-path'] ) || '';
-			AstraSitesAdmin.cartflows_url     = encodeURI( data['astra-site-cartflows-path'] ) || '';
-			AstraSitesAdmin.options_data    = JSON.stringify( data['astra-site-options-data'] ) || '';
-			AstraSitesAdmin.widgets_data    = data['astra-site-widgets-data'] || '';
+			AstraSitesAdmin.customizer_data    = JSON.stringify( data['astra-site-customizer-data'] ) || '';
+			AstraSitesAdmin.wxr_url            = encodeURI( data['astra-site-wxr-path'] ) || '';
+			AstraSitesAdmin.wpforms_url        = encodeURI( data['astra-site-wpforms-path'] ) || '';
+			AstraSitesAdmin.cartflows_url      = encodeURI( data['astra-site-cartflows-path'] ) || '';
+			AstraSitesAdmin.options_data       = JSON.stringify( data['astra-site-options-data'] ) || '';
+			AstraSitesAdmin.enabled_extensions = JSON.stringify( data['astra-enabled-extensions'] ) || '';
+			AstraSitesAdmin.widgets_data       = data['astra-site-widgets-data'] || '';
 
 
 			// Required Plugins.

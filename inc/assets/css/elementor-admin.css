@@ -970,3 +970,15 @@
 #ast-sites-modal .position-left-last {
     margin-right: auto;
 }
+
+@media (max-width: 768px) {
+    #ast-sites-modal .theme-browser .theme {
+        width: 33.33%;
+    }
+    #ast-sites-modal .position-left-last {
+        width: 120px;
+    }
+    #ast-sites-modal .ast-sites-modal__header__menu-area {
+        margin: 0 10px;
+    }
+}

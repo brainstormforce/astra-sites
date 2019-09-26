@@ -801,12 +801,15 @@ body.loading-content .select-page-builder {
     align-items: center;
 }
 
+.astra-sites-templates-not-available {
+	cursor: pointer;
+}
+
 .astra-pages-title {
-    color: #555d66;
+    color: #9e9e9e;
     text-decoration: none;
     font-weight: 500;
     position: relative;
-    opacity: 0.7;
 }
 .single-site-pages-header .count {
     opacity: 0.7;
@@ -1851,11 +1854,14 @@ body.loading-content .select-page-builder {
     margin: -1%;
 }
 
-.theme-browser .theme {
-	width: 25%;
-    padding: 1.1%;
-    margin: 0 0 1em 0em;
-    box-shadow: none;
+
+@media only screen and (min-width: 768px) {
+	.theme-browser .theme {
+		width: 25%;
+	    padding: 1.1%;
+	    margin: 0 0 1em 0em;
+	    box-shadow: none;
+	}
 }
 
 @media only screen and (min-width: 1640px) {
@@ -2020,6 +2026,10 @@ body.loading-content .select-page-builder {
     display: none;
 }
 
+.site-pages-not-import-notice {
+    clear: both;
+}
+
 .astra-loading-icon,
 .astra-loading-icon:after {
 	border-radius: 50%;
@@ -2117,21 +2127,70 @@ body.loading-content .select-page-builder {
         margin-left: 0;
     }
 }
-@media screen and (max-width: 480px) {
-    #astra-sites-menu-page .nav-tab-wrapper {
+@media only screen and (min-width: 780px) and (max-width: 1170px) {
+	#astra-sites-filters .search-form {
+		width: 310px;
+    }
+}
+@media only screen and (min-width: 780px) and (max-width: 1200px) {
+	.theme-browser .theme:nth-child(odd) {
+	    margin-right: 0;
+	}
+	.theme-browser .theme {
+	    width: 33.33%;
+	}
+}
+@media only screen and (min-width: 780px) and (max-width: 962px) {
+	#astra-sites-menu-page .nav-tab-wrapper {
+		margin-left: 36px;
+	}
+}
+/*@media only screen and (max-width: 1120px) {
+	.theme-browser .theme:nth-child(odd) {
+	    margin-right: 0;
+	}
+}*/
+@media only screen and (min-width: 1000px) and (max-width: 1200px) {
+    .theme-browser #site-pages .theme:nth-child(3n) {
+        margin-right: 0;
+    }
+
+    .theme-browser #site-pages .theme {
+        width: 30.33%;
+    }
+}
+
+@media only screen and (min-width: 780px) and (max-width: 999px) {
+    .theme-browser #site-pages .theme:nth-child(2n) {
+        margin-right: 0;
+    }
+
+    .theme-browser #site-pages .theme {
+        width: 48%;
+    }
+}
+
+@media only screen and (max-width: 960px) {
+    #site-pages {
+        position: relative;
         margin: 0;
     }
+}
+@media screen and (max-width: 600px) {
     #astra-sites-filters .search-form {
         width: auto;
     }
-    .page-builder-icon {
-        width: auto;
+}
+@media screen and (max-width: 782px) {
+    #astra-sites-menu-page .nav-tab-wrapper {
+        margin: 0;
+        top: 46px;
     }
     #site-pages {
         margin: 0;
     }
     .theme-browser #site-pages .theme {
-	    width: 46%;
+	    width: 100%;
 	}
 	.single-site-footer {
 	    padding: 10px 20px;

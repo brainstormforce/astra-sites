@@ -156,23 +156,32 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Beaver_Builder' ) ) :
 
 			// 4) Set `list item` module images.
 			if ( isset( $settings->text ) ) {
-				$ids_mapping = get_option( 'astra_sites_wpforms_ids_mapping', array() );
-				if ( $ids_mapping ) {
-
-					// Keep old data in temp.
-					$updated_data = $settings->text;
-
-					// Update WP form IDs.
-					foreach ( $ids_mapping as $old_id => $new_id ) {
-						$updated_data = str_replace( '[wpforms id="' . $old_id, '[wpforms id="' . $new_id, $updated_data );
-					}
-
-					// Update modified data.
-					$settings->text = $updated_data;
-				}
+				$settings->text = self::get_wpforms_mapping( $settings->text );
+			} elseif ( isset( $settings->html ) ) {
+				$settings->html = self::get_wpforms_mapping( $settings->html );
 			}
 
 			return $settings;
+		}
+
+		/**
+		 * Replace WP Forms shortcode.
+		 *
+		 * @since 2.0.0
+		 * @param  string $content Content.
+		 * @return string          Content.
+		 */
+		private static function get_wpforms_mapping( $content = '' ) {
+			$ids_mapping = get_option( 'astra_sites_wpforms_ids_mapping', array() );
+			error_log( json_encode( $ids_mapping ) );
+			if ( $ids_mapping ) {
+				// Update WP form IDs.
+				foreach ( $ids_mapping as $old_id => $new_id ) {
+					$content = str_replace( '[wpforms id="' . $old_id, '[wpforms id="' . $new_id, $content );
+				}
+			}
+
+			return $content;
 		}
 
 		/**

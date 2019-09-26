@@ -83,7 +83,7 @@ if ( ! class_exists( 'Astra_Sites_Compatibility_Elementor' ) ) :
 			$element->start_controls_section(
 				'astra_sites_body_and_paragraph_typography',
 				array(
-					'label' => __( 'Astra Site Settings', 'astra-sites' ),
+					'label' => __( 'Starter Templates Settings', 'astra-sites' ),
 					'tab'   => Controls_Manager::TAB_STYLE,
 				)
 			);

@@ -40,6 +40,14 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		public static $local_vars = array();
 
 		/**
+		 * Localization variable
+		 *
+		 * @since  x.x.x
+		 * @var (Array) $wp_upload_url
+		 */
+		public $wp_upload_url = '';
+
+		/**
 		 * Instance of Astra_Sites.
 		 *
 		 * @since  1.0.0
@@ -65,11 +73,15 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 
 			$this->includes();
 
+			add_action( 'after_setup_theme', __CLASS__ . '::init_hooks' );
 			add_action( 'admin_notices', array( $this, 'admin_notices' ) );
 			add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
-			add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue' ) );
+			add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue' ), 99 );
+			add_action( 'wp_enqueue_scripts', array( $this, 'image_search_scripts' ) );
 			add_action( 'elementor/editor/footer', array( $this, 'insert_templates' ) );
-			add_action( 'elementor/editor/footer', array( $this, 'register_widget_scripts' ) );
+			add_action( 'admin_footer', array( $this, 'insert_image_templates' ) );
+			add_action( 'wp_footer', array( $this, 'insert_image_templates_bb_and_brizy' ) );
+			add_action( 'elementor/editor/footer', array( $this, 'register_widget_scripts' ), 99 );
 			add_action( 'elementor/editor/wp_head', array( $this, 'add_predefined_variables' ) );
 			add_action( 'elementor/editor/before_enqueue_scripts', array( $this, 'popup_styles' ) );
 			add_action( 'elementor/preview/enqueue_styles', array( $this, 'popup_styles' ) );
@@ -82,10 +94,256 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			add_action( 'wp_ajax_astra-sites-activate-theme', array( $this, 'activate_theme' ) );
 			add_action( 'wp_ajax_astra-sites-create-page', array( $this, 'create_page' ) );
 			add_action( 'wp_ajax_astra-sites-create-template', array( $this, 'create_template' ) );
+			add_action( 'wp_ajax_astra-sites-create-image', array( $this, 'create_image' ) );
 			add_action( 'wp_ajax_astra-sites-getting-started-notice', array( $this, 'getting_started_notice' ) );
 			add_action( 'wp_ajax_astra-sites-favorite', array( $this, 'add_to_favorite' ) );
 			add_action( 'wp_ajax_astra-sites-api-request', array( $this, 'api_request' ) );
 			add_action( 'wp_ajax_astra-page-elementor-batch-process', array( $this, 'elementor_batch_process' ) );
+			add_action( 'wp_ajax_astra-sites-validate-license', array( $this, 'validate_image_license' ) );
+
+			add_action( 'delete_attachment', array( $this, 'delete_astra_images' ) );
+		}
+
+		/**
+		 * AJAX call to validate Image Lisence keys.
+		 *
+		 * @since x.x.x
+		 */
+		public function validate_image_license() {
+
+			$type   = $_POST['type'];
+			$key    = $_POST['key'];
+			$status = array(
+				'code'    => 0,
+				'message' => __( 'Blank Key.', 'astra-sites' ),
+			);
+
+			$all_keys                       = get_option( '_astra_images_integration', array() );
+			$all_keys[ $type . '_api_key' ] = $key;
+
+			update_option( '_astra_images_integration', $all_keys );
+
+			$api_status = Astra_Sites::check_api_status( $type );
+
+			if ( $api_status ) {
+				$status = $api_status;
+			}
+
+			update_option( '_astra_images_pixabay_status', $api_status );
+
+			wp_send_json_success( $api_status );
+		}
+
+		/**
+		 * Adds the admin menu and enqueues CSS/JS if we are on
+		 * the builder admin settings page.
+		 *
+		 * @since x.x.x
+		 * @param String $type Type of Image Integration.
+		 * @return array API status response.
+		 */
+		static public function check_api_status( $type ) {
+
+			$settings = get_option( '_astra_images_integration', array() );
+
+			if ( isset( $settings ) && isset( $settings[ $type . '_api_key' ] ) && '' !== $settings[ $type . '_api_key' ] ) {
+
+				$args = array(
+					'key'        => $settings[ $type . '_api_key' ],
+					'q'          => 'flower',
+					'image_type' => 'photo',
+					'pretty'     => true,
+					'per_page'   => 10,
+				);
+				$url  = 'https://pixabay.com/api/?' . http_build_query( $args );
+
+				$response = wp_remote_get( $url );
+
+				if ( is_wp_error( $response ) ) {
+					wp_send_json_error( wp_remote_retrieve_body( $response ) );
+				}
+
+				$body = wp_remote_retrieve_body( $response );
+
+				return $response['response'];
+			}
+			return array(
+				'code'    => 0,
+				'message' => __( 'Blank Key.', 'astra-sites' ),
+			);
+		}
+
+		/**
+		 * Adds the admin menu and enqueues CSS/JS if we are on
+		 * the builder admin settings page.
+		 *
+		 * @since x.x.x
+		 * @return void
+		 */
+		static public function init_hooks() {
+			if ( ! is_admin() ) {
+				return;
+			}
+
+			// Add UAEL menu option to admin.
+			add_action( 'network_admin_menu', __CLASS__ . '::menu' );
+			add_action( 'admin_menu', __CLASS__ . '::menu' );
+
+			// Enqueue admin scripts.
+			if ( isset( $_REQUEST['page'] ) && 'astra-images' === $_REQUEST['page'] ) {
+				self::save_settings();
+			}
+		}
+
+		/**
+		 * Save All admin settings here
+		 */
+		static public function save_settings() {
+
+			// Only admins can save settings.
+			if ( ! current_user_can( 'manage_options' ) ) {
+				return;
+			}
+
+			self::save_integration_option();
+		}
+
+		/**
+		 * Save General Setting options.
+		 *
+		 * @since x.x.x
+		 */
+		static public function save_integration_option() {
+
+			if ( isset( $_POST['ast-img-integration-nonce'] ) && wp_verify_nonce( $_POST['ast-img-integration-nonce'], 'ast-img-integration' ) ) {
+
+				$url            = $_SERVER['REQUEST_URI'];
+				$input_settings = array();
+				$new_settings   = array();
+
+				if ( isset( $_POST['astra_images_integration'] ) ) {
+
+					$input_settings = $_POST['astra_images_integration'];
+
+					// Loop through the input and sanitize each of the values.
+					foreach ( $input_settings as $key => $val ) {
+
+						if ( is_array( $val ) ) {
+							foreach ( $val as $k => $v ) {
+								$new_settings[ $key ][ $k ] = ( isset( $val[ $k ] ) ) ? sanitize_text_field( $v ) : '';
+							}
+						} else {
+							$new_settings[ $key ] = ( isset( $input_settings[ $key ] ) ) ? sanitize_text_field( $val ) : '';
+						}
+					}
+				}
+
+				update_option( '_astra_images_integration', $new_settings );
+
+				$api_status = Astra_Sites::check_api_status( 'pixabay' );
+
+				if ( $api_status ) {
+					update_option( '_astra_images_pixabay_status', $api_status );
+				} else {
+					update_option( '_astra_images_pixabay_status', array( 'code' => 404 ) );
+				}
+
+				$query = array(
+					'message' => 'saved',
+				);
+
+				$redirect_to = add_query_arg( $query, $url );
+				wp_redirect( $redirect_to );
+				exit;
+			} // End if statement.
+		}
+
+		/**
+		 * Renders the admin settings menu.
+		 *
+		 * @since x.x.x
+		 * @return void
+		 */
+		static public function menu() {
+
+			if ( ! current_user_can( 'manage_options' ) ) {
+				return;
+			}
+
+			add_submenu_page(
+				'options-general.php',
+				__( 'Astra Images', 'astra-sites' ),
+				__( 'Astra Images', 'astra-sites' ),
+				'manage_options',
+				'astra-images',
+				__CLASS__ . '::render'
+			);
+		}
+
+		/**
+		 * Renders the admin settings.
+		 *
+		 * @since x.x.x
+		 * @return void
+		 */
+		static public function render() {
+			$action = ( isset( $_GET['action'] ) ) ? $_GET['action'] : '';
+			$action = ( ! empty( $action ) && '' !== $action ) ? $action : 'astra-images';
+			$action = str_replace( '_', '-', $action );
+
+			require_once ASTRA_SITES_DIR . 'inc/includes/general.php';
+		}
+
+		/**
+		 * Before Astra Image delete, remove from options.
+		 *
+		 * @since  x.x.x
+		 * @param int $id ID to deleting image.
+		 * @return void
+		 */
+		public function delete_astra_images( $id ) {
+
+			if ( ! $id ) {
+				return;
+			}
+
+			// @codingStandardsIgnoreStart
+			$saved_images     = get_option( 'astra-sites-saved-images', array() );
+			$astra_image_flag = get_post_meta( $id, 'astra-images', true );
+			$astra_image_flag = (int) $astra_image_flag;
+			if (
+				'' !== $astra_image_flag &&
+				is_array( $saved_images ) &&
+				! empty( $saved_images ) &&
+				in_array( $astra_image_flag, $saved_images )
+			) {
+				$saved_images = array_diff( $saved_images, [ $astra_image_flag ] );
+				update_option( 'astra-sites-saved-images', $saved_images );
+			}
+			// @codingStandardsIgnoreEnd
+		}
+
+		/**
+		 * Enqueue Image Search scripts into Beaver Builder Editor.
+		 *
+		 * @since  x.x.x
+		 * @return void
+		 */
+		public function image_search_scripts() {
+
+			if ( class_exists( 'FLBuilderModel' ) ) {
+				if ( FLBuilderModel::is_builder_active() ) {
+					// Image Search assets.
+					$this->image_search_assets();
+				}
+			}
+
+			if ( class_exists( 'Brizy_Editor_Post' ) ) {
+				if ( isset( $_GET['brizy-edit'] ) || isset( $_GET['brizy-edit-iframe'] ) ) {
+					// Image Search assets.
+					$this->image_search_assets();
+				}
+			}
 		}
 
 		/**
@@ -180,9 +438,45 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		 *
 		 * @return void
 		 */
+		function insert_image_templates() {
+			ob_start();
+			require_once ASTRA_SITES_DIR . 'inc/includes/image-templates.php';
+			ob_end_flush();
+		}
+
+		/**
+		 * Insert Template
+		 *
+		 * @return void
+		 */
+		function insert_image_templates_bb_and_brizy() {
+
+			if ( class_exists( 'FLBuilderModel' ) ) {
+				if ( FLBuilderModel::is_builder_active() ) {
+					ob_start();
+					require_once ASTRA_SITES_DIR . 'inc/includes/image-templates.php';
+					ob_end_flush();
+				}
+			}
+
+			if ( class_exists( 'Brizy_Editor_Post' ) ) {
+				if ( isset( $_GET['brizy-edit'] ) || isset( $_GET['brizy-edit-iframe'] ) ) {
+					ob_start();
+					require_once ASTRA_SITES_DIR . 'inc/includes/image-templates.php';
+					ob_end_flush();
+				}
+			}
+		}
+
+		/**
+		 * Insert Template
+		 *
+		 * @return void
+		 */
 		function insert_templates() {
 			ob_start();
 			require_once ASTRA_SITES_DIR . 'inc/includes/templates.php';
+			require_once ASTRA_SITES_DIR . 'inc/includes/image-templates.php';
 			ob_end_flush();
 		}
 
@@ -361,6 +655,106 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 					'link'           => get_permalink( $new_page_id ),
 				)
 			);
+		}
+
+		/**
+		 * Import Image.
+		 *
+		 * @since  x.x.x
+		 */
+		public function create_image() {
+
+			$url      = $_POST['url'];
+			$name     = $_POST['name'];
+			$photo_id = $_POST['id'];
+
+			$saved_images = get_option( 'astra-sites-saved-images', array() );
+
+			$this->wp_upload_url = $this->get_wp_upload_url();
+
+			$image  = '';
+			$result = array();
+
+			if ( '' !== $url ) {
+
+				$name  = preg_replace( '/\.[^.]+$/', '', $name ) . '-' . $photo_id . '.jpg';
+				$image = $this->create_image_from_url( $url, $name );
+
+				if ( $image ) {
+
+					$result['attachmentData'] = wp_prepare_attachment_for_js( $image );
+					if ( did_action( 'elementor/loaded' ) ) {
+						$result['data'] = Astra_Elementor_Images::get_instance()->get_attachment_data( $image );
+					}
+				}
+			}
+
+			if ( empty( $saved_images ) || false === $saved_images ) {
+				$saved_images = array();
+			}
+
+			$saved_images[] = $photo_id;
+			update_option( 'astra-sites-saved-images', $saved_images );
+
+			$result['updated-saved-images'] = get_option( 'astra-sites-saved-images', array() );
+
+			wp_send_json_success( $result );
+		}
+
+		/**
+		 * Set the upload directory
+		 */
+		public function get_wp_upload_url() {
+			$wp_upload_dir = wp_upload_dir();
+			return isset( $wp_upload_dir['url'] ) ? $wp_upload_dir['url'] : false;
+		}
+
+		/**
+		 * Create the image and return the new media upload id.
+		 *
+		 * @param String $url URL to pixabay image.
+		 * @param String $name Name to pixabay image.
+		 * @see http://codex.wordpress.org/Function_Reference/wp_insert_attachment#Example
+		 */
+		public function create_image_from_url( $url, $name ) {
+
+			if ( empty( $url ) || empty( $this->wp_upload_url ) ) {
+				return false;
+			}
+
+			$filename = basename( $url );
+
+			$upload_file = wp_upload_bits( $name, null, file_get_contents( $url ) );
+
+			if ( ! $upload_file['error'] ) {
+
+				$wp_filetype   = wp_check_filetype( $name, null );
+				$attachment    = array(
+					'post_mime_type' => $wp_filetype['type'],
+					'post_parent'    => 0,
+					'post_title'     => preg_replace( '/\.[^.]+$/', '', $name ),
+					'post_content'   => __( 'Astra Site Image - ', 'astra-sites' ) . $name,
+					'post_status'    => 'inherit',
+				);
+				$attachment_id = wp_insert_attachment( $attachment, $upload_file['file'], 0 );
+
+				if ( ! is_wp_error( $attachment_id ) ) {
+
+					require_once( ABSPATH . 'wp-admin' . '/includes/image.php' );
+					require_once( ABSPATH . 'wp-admin/includes/media.php' );
+
+					$attachment_data = wp_generate_attachment_metadata( $attachment_id, $upload_file['file'] );
+					wp_update_attachment_metadata( $attachment_id, $attachment_data );
+
+					update_post_meta( $attachment_id, 'astra-images', $_POST['id'] );
+					update_post_meta( $attachment_id, '_wp_attachment_image_alt', sanitize_text_field( ! empty( $_POST['name'] ) ? $_POST['name'] : '' ) );
+
+					return $attachment_id;
+				}
+			}
+
+			return false;
+
 		}
 
 		/**
@@ -655,6 +1049,104 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		}
 
 		/**
+		 * Enqueue Image Search scripts.
+		 *
+		 * @since  x.x.x
+		 * @return void
+		 */
+		public function image_search_assets() {
+
+			wp_enqueue_script( 'masonry' );
+			wp_enqueue_script( 'imagesloaded' );
+
+			wp_enqueue_script(
+				'astra-sites-images-common',
+				ASTRA_SITES_URI . 'inc/assets/js/dist/common.js',
+				array( 'jquery', 'wp-util' ), // Dependencies, defined above.
+				ASTRA_SITES_VER,
+				true
+			);
+
+			$data = apply_filters(
+				'astra_sites_images_common',
+				array(
+					'ajaxurl'             => esc_url( admin_url( 'admin-ajax.php' ) ),
+					'asyncurl'            => esc_url( admin_url( 'async-upload.php' ) ),
+					'is_bb_active'        => ( class_exists( 'FLBuilderModel' ) ),
+					'is_brizy_active'     => ( class_exists( 'Brizy_Editor_Post' ) ),
+					'is_elementor_active' => ( did_action( 'elementor/loaded' ) ),
+					'is_bb_editor'        => ( class_exists( 'FLBuilderModel' ) ) ? ( FLBuilderModel::is_builder_active() ) : false,
+					'is_brizy_editor'     => ( class_exists( 'Brizy_Editor_Post' ) ) ? ( isset( $_GET['brizy-edit'] ) || isset( $_GET['brizy-edit-iframe'] ) ) : false,
+					'saved_images'        => get_option( 'astra-sites-saved-images', array() ),
+					'pixabay_category'    => array(
+						'all'            => __( 'All', 'astra-sites' ),
+						'animals'        => __( 'Animals', 'astra-sites' ),
+						'buildings'      => __( 'Architecture/Buildings', 'astra-sites' ),
+						'backgrounds'    => __( 'Backgrounds/Textures', 'astra-sites' ),
+						'fashion'        => __( 'Beauty/Fashion', 'astra-sites' ),
+						'business'       => __( 'Business/Finance', 'astra-sites' ),
+						'computer'       => __( 'Computer/Communication', 'astra-sites' ),
+						'education'      => __( 'Education', 'astra-sites' ),
+						'feelings'       => __( 'Emotions', 'astra-sites' ),
+						'food'           => __( 'Food/Drink', 'astra-sites' ),
+						'health'         => __( 'Health/Medical', 'astra-sites' ),
+						'industry'       => __( 'Industry/Craft', 'astra-sites' ),
+						'music'          => __( 'Music', 'astra-sites' ),
+						'nature'         => __( 'Nature/Landscapes', 'astra-sites' ),
+						'people'         => __( 'People', 'astra-sites' ),
+						'places'         => __( 'Places/Monuments', 'astra-sites' ),
+						'religion'       => __( 'Religion', 'astra-sites' ),
+						'science'        => __( 'Science/Technology', 'astra-sites' ),
+						'sports'         => __( 'Sports', 'astra-sites' ),
+						'transportation' => __( 'Transportation/Traffic', 'astra-sites' ),
+						'travel'         => __( 'Travel/Vacation', 'astra-sites' ),
+					),
+					'pixabay_order'       => array(
+						'popular'  => __( 'Popular', 'astra-sites' ),
+						'latest'   => __( 'Latest', 'astra-sites' ),
+						'upcoming' => __( 'Upcoming', 'astra-sites' ),
+						'ec'       => __( 'Editor\'s Choice', 'astra-sites' ),
+					),
+					'pixabay_orientation' => array(
+						'any'        => __( 'Any Orientation', 'astra-sites' ),
+						'vertical'   => __( 'Vertical', 'astra-sites' ),
+						'horizontal' => __( 'Horizontal', 'astra-sites' ),
+					),
+					'integration'         => get_option( '_astra_images_integration', array() ),
+					'api_status'          => self::get_api_status( '_astra_images_pixabay_status' ),
+				)
+			);
+			wp_localize_script( 'astra-sites-images-common', 'astraImages', $data );
+
+			wp_enqueue_script(
+				'astra-sites-images-script',
+				ASTRA_SITES_URI . 'inc/assets/js/dist/index.js',
+				array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-components', 'wp-editor', 'wp-api-fetch', 'astra-sites-images-common' ), // Dependencies, defined above.
+				ASTRA_SITES_VER,
+				true
+			);
+
+			wp_enqueue_style( 'astra-sites-images', ASTRA_SITES_URI . 'inc/assets/css/images.css', ASTRA_SITES_VER, true );
+		}
+
+		/**
+		 * Returns API status
+		 *
+		 * @since  x.x.x
+		 *
+		 * @param  string $key Option name.
+		 * @return array
+		 */
+		static public function get_api_status( $key ) {
+			$status = get_option( $key, array() );
+			if ( empty( $status ) ) {
+				return array( 'code' => 404 );
+			}
+			return $status;
+		}
+
+
+		/**
 		 * Enqueue admin scripts.
 		 *
 		 * @since  1.3.2    Added 'install-theme.js' to install and activate theme.
@@ -667,8 +1159,16 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		 */
 		public function admin_enqueue( $hook = '' ) {
 
+			// Image Search assets.
+			$this->image_search_assets();
+
 			wp_enqueue_script( 'astra-sites-install-theme', ASTRA_SITES_URI . 'inc/assets/js/install-theme.js', array( 'jquery', 'updates' ), ASTRA_SITES_VER, true );
 			wp_enqueue_style( 'astra-sites-install-theme', ASTRA_SITES_URI . 'inc/assets/css/install-theme.css', null, ASTRA_SITES_VER, 'all' );
+
+			if ( 'settings_page_astra-images' === $hook ) {
+
+				wp_enqueue_style( 'astra-sites-integration', ASTRA_SITES_URI . 'inc/assets/css/integration.css', null, ASTRA_SITES_VER, 'all' );
+			}
 
 			$data = apply_filters(
 				'astra_sites_install_theme_localize_vars',
@@ -811,10 +1311,27 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		 */
 		function register_widget_scripts() {
 
+			$page_builders = Astra_Sites::get_instance()->get_page_builders();
+			$has_elementor = false;
+
+			foreach ( $page_builders as $page_builder ) {
+
+				if ( 'elementor' === $page_builder['slug'] ) {
+					$has_elementor = true;
+				}
+			}
+
+			if ( ! $has_elementor ) {
+				return;
+			}
+
 			wp_enqueue_script( 'astra-sites-helper', ASTRA_SITES_URI . 'inc/assets/js/helper.js', array( 'jquery' ), ASTRA_SITES_VER, true );
 
 			wp_enqueue_script( 'masonry' );
 			wp_enqueue_script( 'imagesloaded' );
+
+			// Image Search assets.
+			$this->image_search_assets();
 
 			wp_enqueue_script( 'astra-sites-elementor-admin-page', ASTRA_SITES_URI . 'inc/assets/js/elementor-admin-page.js', array( 'jquery', 'astra-sites-helper', 'wp-util', 'updates', 'masonry', 'imagesloaded' ), ASTRA_SITES_VER, true );
 
@@ -935,6 +1452,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			require_once ASTRA_SITES_DIR . 'inc/classes/class-astra-sites-white-label.php';
 			require_once ASTRA_SITES_DIR . 'inc/classes/class-astra-sites-page.php';
 			require_once ASTRA_SITES_DIR . 'inc/classes/class-astra-elementor-pages.php';
+			require_once ASTRA_SITES_DIR . 'inc/classes/class-astra-elementor-images.php';
 			require_once ASTRA_SITES_DIR . 'inc/classes/compatibility/class-astra-sites-compatibility.php';
 			require_once ASTRA_SITES_DIR . 'inc/classes/class-astra-sites-importer.php';
 		}

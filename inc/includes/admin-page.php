@@ -220,6 +220,16 @@ defined( 'ABSPATH' ) or exit;
  * TMPL - Activate License
  */
 ?>
+<script type="text/template" id="tmpl-astra-sites-skip-templates">
+	<p><?php _e( 'The page templates which contain the dynamic widgets/modules are not available for single template import. With the "Import Site" option, you can get those pages.', 'astra-sites' ); ?></p>
+	<p><?php _e( 'You can have the complete site preview from bottom left button.', 'astra-sites' ); ?></p>
+</script>
+
+<?php
+/**
+ * TMPL - Activate License
+ */
+?>
 <script type="text/template" id="tmpl-astra-sites-activate-license">
 	<p>
 		<?php
@@ -282,6 +292,12 @@ defined( 'ABSPATH' ) or exit;
 			<div class="single-site-pages-wrap">
 				<div class="astra-pages-title-wrap">
 					<span class="astra-pages-title"><?php _e( 'Page Templates', 'astra-sites' ); ?></span>
+					<#
+					console.log( data );
+					var has_skip_pages = data['astra-skip-pages-count'] || 0;
+					if( has_skip_pages ) { #>
+						<span class="astra-pages-title"><?php _e( 'Some Templates not Available!', 'astra-sites' ); ?> <span class="dashicons dashicons-editor-help astra-sites-templates-not-available"></span></span>
+					<# } #>
 				</div>
 				<div class="single-site-pages">
 					<div id="single-pages">
