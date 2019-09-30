@@ -14,6 +14,10 @@
     display: none;
 }
 
+#ast-sites-modal .agency-icon {
+    width: 20px;
+}
+
 #ast-sites-modal.dialog-type-lightbox .dialog-header {
 	padding: 0;
 }
@@ -974,6 +978,7 @@
 @media (max-width: 768px) {
     #ast-sites-modal .theme-browser .theme {
         width: 33.33%;
+        box-shadow: none;
     }
     #ast-sites-modal .position-left-last {
         width: 120px;

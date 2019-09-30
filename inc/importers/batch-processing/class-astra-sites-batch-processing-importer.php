@@ -78,7 +78,6 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Importer' ) ) :
 			error_log( 'Requesting Page Builders' );
 			update_option( 'astra-sites-batch-status-string', 'Requesting Page Builders' );
 
-			$page_builders = Astra_Sites::get_instance()->get_page_builders();
 			$purchase_key  = Astra_Sites::get_instance()->get_license_key();
 			$site_url      = get_site_url();
 
@@ -89,9 +88,21 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Importer' ) ) :
 			$page_builder_request = wp_remote_get( trailingslashit( Astra_Sites::get_instance()->get_api_domain() ) . '/wp-json/wp/v2/astra-site-page-builder/?_fields=id,name,slug&site_url=' . $site_url . '&purchase_key=' . $purchase_key, $api_args );
 			if ( ! is_wp_error( $page_builder_request ) && 200 === (int) wp_remote_retrieve_response_code( $page_builder_request ) ) {
 				$page_builders = json_decode( wp_remote_retrieve_body( $page_builder_request ), true );
+
+				// Set mini agency page builder.
+				$page_builder_slugs = wp_list_pluck( $page_builders, 'slug' );
+				if( in_array('elementor', $page_builder_slugs) && ! in_array('beaver-builder', $page_builder_slugs) ) {
+					update_option( 'astra-sites-license-page-builder', 'elementor' );
+				} else if( in_array('beaver-builder', $page_builder_slugs) && ! in_array('elementor', $page_builder_slugs) ) {
+					update_option( 'astra-sites-license-page-builder', 'beaver-builder' );
+				} else {
+					update_option( 'astra-sites-license-page-builder', '' );
+				}
 			}
 
-			update_option( 'astra-sites-page-builders', $page_builders );
+			error_log(get_option( 'astra-sites-license-page-builder', '' ));
+
+			// update_option( 'astra-sites-page-builders', $page_builders );
 
 			error_log( 'Page Builders Imported Successfully!' );
 			update_option( 'astra-sites-batch-status-string', 'Page Builders Imported Successfully!' );

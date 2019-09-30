@@ -154,6 +154,7 @@
             let type = $scope.find( '.ast-image__license' ).data( 'type' );
             let key = $scope.find( '.ast-image__license' ).val();
             $scope.find( '.ast-image-valid-license' ).hide();
+            $scope.find( '.ast-image__browse-images' ).hide();
 
             if ( '' == key ) {
                 AstraImageCommon.isValidating = false;
@@ -324,7 +325,7 @@
                 return;
             }
 
-            if ( AstraImageCommon.apiStatus ) {
+            if ( !AstraImageCommon.apiStatus ) {
                 return;
             }
 

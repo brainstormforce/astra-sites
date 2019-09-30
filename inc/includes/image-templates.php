@@ -59,14 +59,14 @@ defined( 'ABSPATH' ) or exit;
 				</div>
 				<div class="ast-image__license-wrap">
 					<div class="ast-image__license-heading-wrap">
-						<h2 class="ast-image__license-heading"><?php _e( 'Stunning free images & royalty free stock', 'astra-images' ); ?></h2>
+						<h2 class="ast-image__license-heading"><?php _e( 'Authenticate to Fetch Images from Pixabay', 'astra-images' ); ?></h2>
 					</div>
 					<div>
-						<p class="ast-image__license-description"><?php _e( 'Over 1 million+ high quality stock images and videos shared by Pixabay community. Over 1 million+ high quality stock images and videos', 'astra-sites' ); ?></p>
+						<p class="ast-image__license-description"><?php _e( 'Please enter your API key below so that you can scan over 1 million+ high quality stock images shared by the Pixabay community.', 'astra-sites' ); ?></p>
 					</div>
 					<div class="ast-image__license-input-wrap">
 						<div class="ast-image__license-input-inner-wrap">
-							<input type="text" data-type="pixabay" value="{{license_val}}" placeholder="<?php _e( 'Enter the Key', 'astra-sites' ); ?>" class="ast-image__license" />
+							<input type="text" data-type="pixabay" value="{{license_val}}" placeholder="<?php _e( 'Enter the API key', 'astra-sites' ); ?>" class="ast-image__license" />
 							<# if ( 200 == astraImages.api_status['code'] ) { #>
 							<div class="dashicons-yes-alt dashicons ast-image-valid-license"></div>
 							<# } #>

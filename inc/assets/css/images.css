@@ -131,9 +131,13 @@
     margin: 0;
 }
 
+.ast-attachments-browser .ast-image__filter li:first-child {
+    padding-left: 0;
+}
+
 .ast-attachments-browser .ast-image__filter li select {
     height: 35px;
-    width: 150px;
+    width: auto;
 }
 
 .ast-attachments-browser .ast-image__skeleton-inner-wrap {
@@ -484,9 +488,16 @@
     .ast-attachments-browser:not(.preview-mode) .ast-attachments-search-wrap {
         display: inline-block;
         height: 76px;
+        width: 100%;
     }
     .ast-attachments-browser .search-icon {
         left: 265px;
+    }
+    .ast-attachments-browser .imported.ast-image__list-inner-wrap:before {
+        top: 15px;
+        padding: 4px;
+        margin: 0 5px 0 15px;
+        font-size: 11px;
     }
 }
 

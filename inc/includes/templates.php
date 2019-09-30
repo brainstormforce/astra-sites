@@ -116,7 +116,7 @@ defined( 'ABSPATH' ) or exit;
 						<h3 class="theme-name">{{{site_title}}}</h3>
 					</div>
 					<# if ( site_type && 'free' !== site_type ) { #>
-						<div class="agency-ribbons" title="<?php _e( 'Agency', 'astra-sites' ); ?>"><?php _e( 'Agency', 'astra-sites' ); ?></div>
+						<img class="agency-icon" src="<?php echo ASTRA_SITES_URI . 'inc/assets/images/agency.svg'; ?>" alt="<?php _e( 'Agency Template', 'astra-sites' ); ?>" title="<?php _e( 'Agency Template', 'astra-sites' ); ?>" />
 					<# } #>
 				</div>
 			</div>
@@ -198,7 +198,7 @@ defined( 'ABSPATH' ) or exit;
 					<h3 class="theme-name">{{{site_title}}}</h3>
 				</div>
 				<# if ( site_type && 'free' !== site_type ) { #>
-					<div class="agency-ribbons" title="<?php _e( 'Agency', 'astra-sites' ); ?>"><?php _e( 'Agency', 'astra-sites' ); ?></div>
+					<img class="agency-icon" src="<?php echo ASTRA_SITES_URI . 'inc/assets/images/agency.svg'; ?>" alt="<?php _e( 'Agency Template', 'astra-sites' ); ?>" title="<?php _e( 'Agency Template', 'astra-sites' ); ?>" />
 				<# } #>
 			</div>
 		</div>
@@ -279,7 +279,7 @@ defined( 'ABSPATH' ) or exit;
 					<h3 class="theme-name"><strong>{{title1}}</strong>{{title2}}</h3>
 				</div>
 				<# if ( site_type && 'free' !== site_type ) { #>
-					<div class="agency-ribbons" title="<?php _e( 'Agency', 'astra-sites' ); ?>"><?php _e( 'Agency', 'astra-sites' ); ?></div>
+					<img class="agency-icon" src="<?php echo ASTRA_SITES_URI . 'inc/assets/images/agency.svg'; ?>" alt="<?php _e( 'Agency Template', 'astra-sites' ); ?>" title="<?php _e( 'Agency Template', 'astra-sites' ); ?>" />
 				<# } #>
 			</div>
 		</div>

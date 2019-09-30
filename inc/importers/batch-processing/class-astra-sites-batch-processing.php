@@ -252,7 +252,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 
 				// If not fresh user then trigger batch import on the transient and option
 				// Only on the Astra Sites page.
-			} elseif ( 'appearance_page_astra-sites' === get_current_screen()->id ) {
+			} elseif ( isset( get_current_screen()->id ) && 'appearance_page_astra-sites' === get_current_screen()->id ) {
 
 				// Process import.
 				$this->process_import();

@@ -73,7 +73,6 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 
 			$this->includes();
 
-			add_action( 'after_setup_theme', __CLASS__ . '::init_hooks' );
 			add_action( 'admin_notices', array( $this, 'admin_notices' ) );
 			add_action( 'plugins_loaded', array( $this, 'load_textdomain' ) );
 			add_action( 'admin_enqueue_scripts', array( $this, 'admin_enqueue' ), 99 );
@@ -171,127 +170,6 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				'code'    => 0,
 				'message' => __( 'Blank Key.', 'astra-sites' ),
 			);
-		}
-
-		/**
-		 * Adds the admin menu and enqueues CSS/JS if we are on
-		 * the builder admin settings page.
-		 *
-		 * @since x.x.x
-		 * @return void
-		 */
-		static public function init_hooks() {
-			if ( ! is_admin() ) {
-				return;
-			}
-
-			// Add UAEL menu option to admin.
-			add_action( 'network_admin_menu', __CLASS__ . '::menu' );
-			add_action( 'admin_menu', __CLASS__ . '::menu' );
-
-			// Enqueue admin scripts.
-			if ( isset( $_REQUEST['page'] ) && 'astra-images' === $_REQUEST['page'] ) {
-				self::save_settings();
-			}
-		}
-
-		/**
-		 * Save All admin settings here
-		 */
-		static public function save_settings() {
-
-			// Only admins can save settings.
-			if ( ! current_user_can( 'manage_options' ) ) {
-				return;
-			}
-
-			self::save_integration_option();
-		}
-
-		/**
-		 * Save General Setting options.
-		 *
-		 * @since x.x.x
-		 */
-		static public function save_integration_option() {
-
-			if ( isset( $_POST['ast-img-integration-nonce'] ) && wp_verify_nonce( $_POST['ast-img-integration-nonce'], 'ast-img-integration' ) ) {
-
-				$url            = $_SERVER['REQUEST_URI'];
-				$input_settings = array();
-				$new_settings   = array();
-
-				if ( isset( $_POST['astra_images_integration'] ) ) {
-
-					$input_settings = $_POST['astra_images_integration'];
-
-					// Loop through the input and sanitize each of the values.
-					foreach ( $input_settings as $key => $val ) {
-
-						if ( is_array( $val ) ) {
-							foreach ( $val as $k => $v ) {
-								$new_settings[ $key ][ $k ] = ( isset( $val[ $k ] ) ) ? sanitize_text_field( $v ) : '';
-							}
-						} else {
-							$new_settings[ $key ] = ( isset( $input_settings[ $key ] ) ) ? sanitize_text_field( $val ) : '';
-						}
-					}
-				}
-
-				update_option( '_astra_images_integration', $new_settings );
-
-				$api_status = Astra_Sites::check_api_status( 'pixabay' );
-
-				if ( $api_status ) {
-					update_option( '_astra_images_pixabay_status', $api_status );
-				} else {
-					update_option( '_astra_images_pixabay_status', array( 'code' => 404 ) );
-				}
-
-				$query = array(
-					'message' => 'saved',
-				);
-
-				$redirect_to = add_query_arg( $query, $url );
-				wp_redirect( $redirect_to );
-				exit;
-			} // End if statement.
-		}
-
-		/**
-		 * Renders the admin settings menu.
-		 *
-		 * @since x.x.x
-		 * @return void
-		 */
-		static public function menu() {
-
-			if ( ! current_user_can( 'manage_options' ) ) {
-				return;
-			}
-
-			add_submenu_page(
-				'options-general.php',
-				__( 'Astra Images', 'astra-sites' ),
-				__( 'Astra Images', 'astra-sites' ),
-				'manage_options',
-				'astra-images',
-				__CLASS__ . '::render'
-			);
-		}
-
-		/**
-		 * Renders the admin settings.
-		 *
-		 * @since x.x.x
-		 * @return void
-		 */
-		static public function render() {
-			$action = ( isset( $_GET['action'] ) ) ? $_GET['action'] : '';
-			$action = ( ! empty( $action ) && '' !== $action ) ? $action : 'astra-images';
-			$action = str_replace( '_', '-', $action );
-
-			require_once ASTRA_SITES_DIR . 'inc/includes/general.php';
 		}
 
 		/**
@@ -1165,11 +1043,6 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			wp_enqueue_script( 'astra-sites-install-theme', ASTRA_SITES_URI . 'inc/assets/js/install-theme.js', array( 'jquery', 'updates' ), ASTRA_SITES_VER, true );
 			wp_enqueue_style( 'astra-sites-install-theme', ASTRA_SITES_URI . 'inc/assets/css/install-theme.css', null, ASTRA_SITES_VER, 'all' );
 
-			if ( 'settings_page_astra-images' === $hook ) {
-
-				wp_enqueue_style( 'astra-sites-integration', ASTRA_SITES_URI . 'inc/assets/css/integration.css', null, ASTRA_SITES_VER, 'all' );
-			}
-
 			$data = apply_filters(
 				'astra_sites_install_theme_localize_vars',
 				array(
@@ -1290,6 +1163,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 					'api_sites_and_pages'        => (array) $this->get_all_sites(),
 					'api_sites_and_pages_tags'   => get_option( 'astra-sites-tags', array() ),
 					'license_status'             => $license_status,
+					'license_page_builder'       => get_option( 'astra-sites-license-page-builder', '' ),
 
 					'ApiURL'                     => $this->api_url,
 					'stored_data'                => $stored_data,
@@ -1697,6 +1571,35 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			}
 
 			return $this->get_default_page_builders();
+		}
+
+		/**
+		 * Get Page Builder Filed
+		 *
+		 * @since 2.0.0
+		 * @param  string $page_builder Page Bulider.
+		 * @param  string $field        Field name.
+		 * @return mixed
+		 */
+		function get_page_builder_field( $page_builder = '', $field = '' ) {
+			if( empty( $page_builder ) ) {
+				return '';
+			}
+
+			$page_builders = Astra_Sites::get_instance()->get_page_builders();
+			if( empty( $page_builders ) ) {
+				return '';
+			}
+
+			foreach ($page_builders as $key => $current_page_builder) {
+				if( $page_builder === $current_page_builder['slug'] ) {
+					if( isset( $current_page_builder[ $field ] ) ) {
+						return $current_page_builder[ $field ];
+					}
+				}
+			}
+
+			return '';
 		}
 
 		/**

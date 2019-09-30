@@ -362,6 +362,7 @@ var AstraSitesAjaxQueue = (function() {
 			$( document ).on( 'click'                     , '.site-import-site-button', AstraSitesAdmin._show_site_popup);
 			$( document ).on( 'click'                     , '.astra-sites-get-agency-bundle-button', AstraSitesAdmin._show_get_agency_bundle_notice);
 			$( document ).on( 'click'                     , '.astra-sites-activate-license-button', AstraSitesAdmin._show_activate_license_notice);
+			$( document ).on( 'click'                     , '.astra-sites-invalid-mini-agency-license-button', AstraSitesAdmin._show_invalid_mini_agency_license);
 			$( document ).on( 'click'                     , '.astra-sites-templates-not-available', AstraSitesAdmin._show_skip_templates_notice);
 			$( document ).on( 'click', '.astra-sites-site-import-popup .site-install-site-button', AstraSitesAdmin._resetData);
 
@@ -2178,6 +2179,21 @@ var AstraSitesAjaxQueue = (function() {
 			var template = wp.template( 'astra-sites-activate-license' );
 	        var output  = '<div class="overlay"></div>';
 	        	output += '<div class="inner"><div class="heading"><h2>Liked this demo?</h2></div><span class="dashicons close dashicons-no-alt"></span><div class="astra-sites-import-content">';
+                output += '</div></div>';
+			$('.astra-sites-result-preview').html( output );
+	        $('.astra-sites-import-content').html( template );
+		},
+
+		_show_invalid_mini_agency_license: function(event) {
+			event.preventDefault();
+			$('.astra-sites-result-preview')
+				.removeClass('astra-sites-activate-license astra-sites-site-import-popup astra-sites-skip-templates astra-sites-page-import-popup')
+				.addClass('astra-sites-invalid-mini-agency-license')
+				.show();
+
+			var template = wp.template( 'astra-sites-invalid-mini-agency-license' );
+	        var output  = '<div class="overlay"></div>';
+	        	output += '<div class="inner"><div class="heading"><h2>Not Valid License</h2></div><span class="dashicons close dashicons-no-alt"></span><div class="astra-sites-import-content">';
                 output += '</div></div>';
 			$('.astra-sites-result-preview').html( output );
 	        $('.astra-sites-import-content').html( template );

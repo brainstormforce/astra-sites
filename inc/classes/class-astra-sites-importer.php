@@ -136,7 +136,7 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) {
 		 * @return void
 		 */
 		function track_flows( $flow_id ) {
-			error_log( '$flow_id ' . $flow_id );
+			error_log( 'Flow ID ' . $flow_id );
 			Astra_WXR_Importer::instance()->track_post( $flow_id );
 		}
 

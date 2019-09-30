@@ -187,7 +187,7 @@ defined( 'ABSPATH' ) or exit;
 				<# } #>
 			</div>
 			<# if ( site_type && 'free' !== site_type ) { #>
-				<div class="agency-ribbons" title="Agency">Agency</div>
+				<img class="agency-icon" src="<?php echo ASTRA_SITES_URI . 'inc/assets/images/agency.svg'; ?>" alt="<?php _e( 'Agency Template', 'astra-sites' ); ?>" title="<?php _e( 'Agency Template', 'astra-sites' ); ?>" />
 			<# } #>
 		</div>
 	</div>
@@ -235,6 +235,29 @@ defined( 'ABSPATH' ) or exit;
 		<?php
 			/* translators: %s is pricing page link */
 			printf( __( 'This is a premium template available with Astra \'Agency\' packages. <a href="%s" target="_blank">Validate Your License</a> Key to import this template.', 'astra-sites' ), admin_url( 'plugins.php?bsf-inline-license-form=astra-pro-sites' ) );
+		?>
+	</p>
+</script>
+
+<?php
+/**
+ * TMPL - Invalid Mini Agency License
+ */
+?>
+<script type="text/template" id="tmpl-astra-sites-invalid-mini-agency-license">
+	<p>
+		<?php
+			$page_builder = get_option( 'astra-sites-license-page-builder', '' );
+			if( 'elementor' === $page_builder ) {
+				$current_page_builder = 'Elementor';
+				$upgrade_page_builder = 'Beaver Builder';
+			} else {
+				$current_page_builder = 'Beaver Builder';
+				$upgrade_page_builder = 'Elementor';
+			}
+
+			/* translators: %s is pricing page link */
+			printf( __( 'You have purchase the Astra \'Mini Agency\' package for page builder addon "%s".<br/>So, You could not import the Agency site of "%s" page bulider.<br/><br/>Please upgrade your plan to <a href="%s" target="_blank">Agency Bundle</a>.', 'astra-sites' ), $current_page_builder, $upgrade_page_builder, 'https://wpastra.com/pricing/' );
 		?>
 	</p>
 </script>
@@ -335,7 +358,10 @@ defined( 'ABSPATH' ) or exit;
 				<div class="site-action-buttons-wrap">
 					<a href="{{data['astra-site-url']}}" class="button button-hero site-preview-button" target="_blank">Preview "{{{data['title']}}}" Site <i class="dashicons dashicons-external"></i></a>
 					<div class="site-action-buttons-right">
-						<# if( 'free' !== data['astra-sites-type'] && ! astraSitesVars.license_status ) { #>
+						<# if( 'free' !== data['astra-sites-type'] && '' !== astraSitesVars.license_page_builder && data['astra-site-page-builder'] !== astraSitesVars.license_page_builder && ( 'brizy' !== data['astra-site-page-builder'] && 'gutenberg' !== data['astra-site-page-builder']  ) ) { #>
+							<a class="button button-hero button-primary disabled" href="#" target="_blank"><?php _e( 'Not Valid License', 'astra-sites' ); ?></a>
+							<span class="dashicons dashicons-editor-help astra-sites-invalid-mini-agency-license-button"></span>
+						<# } else if( 'free' !== data['astra-sites-type'] && ! astraSitesVars.license_status ) { #>
 							<a class="button button-hero button-primary" href="{{astraSitesVars.getProURL}}" target="_blank">{{astraSitesVars.getProText}}<i class="dashicons dashicons-external"></i></a>
 							<# if( ! astraSitesVars.isPro ) { #>
 								<span class="dashicons dashicons-editor-help astra-sites-get-agency-bundle-button"></span>
