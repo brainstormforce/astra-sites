@@ -19,9 +19,9 @@ if ( ! is_callable( 'Astra_Ext_White_Label_Markup::branding_key_to_constant' ) )
 			<span class="toggle-indicator" aria-hidden="true"></span>
 		</button>
 
-		<h2 class="hndle ui-sortable-handle">
+		<h3 class="hndle ui-sortable-handle">
 			<span><?php echo esc_html( $plugin_name ); ?></span>
-		</h2>
+		</h3>
 
 		<div class="inside">
 			<div class="form-wrap">

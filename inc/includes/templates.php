@@ -19,6 +19,19 @@ defined( 'ABSPATH' ) or exit;
 	<div class="dialog-widget dialog-lightbox-widget dialog-type-buttons dialog-type-lightbox" id="ast-sites-modal">
 		<div class="dialog-widget-content dialog-lightbox-widget-content">
 			<div class="astra-sites-content-wrap">
+				<div id="ast-sites-floating-notice-wrap-id" class="ast-sites-floating-notice-wrap"><div class="ast-sites-floating-notice"></div></div>
+				<?php
+				$status = get_option( 'astra-sites-batch-is-complete', 'no' );
+				if ( 'yes' === $status ) {
+					?>
+					<div class="ast-sites-floating-notice-wrap refreshed-notice slide-in">
+						<div class="ast-sites-floating-notice">
+							<div class="astra-sites-sync-library-message success notice notice-success is-dismissible">
+								<?php _e( 'Template library refreshed!', 'astra-sites' ); ?> <button type="button" class="notice-dismiss"><span class="screen-reader-text"><?php _e( 'Dismiss', 'astra-sites' ); ?></span></button>
+							</div>
+						</div>
+					</div>
+				<?php } ?>
 				<div class="dialog-message dialog-lightbox-message" data-type="pages">
 					<div class="dialog-content dialog-lightbox-content theme-browser"></div>
 					<div class="theme-preview"></div>
@@ -29,19 +42,6 @@ defined( 'ABSPATH' ) or exit;
 				</div>
 			</div>
 			<div class="dialog-buttons-wrapper dialog-lightbox-buttons-wrapper"></div>
-			<div id="ast-sites-floating-notice-wrap-id" class="ast-sites-floating-notice-wrap"><div class="ast-sites-floating-notice"></div></div>
-			<?php
-			$status = get_option( 'astra-sites-batch-is-complete', 'no' );
-			if ( 'yes' === $status ) {
-				?>
-				<div class="ast-sites-floating-notice-wrap refreshed-notice slide-in">
-					<div class="ast-sites-floating-notice">
-						<div class="astra-sites-sync-library-message success notice notice-alt notice-success is-dismissible">
-							<?php _e( 'Template library refreshed!', 'astra-sites' ); ?> <button type="button" class="notice-dismiss"><span class="screen-reader-text"><?php _e( 'Dismiss', 'astra-sites' ); ?></span></button>
-						</div>
-					</div>
-				</div>
-			<?php } ?>
 		</div>
 		<div class="dialog-background-lightbox"></div>
 	</div>
@@ -149,7 +149,7 @@ defined( 'ABSPATH' ) or exit;
 	#>
 		<div class="astra-sites-no-sites">
 			<div class="inner">
-				<h2><?php _e( 'Sorry No Result Found.', 'astra-sites' ); ?></h2>
+				<h3><?php _e( 'Sorry No Result Found.', 'astra-sites' ); ?></h3>
 				<div class="content">
 					<div class="description">
 						<p>
@@ -209,7 +209,7 @@ defined( 'ABSPATH' ) or exit;
 	#>
 		<div class="astra-sites-no-sites">
 			<div class="inner">
-				<h2><?php _e( 'Sorry No Result Found.', 'astra-sites' ); ?></h2>
+				<h3><?php _e( 'Sorry No Result Found.', 'astra-sites' ); ?></h3>
 				<div class="content">
 					<div class="description">
 						<p>
@@ -290,7 +290,7 @@ defined( 'ABSPATH' ) or exit;
 	#>
 		<div class="astra-sites-no-sites">
 			<div class="inner">
-				<h2><?php _e( 'Sorry No Result Found.', 'astra-sites' ); ?></h2>
+				<h3><?php _e( 'Sorry No Result Found.', 'astra-sites' ); ?></h3>
 				<div class="content">
 					<div class="description">
 						<p>
@@ -338,7 +338,7 @@ defined( 'ABSPATH' ) or exit;
 <script type="text/template" id="tmpl-astra-sites-no-sites">
 	<div class="astra-sites-no-sites">
 		<div class="inner">
-			<h2><?php _e( 'Sorry No Result Found.', 'astra-sites' ); ?></h2>
+			<h3><?php _e( 'Sorry No Result Found.', 'astra-sites' ); ?></h3>
 			<div class="content">
 				<div class="empty-item">
 					<img class="empty-collection-part" src="<?php echo ASTRA_SITES_URI . 'inc/assets/images/empty-collection.svg'; ?>" alt="empty-collection">
@@ -360,7 +360,7 @@ defined( 'ABSPATH' ) or exit;
 
 <script type="text/template" id="tmpl-astra-sites-elementor-preview">
 	<#
-	let wrap_height = $scope.find( '.astra-sites-content-wrap' ).height();
+	let wrap_height = $elscope.find( '.astra-sites-content-wrap' ).height();
 	wrap_height = ( wrap_height - 45 );
 	wrap_height = wrap_height + 'px';
 	#>

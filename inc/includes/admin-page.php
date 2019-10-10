@@ -67,6 +67,18 @@ defined( 'ABSPATH' ) or exit;
 		<div id="astra-sites" class="themes wp-clearfix"></div>
 		<div id="site-pages" class="themes wp-clearfix"></div>
 		<div class="astra-sites-result-preview" style="display: none;"></div>
+
+		<div class="astra-sites-popup" style="display: none;">
+			<div class="overlay"></div>
+			<div class="inner">
+				<div class="heading">
+					<h3><?php _e( 'Heading', 'astra-sites' ); ?></h3>
+					<span class="dashicons close dashicons-no-alt"></span>
+				</div>
+				<div class="astra-sites-import-content"></div>
+				<div class="ast-actioms-wrap"></div>
+			</div>
+		</div>
 	</div>
 
 	<?php do_action( 'astra_sites_after_site_grid' ); ?>
@@ -76,7 +88,7 @@ defined( 'ABSPATH' ) or exit;
 <script type="text/template" id="tmpl-astra-sites-no-sites">
 	<div class="astra-sites-no-sites">
 		<div class="inner">
-			<h2><?php _e( 'Sorry No Result Found.', 'astra-sites' ); ?></h2>
+			<h3><?php _e( 'Sorry No Result Found.', 'astra-sites' ); ?></h3>
 			<div class="content">
 				<div class="empty-item">
 					<img class="empty-collection-part" src="<?php echo ASTRA_SITES_URI . 'inc/assets/images/empty-collection.svg'; ?>" alt="empty-collection">
@@ -98,7 +110,7 @@ defined( 'ABSPATH' ) or exit;
 <script type="text/template" id="tmpl-astra-sites-no-favorites">
 	<div class="astra-sites-no-favorites">
 		<div class="inner">
-			<h2><?php _e( 'Favorite template list is empty.', 'astra-sites' ); ?></h2>
+			<h3><?php _e( 'Favorite template list is empty.', 'astra-sites' ); ?></h3>
 			<div class="content">
 				<div class="empty-item">
 					<img class="empty-collection-part" src="<?php echo ASTRA_SITES_URI . 'inc/assets/images/empty-collection.svg'; ?>" alt="empty-collection">
@@ -248,16 +260,16 @@ defined( 'ABSPATH' ) or exit;
 	<p>
 		<?php
 			$page_builder = get_option( 'astra-sites-license-page-builder', '' );
-			if( 'elementor' === $page_builder ) {
-				$current_page_builder = 'Elementor';
-				$upgrade_page_builder = 'Beaver Builder';
-			} else {
-				$current_page_builder = 'Beaver Builder';
-				$upgrade_page_builder = 'Elementor';
-			}
+		if ( 'elementor' === $page_builder ) {
+			$current_page_builder = 'Elementor';
+			$upgrade_page_builder = 'Beaver Builder';
+		} else {
+			$current_page_builder = 'Beaver Builder';
+			$upgrade_page_builder = 'Elementor';
+		}
 
 			/* translators: %s is pricing page link */
-			printf( __( 'You have purchase the Astra \'Mini Agency\' package for page builder addon "%s".<br/>So, You could not import the Agency site of "%s" page bulider.<br/><br/>Please upgrade your plan to <a href="%s" target="_blank">Agency Bundle</a>.', 'astra-sites' ), $current_page_builder, $upgrade_page_builder, 'https://wpastra.com/pricing/' );
+			printf( __( 'You have purchase the Astra \'Mini Agency\' package for page builder addon "%1$s".<br/>So, You could not import the Agency site of "%2$s" page bulider.<br/><br/>Please upgrade your plan to <a href="%3$s" target="_blank">Agency Bundle</a>.', 'astra-sites' ), $current_page_builder, $upgrade_page_builder, 'https://wpastra.com/pricing/' );
 		?>
 	</p>
 </script>
@@ -305,7 +317,7 @@ defined( 'ABSPATH' ) or exit;
 		<div class="single-site">
 			<div class="single-site-preview-wrap">
 				<div class="single-site-pages-header">
-					<h2 class="astra-site-title">{{{data['title']}}}</h2>
+					<h3 class="astra-site-title">{{{data['title']}}}</h3>
 					<span class="count" style="display: none"></span>
 				</div>
 				<div class="single-site-preview">
@@ -315,17 +327,12 @@ defined( 'ABSPATH' ) or exit;
 			<div class="single-site-pages-wrap">
 				<div class="astra-pages-title-wrap">
 					<span class="astra-pages-title"><?php _e( 'Page Templates', 'astra-sites' ); ?></span>
-					<#
-					console.log( data );
-					var has_skip_pages = data['astra-skip-pages-count'] || 0;
-					if( has_skip_pages ) { #>
-						<span class="astra-pages-title"><?php _e( 'Some Templates not Available!', 'astra-sites' ); ?> <span class="dashicons dashicons-editor-help astra-sites-templates-not-available"></span></span>
-					<# } #>
 				</div>
 				<div class="single-site-pages">
 					<div id="single-pages">
-						<# for ( page_id in data.pages ) { #>
-							<div class="theme astra-theme site-single" data-page-id="{{page_id}}" >
+						<# for ( page_id in data.pages ) {
+							var dynamic_page = data.pages[page_id]['dynamic-page'] || 'no'; #>
+							<div class="theme astra-theme site-single" data-page-id="{{page_id}}" data-dynamic-page="{{dynamic_page}}" >
 								<div class="inner">
 									<#
 									var featured_image_class = '';
@@ -369,8 +376,8 @@ defined( 'ABSPATH' ) or exit;
 								<span class="dashicons dashicons-editor-help astra-sites-activate-license-button"></span>
 							<# } #>
 						<# } else { #>
-							<div class="button button-hero button-primary site-import-layout-button disabled"><?php _e( 'Import Template', 'astra-sites' ); ?></div>
-							<div style="margin-left: 5px;" class="button button-hero button-primary site-import-site-button">Import Site</div>
+							<div class="button button-hero button-primary site-import-site-button">Import Site</div>
+							<div style="margin-left: 5px;" class="button button-hero button-primary site-import-layout-button disabled"><?php _e( 'Import Template', 'astra-sites' ); ?></div>
 						<# } #>
 					</div>
 				</div>
@@ -381,7 +388,7 @@ defined( 'ABSPATH' ) or exit;
 
 <script type="text/template" id="tmpl-astra-sites-site-import-success">
 	<div class="heading">
-		<h2><?php _e( 'Imported Successfully!', 'astra-sites' ); ?></h2>
+		<h3><?php _e( 'Imported Successfully!', 'astra-sites' ); ?></h3>
 		<span class="dashicons close dashicons-no-alt"></span>
 	</div>
 	<div class="astra-sites-import-content">
@@ -405,7 +412,7 @@ defined( 'ABSPATH' ) or exit;
 
 <script type="text/template" id="tmpl-astra-sites-page-import-success">
 	<div class="heading">
-		<h2><?php _e( 'Imported Successfully!', 'astra-sites' ); ?></h2>
+		<h3><?php _e( 'Imported Successfully!', 'astra-sites' ); ?></h3>
 		<span class="dashicons close dashicons-no-alt"></span>
 	</div>
 	<div class="astra-sites-import-content">
@@ -417,6 +424,24 @@ defined( 'ABSPATH' ) or exit;
 		<a class="button button-primary button-hero" href="{{data['link']}}" target="_blank"><?php _e( 'View Template', 'astra-sites' ); ?> <i class="dashicons dashicons-external"></i></a>
 	</div>
 </script>
+
+<?php
+/**
+ * Skip and Import Dynamic Template
+ */
+?>
+<script type="text/template" id="tmpl-astra-sites-skip-and-import-heading">	
+	<?php _e( 'Skip and Import', 'astra-sites' ); ?>
+</script>
+<script type="text/template" id="tmpl-astra-sites-skip-and-import-content">	
+	<p><?php _e( 'The page templates which contain the dynamic widgets/modules are not available for single template import. With the "Import Site" option, you can get those pages.', 'astra-sites' ); ?></p>
+	<p><?php _e( 'You can have the complete site preview from bottom left button.', 'astra-sites' ); ?></p>
+</script>
+<script type="text/template" id="tmpl-astra-sites-skip-and-import-actions">
+	<button class="button button-primary astra-sites-skip-and-import-template"><?php _e( 'Skip & Import', 'astra-sites' ); ?></button>
+	<button class="button button-hero site-import-cancel"><?php _e( 'Cancel', 'astra-sites' ); ?></button>
+</script>
+
 <?php
 /**
  * TMPL - First Screen
@@ -429,9 +454,9 @@ defined( 'ABSPATH' ) or exit;
 
 		<div class="heading">
 			<# if( 'astra-sites' === data ) { #>
-				<h2><?php _e( 'We are importing site for you!', 'astra-sites' ); ?></h2>
+				<h3><?php _e( 'We are importing site for you!', 'astra-sites' ); ?></h3>
 			<# } else { #>
-				<h2><?php _e( 'We are importing template for you!', 'astra-sites' ); ?></h2>
+				<h3><?php _e( 'We are importing template for you!', 'astra-sites' ); ?></h3>
 			<# } #>
 			<span class="dashicons close dashicons-no-alt"></span>
 		</div>

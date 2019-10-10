@@ -112,7 +112,7 @@
                             priority: 40
                         },
                         astraimages: {
-                            text: 'Astra Images',
+                            text: astraImages.title,
                             priority: 70
                         }
                     });
@@ -196,7 +196,7 @@ AstraAttachmentsBrowser = Frame.extend({
     createContent: function createContent() {
 
         this.attachmentsHeading = new wp.media.view.Heading({
-            text: 'Astra Images',
+            text: astraImages.title,
             level: 'h3',
             className: 'ast-media-views-heading'
         });
@@ -261,7 +261,7 @@ module.exports = AstraContent;
 /***/ (function(module, exports) {
 
 var l10n = wp.media.view.l10n;
-
+$ = jQuery;
 // Search input view controller.
 AstraSearch = wp.Backbone.View.extend({
 
@@ -271,7 +271,7 @@ AstraSearch = wp.Backbone.View.extend({
     searching: false,
     images: [],
     attributes: {
-        placeholder: 'Pixabay Search - Ex: flowers',
+        placeholder: astraImages.search_placeholder,
         type: 'search',
         'aria-describedby': 'live-search-desc'
     },
@@ -337,7 +337,7 @@ AstraSearch = wp.Backbone.View.extend({
         var thisObject = this;
         thisObject.searching = true;
         AstraImageCommon.config.q = event.target.value;
-        var url = 'https://pixabay.com/api/?' + $.param(AstraImageCommon.config);
+        var url = astraImages.pixabay_url + '?' + $.param(AstraImageCommon.config);
 
         if (url) {
             fetch(url).then(function (response) {

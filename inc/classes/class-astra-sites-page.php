@@ -69,23 +69,41 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 		 * @return void
 		 */
 		function getting_started() {
-			if ( 'plugins' !== get_current_screen()->base ) {
+
+			$current_screen = get_current_screen();
+
+			// Bail if not on Astra Sites screen.
+			if( ! is_object( $current_screen ) && null === $current_screen ) {
 				return;
+			}			
+
+			if ( 'appearance_page_astra-sites' === $current_screen->base ) {
+				$status = get_option( 'astra-sites-batch-is-complete', 'no' );
+				if ( 'yes' === $status ) {
+					?>
+					<div class="astra-sites-sync-library-message success notice notice-success is-dismissible">
+						<p><?php _e( 'Template library refreshed!', 'astra-sites' ); ?> <button type="button" class="notice-dismiss"><span class="screen-reader-text"><?php _e( 'Dismiss', 'astra-sites' ); ?></span></button></p>
+					</div>
+					<?php
+				}
 			}
 
-			$processed    = get_user_meta( get_current_user_id(), '_astra_sites_gettings_started', true );
-			$product_name = Astra_Sites_White_Label::get_instance()->page_title( 'Astra' );
+			if ( 'plugins' === $current_screen->base ) {
+				$processed    = get_user_meta( get_current_user_id(), '_astra_sites_gettings_started', true );
+				$product_name = Astra_Sites_White_Label::get_instance()->page_title( 'Astra' );
 
-			if ( $processed ) {
-				return;
+				if ( $processed ) {
+					return;
+				}
+
+				?>
+				<div class="notice notice-info is-dismissible astra-sites-getting-started-notice">
+					<?php /* translators: %1$s is the admin page URL, %2$s is product name. */ ?>
+					<p><?php printf( __( 'Thank you for choosing %1$s! Check the library of <a class="astra-sites-getting-started-btn" href="%2$s">ready starter sites here »</a>', 'astra-sites' ), $product_name, admin_url( 'themes.php?page=astra-sites' ) ); ?></p>
+				</div>
+				<?php
 			}
 
-			?>
-			<div class="notice notice-info is-dismissible astra-sites-getting-started-notice">
-				<?php /* translators: %1$s is the admin page URL, %2$s is product name. */ ?>
-				<p><?php printf( __( 'Thank you for choosing %1$s! Check the library of <a class="astra-sites-getting-started-btn" href="%2$s">ready starter sites here »</a>', 'astra-sites' ), $product_name, admin_url( 'themes.php?page=astra-sites' ) ); ?></p>
-			</div>
-			<?php
 		}
 
 		/**
@@ -160,14 +178,14 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 		 * @return array page builder sites.
 		 */
 		function get_sites_by_page_builder( $default_page_builder = '' ) {
-			$sites_and_pages = Astra_Sites::get_instance()->get_all_sites();
-
-			$page_builder_keys = wp_list_pluck( $sites_and_pages, 'astra-site-page-builder' );
-
+			$sites_and_pages            = Astra_Sites::get_instance()->get_all_sites();
 			$current_page_builder_sites = array();
-			foreach ( $page_builder_keys as $site_id => $page_builder ) {
-				if ( $default_page_builder === $page_builder ) {
-					$current_page_builder_sites[ $site_id ] = $sites_and_pages[ $site_id ];
+			if ( ! empty( $sites_and_pages ) ) {
+				$page_builder_keys = wp_list_pluck( $sites_and_pages, 'astra-site-page-builder' );
+				foreach ( $page_builder_keys as $site_id => $page_builder ) {
+					if ( $default_page_builder === $page_builder ) {
+						$current_page_builder_sites[ $site_id ] = $sites_and_pages[ $site_id ];
+					}
 				}
 			}
 
@@ -243,7 +261,14 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 		 */
 		public function notices() {
 
-			if ( 'appearance_page_astra-sites' !== get_current_screen()->id ) {
+			$current_screen = get_current_screen();
+
+			// Bail if not on Astra Sites screen.
+			if( ! is_object( $current_screen ) && null === $current_screen ) {
+				return;
+			}
+
+			if ( 'appearance_page_astra-sites' !== $current_screen->id ) {
 				return;
 			}
 
@@ -436,15 +461,6 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 										<a title="<?php _e( 'Sync Library', 'astra-sites' ); ?>" href="#" class="astra-sites-sync-library-button">
 											<i class="icon-refresh"></i>
 										</a>
-
-										<?php
-										$status = get_option( 'astra-sites-batch-is-complete', 'no' );
-										if ( 'yes' === $status ) {
-											?>
-											<div class="astra-sites-sync-library-message success notice notice-alt notice-success is-dismissible">
-												<p><?php _e( 'Template library refreshed!', 'astra-sites' ); ?> <button type="button" class="notice-dismiss"><span class="screen-reader-text"><?php _e( 'Dismiss', 'astra-sites' ); ?></span></button></p>
-											</div>
-										<?php } ?>
 									</li>
 								</ul>
 							</div>

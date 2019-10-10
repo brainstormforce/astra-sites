@@ -50,7 +50,7 @@ defined( 'ABSPATH' ) or exit;
 		<# if ( 0 === count ) { #>
 			<# if ( AstraImageCommon.apiStatus ) { #>
 			<div class="astra-sites-no-sites">
-				<h2><?php _e( 'Sorry No Result Found.', 'astra-sites' ); ?></h2>
+				<h3><?php _e( 'Sorry No Result Found.', 'astra-sites' ); ?></h3>
 			</div>
 			<# } else { #>
 			<# var ht = 'calc( ' + $scope.find( '.ast-image__skeleton-inner-wrap' ).innerHeight() + 'px - 50px );' #>
@@ -59,7 +59,7 @@ defined( 'ABSPATH' ) or exit;
 				</div>
 				<div class="ast-image__license-wrap">
 					<div class="ast-image__license-heading-wrap">
-						<h2 class="ast-image__license-heading"><?php _e( 'Authenticate to Fetch Images from Pixabay', 'astra-images' ); ?></h2>
+						<h3 class="ast-image__license-heading"><?php _e( 'Authenticate to Fetch Images from Pixabay', 'astra-images' ); ?></h3>
 					</div>
 					<div>
 						<p class="ast-image__license-description"><?php _e( 'Please enter your API key below so that you can scan over 1 million+ high quality stock images shared by the Pixabay community.', 'astra-sites' ); ?></p>
@@ -118,7 +118,7 @@ defined( 'ABSPATH' ) or exit;
 
 <script type="text/template" id="tmpl-ast-image-no-result">
 	<div class="astra-sites-no-sites">
-		<h2><?php _e( 'Sorry No Result Found.', 'astra-sites' ); ?></h2>
+		<h3><?php _e( 'Sorry No Result Found.', 'astra-sites' ); ?></h3>
 		<p class="description">
 			<?php
 			/* translators: %1$s External Link */
@@ -140,32 +140,6 @@ defined( 'ABSPATH' ) or exit;
 				</div>
 			</div>
 		</div>
-		<div class="single-site-info">
-			<div class="ast-image__title-wrap">
-				<h3 class="ast-image__title">{{data.tags}}</h3>
-			</div>
-			<div class="ast-image__info-wrap">
-				<div class="ast-image__info-user">
-					<a href="https://pixabay.com/users/{{data.user}}" class="" target="_blank" rel="noreferrer noopener"><?php _e( 'By', 'astra-sites' ); ?> {{data.user}}</a>
-				</div>
-				<div class="ast-image__info-image">
-					<ul class="ast-image__info-list">
-						<li><strong><?php _e( 'Type', 'astra-sites' ); ?></strong><br>{{image_type}}</li>
-						<li><strong><?php _e( 'Size', 'astra-sites' ); ?></strong><br>{{(data.imageSize/1000000).toFixed(2)}}MB</li>
-						<li><strong><?php _e( 'Dimensions', 'astra-sites' ); ?></strong><br>{{data.imageHeight}}px X {{data.imageWidth}}px</li>
-					</ul>
-				</div>
-				<div class="ast-image__save-wrap">
-					<button type="button" class="ast-image__save button media-button button-primary button-large media-button-select {{disable_class}}" data-import-status={{is_imported}}>
-						<# if ( is_imported ) { #>
-							<?php _e( 'Already Saved', 'astra-sites' ); ?>
-						<# } else { #>
-							<?php _e( 'Save & Insert', 'astra-sites' ); ?>
-						<# } #>
-					</button>
-				</div>
-			</div>
-		</div>
 	</div>
 </script>
 
@@ -174,6 +148,20 @@ defined( 'ABSPATH' ) or exit;
 		<i class="icon-chevron-left"></i>
 		<span class="ast-image__go-back-text"><?php _e( 'Back to Images', 'astra-sites' ); ?></span>
 	</span>
+</script>
+
+<script type="text/template" id="tmpl-ast-image-save">
+	<# var is_imported = _.includes( astraImages.saved_images, data.id.toString() ); #>
+	<# var disable_class = ( is_imported ) ? 'disabled': ''; #>
+	<div class="ast-image__save-wrap">
+		<button type="button" class="ast-image__save button media-button button-primary button-large media-button-select {{disable_class}}" data-import-status={{is_imported}}>
+			<# if ( is_imported ) { #>
+				<?php _e( 'Already Saved', 'astra-sites' ); ?>
+			<# } else { #>
+				<?php _e( 'Save & Insert', 'astra-sites' ); ?>
+			<# } #>
+		</button>
+	</div>
 </script>
 
 <?php

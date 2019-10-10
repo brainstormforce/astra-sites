@@ -110,7 +110,8 @@
                 return;
             }
 
-            thisBtn.text( 'Downloading...' );
+            thisBtn.text( astraImages.downloading );
+            thisBtn.addClass( 'installing' );
 
             AstraImageCommon.canSave = false;
 
@@ -137,6 +138,7 @@
                 astraImages.saved_images = data.data['updated-saved-images'];
                 wp.media.view.AstraAttachmentsBrowser.object.photoUploadComplete( data.data );
                 thisBtn.text( 'Done' );
+                thisBtn.removeClass( 'installing' );
                 AstraImageCommon._empty();
             });
         },
@@ -159,7 +161,7 @@
             if ( '' == key ) {
                 AstraImageCommon.isValidating = false;
                 errWrap.show();
-                errWrap.find( 'span' ).text( 'Please enter an API key.' );
+                errWrap.find( 'span' ).text( astraImages.empty_api_key );
                 setTimeout( function() {
                     errWrap.hide();
                     errWrap.find( 'span' ).text( '' );
@@ -167,7 +169,7 @@
                 return;
             }
 
-            thisBtn.text( 'Validating...' );
+            thisBtn.text( astraImages.validating );
 
             // Work with JSON page here
             $.ajax({
@@ -191,7 +193,7 @@
                     AstraImageCommon.apiStatus = false;
                     thisBtn.text( 'Validate Key' );
                     errWrap.show();
-                    errWrap.find( 'span' ).text( 'An error occured with code "' + astraImages.api_status['code'] + '"' );
+                    errWrap.find( 'span' ).text( astraImages.error_api_key + '"' + astraImages.api_status['code'] + '"' );
                     setTimeout( function() {
                         errWrap.hide();
                         errWrap.find( 'span' ).text( '' );
@@ -224,6 +226,7 @@
             $scope.removeClass( 'preview-mode' );
             $scope.find( '.ast-attachments-search-wrap' ).children().show();
             $scope.find( '.ast-image__go-back' ).remove();
+            $scope.find( '.ast-image__save-wrap' ).remove();
             $scope.find( '.ast-image__preview-skeleton' ).hide();
             $scope.find( '.ast-image__preview-skeleton' ).html( '' );
 
@@ -245,7 +248,11 @@
             AstraImageCommon.image = $( this ).data( 'img-info' );
 
             let preview = wp.template( 'ast-image-single' );
-            let list_html = preview( AstraImageCommon.image );
+            let single_html = preview( AstraImageCommon.image );
+
+            let save_btn = wp.template( 'ast-image-save' );
+            let single_btn = save_btn( AstraImageCommon.image );
+
             let wrapHeight = $scope.find( '.ast-image__skeleton-inner-wrap' ).outerHeight();
             wrapHeight = ( wrapHeight - 60 );
 
@@ -253,7 +260,8 @@
             $scope.addClass( 'preview-mode' );
             $scope.find( '.ast-attachments-search-wrap' ).children().hide();
             $scope.find( '.ast-image__search-wrap' ).before( $( '#tmpl-ast-image-go-back' ).text() );
-            $scope.find( '.ast-image__preview-skeleton' ).html( list_html );
+            $scope.find( '.ast-image__search-wrap' ).after( single_btn );
+            $scope.find( '.ast-image__preview-skeleton' ).html( single_html );
             $scope.find( '.ast-image__preview-skeleton' ).show();
             $scope.find( '.single-site-preview' ).css( 'max-height', wrapHeight );
 

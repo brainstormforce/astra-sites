@@ -1,5 +1,5 @@
 var l10n = wp.media.view.l10n
-
+$ = jQuery
 // Search input view controller.
 AstraSearch = wp.Backbone.View.extend({
 
@@ -9,7 +9,7 @@ AstraSearch = wp.Backbone.View.extend({
     searching: false,
     images: [],
     attributes: {
-        placeholder: 'Pixabay Search - Ex: flowers',
+        placeholder: astraImages.search_placeholder,
         type: 'search',
         'aria-describedby': 'live-search-desc'
     },
@@ -75,7 +75,7 @@ AstraSearch = wp.Backbone.View.extend({
         let thisObject = this;
         thisObject.searching = true;
         AstraImageCommon.config.q = event.target.value;
-        var url = 'https://pixabay.com/api/?' + $.param( AstraImageCommon.config );
+        var url = astraImages.pixabay_url + '?' + $.param( AstraImageCommon.config );
 
         if ( url ) {
             fetch( url ).then(function (response) {

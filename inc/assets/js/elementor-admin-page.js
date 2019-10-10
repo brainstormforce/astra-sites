@@ -267,7 +267,7 @@ var AstraSitesAjaxQueue = (function() {
 			}
 
 			button.addClass( 'updating-message');
-			$elscope.find( '#ast-sites-floating-notice-wrap-id .ast-sites-floating-notice' ).html( 'Syncing template library in the background! We will notify you once it is done.<button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss</span></button>' );
+			$elscope.find( '#ast-sites-floating-notice-wrap-id .ast-sites-floating-notice' ).html( 'Syncing template library in the background can take anywhere between 2 to 3 minutes. We will notify you once done. <button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss</span></button>' );
 			$elscope.find( '#ast-sites-floating-notice-wrap-id' ).addClass( 'slide-in' );
 
 			$.ajax({
@@ -282,15 +282,6 @@ var AstraSitesAjaxQueue = (function() {
 		    })
 			.done(function ( response ) {
 				button.removeClass( 'updating-message');
-
-				setTimeout( function() {
-					$elscope.find( '#ast-sites-floating-notice-wrap-id' ).removeClass( 'slide-in' );
-					$elscope.find( '#ast-sites-floating-notice-wrap-id' ).addClass( 'slide-out' );
-				}, 5000 );
-
-				setTimeout( function() {
-					$elscope.find( '#ast-sites-floating-notice-wrap-id' ).removeClass( 'slide-out' );
-				}, 5200 );
 
 				if( 'ajax' === response.data ) {
 
@@ -916,7 +907,7 @@ var AstraSitesAjaxQueue = (function() {
 
 			if ( 'pages' == AstraElementorSitesAdmin.type ) {
 
-				$elscope.find( '#ast-sites-floating-notice-wrap-id .ast-sites-floating-notice' ).html( 'Inserting this Page will add a common Page Setting as <strong>Astra Site Settings</strong>. You can turn the setting off if you do not wish to use them. <button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss</span></button>' );
+				$elscope.find( '#ast-sites-floating-notice-wrap-id .ast-sites-floating-notice' ).html( 'Inserting this Page will add a common Page Setting as <strong>Starter Templates Settings</strong>. You can turn the setting off if you do not wish to use them. <button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss</span></button>' );
 				$elscope.find( '#ast-sites-floating-notice-wrap-id' ).addClass( 'slide-in' );
 			}
 
@@ -1481,18 +1472,6 @@ var AstraSitesAjaxQueue = (function() {
 			// Hide Back button.
 			$elscope.find( '.back-to-layout' ).css( 'visibility', 'hidden' );
 			$elscope.find( '.back-to-layout' ).css( 'opacity', '0' );
-
-			AstraElementorSitesAdmin._autoCloseNotice();
-		},
-
-		_autoCloseNotice: function( e ) {
-			
-			if( $elscope.find('.ast-sites-floating-notice-wrap.refreshed-notice').length ) {
-
-				setTimeout(function() {
-					$elscope.find('.ast-sites-floating-notice-wrap.refreshed-notice').find( '.notice-dismiss' ).click();
-				}, 6000);
-			}
 		},
 
 		_initSites: function( e ) {

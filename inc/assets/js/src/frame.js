@@ -28,7 +28,7 @@ AstraAttachmentsBrowser = Frame.extend({
     createContent: function() {
 
         this.attachmentsHeading = new wp.media.view.Heading( {
-            text: 'Astra Images',
+            text: astraImages.title,
             level: 'h3',
             className: 'ast-media-views-heading'
         } );

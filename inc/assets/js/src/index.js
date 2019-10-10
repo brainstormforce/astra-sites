@@ -38,7 +38,7 @@
                             priority: 40
                         },
                         astraimages: {
-                            text:     'Astra Images',
+                            text:     astraImages.title,
                             priority: 70
                         }
                     });

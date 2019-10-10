@@ -201,26 +201,6 @@ if ( ! class_exists( 'Astra_Sites_Compatibility_Elementor' ) ) :
 				$default_fonts = ', ' . $default_fonts;
 			}
 
-			$element->add_control(
-				'astra_sites_default_heading_font_family',
-				array(
-					'label'     => __( 'Headings', 'astra-sites' ),
-					'type'      => Controls_Manager::FONT,
-					'default'   => '',
-					'selectors' => array(
-						'h1, .entry-content h1, .entry-content h1 a' => 'font-family: "{{VALUE}}"' . $default_fonts . ';',
-						'h2, .entry-content h2, .entry-content h2 a' => 'font-family: "{{VALUE}}"' . $default_fonts . ';',
-						'h3, .entry-content h3, .entry-content h3 a' => 'font-family: "{{VALUE}}"' . $default_fonts . ';',
-						'h4, .entry-content h4, .entry-content h4 a' => 'font-family: "{{VALUE}}"' . $default_fonts . ';',
-						'h5, .entry-content h5, .entry-content h5 a' => 'font-family: "{{VALUE}}"' . $default_fonts . ';',
-						'h6, .entry-content h6, .entry-content h6 a' => 'font-family: "{{VALUE}}"' . $default_fonts . ';',
-					),
-					'condition' => array(
-						'astra_sites_page_setting_enable' => 'yes',
-					),
-				)
-			);
-
 			for ( $i = 1; $i < 7; $i++ ) {
 				$element->add_group_control(
 					Group_Control_Typography::get_type(),
