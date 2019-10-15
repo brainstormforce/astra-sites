@@ -117,6 +117,9 @@ We are open to suggestions and would love to work on topics that our users are l
 
 == Changelog ==
 
+v1.3.20 - 15-October-2019
+- Fix: Updated Astra Notice library to v1.1.4.
+
 v1.3.19 - 12-September-2019
 - Improvement: Allow extra query parameters to be added to the API calls for Astra Sites using filters.
 
