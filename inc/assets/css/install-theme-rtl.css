@@ -1,0 +1,21 @@
+.processing:before {
+    margin: 0 0px 0px 3px;
+}
+.processing:before {
+    animation: rotation 2s infinite linear;
+}
+.processing:before {
+    color: #f56e28;
+    content: "\f463";
+}
+.processing:before {
+    display: inline-block;
+    font: normal 20px/1 dashicons;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    vertical-align: top;
+}
+#astra-theme-activation-nag a {
+	box-shadow: none;
+	outline: none;
+}
