@@ -5,7 +5,7 @@
 **Requires at least:** 4.4  
 **Requires PHP:** 5.3  
 **Tested up to:** 5.2  
-**Stable tag:** 1.3.19  
+**Stable tag:** 1.3.20  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -37,7 +37,7 @@ All you need to do is select the demo that suits your needs, import, tweak and g
 
 Businesses like restaurants, lawyers, agencies, interior designers, artist shops, brandstore, pet services, charity, plumber, dental clinic, construction, fitness trainer, gardening, makeup artist and a lot more. You can take a look at all of them built with different page builders.
 
-- [Elementor Free Website Templates](https://wpastra.com/ready-websites/?page-builder=elementor&category=free)
+- [Elementor Free Website Templates](https://wpastra.com/elementor-templates-free-downloads/)
 - [Beaver Builder Free Website Templates](https://wpastra.com/ready-websites/?page-builder=beaver-builder&category=free)
 - [Gutenberg Free Website Templates](https://wpastra.com/ready-websites/?page-builder=gutenberg&category=free)
 - [Brizy Free Website Templates](https://wpastra.com/ready-websites/?page-builder=brizy&category=free)
@@ -116,6 +116,9 @@ We are open to suggestions and would love to work on topics that our users are l
 3. Click the import site button to start the import process.
 
 ## Changelog ##
+
+v1.3.20 - 15-October-2019
+- Fix: Updated Astra Notice library to v1.1.4.
 
 v1.3.19 - 12-September-2019
 - Improvement: Allow extra query parameters to be added to the API calls for Astra Sites using filters.
