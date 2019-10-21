@@ -59,6 +59,22 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 			add_action( 'wp_ajax_astra-sites-change-page-builder', array( $this, 'save_page_builder_on_ajax' ) );
 			add_action( 'admin_init', array( $this, 'save_page_builder_on_submit' ) );
 			add_action( 'admin_notices', array( $this, 'getting_started' ) );
+			add_action( 'admin_body_class', array( $this, 'admin_body_class' ) );
+		}
+
+		/**
+		 * Admin Body Classes
+		 *
+		 * @since x.x.x
+		 * @param string $classes Space separated class string.
+		 */
+		function admin_body_class( $classes = '' ) {
+
+			if ( ! isset( $_GET['change-page-builder'] ) ) {
+				return $classes;
+			}
+
+			return $classes . ' astra-sites-change-page-builder ';
 		}
 
 		/**
@@ -73,9 +89,9 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 			$current_screen = get_current_screen();
 
 			// Bail if not on Astra Sites screen.
-			if( ! is_object( $current_screen ) && null === $current_screen ) {
+			if ( ! is_object( $current_screen ) && null === $current_screen ) {
 				return;
-			}			
+			}
 
 			if ( 'appearance_page_astra-sites' === $current_screen->base ) {
 				$status = get_option( 'astra-sites-batch-is-complete', 'no' );
@@ -264,7 +280,7 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 			$current_screen = get_current_screen();
 
 			// Bail if not on Astra Sites screen.
-			if( ! is_object( $current_screen ) && null === $current_screen ) {
+			if ( ! is_object( $current_screen ) && null === $current_screen ) {
 				return;
 			}
 

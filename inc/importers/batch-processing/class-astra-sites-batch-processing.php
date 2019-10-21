@@ -114,6 +114,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 			add_action( 'wp_ajax_astra-sites-update-library', array( $this, 'update_library' ) );
 			add_action( 'wp_ajax_astra-sites-update-library-complete', array( $this, 'update_library_complete' ) );
 			add_action( 'wp_ajax_astra-sites-import-categories', array( $this, 'import_categories' ) );
+			add_action( 'wp_ajax_astra-sites-import-block-categories', array( $this, 'import_block_categories' ) );
 			add_action( 'wp_ajax_astra-sites-import-page-builders', array( $this, 'import_page_builders' ) );
 			add_action( 'wp_ajax_astra-sites-import-blocks', array( $this, 'import_blocks' ) );
 			add_action( 'wp_ajax_astra-sites-get-sites-request-count', array( $this, 'sites_requests_count' ) );
@@ -128,6 +129,17 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 		 */
 		function import_categories() {
 			Astra_Sites_Batch_Processing_Importer::get_instance()->import_categories();
+			wp_send_json_success();
+		}
+
+		/**
+		 * Import Block Categories
+		 *
+		 * @since 2.0.0
+		 * @return void
+		 */
+		function import_block_categories() {
+			Astra_Sites_Batch_Processing_Importer::get_instance()->import_block_categories();
 			wp_send_json_success();
 		}
 
@@ -257,11 +269,11 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 				$current_screen = get_current_screen();
 
 				// Bail if not on Astra Sites screen.
-				if( ! is_object( $current_screen ) && null === $current_screen ) {
+				if ( ! is_object( $current_screen ) && null === $current_screen ) {
 					return;
 				}
 
-				if( 'appearance_page_astra-sites' === $current_screen->id ) {
+				if ( 'appearance_page_astra-sites' === $current_screen->id ) {
 
 					// Process import.
 					$this->process_import();
@@ -325,6 +337,16 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 					);
 				}
 			}
+
+			// Added the categories.
+			error_log( 'Added Block Categories in queue.' );
+			update_option( 'astra-sites-batch-status-string', 'Added Block Categories in queue.' );
+			self::$process_site_importer->push_to_queue(
+				array(
+					'instance' => Astra_Sites_Batch_Processing_Importer::get_instance(),
+					'method'   => 'import_block_categories',
+				)
+			);
 
 			// Get count.
 			$total_requests = $this->get_total_requests();

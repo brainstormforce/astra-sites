@@ -60,6 +60,12 @@ if ( class_exists( 'WP_Background_Process' ) ) :
 				error_log( 'Inside Batch ' . $page );
 				update_option( 'astra-sites-batch-status-string', 'Inside Batch ' . $page );
 				$process->import_blocks( $page );
+			} elseif ( 'import_block_categories' === $method ) {
+				error_log( '-------- Importing Blocks Categories --------' );
+				$page = $object['page'];
+				error_log( 'Inside Batch ' . $page );
+				update_option( 'astra-sites-batch-status-string', 'Inside Batch ' . $page );
+				$process->import_block_categories( $page );
 			}
 
 			return false;

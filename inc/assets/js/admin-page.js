@@ -245,12 +245,15 @@ var AstraSitesAjaxQueue = (function() {
 
 			// Add site title's in autocomplete.
 			for( site_id in sites ) {
-				var title = _.unescape( sites[ site_id ]['title'] );
 
-				// @todo check why below character not escape with function _.unescape();
-				title = title.replace('&#8211;', '-' );
+				if( astraSitesVars.default_page_builder === sites[ site_id ]['astra-site-page-builder'] ) {
+					var title = _.unescape( sites[ site_id ]['title'] );
 
-				strings.push( title );
+					// @todo check why below character not escape with function _.unescape();
+					title = title.replace('&#8211;', '-' );
+
+					strings.push( title );
+				}
 			}
 			
 			strings = strings.filter(function(item, pos) {
@@ -405,7 +408,7 @@ var AstraSitesAjaxQueue = (function() {
 			$( document ).on('click', '.astra-sites-sync-library-message.success .notice-dismiss', AstraSitesAdmin._sync_library_complete );
 			$( document ).on('click', '.page-builder-icon', AstraSitesAdmin._toggle_page_builder_list );
 			$( document ).on('click', '.showing-page-builders #wpbody-content', AstraSitesAdmin._close_page_builder_list );
-			$( document ).on('keypress input'                     , '#wp-filter-search-input', AstraSitesAdmin._search );
+			$( document ).on('keyup input'                     , '#wp-filter-search-input', AstraSitesAdmin._search );
 			$( document ).on('click'                     , '.ui-autocomplete .ui-menu-item', AstraSitesAdmin._show_search_term );
 		},
 
@@ -742,7 +745,7 @@ var AstraSitesAjaxQueue = (function() {
 			if( ! $('.astra-sites-sync-library-message').length ) {
 				var noticeContent = wp.updates.adminNotice( {
 					className: 'astra-sites-sync-library-message notice notice-info is-dismissible',
-					message:   'Syncing template library in the background can take anywhere between 2 to 3 minutes. We will notify you once done. <button type="button" class="notice-dismiss"><span class="screen-reader-text">'+commonL10n.dismiss+'</span></button>',
+					message:   'Syncing template library in the background. The process can take anywhere between 2 to 3 minutes. We will notify you once done. <button type="button" class="notice-dismiss"><span class="screen-reader-text">'+commonL10n.dismiss+'</span></button>',
 				} );
 				$('#screen-meta').after( noticeContent );
 			}
@@ -1173,6 +1176,7 @@ var AstraSitesAjaxQueue = (function() {
 			if( astraSitesVars.sites && astraSitesVars.sites.site_url ) {
 				AstraSitesAdmin._api_params['site_url'] = astraSitesVars.sites.site_url;
 			}
+			AstraSitesAdmin._api_params['track'] = true;
 		},
 
 		_show_default_page_builder_sites: function() {
@@ -1284,10 +1288,14 @@ var AstraSitesAjaxQueue = (function() {
 				.done(function ( response ) {
 					if( response.success ) {
 
+						astraSitesVars.default_page_builder = page_builder_slug;
+
 						// Set changed page builder data as a default page builder object.
 						astraSitesVars.default_page_builder_sites = response.data;
 						$('.astra-sites-show-favorite-button').removeClass('active');
 						AstraSitesAdmin.add_sites( response.data );
+
+						AstraSitesAdmin._autocomplete();
 					}
 				});
 
@@ -2632,7 +2640,7 @@ var AstraSitesAjaxQueue = (function() {
 				$('.current-importing-status-wrap').remove();
 				$('.astra-sites-result-preview .inner > h3').text('We are importing page!');
 
-				fetch( AstraSitesAdmin.templateData['astra-page-api-url'] ).then(response => {
+				fetch( AstraSitesAdmin.templateData['astra-page-api-url'] + '?&track=true&site_url=' + astraSitesVars.siteURL ).then(response => {
 					return response.json();
 				}).then(data => {
 

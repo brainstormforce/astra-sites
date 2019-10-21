@@ -1279,6 +1279,8 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 					'isWhiteLabeled'             => Astra_Sites_White_Label::get_instance()->is_white_labeled(),
 					'getProText'                 => __( 'Get Agency Bundle', 'astra-sites' ),
 					'getProURL'                  => esc_url( 'https://wpastra.com/agency/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=wp-dashboard' ),
+					'astra_block_categories'     => get_option( 'astra-blocks-categories', array() ),
+					'siteURL'                    => site_url(),
 				)
 			);
 

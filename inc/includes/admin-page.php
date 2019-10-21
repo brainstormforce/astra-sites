@@ -110,7 +110,7 @@ defined( 'ABSPATH' ) or exit;
 <script type="text/template" id="tmpl-astra-sites-no-favorites">
 	<div class="astra-sites-no-favorites">
 		<div class="inner">
-			<h3><?php _e( 'Favorite template list is empty.', 'astra-sites' ); ?></h3>
+			<h3><?php _e( 'Favorite Template List Is Empty.', 'astra-sites' ); ?></h3>
 			<div class="content">
 				<div class="empty-item">
 					<img class="empty-collection-part" src="<?php echo ASTRA_SITES_URI . 'inc/assets/images/empty-collection.svg'; ?>" alt="empty-collection">
@@ -119,7 +119,7 @@ defined( 'ABSPATH' ) or exit;
 					<p>
 					<?php
 					/* translators: %1$s External Link */
-					_e( 'You\'ll notice a heart-shaped symbol on every template card. Simply tap this icon to add template as Favorite.', 'astra-sites' );
+					_e( 'Simply tap this icon to mark the template as Favorite.', 'astra-sites' );
 					?>
 					</p>
 					<img src="<?php echo ASTRA_SITES_URI . 'inc/assets/images/arrow-blue.svg'; ?>" class="arrow-img">
@@ -199,7 +199,7 @@ defined( 'ABSPATH' ) or exit;
 				<# } #>
 			</div>
 			<# if ( site_type && 'free' !== site_type ) { #>
-				<img class="agency-icon" src="<?php echo ASTRA_SITES_URI . 'inc/assets/images/agency.svg'; ?>" alt="<?php _e( 'Agency Template', 'astra-sites' ); ?>" title="<?php _e( 'Agency Template', 'astra-sites' ); ?>" />
+				<div class="agency-ribbons" title="<?php _e( 'Agency', 'astra-sites' ); ?>"><?php _e( 'Agency', 'astra-sites' ); ?></div>
 			<# } #>
 		</div>
 	</div>
@@ -392,9 +392,9 @@ defined( 'ABSPATH' ) or exit;
 		<span class="dashicons close dashicons-no-alt"></span>
 	</div>
 	<div class="astra-sites-import-content">
-		<p><b><?php _e( 'Hurray! The Site is imported successfully! 🎉', 'astra-sites' ); ?></b></p>
-		<p><?php _e( 'Now go ahead, customize the text, images, and design to make it yours!', 'astra-sites' ); ?></p>
-		<p><?php _e( 'You can now start making changes according to your requirements.', 'astra-sites' ); ?></p>
+		<p><b><?php _e( 'Hurray! The Site Is Imported Successfully! 🎉', 'astra-sites' ); ?></b></p>
+		<p><?php _e( 'Go ahead, customize the text, images and design to make it yours!', 'astra-sites' ); ?></p>
+		<p><?php _e( 'Have fun!', 'astra-sites' ); ?></p>
 
 		<?php
 		$theme_status = Astra_Sites::get_instance()->get_theme_status();
@@ -416,9 +416,9 @@ defined( 'ABSPATH' ) or exit;
 		<span class="dashicons close dashicons-no-alt"></span>
 	</div>
 	<div class="astra-sites-import-content">
-		<p><b><?php _e( 'Hurray! The Template is imported successfully! 🎉', 'astra-sites' ); ?></b></p>
-		<p><?php _e( 'Now go ahead, customize the text, images, and design to make it yours!', 'astra-sites' ); ?></p>
-		<p><?php _e( 'You can now start making changes according to your requirements.', 'astra-sites' ); ?></p>
+		<p><b><?php _e( 'Hurray! The Template Is Imported Successfully! 🎉', 'astra-sites' ); ?></b></p>
+		<p><?php _e( 'Go ahead, customize the text, images and design to make it yours!', 'astra-sites' ); ?></p>
+		<p><?php _e( 'Have fun!', 'astra-sites' ); ?></p>
 	</div>
 	<div class="ast-actioms-wrap">
 		<a class="button button-primary button-hero" href="{{data['link']}}" target="_blank"><?php _e( 'View Template', 'astra-sites' ); ?> <i class="dashicons dashicons-external"></i></a>
@@ -431,14 +431,15 @@ defined( 'ABSPATH' ) or exit;
  */
 ?>
 <script type="text/template" id="tmpl-astra-sites-skip-and-import-heading">	
-	<?php _e( 'Skip and Import', 'astra-sites' ); ?>
+	<?php _e( 'Heads Up!', 'astra-sites' ); ?>
 </script>
 <script type="text/template" id="tmpl-astra-sites-skip-and-import-content">	
-	<p><?php _e( 'The page templates which contain the dynamic widgets/modules are not available for single template import. With the "Import Site" option, you can get those pages.', 'astra-sites' ); ?></p>
-	<p><?php _e( 'You can have the complete site preview from bottom left button.', 'astra-sites' ); ?></p>
+	<p><?php _e( 'The page template you are about to import contains a dynamic widget/module. Please note this dynamic data will not be available with the imported page.', 'astra-sites' ); ?></p>
+	<p><?php _e( 'You will need to add it manually on the page.', 'astra-sites' ); ?></p>
+	<p><?php _e( 'This dynamic content will be available when you import the entire site.', 'astra-sites' ); ?></p>
 </script>
 <script type="text/template" id="tmpl-astra-sites-skip-and-import-actions">
-	<button class="button button-primary astra-sites-skip-and-import-template"><?php _e( 'Skip & Import', 'astra-sites' ); ?></button>
+	<button class="button button-primary astra-sites-skip-and-import-template"><?php _e( 'Accept and Import', 'astra-sites' ); ?></button>
 	<button class="button button-hero site-import-cancel"><?php _e( 'Cancel', 'astra-sites' ); ?></button>
 </script>
 
@@ -454,9 +455,9 @@ defined( 'ABSPATH' ) or exit;
 
 		<div class="heading">
 			<# if( 'astra-sites' === data ) { #>
-				<h3><?php _e( 'We are importing site for you!', 'astra-sites' ); ?></h3>
+				<h3><?php _e( 'We Are Importing Site for You!', 'astra-sites' ); ?></h3>
 			<# } else { #>
-				<h3><?php _e( 'We are importing template for you!', 'astra-sites' ); ?></h3>
+				<h3><?php _e( 'We Are Importing Template for You!', 'astra-sites' ); ?></h3>
 			<# } #>
 			<span class="dashicons close dashicons-no-alt"></span>
 		</div>
@@ -527,13 +528,13 @@ defined( 'ABSPATH' ) or exit;
 				<p>
 				<?php
 				/* translators: %s is the dynamic string. */
-				printf( __( 'Import process can take anywhere between 2 to 10 minutes depending on the size of the %s and speed of the connection.', 'astra-sites' ), '{{string}}' );
+				printf( __( 'Import process can take anywhere between 2 to 10 minutes depending on the size of the template and speed of the connection.', 'astra-sites' ), '{{string}}' );
 				?>
 				</p>
 				<p>
 				<?php
 				/* translators: %s is the dynamic string. */
-				printf( __( 'Please do not close this browser window until the %s is imported completely.', 'astra-sites' ), '{{string}}' );
+				printf( __( 'Please do NOT close this browser window until the template is imported completely.', 'astra-sites' ), '{{string}}' );
 				?>
 				</p>
 

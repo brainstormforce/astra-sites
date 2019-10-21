@@ -54,7 +54,7 @@
 
 .ast-attachments-browser input.ast-image__search {
 	line-height: 1.8em;
-	width: 300px;
+	width: 620px;
 	background: #fff;
 }
 
@@ -127,7 +127,7 @@
 }
 
 .ast-attachments-browser .ast-image__filter li {
-    padding: 0 5px;
+    padding: 0 8px;
     margin: 0;
 }
 

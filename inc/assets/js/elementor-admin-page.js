@@ -116,6 +116,7 @@ var AstraSitesAjaxQueue = (function() {
 		action : '',
 		masonryObj : [],
 		index : 0,
+		blockCategory : '',
 
 		init: function() {
 			this._bind();
@@ -144,12 +145,16 @@ var AstraSitesAjaxQueue = (function() {
 
 					elementor.on( "preview:loaded", function() {
 
-						let base_skeleton = $( '#tmpl-ast-template-base-skeleton' ).text();
+						let base_skeleton = wp.template( 'ast-template-base-skeleton' );
 						let header_template = $( '#tmpl-ast-template-modal__header' ).text();
 
-						$( 'body' ).append( base_skeleton );
+						$( 'body' ).append( base_skeleton() );
 						$elscope = $( '#ast-sites-modal' );
 						$elscope.find( '.astra-sites-content-wrap' ).before( header_template );
+
+						$elscope.find( '.astra-blocks-category' ).select2();
+
+						$elscope.find( '.astra-blocks-category' ).on( 'select2:select', AstraElementorSitesAdmin._categoryChange );
 
 						$( elementor.$previewContents[0].body ).on( "click", ".elementor-add-ast-site-button", AstraElementorSitesAdmin._open );
 
@@ -193,6 +198,12 @@ var AstraSitesAjaxQueue = (function() {
 				}
 			}
 
+		},
+
+		_categoryChange( event ) {
+			var data = event.params.data;
+			AstraElementorSitesAdmin.blockCategory = $( this ).val();
+			$elscope.find( '#wp-filter-search-input' ).trigger( 'keyup' );
 		},
 
 		_dismiss: function() {
@@ -267,7 +278,7 @@ var AstraSitesAjaxQueue = (function() {
 			}
 
 			button.addClass( 'updating-message');
-			$elscope.find( '#ast-sites-floating-notice-wrap-id .ast-sites-floating-notice' ).html( 'Syncing template library in the background can take anywhere between 2 to 3 minutes. We will notify you once done. <button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss</span></button>' );
+			$elscope.find( '#ast-sites-floating-notice-wrap-id .ast-sites-floating-notice' ).html( 'Syncing template library in the background. The process can take anywhere between 2 to 3 minutes. We will notify you once done. <button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss</span></button>' );
 			$elscope.find( '#ast-sites-floating-notice-wrap-id' ).addClass( 'slide-in' );
 
 			$.ajax({
@@ -363,6 +374,7 @@ var AstraSitesAjaxQueue = (function() {
 			$elscope.find( '.theme-preview' ).html( '' );
 			$elscope.find( '.theme-preview-block' ).hide();
 			$elscope.find( '.theme-preview-block' ).html( '' );
+			$elscope.find( '.astra-blocks-category-wrap' ).show();
 
 			$elscope.find( '.dialog-lightbox-content' ).hide();
 			$elscope.find( '.dialog-lightbox-content-block' ).hide();
@@ -789,7 +801,7 @@ var AstraSitesAjaxQueue = (function() {
 		_appendBlocks: function( data ) {
 
 			let single_template = wp.template( 'astra-blocks-list' );
-			blocks_list = single_template( data );
+			let blocks_list = single_template( data );
 			$elscope.find( '.dialog-lightbox-message' ).hide();
 			$elscope.find( '.dialog-lightbox-message-block' ).show();
 			$elscope.find( '.dialog-lightbox-content-block' ).html( blocks_list );
@@ -868,7 +880,7 @@ var AstraSitesAjaxQueue = (function() {
 
 				AstraElementorSitesAdmin._importWPForm( AstraElementorSitesAdmin.templateData['astra-site-wpforms-path'], function( form_response ) {
 
-					fetch( AstraElementorSitesAdmin.templateData['astra-page-api-url'] ).then(response => {
+					fetch( AstraElementorSitesAdmin.templateData['astra-page-api-url'] + '?&track=true&site_url=' + astraElementorSites.siteURL ).then(response => {
 						return response.json();
 					}).then( data => {
 						AstraElementorSitesAdmin.insertData = data;
@@ -933,9 +945,9 @@ var AstraSitesAjaxQueue = (function() {
 				let api_url = '';
 
 				if ( 'blocks' == AstraElementorSitesAdmin.type ) {
-					api_url = astraElementorSites.ApiURL + 'astra-blocks/' + data['id'];
+					api_url = astraElementorSites.ApiURL + 'astra-blocks/' + data['id'] + '/?&track=true&site_url=' + astraElementorSites.siteURL;
 				} else {
-					api_url = AstraElementorSitesAdmin.templateData['astra-page-api-url'];
+					api_url = AstraElementorSitesAdmin.templateData['astra-page-api-url'] + '?&track=true&site_url=' + astraElementorSites.siteURL;
 				}
 
 				$.ajax({
@@ -1037,6 +1049,7 @@ var AstraSitesAjaxQueue = (function() {
 			$elscope.find( '.theme-preview' ).html( '' );
 			$elscope.find( '.theme-preview-block' ).hide();
 			$elscope.find( '.theme-preview-block' ).html( '' );
+			$elscope.find( '.astra-blocks-category-wrap' ).show();
 
 			// Show listing page.
 			if( AstraElementorSitesAdmin.type == 'pages' ) {
@@ -1080,6 +1093,7 @@ var AstraSitesAjaxQueue = (function() {
 			// Hide Preview page.
 			$elscope.find( '.theme-preview' ).hide();
 			$elscope.find( '.theme-preview' ).html( '' );
+			$elscope.find( '.astra-blocks-category-wrap' ).show();
 			$elscope.find( '.theme-preview-block' ).hide();
 			$elscope.find( '.theme-preview-block' ).html( '' );
 
@@ -1139,6 +1153,7 @@ var AstraSitesAjaxQueue = (function() {
 				$elscope.find( '.astra-preview-actions-wrap' ).remove();
 				$elscope.find( '.theme-preview' ).hide();
 				$elscope.find( '.theme-preview' ).html( '' );
+				$elscope.find( '.astra-blocks-category-wrap' ).show();
 				$elscope.find( '.theme-preview-block' ).hide();
 				$elscope.find( '.theme-preview-block' ).html( '' );
 				$elscope.find( '.dialog-lightbox-content' ).show();
@@ -1152,6 +1167,7 @@ var AstraSitesAjaxQueue = (function() {
 				$elscope.find( '.dialog-lightbox-content-block' ).hide();
 				$elscope.find( '.dialog-lightbox-message' ).animate({ scrollTop: 0 }, 50 );
 				$elscope.find( '.theme-preview-block' ).show();
+				$elscope.find( '.astra-blocks-category-wrap' ).hide();
 
 				// Hide.
 				$elscope.find( '.theme-preview' ).hide();

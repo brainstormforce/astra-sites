@@ -37,6 +37,16 @@ defined( 'ABSPATH' ) or exit;
 					<div class="theme-preview"></div>
 				</div>
 				<div class="dialog-message dialog-lightbox-message-block" data-type="blocks">
+					<div class="astra-blocks-category-wrap">
+						<div class="astra-blocks-category-inner-wrap">
+							<select id="elementor-template-library-filter" class="astra-blocks-category elementor-template-library-filter-select elementor-select2">
+								<option value=""><?php _e( 'All', 'astra-sites' ); ?></option>
+								<# for ( key in astraElementorSites.astra_block_categories ) { #>
+								<option value="{{astraElementorSites.astra_block_categories[key].id}}">{{astraElementorSites.astra_block_categories[key].name}}</option>
+								<# } #>
+							</select>
+						</div>
+					</div>
 					<div class="dialog-content dialog-lightbox-content-block theme-browser"></div>
 					<div class="theme-preview-block"></div>
 				</div>
@@ -116,7 +126,7 @@ defined( 'ABSPATH' ) or exit;
 						<h3 class="theme-name">{{{site_title}}}</h3>
 					</div>
 					<# if ( site_type && 'free' !== site_type ) { #>
-						<img class="agency-icon" src="<?php echo ASTRA_SITES_URI . 'inc/assets/images/agency.svg'; ?>" alt="<?php _e( 'Agency Template', 'astra-sites' ); ?>" title="<?php _e( 'Agency Template', 'astra-sites' ); ?>" />
+						<div class="agency-ribbons" title="<?php _e( 'Agency', 'astra-sites' ); ?>"><?php _e( 'Agency', 'astra-sites' ); ?></div>
 					<# } #>
 				</div>
 			</div>
@@ -130,8 +140,13 @@ defined( 'ABSPATH' ) or exit;
 	<#
 		var count = 0;
 		for ( key in data ) {
-			var site_title = ( undefined == data[ key ]['category'][0] ) ? data[ key ]['title'] : data[ key ]['category'][0];
+			var site_title = ( undefined == data[ key ]['category'] ) ? data[ key ]['title'] : astraElementorSites.astra_block_categories[data[ key ]['category']].name;
 			count++;
+			if ( '' !== AstraElementorSitesAdmin.blockCategory ) {
+				if ( AstraElementorSitesAdmin.blockCategory != data[ key ]['category'] ) {
+					continue;
+				}
+			}
 	#>
 		<div class="astra-sites-library-template astra-theme" data-block-id={{key}}>
 			<div class="astra-sites-library-template-inner theme-screenshot" data-step="1">
@@ -198,7 +213,7 @@ defined( 'ABSPATH' ) or exit;
 					<h3 class="theme-name">{{{site_title}}}</h3>
 				</div>
 				<# if ( site_type && 'free' !== site_type ) { #>
-					<img class="agency-icon" src="<?php echo ASTRA_SITES_URI . 'inc/assets/images/agency.svg'; ?>" alt="<?php _e( 'Agency Template', 'astra-sites' ); ?>" title="<?php _e( 'Agency Template', 'astra-sites' ); ?>" />
+					<div class="agency-ribbons" title="<?php _e( 'Agency', 'astra-sites' ); ?>"><?php _e( 'Agency', 'astra-sites' ); ?></div>
 				<# } #>
 			</div>
 		</div>
@@ -279,7 +294,7 @@ defined( 'ABSPATH' ) or exit;
 					<h3 class="theme-name"><strong>{{title1}}</strong>{{title2}}</h3>
 				</div>
 				<# if ( site_type && 'free' !== site_type ) { #>
-					<img class="agency-icon" src="<?php echo ASTRA_SITES_URI . 'inc/assets/images/agency.svg'; ?>" alt="<?php _e( 'Agency Template', 'astra-sites' ); ?>" title="<?php _e( 'Agency Template', 'astra-sites' ); ?>" />
+					<div class="agency-ribbons" title="<?php _e( 'Agency', 'astra-sites' ); ?>"><?php _e( 'Agency', 'astra-sites' ); ?></div>
 				<# } #>
 			</div>
 		</div>
@@ -361,7 +376,7 @@ defined( 'ABSPATH' ) or exit;
 <script type="text/template" id="tmpl-astra-sites-elementor-preview">
 	<#
 	let wrap_height = $elscope.find( '.astra-sites-content-wrap' ).height();
-	wrap_height = ( wrap_height - 45 );
+	wrap_height = ( wrap_height - 55 );
 	wrap_height = wrap_height + 'px';
 	#>
 	<div id="astra-blocks" class="themes wp-clearfix" data-site-id="{{data.id}}" style="display: block;">
