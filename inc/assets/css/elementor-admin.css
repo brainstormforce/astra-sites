@@ -570,7 +570,7 @@
 #ast-sites-modal .theme-preview,
 #ast-sites-modal .theme-preview-block {
     display: none;
-    margin: 0;
+    margin: 0 1.3%;
     margin-top: 10px;
 }
 
