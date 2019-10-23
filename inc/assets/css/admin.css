@@ -288,6 +288,7 @@
 
 .favorite-action-wrap {
 	padding-right: 15px;
+	padding-left: 10px;
 }
 
 .favorite-action-wrap i {
@@ -1292,7 +1293,7 @@ body.loading-content .select-page-builder {
 }
 #astra-sites-admin {
     margin-right: 20px;
-    margin-left: 35px;
+    margin-left: 25px;
     margin-top: 40px;
 }
 .astra-previewing-single-pages #wpfooter {
@@ -1514,15 +1515,16 @@ body.loading-content .select-page-builder {
     display: inline-block;
     position: absolute;
     z-index: 9;
-    top: -10px;
+    top: -7px;
     text-transform: uppercase;
     font-weight: 600;
     font-size: 9px;
-    letter-spacing: 0.5px;
-    right: -10px;
+    letter-spacing: 0.2px;
+    right: -7px;
+    border-radius: 2px;
     line-height: 15px;
-    background: #0073aa;
-    padding: 5px;
+    padding: 5px 8px;
+    background-color: #0073aa;
     text-shadow: 0 -1px 1px #006799, 1px 0 1px #006799, 0 1px 1px #006799, -1px 0 1px #006799;
 }
 
@@ -1997,23 +1999,39 @@ body.loading-content .select-page-builder {
     display: none !important;
 }
 
+.astra-previewing-single-pages #wpbody-content > .notice.astra-sites-sync-library-message {
+    top: 85px;
+    display: block !important;
+    width: calc( 100% - 270px );
+}
+
+.astra-previewing-single-pages.folded #wpbody-content > .notice.astra-sites-sync-library-message {
+    width: calc( 100% - 150px );
+}
+
 .appearance_page_astra-sites.astra-previewing-single-pages #wpbody-content {
     padding-top: 0;
 }
 
+.astra-previewing-single-pages #wpbody-content > .notice.astra-sites-sync-library-message,
 .astra-previewing-single-pages #wpbody-content > .notice.astra-sites-sync-library-start-message {
-    display: inline-block !important;
-    top: 90px;
-    right: 0;
-    width: calc( 100% - 260px ) !important;
+	display: inline-block !important;
+	top: 90px;
+	right: 0;
+	width: calc( 100% - 260px ) !important;
 }
 
+.folded.astra-previewing-single-pages #wpbody-content > .notice.astra-sites-sync-library-message,
 .folded.astra-previewing-single-pages #wpbody-content > .notice.astra-sites-sync-library-start-message {
-    width: calc( 100% - 140px ) !important;
+	width: calc( 100% - 140px ) !important;
 }
 
 .appearance_page_astra-sites #wpbody-content {
     padding-top: 80px;
+}
+
+.appearance_page_astra-sites.auto-fold #wpcontent {
+	padding-left: 0;
 }
 
 .pages-count,
@@ -2166,7 +2184,12 @@ body.loading-content .select-page-builder {
 @media only screen and (max-width: 960px) {
     #site-pages {
         position: relative;
-        margin: 0;
+        margin: 0 70px 0 0;
+    }
+}
+@media only screen and (max-width: 1200px) {
+    .back-to-layout {
+    	margin-right: 20px;
     }
 }
 @media screen and (max-width: 600px) {

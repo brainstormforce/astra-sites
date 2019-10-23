@@ -662,6 +662,9 @@ var AstraSitesAjaxQueue = (function() {
 					var total = response.data;
 
 					for( let i = 1; i <= total; i++ ) {
+
+						console.log( i + ' === ' + total );
+
 						AstraSitesAjaxQueue.add({
 							url: astraSitesVars.ajaxurl,
 							type: 'POST',
@@ -670,6 +673,7 @@ var AstraSitesAjaxQueue = (function() {
 								page_no : i,
 							},
 							success: function( result ){
+
 								if( is_append ) {
 									var template = wp.template( 'astra-sites-page-builder-sites' );
 									if( $('#astra-sites').hasClass('temp') ) {
@@ -683,6 +687,18 @@ var AstraSitesAjaxQueue = (function() {
 
 									AstraSitesAdmin._load_large_images();
 									$( document ).trigger( 'astra-sites-added-pages' );
+								}
+
+								if( i === total && astraSitesVars.strings.syncCompleteMessage ) {
+									$('#wpbody-content').find('.astra-sites-sync-library-message').remove();
+									var noticeContent = wp.updates.adminNotice( {
+										className: 'notice notice-success is-dismissible astra-sites-sync-library-message',
+										message:   astraSitesVars.strings.syncCompleteMessage + ' <button type="button" class="notice-dismiss"><span class="screen-reader-text">'+commonL10n.dismiss+'</span></button>',
+									} );
+									$('#screen-meta').after( noticeContent );
+									$(document).trigger( 'wp-updates-notice-added' );
+								} else {
+									$('#wpbody-content').find('.astra-sites-sync-library-message .message').text('Importing 15 Templates for each page. Now imported ' + i + ' page of ' + total + '. You can close this window. The Import process works in the background too. ');
 								}
 							}
 						});
@@ -742,13 +758,12 @@ var AstraSitesAjaxQueue = (function() {
 
 			button.addClass( 'updating-message');
 
-			if( ! $('.astra-sites-sync-library-message').length ) {
+			$('.astra-sites-sync-library-message').remove();
 				var noticeContent = wp.updates.adminNotice( {
-					className: 'astra-sites-sync-library-message notice notice-info is-dismissible',
-					message:   'Syncing template library in the background. The process can take anywhere between 2 to 3 minutes. We will notify you once done. <button type="button" class="notice-dismiss"><span class="screen-reader-text">'+commonL10n.dismiss+'</span></button>',
-				} );
-				$('#screen-meta').after( noticeContent );
-			}
+				className: 'astra-sites-sync-library-message notice notice-info is-dismissible',
+				message:   '<span class="message">Syncing template library in the background. The process can take anywhere between 2 to 3 minutes. We will notify you once done.</span> <button type="button" class="notice-dismiss"><span class="screen-reader-text">'+commonL10n.dismiss+'</span></button>',
+			} );
+			$('#screen-meta').after( noticeContent );
 
 			$(document).trigger( 'wp-updates-notice-added' );
 
@@ -766,9 +781,7 @@ var AstraSitesAjaxQueue = (function() {
 
 				button.removeClass( 'updating-message');
 
-				if( 'ajax' === response.data ) {
-					AstraSitesAdmin._sync_library_with_ajax();
-				}
+				AstraSitesAdmin._sync_library_with_ajax();
 			});
 		},
 

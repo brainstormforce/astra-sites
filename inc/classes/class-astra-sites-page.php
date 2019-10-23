@@ -70,11 +70,14 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 		 */
 		function admin_body_class( $classes = '' ) {
 
-			if ( ! isset( $_GET['change-page-builder'] ) ) {
-				return $classes;
+			$default_page_builder = $this->get_setting( 'page_builder' );
+
+			if ( empty( $default_page_builder ) ) {
+				return $classes . ' astra-sites-change-page-builder ';
 			}
 
-			return $classes . ' astra-sites-change-page-builder ';
+			return $classes;
+
 		}
 
 		/**
@@ -98,7 +101,7 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 				if ( 'yes' === $status ) {
 					?>
 					<div class="astra-sites-sync-library-message success notice notice-success is-dismissible">
-						<p><?php _e( 'Template library refreshed!', 'astra-sites' ); ?> <button type="button" class="notice-dismiss"><span class="screen-reader-text"><?php _e( 'Dismiss', 'astra-sites' ); ?></span></button></p>
+						<p><?php Astra_Sites::get_instance()->get_sync_complete_message( true ); ?></p>
 					</div>
 					<?php
 				}

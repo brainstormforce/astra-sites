@@ -149,7 +149,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Gutenberg' ) ) :
 			// expects as 'u0026amp;'. So, Converted '&amp;' with 'u0026amp;'.
 			//
 			// @todo This affect for normal page content too. Detect only Gutenberg pages and process only on it.
-			$content = str_replace( '&amp;', "\u0026amp;", $content );
+			// $content = str_replace( '&amp;', "\u0026amp;", $content );
 			$content = $this->get_content( $content );
 
 			// Update content.

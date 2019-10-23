@@ -1169,6 +1169,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 						'importFailBtnLarge'       => __( 'Import failed.', 'astra-sites' ),
 						'importDemo'               => __( 'Import This Site', 'astra-sites' ),
 						'importingDemo'            => __( 'Importing..', 'astra-sites' ),
+						'syncCompleteMessage'      => Astra_Sites::get_instance()->get_sync_complete_message(),
 					),
 					'log'                        => array(
 						'bulkInstall'          => __( 'Installing Required Plugins..', 'astra-sites' ),
@@ -1643,6 +1644,24 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			}
 
 			return '';
+		}
+
+		/**
+		 * Get Sync Complete Message
+		 *
+		 * @since 2.0.0
+		 * @param  boolean $echo Echo the message.
+		 * @return mixed
+		 */
+		function get_sync_complete_message( $echo = false ) {
+
+			$message = __( 'Template library refreshed!', 'astra-sites' );
+
+			if ( $echo ) {
+				echo $message;
+			} else {
+				return $message;
+			}
 		}
 
 	}

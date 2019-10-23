@@ -1470,7 +1470,14 @@ var AstraSitesAjaxQueue = (function() {
 
 		_open: function( e ) {
 			$( document ).trigger( 'astra-sites__elementor-open-before' );
-			AstraElementorSitesAdmin.index = $( this ).closest( '.elementor-add-section' ).prevAll().length;
+			
+			let add_section = $( this ).closest( '.elementor-add-section' );
+			
+			if ( add_section.hasClass( 'elementor-add-section-inline' ) ) {
+				AstraElementorSitesAdmin.index = add_section.prevAll().length;
+			} else {
+				AstraElementorSitesAdmin.index = add_section.prev().children().length;
+			}
 			AstraElementorSitesAdmin._home();
 			$elscope.fadeIn();
 			$( document ).trigger( 'astra-sites__elementor-open-after' );

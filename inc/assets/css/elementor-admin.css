@@ -571,6 +571,7 @@
 #ast-sites-modal .theme-preview-block {
     display: none;
     margin: 0;
+    margin-top: 10px;
 }
 
 #ast-sites-modal .ast-validate {

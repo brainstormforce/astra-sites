@@ -119,7 +119,7 @@ defined( 'ABSPATH' ) or exit;
 					<p>
 					<?php
 					/* translators: %1$s External Link */
-					_e( 'Simply tap this icon to mark the template as Favorite.', 'astra-sites' );
+					_e( 'You\'ll notice a heart-shaped symbol on every template card. Simply tap this icon to mark the template as Favorite.', 'astra-sites' );
 					?>
 					</p>
 					<img src="<?php echo ASTRA_SITES_URI . 'inc/assets/images/arrow-blue.svg'; ?>" class="arrow-img">
