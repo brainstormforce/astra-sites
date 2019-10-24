@@ -74,7 +74,7 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 				$rest_args['search'] = $search;
 			}
 
-			$list = (array) Astra_Sites::get_instance()->get_sites( 'astra-sites', $rest_args, true, $assoc_args );
+			$list = (array) $this->get_sites( 'astra-sites', $rest_args, true, $assoc_args );
 
 			// Modify the output.
 			foreach ( $list as $key => $item ) {
@@ -425,6 +425,212 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 			}
 
 			return $this->current_site_data;
+		}
+
+		/**
+		 * Get Sites
+		 *
+		 * @since 1.4.0
+		 *
+		 * @param  string  $post_slug  Post slug.
+		 * @param  array   $args       Post query arguments.
+		 * @param  boolean $force      Force import.
+		 * @param  array   $assoc_args Associate arguments.
+		 * @return array
+		 */
+		private function get_sites( $post_slug = '', $args = array(), $force = false, $assoc_args = array() ) {
+
+			// Add page builders.
+			$page_builder  = isset( $assoc_args['page-builder'] ) ? $assoc_args['page-builder'] : '';
+			$response      = $this->get_term_ids( 'astra-site-page-builder', $page_builder, $args );
+			$args          = $response['args'];
+			$page_builders = $response['terms'];
+
+			// Add type.
+			$type     = isset( $assoc_args['type'] ) ? $assoc_args['type'] : '';
+			$response = $this->get_term_ids( 'astra-sites-type', $type, $args );
+			$args     = $response['args'];
+			$types    = $response['terms'];
+
+			// Add categories.
+			$category   = isset( $assoc_args['category'] ) ? $assoc_args['category'] : '';
+			$response   = $this->get_term_ids( 'astra-site-category', $category, $args );
+			$args       = $response['args'];
+			$categories = $response['terms'];
+
+			// Site list.
+			$sites = (array) $this->get_posts( 'astra-sites', $args, $force );
+
+			$list = array();
+			if ( $sites['success'] ) {
+				foreach ( $sites['data'] as $key => $site ) {
+					$single_site = array(
+						'id'            => $site['id'],
+						'slug'          => $site['slug'],
+						'title'         => $site['title']['rendered'],
+						'url'           => $site['astra-site-url'],
+						'type'          => $site['astra-site-type'],
+						'categories'    => array(),
+						'tags'          => array(),
+						'page_builders' => array(),
+					);
+
+					if ( isset( $site['astra-site-category'] ) && ! empty( $categories['data'] ) ) {
+						foreach ( $site['astra-site-category'] as $category_key => $category_id ) {
+							if ( isset( $categories['data'][ $category_id ] ) ) {
+								$single_site['categories'][ $category_id ] = $categories['data'][ $category_id ];
+							}
+						}
+					}
+
+					if ( isset( $site['astra-sites-tag'] ) && ! empty( $tags['data'] ) ) {
+						foreach ( $site['astra-sites-tag'] as $tag_key => $tag_id ) {
+							if ( isset( $tags['data'][ $tag_id ] ) ) {
+								$single_site['tags'][ $tag_id ] = $tags['data'][ $tag_id ];
+							}
+						}
+					}
+
+					if ( isset( $site['astra-site-page-builder'] ) && ! empty( $page_builders['data'] ) ) {
+						foreach ( $site['astra-site-page-builder'] as $page_builder_key => $page_builder_id ) {
+							if ( isset( $page_builders['data'][ $page_builder_id ] ) ) {
+								$single_site['page_builders'][ $page_builder_id ] = $page_builders['data'][ $page_builder_id ];
+							}
+						}
+					}
+
+					$list[] = $single_site;
+				}
+			}
+
+			return $list;
+		}
+
+
+		/**
+		 * Get Term IDs
+		 *
+		 * @since 1.4.0
+		 *
+		 * @param  string $term_slug   Term slug.
+		 * @param  string $search_term Search term.
+		 * @param  array  $args        Term query arguments.
+		 * @return array               Term response.
+		 */
+		private function get_term_ids( $term_slug = '', $search_term = '', $args = array() ) {
+			$term_args = array();
+
+			if ( ! empty( $search_term ) ) {
+				$term_args = array(
+					'search' => $search_term,
+				);
+			}
+
+			$term_response = (array) $this->get_terms( $term_slug, $term_args, true );
+
+			if ( ! empty( $search_term ) ) {
+				if ( ! empty( $term_response ) && is_array( $term_response['data'] ) ) {
+					$args[ $term_slug ] = implode( ',', array_keys( $term_response['data'] ) );
+				}
+			}
+
+			return array(
+				'args'  => $args,
+				'terms' => $term_response,
+			);
+		}
+
+		/**
+		 * Get Terms
+		 *
+		 * @since 1.0.0
+		 *
+		 * @param  array  $term_slug Term Slug.
+		 * @param  array  $args      For selecting the demos (Search terms, pagination etc).
+		 * @param  string $force     Force import.
+		 * @return $array            Term response.
+		 */
+		private function get_terms( $term_slug = '', $args = array(), $force = false ) {
+
+			$defaults = array(
+				'_fields' => 'id,name,slug,count',
+			);
+			$args     = wp_parse_args( (array) $args, $defaults );
+
+			$terms_data = get_transient( 'astra-sites-term-' . $term_slug );
+
+			if ( empty( $terms_data ) || $force ) {
+				$url = add_query_arg( $args, Astra_Sites::get_instance()->get_api_url() . $term_slug );
+
+				$api_args = array(
+					'timeout' => 60,
+				);
+
+				$success  = false;
+				$response = wp_remote_get( $url, $api_args );
+				if ( ! is_wp_error( $response ) || wp_remote_retrieve_response_code( $response ) === 200 ) {
+					$request_term_data = json_decode( wp_remote_retrieve_body( $response ), true );
+
+					if ( ! isset( $request_term_data['code'] ) ) {
+						$success        = true;
+						$new_terms_data = array();
+						foreach ( $request_term_data as $key => $request_term ) {
+							$new_terms_data[ $request_term['id'] ] = $request_term['name'];
+						}
+						set_transient( 'astra-sites-term-' . $term_slug, $new_terms_data, WEEK_IN_SECONDS );
+					}
+				}
+			} else {
+				$success = true;
+			}
+
+			return array(
+				'success' => $success,
+				'data'    => $terms_data,
+			);
+		}
+
+		/**
+		 * Get Posts
+		 *
+		 * @since 1.4.0
+		 *
+		 * @param  string  $post_slug  Post slug.
+		 * @param  array   $args       Post query arguments.
+		 * @param  boolean $force      Force import.
+		 * @return array
+		 */
+		private function get_posts( $post_slug = '', $args = array(), $force = false ) {
+
+			$args = wp_parse_args( (array) $args, array() );
+
+			$all_posts = get_transient( 'astra-sites-post-' . $post_slug );
+
+			if ( empty( $all_posts ) || $force ) {
+				$url = add_query_arg( $args, Astra_Sites::get_instance()->get_api_url() . $post_slug );
+
+				$api_args = array(
+					'timeout' => 60,
+				);
+
+				$success  = false;
+				$response = wp_remote_get( $url, $api_args );
+				if ( ! is_wp_error( $response ) || wp_remote_retrieve_response_code( $response ) === 200 ) {
+					$all_posts = json_decode( wp_remote_retrieve_body( $response ), true );
+
+					if ( ! isset( $all_posts['code'] ) ) {
+						$success = true;
+						set_transient( 'astra-sites-post-' . $post_slug, $all_posts, WEEK_IN_SECONDS );
+					}
+				}
+			} else {
+				$success = true;
+			}
+
+			return array(
+				'success' => $success,
+				'data'    => $all_posts,
+			);
 		}
 	}
 
