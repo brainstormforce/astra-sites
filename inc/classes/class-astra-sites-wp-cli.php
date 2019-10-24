@@ -471,7 +471,6 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 						'url'           => $site['astra-site-url'],
 						'type'          => $site['astra-site-type'],
 						'categories'    => array(),
-						'tags'          => array(),
 						'page_builders' => array(),
 					);
 
@@ -479,14 +478,6 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 						foreach ( $site['astra-site-category'] as $category_key => $category_id ) {
 							if ( isset( $categories['data'][ $category_id ] ) ) {
 								$single_site['categories'][ $category_id ] = $categories['data'][ $category_id ];
-							}
-						}
-					}
-
-					if ( isset( $site['astra-sites-tag'] ) && ! empty( $tags['data'] ) ) {
-						foreach ( $site['astra-sites-tag'] as $tag_key => $tag_id ) {
-							if ( isset( $tags['data'][ $tag_id ] ) ) {
-								$single_site['tags'][ $tag_id ] = $tags['data'][ $tag_id ];
 							}
 						}
 					}
