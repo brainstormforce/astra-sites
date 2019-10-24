@@ -90,24 +90,32 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 		/**
 		 * Save Page Builder
 		 *
-		 * @return void
+		 * @since 1.4.0 The `$page_builder_slug` was added.
+		 *
+		 * @param  string $page_builder_slug Page Builder Slug.
+		 * @return mixed
 		 */
-		function save_page_builder() {
+		function save_page_builder( $page_builder_slug = '' ) {
 
 			// Only admins can save settings.
-			if ( ! current_user_can( 'manage_options' ) ) {
+			if ( ! defined( 'WP_CLI' ) && ! current_user_can( 'manage_options' ) ) {
 				return;
 			}
 
 			// Make sure we have a valid nonce.
-			if ( isset( $_REQUEST['astra-sites-page-builder'] ) && wp_verify_nonce( $_REQUEST['astra-sites-page-builder'], 'astra-sites-welcome-screen' ) ) {
+			if ( ! defined( 'WP_CLI' ) && ( ! isset( $_REQUEST['astra-sites-page-builder'] ) || ! wp_verify_nonce( $_REQUEST['astra-sites-page-builder'], 'astra-sites-welcome-screen' ) ) ) {
+				return;
+			}
 
-				// Stored Settings.
-				$stored_data = $this->get_settings();
+			// Stored Settings.
+			$stored_data = $this->get_settings();
 
+			$page_builder = isset( $_REQUEST['page_builder'] ) ? sanitize_key( $_REQUEST['page_builder'] ) : sanitize_key( $page_builder_slug );
+
+			if ( ! empty( $page_builder ) ) {
 				// New settings.
 				$new_data = array(
-					'page_builder' => ( isset( $_REQUEST['page_builder'] ) ) ? sanitize_key( $_REQUEST['page_builder'] ) : '',
+					'page_builder' => $page_builder,
 				);
 
 				// Merge settings.
@@ -115,7 +123,9 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 
 				// Update settings.
 				update_option( 'astra_sites_settings', $data );
+			}
 
+			if ( ! defined( 'WP_CLI' ) ) {
 				wp_redirect( admin_url( '/themes.php?page=astra-sites' ) );
 			}
 		}
@@ -279,33 +289,15 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 							<p><?php _e( 'Astra offers starter sites that can be imported in one click. These templates are available in few different page builders. Please choose your preferred page builder from the list below.', 'astra-sites' ); ?></p>
 							<div class="fields">
 								<ul class="page-builders">
-									<li>
-										<label>
-											<input type="radio" name="page_builder" value="gutenberg">
-											<img src="<?php echo esc_url( ASTRA_SITES_URI . 'inc/assets/images/gutenberg.jpg' ); ?>" />
-											<div class="title"><?php _e( 'Gutenberg', 'astra-sites' ); ?></div>
-										</label>
-									</li>
-									<li>
-										<label>
-											<input type="radio" name="page_builder" value="elementor">
-											<img src="<?php echo esc_url( ASTRA_SITES_URI . 'inc/assets/images/elementor.jpg' ); ?>" />
-											<div class="title"><?php _e( 'Elementor', 'astra-sites' ); ?></div>
-										</label>
-									</li>
-									<li>
-										<label>
-											<input type="radio" name="page_builder" value="beaver-builder">
-											<img src="<?php echo esc_url( ASTRA_SITES_URI . 'inc/assets/images/beaver-builder.png' ); ?>" />
-											<div class="title"><?php _e( 'Beaver Builder', 'astra-sites' ); ?></div>
+									<?php foreach ( (array) $this->get_page_builders() as $key => $page_builder ) { ?>
+										<li>
+											<label>
+												<input type="radio" name="page_builder" value="<?php echo esc_attr( $page_builder['slug'] ); ?>">
+												<img src="<?php echo esc_url( $page_builder['image_url'] ); ?>" />
+												<div class="title"><?php echo esc_html( $page_builder['name'] ); ?></div>
+											</label>
 										</li>
-									<li>
-										<label>
-											<input type="radio" name="page_builder" value="brizy">
-											<img src="<?php echo esc_url( ASTRA_SITES_URI . 'inc/assets/images/brizy.jpg' ); ?>" />
-											<div class="title"><?php _e( 'Brizy', 'astra-sites' ); ?></div>
-										</label>
-									</li>
+									<?php } ?>
 								</ul>
 								<div class="astra-sites-page-builder-notice" style="display: none;">
 									<p class="description"><?php _e( 'Please select your favorite page builder to continue..', 'astra-sites' ); ?></p>
@@ -358,6 +350,37 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 				</div><!-- .nav-tab-wrapper -->
 				<?php
 			}
+		}
+
+		/**
+		 * Page Builder List
+		 *
+		 * @since 1.4.0
+		 * @return array
+		 */
+		function get_page_builders() {
+			return array(
+				'gutenberg'      => array(
+					'slug'      => 'gutenberg',
+					'name'      => __( 'Gutenberg', 'astra-sites' ),
+					'image_url' => ASTRA_SITES_URI . 'inc/assets/images/gutenberg.jpg',
+				),
+				'elementor'      => array(
+					'slug'      => 'elementor',
+					'name'      => __( 'Elementor', 'astra-sites' ),
+					'image_url' => ASTRA_SITES_URI . 'inc/assets/images/elementor.jpg',
+				),
+				'beaver-builder' => array(
+					'slug'      => 'beaver-builder',
+					'name'      => __( 'Beaver Builder', 'astra-sites' ),
+					'image_url' => ASTRA_SITES_URI . 'inc/assets/images/beaver-builder.jpg',
+				),
+				'brizy'          => array(
+					'slug'      => 'brizy',
+					'name'      => __( 'Brizy', 'astra-sites' ),
+					'image_url' => ASTRA_SITES_URI . 'inc/assets/images/brizy.jpg',
+				),
+			);
 		}
 
 		/**

@@ -125,7 +125,7 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 			// Force import.
 			$yes = isset( $assoc_args['yes'] ) ? true : false;
 			if ( ! $yes ) {
-				WP_CLI::confirm( 'Are you sure you want to import the site?' );
+				WP_CLI::confirm( __( 'Are you sure you want to import the site?', 'astra-sites' ) );
 			}
 
 			// Valid site ID?
@@ -151,10 +151,8 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 			}
 
 			if ( 'free' !== $demo_data['site-type'] && 'upgrade' === $demo_data['license-status'] && ! $license_status ) {
-				WP_CLI::line( 'This is Agency site. Please activate the Astra Premium Sites license!' );
-				WP_CLI::line( 'Goto: ' . admin_url( 'plugins.php?bsf-inline-license-form=astra-pro-sites' ) );
-				WP_CLI::line( 'Activate it from ' . admin_url( 'plugins.php?bsf-inline-license-form=astra-pro-sites' ) );
-				WP_CLI::error( "Or\nUse CLI command `wp brainstormforce license activate astra-pro-sites {YOUR_LICENSE_KEY}`" );
+				WP_CLI::line( __( 'This is Agency site. Please activate the Astra Premium Sites license!', 'astra-sites' ) );
+				WP_CLI::error( __( "Or\nUse CLI command `wp brainstormforce license activate astra-pro-sites {YOUR_LICENSE_KEY}`", 'astra-sites' ) );
 			}
 
 			/**
@@ -167,7 +165,7 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 
 					// Install Plugins.
 					if ( ! empty( $plugin_status['required_plugins']['notinstalled'] ) ) {
-						WP_CLI::line( 'Installing Plugins..' );
+						WP_CLI::line( __( 'Installing Plugins..', 'astra-sites' ) );
 						foreach ( $plugin_status['required_plugins']['notinstalled'] as $key => $plugin ) {
 							if ( isset( $plugin['slug'] ) ) {
 								WP_CLI::runcommand( 'plugin install ' . $plugin['slug'] . ' --activate' );
@@ -177,7 +175,7 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 
 					// Activate Plugins.
 					if ( ! empty( $plugin_status['required_plugins']['inactive'] ) ) {
-						WP_CLI::line( 'Activating Plugins..' );
+						WP_CLI::line( __( 'Activating Plugins..', 'astra-sites' ) );
 						foreach ( $plugin_status['required_plugins']['inactive'] as $key => $plugin ) {
 							if ( isset( $plugin['init'] ) ) {
 								Astra_Sites::get_instance()->required_plugin_activate( $plugin['init'], $demo_data['astra-site-options-data'], $demo_data['astra-enabled-extensions'] );
@@ -224,14 +222,16 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 			if ( isset( $demo_data['astra-site-wxr-path'] ) && ! empty( $demo_data['astra-site-wxr-path'] ) ) {
 
 				// Download XML file.
-				WP_CLI::line( 'Downloading ' . $demo_data['astra-site-wxr-path'] );
+				/* translators: %s is the XML file URL. */
+				WP_CLI::line( sprintf( __( 'Downloading %s', 'astra-sites' ), $demo_data['astra-site-wxr-path'] ) );
 				$xml_path = Astra_Sites_Helper::download_file( $demo_data['astra-site-wxr-path'] );
 
 				if ( $xml_path['success'] && isset( $xml_path['data']['file'] ) ) {
-					WP_CLI::line( 'Importing WXR..' );
+					WP_CLI::line( __( 'Importing WXR..', 'astra-sites' ) );
 					Astra_WXR_Importer::instance()->sse_import( $xml_path['data']['file'] );
 				} else {
-					WP_CLI::line( 'WXR file Download Failed. Error ' . $xml_path['data'] );
+					/* translators: %s is error message. */
+					WP_CLI::line( printf( __( 'WXR file Download Failed. Error %s', 'astra-sites' ), $xml_path['data'] ) );
 				}
 			}
 
@@ -239,7 +239,7 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 			 * Import Site Options.
 			 */
 			if ( isset( $demo_data['astra-site-options-data'] ) && ! empty( $demo_data['astra-site-options-data'] ) ) {
-				WP_CLI::line( 'Importing Site Options..' );
+				WP_CLI::line( __( 'Importing Site Options..', 'astra-sites' ) );
 				Astra_Sites_Importer::get_instance()->import_options( $demo_data['astra-site-options-data'] );
 			}
 
@@ -247,7 +247,7 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 			 * Import Widgets.
 			 */
 			if ( isset( $demo_data['astra-site-widgets-data'] ) && ! empty( $demo_data['astra-site-widgets-data'] ) ) {
-				WP_CLI::line( 'Importing Widgets..' );
+				WP_CLI::line( __( 'Importing Widgets..', 'astra-sites' ) );
 				Astra_Sites_Importer::get_instance()->import_widgets( $demo_data['astra-site-widgets-data'] );
 			}
 
@@ -256,8 +256,8 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 			 */
 			Astra_Sites_Importer::get_instance()->import_end();
 
-			WP_CLI::line( 'Site Imported Successfully!' );
-			WP_CLI::line( 'Visit: ' . $site_url );
+			/* translators: %s is the site URL. */
+			WP_CLI::line( sprintf( __( "Site Imported Successfully!\nVisit: %s", 'astra-sites' ), $site_url ) );
 		}
 
 		/**
@@ -276,7 +276,7 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 
 			$yes = isset( $assoc_args['yes'] ) ? true : false;
 			if ( ! $yes ) {
-				WP_CLI::confirm( 'Are you sure you want to delete imported site data?' );
+				WP_CLI::confirm( __( 'Are you sure you want to delete imported site data?', 'astra-sites' ) );
 			}
 
 			// Get tracked data.
@@ -284,21 +284,21 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 
 			// Delete tracked posts.
 			if ( isset( $reset_data['reset_posts'] ) && ! empty( $reset_data['reset_posts'] ) ) {
-				WP_CLI::line( 'Reseting Posts..' );
+				WP_CLI::line( __( 'Reseting Posts..', 'astra-sites' ) );
 				foreach ( $reset_data['reset_posts'] as $key => $post_id ) {
 					Astra_Sites_Importer::get_instance()->delete_imported_posts( $post_id );
 				}
 			}
 			// Delete tracked terms.
 			if ( isset( $reset_data['reset_terms'] ) && ! empty( $reset_data['reset_terms'] ) ) {
-				WP_CLI::line( 'Reseting Terms..' );
+				WP_CLI::line( __( 'Reseting Terms..', 'astra-sites' ) );
 				foreach ( $reset_data['reset_terms'] as $key => $post_id ) {
 					Astra_Sites_Importer::get_instance()->delete_imported_terms( $post_id );
 				}
 			}
 			// Delete tracked WP forms.
 			if ( isset( $reset_data['reset_wp_forms'] ) && ! empty( $reset_data['reset_wp_forms'] ) ) {
-				WP_CLI::line( 'Resting WP Forms...' );
+				WP_CLI::line( __( 'Resting WP Forms...', 'astra-sites' ) );
 				foreach ( $reset_data['reset_wp_forms'] as $key => $post_id ) {
 					Astra_Sites_Importer::get_instance()->delete_imported_wp_forms( $post_id );
 				}
@@ -337,6 +337,65 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 
 			WP_CLI::line( __( 'Importing customizer settings..', 'astra-sites' ) );
 			Astra_Sites_Importer::get_instance()->import_customizer_settings( $demo_data['astra-site-customizer-data'] );
+		}
+
+		/**
+		 * Page Builders
+		 *
+		 * ### EXAMPLES
+		 *
+		 *     # List all the page builders.
+		 *     λ wp astra-sites page_builder list
+		 *     +----------------+----------------+
+		 *     | slug           | name           |
+		 *     +----------------+----------------+
+		 *     | gutenberg      | Gutenberg      |
+		 *     | elementor      | Elementor      |
+		 *     | beaver-builder | Beaver Builder |
+		 *     | brizy          | Brizy          |
+		 *     +----------------+----------------+
+		 *
+		 *     # Set `Elementor` as default page builder.
+		 *     λ wp astra-sites page_builder set elementor
+		 *     "Elementor" is set as default page builder.
+		 *
+		 *     # Set `Beaver Builder` as default page builder.
+		 *     λ wp astra-sites page_builder set beaver-builder
+		 *     "Beaver Builder" is set as default page builder.
+		 *
+		 * @since 1.4.0
+		 * @param  array $args        Arguments.
+		 * @param  array $assoc_args Associated Arguments.
+		 */
+		public function page_builder( $args, $assoc_args ) {
+			$action = isset( $args[0] ) ? $args[0] : '';
+
+			if ( empty( $action ) ) {
+				WP_CLI::error( __( 'Please add valid parameter.', 'astra-sites' ) );
+			}
+
+			$page_builders = Astra_Sites_Page::get_instance()->get_page_builders();
+
+			if ( 'list' === $action ) {
+				$display_fields = array(
+					'slug',
+					'name',
+				);
+				$formatter      = $this->get_formatter( $assoc_args, $display_fields );
+				$formatter->display_items( $page_builders );
+			} elseif ( 'set' === $action ) {
+				$page_builder_slugs = array_keys( $page_builders );
+				$page_builder_slug  = isset( $args[1] ) ? $args[1] : '';
+				if ( in_array( $page_builder_slug, $page_builder_slugs, true ) ) {
+					Astra_Sites_Page::get_instance()->save_page_builder( $page_builder_slug );
+					/* translators: %s is the page builder name. */
+					WP_CLI::line( sprintf( __( '"%s" is set as default page builder.', 'astra-sites' ), $page_builders[ $page_builder_slug ]['name'] ) );
+				} else {
+					WP_CLI::error( __( "Invalid page builder slug. \nCheck all page builder slugs with command `wp astra-sites page_builder list`", 'astra-sites' ) );
+				}
+			} else {
+				WP_CLI::error( __( "Invalid parameter! \nPlease use `list` or `set` parameter.", 'astra-sites' ) );
+			}
 		}
 
 		/**
