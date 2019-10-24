@@ -82,16 +82,20 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 				$list[ $key ]['page-builder'] = implode( ', ', $list[ $key ]['page_builders'] );
 			}
 
-			$display_fields = array(
-				'id',
-				'title',
-				'url',
-				'type',
-				'categories',
-				'page-builder',
-			);
-			$formatter      = $this->get_formatter( $assoc_args, $display_fields );
-			$formatter->display_items( $list );
+			if ( ! empty( $list ) ) {
+				$display_fields = array(
+					'id',
+					'title',
+					'url',
+					'type',
+					'categories',
+					'page-builder',
+				);
+				$formatter      = $this->get_formatter( $assoc_args, $display_fields );
+				$formatter->display_items( $list );
+			} else {
+				WP_CLI::error( __( 'No sites found! Try another query.', 'astra-sites' ) );
+			}
 		}
 
 		/**
@@ -383,6 +387,13 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 				);
 				$formatter      = $this->get_formatter( $assoc_args, $display_fields );
 				$formatter->display_items( $page_builders );
+
+				$default_page_builder = isset( $page_builders[ Astra_Sites_Page::get_instance()->get_setting( 'page_builder' ) ] ) ? $page_builders[ Astra_Sites_Page::get_instance()->get_setting( 'page_builder' ) ]['name'] : '';
+
+				if ( ! empty( $default_page_builder ) ) {
+					/* translators: %s is the current page builder name. */
+					WP_CLI::line( sprintf( __( 'Default page builder is "%s".', 'astra-sites' ), $default_page_builder ) );
+				}
 			} elseif ( 'set' === $action ) {
 				$page_builder_slugs = array_keys( $page_builders );
 				$page_builder_slug  = isset( $args[1] ) ? $args[1] : '';
@@ -390,6 +401,7 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 					Astra_Sites_Page::get_instance()->save_page_builder( $page_builder_slug );
 					/* translators: %s is the page builder name. */
 					WP_CLI::line( sprintf( __( '"%s" is set as default page builder.', 'astra-sites' ), $page_builders[ $page_builder_slug ]['name'] ) );
+
 				} else {
 					WP_CLI::error( __( "Invalid page builder slug. \nCheck all page builder slugs with command `wp astra-sites page_builder list`", 'astra-sites' ) );
 				}
@@ -469,7 +481,7 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 						'slug'          => $site['slug'],
 						'title'         => $site['title']['rendered'],
 						'url'           => $site['astra-site-url'],
-						'type'          => $site['astra-site-type'],
+						'type'          => ( 'premium' === $site['astra-site-type'] ) ? 'Agency' : ucwords( $site['astra-site-type'] ),
 						'categories'    => array(),
 						'page_builders' => array(),
 					);
