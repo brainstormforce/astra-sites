@@ -17,13 +17,12 @@ if ( ! class_exists( '\Elementor\Plugin' ) ) {
 }
 
 use Elementor\Core\Base\Document;
+use Elementor\Core\Editor\Editor;
 use Elementor\DB;
-use Elementor\Core\Settings\Page\Manager as PageSettingsManager;
 use Elementor\Core\Settings\Manager as SettingsManager;
 use Elementor\Core\Settings\Page\Model;
-use Elementor\Editor;
+use Elementor\Modules\Library\Documents\Library_Document;
 use Elementor\Plugin;
-use Elementor\Settings;
 use Elementor\Utils;
 
 /**
@@ -89,8 +88,14 @@ class Astra_Sites_Batch_Processing_Elementor extends Source_Local {
 						}
 					}
 
-					$data = add_magic_quotes( $data );
-					$data = json_decode( $data, true );
+					if ( ! is_array( $data ) ) {
+						$data = json_decode( $data, true );
+					}
+
+					$document = Plugin::$instance->documents->get( $post_id );
+					if ( $document ) {
+						$data = $document->get_elements_raw_data( $data, true );
+					}
 
 					// Import the data.
 					$data = $this->process_export_import_content( $data, 'on_import' );
@@ -100,7 +105,7 @@ class Astra_Sites_Batch_Processing_Elementor extends Source_Local {
 					update_metadata( 'post', $post_id, '_astra_sites_hotlink_imported', true );
 
 					// !important, Clear the cache after images import.
-					Plugin::$instance->posts_css_manager->clear_cache();
+					Plugin::$instance->files_manager->clear_cache();
 
 				}
 			}
