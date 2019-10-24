@@ -441,7 +441,7 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 		private function get_sites( $post_slug = '', $args = array(), $force = false, $assoc_args = array() ) {
 
 			// Add page builders.
-			$page_builder  = isset( $assoc_args['page-builder'] ) ? $assoc_args['page-builder'] : '';
+			$page_builder  = isset( $assoc_args['page-builder'] ) ? $assoc_args['page-builder'] : Astra_Sites_Page::get_instance()->get_setting( 'page_builder' );
 			$response      = $this->get_term_ids( 'astra-site-page-builder', $page_builder, $args );
 			$args          = $response['args'];
 			$page_builders = $response['terms'];
