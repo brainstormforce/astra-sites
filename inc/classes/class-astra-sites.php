@@ -270,7 +270,15 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		 */
 		public static function set_api_url() {
 			self::$api_url = apply_filters( 'astra_sites_api_url', 'https://websitedemos.net/wp-json/wp/v2/' );
+		}
 
+		/**
+		 * Getter for $api_url
+		 *
+		 * @since  1.0.0
+		 */
+		public function get_api_url() {
+			return self::$api_url;
 		}
 
 		/**
@@ -676,15 +684,6 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			}
 
 			return false;
-		}
-
-		/**
-		 * Getter for $api_url
-		 *
-		 * @since  1.0.0
-		 */
-		public function get_api_url() {
-			return apply_filters( 'astra_sites_api_url', 'https://websitedemos.net/wp-json/wp/v2/' );
 		}
 	}
 
