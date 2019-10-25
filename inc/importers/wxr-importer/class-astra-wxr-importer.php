@@ -186,6 +186,10 @@ class Astra_WXR_Importer {
 	function sse_import( $xml_url = '' ) {
 
 		if ( ! defined( 'WP_CLI' ) ) {
+
+			// Verify Nonce.
+			check_ajax_referer( 'astra-sites', '_ajax_nonce' );
+
 			// Start the event stream.
 			header( 'Content-Type: text/event-stream, charset=UTF-8' );
 
