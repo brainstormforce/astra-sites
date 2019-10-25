@@ -122,8 +122,11 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 		 */
 		function import_start() {
 
+			// Verify Nonce.
+			check_ajax_referer( 'astra-sites', '_ajax_nonce' );
+
 			if ( ! current_user_can( 'customize' ) ) {
-				wp_send_json_error( __( 'You have not "customize" access to import the Astra site.', 'astra-sites' ) );
+				wp_send_json_error( __( 'You are not allowed to perform this action', 'astra-sites' ) );
 			}
 
 			$demo_api_uri = isset( $_POST['api_url'] ) ? esc_url( $_POST['api_url'] ) : '';
@@ -159,6 +162,13 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 		 * @return void
 		 */
 		function import_wpforms() {
+
+			// Verify Nonce.
+			check_ajax_referer( 'astra-sites', '_ajax_nonce' );
+
+			if ( ! current_user_can( 'customize' ) ) {
+				wp_send_json_error( __( 'You are not allowed to perform this action', 'astra-sites' ) );
+			}
 
 			$wpforms_url = ( isset( $_REQUEST['wpforms_url'] ) ) ? urldecode( $_REQUEST['wpforms_url'] ) : '';
 			$ids_mapping = array();
@@ -232,6 +242,13 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 		 */
 		function import_customizer_settings() {
 
+			// Verify Nonce.
+			check_ajax_referer( 'astra-sites', '_ajax_nonce' );
+
+			if ( ! current_user_can( 'customize' ) ) {
+				wp_send_json_error( __( 'You are not allowed to perform this action', 'astra-sites' ) );
+			}
+
 			$customizer_data = ( isset( $_POST['customizer_data'] ) ) ? (array) json_decode( stripcslashes( $_POST['customizer_data'] ), 1 ) : array();
 
 			if ( ! empty( $customizer_data ) ) {
@@ -258,6 +275,13 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 		 * @return void
 		 */
 		function prepare_xml_data() {
+
+			// Verify Nonce.
+			check_ajax_referer( 'astra-sites', '_ajax_nonce' );
+
+			if ( ! current_user_can( 'customize' ) ) {
+				wp_send_json_error( __( 'You are not allowed to perform this action', 'astra-sites' ) );
+			}
 
 			if ( ! class_exists( 'XMLReader' ) ) {
 				wp_send_json_error( __( 'If XMLReader is not available, it imports all other settings and only skips XML import. This creates an incomplete website. We should bail early and not import anything if this is not present.', 'astra-sites' ) );
@@ -297,6 +321,13 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 		 */
 		function import_options() {
 
+			// Verify Nonce.
+			check_ajax_referer( 'astra-sites', '_ajax_nonce' );
+
+			if ( ! current_user_can( 'customize' ) ) {
+				wp_send_json_error( __( 'You are not allowed to perform this action', 'astra-sites' ) );
+			}
+
 			$options_data = ( isset( $_POST['options_data'] ) ) ? (array) json_decode( stripcslashes( $_POST['options_data'] ), 1 ) : '';
 
 			if ( ! empty( $options_data ) ) {
@@ -323,6 +354,13 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 		 * @return void
 		 */
 		function import_widgets() {
+
+			// Verify Nonce.
+			check_ajax_referer( 'astra-sites', '_ajax_nonce' );
+
+			if ( ! current_user_can( 'customize' ) ) {
+				wp_send_json_error( __( 'You are not allowed to perform this action', 'astra-sites' ) );
+			}
 
 			$widgets_data = ( isset( $_POST['widgets_data'] ) ) ? (object) json_decode( stripcslashes( $_POST['widgets_data'] ) ) : '';
 
@@ -353,6 +391,14 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 		 * @return void
 		 */
 		function import_end() {
+
+			// Verify Nonce.
+			check_ajax_referer( 'astra-sites', '_ajax_nonce' );
+
+			if ( ! current_user_can( 'customize' ) ) {
+				wp_send_json_error( __( 'You are not allowed to perform this action', 'astra-sites' ) );
+			}
+
 			do_action( 'astra_sites_import_complete' );
 		}
 
@@ -470,6 +516,14 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 		 * @return void
 		 */
 		function reset_customizer_data() {
+
+			// Verify Nonce.
+			check_ajax_referer( 'astra-sites', '_ajax_nonce' );
+
+			if ( ! current_user_can( 'customize' ) ) {
+				wp_send_json_error( __( 'You are not allowed to perform this action', 'astra-sites' ) );
+			}
+
 			Astra_Sites_Importer_Log::add( 'Deleted customizer Settings ' . json_encode( get_option( 'astra-settings', array() ) ) );
 
 			delete_option( 'astra-settings' );
@@ -484,6 +538,13 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 		 * @return void
 		 */
 		function reset_site_options() {
+
+			// Verify Nonce.
+			check_ajax_referer( 'astra-sites', '_ajax_nonce' );
+
+			if ( ! current_user_can( 'customize' ) ) {
+				wp_send_json_error( __( 'You are not allowed to perform this action', 'astra-sites' ) );
+			}
 
 			$options = get_option( '_astra_sites_old_site_options', array() );
 
@@ -505,6 +566,14 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 		 * @return void
 		 */
 		function reset_widgets_data() {
+
+			// Verify Nonce.
+			check_ajax_referer( 'astra-sites', '_ajax_nonce' );
+
+			if ( ! current_user_can( 'customize' ) ) {
+				wp_send_json_error( __( 'You are not allowed to perform this action', 'astra-sites' ) );
+			}
+
 			$old_widgets = get_option( '_astra_sites_old_widgets_data', array() );
 
 			Astra_Sites_Importer_Log::add( 'DELETED - WIDGETS ' . json_encode( $old_widgets ) );
@@ -539,6 +608,14 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 		 * @return void
 		 */
 		function delete_imported_posts() {
+
+			// Verify Nonce.
+			check_ajax_referer( 'astra-sites', '_ajax_nonce' );
+
+			if ( ! current_user_can( 'customize' ) ) {
+				wp_send_json_error( __( 'You are not allowed to perform this action', 'astra-sites' ) );
+			}
+
 			$post_id = isset( $_REQUEST['post_id'] ) ? absint( $_REQUEST['post_id'] ) : '';
 			$message = 'Deleted - Post ID ' . $post_id . ' - ' . get_post_type( $post_id ) . ' - ' . get_the_title( $post_id );
 
@@ -556,6 +633,14 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 		 * @return void
 		 */
 		function delete_imported_wp_forms() {
+
+			// Verify Nonce.
+			check_ajax_referer( 'astra-sites', '_ajax_nonce' );
+
+			if ( ! current_user_can( 'customize' ) ) {
+				wp_send_json_error( __( 'You are not allowed to perform this action', 'astra-sites' ) );
+			}
+
 			$post_id = isset( $_REQUEST['post_id'] ) ? absint( $_REQUEST['post_id'] ) : '';
 
 			$message = 'Deleted - Form ID ' . $post_id . ' - ' . get_post_type( $post_id ) . ' - ' . get_the_title( $post_id );
@@ -575,6 +660,13 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 		 * @return void
 		 */
 		function delete_imported_terms() {
+
+			// Verify Nonce.
+			check_ajax_referer( 'astra-sites', '_ajax_nonce' );
+
+			if ( ! current_user_can( 'customize' ) ) {
+				wp_send_json_error( __( 'You are not allowed to perform this action', 'astra-sites' ) );
+			}
 
 			$term_id = isset( $_REQUEST['term_id'] ) ? absint( $_REQUEST['term_id'] ) : '';
 
