@@ -78,6 +78,13 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		 * @return void
 		 */
 		function getting_started_notice() {
+			// Verify Nonce.
+			check_ajax_referer( 'astra-sites', '_ajax_nonce' );
+
+			if ( ! current_user_can( 'customize' ) ) {
+				wp_send_json_error( __( 'You are not allowed to perform this action', 'astra-sites' ) );
+			}
+
 			update_user_meta( get_current_user_id(), '_astra_sites_gettings_started', true );
 			wp_send_json_success();
 		}
@@ -89,6 +96,13 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		 * @return void
 		 */
 		function activate_theme() {
+
+			// Verify Nonce.
+			check_ajax_referer( 'astra-sites', '_ajax_nonce' );
+
+			if ( ! current_user_can( 'customize' ) ) {
+				wp_send_json_error( __( 'You are not allowed to perform this action', 'astra-sites' ) );
+			}
 
 			switch_theme( 'astra' );
 
@@ -104,6 +118,9 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		 * Set reset data
 		 */
 		function set_reset_data() {
+
+			check_ajax_referer( 'astra-sites', '_ajax_nonce' );
+
 			if ( ! current_user_can( 'manage_options' ) ) {
 				return;
 			}
@@ -127,6 +144,9 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		 * Backup our existing settings.
 		 */
 		function backup_settings() {
+
+			check_ajax_referer( 'astra-sites', '_ajax_nonce' );
+
 			if ( ! current_user_can( 'manage_options' ) ) {
 				return;
 			}
@@ -286,7 +306,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 
 			// Admin Page.
 			wp_enqueue_style( 'astra-sites-admin', ASTRA_SITES_URI . 'inc/assets/css/admin.css', ASTRA_SITES_VER, true );
-			wp_enqueue_script( 'astra-sites-admin-page', ASTRA_SITES_URI . 'inc/assets/js/admin-page.js', array( 'jquery', 'wp-util', 'updates' ), ASTRA_SITES_VER, true );
+			wp_enqueue_script( 'astra-sites-admin-page', ASTRA_SITES_URI . 'inc/assets/js/admin-page.js', array( 'jquery', 'wp-util', 'updates', 'wp-url' ), ASTRA_SITES_VER, true );
 			wp_enqueue_script( 'astra-sites-render-grid', ASTRA_SITES_URI . 'inc/assets/js/render-grid.js', array( 'wp-util', 'astra-sites-api', 'imagesloaded', 'jquery' ), ASTRA_SITES_VER, true );
 
 			$data = apply_filters(
@@ -431,6 +451,8 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		 * @since 1.0.0
 		 */
 		public function required_plugin_activate() {
+
+			check_ajax_referer( 'astra-sites', '_ajax_nonce' );
 
 			if ( ! current_user_can( 'install_plugins' ) || ! isset( $_POST['init'] ) || ! $_POST['init'] ) {
 				wp_send_json_error(
