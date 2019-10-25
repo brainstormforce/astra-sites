@@ -364,8 +364,3 @@ v1.0.1 - 04-Aug-2017
 
 v1.0.0
 - Initial release
-
-== Upgrade Notice ==
-
-= 1.3.21 =
-As this is a security update and everyone is recommended to update to this version.
