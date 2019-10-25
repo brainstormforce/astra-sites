@@ -156,13 +156,13 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 
 			if ( 'free' !== $demo_data['site-type'] && 'upgrade' === $demo_data['license-status'] && ! $license_status ) {
 
-				if( ! defined( 'ASTRA_PRO_SITES_NAME' ) ) {
+				if ( ! defined( 'ASTRA_PRO_SITES_NAME' ) ) {
 					WP_CLI::line( __( 'This is Agency site. Please activate the "Astra Premium Sites" license!', 'astra-sites' ) );
 					WP_CLI::line( __( 'Use `wp plugin deactivate astra-sites` and then `wp plugin activate astra-pro-sites`', 'astra-sites' ) );
 				}
 
 				/* translators: %s is the activate plugin license link. */
-				WP_CLI::error( __( "Use CLI command `wp brainstormforce license activate astra-pro-sites {YOUR_LICENSE_KEY}`", 'astra-sites' ) );
+				WP_CLI::error( __( 'Use CLI command `wp brainstormforce license activate astra-pro-sites {YOUR_LICENSE_KEY}`', 'astra-sites' ) );
 			}
 
 			/**
