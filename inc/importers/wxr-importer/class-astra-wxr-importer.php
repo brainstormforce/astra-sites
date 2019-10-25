@@ -182,6 +182,13 @@ class Astra_WXR_Importer {
 	 */
 	function sse_import() {
 
+		// Verify Nonce.
+		check_ajax_referer( 'astra-sites', '_ajax_nonce' );
+
+		if ( ! current_user_can( 'customize' ) ) {
+			wp_send_json_error( __( 'You are not allowed to perform this action', 'astra-sites' ) );
+		}
+
 		// Start the event stream.
 		header( 'Content-Type: text/event-stream, charset=UTF-8' );
 
