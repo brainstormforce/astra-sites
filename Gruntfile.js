@@ -107,27 +107,51 @@ module.exports = function( grunt ) {
 
 		clean: {
             main: ["astra-sites"],
-            zip: ["astra-sites.zip"]
+            zip: ["*.zip"]
 
+        },
+
+        bumpup: {
+            options: {
+                updateProps: {
+                    pkg: 'package.json'
+                }
+            },
+            file: 'package.json'
         },
 
 	} );
 
-	grunt.loadNpmTasks( 'grunt-wp-i18n' );
-	grunt.loadNpmTasks( 'grunt-wp-readme-to-markdown' );
-	grunt.loadNpmTasks( 'grunt-contrib-copy' );
+    grunt.loadNpmTasks( 'grunt-wp-i18n' );
+    grunt.loadNpmTasks( 'grunt-contrib-copy' );
     grunt.loadNpmTasks( 'grunt-contrib-compress' );
     grunt.loadNpmTasks( 'grunt-contrib-clean' );
+    grunt.loadNpmTasks( 'grunt-bumpup' );
+    grunt.loadNpmTasks( 'grunt-text-replace' );
+	grunt.loadNpmTasks( 'grunt-wp-readme-to-markdown' );
 
-    // Generate README.md file.
+	// Generate README.md file.
     grunt.registerTask( 'readme', ['wp_readme_to_markdown'] );
 
     // Generate .pot file.
-	grunt.registerTask( 'i18n', ['addtextdomain', 'makepot'] );
+    grunt.registerTask( 'i18n', ['addtextdomain', 'makepot'] );
 
-	// Grunt release - Create installable package of the local files
+    // Grunt release - Create installable package of the local files
     grunt.registerTask('release', ['clean:zip', 'copy', 'compress', 'clean:main']);
 
-	grunt.util.linefeed = '\n';
+    // Bump Version - `grunt version-bump --ver=<version-number>`
+    grunt.registerTask('version-bump', function (ver) {
+
+        var newVersion = grunt.option('ver');
+
+        if (newVersion) {
+            newVersion = newVersion ? newVersion : 'patch';
+
+            grunt.task.run('bumpup:' + newVersion);
+            grunt.task.run('replace');
+        }
+    });
+
+    grunt.util.linefeed = '\n';
 
 };
