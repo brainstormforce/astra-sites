@@ -118,10 +118,10 @@ We are open to suggestions and would love to work on topics that our users are l
 ## Changelog ##
 
 v1.4.0 - 30-October-2019
-- New: Added the WP CLI command `wp astra-sitest list` to list the demo sites.
-- New: Added the WP CLI command `wp astra-sitest import <id>` to import the demo with ID.
-- New: Added the WP CLI command `wp astra-sitest page_builder list` to list all page builders.
-- New: Added the WP CLI command `wp astra-sitest page_builder set <slug>` to set the default page builder by page builder slug.
+- New: Added the WP CLI command `wp astra-sites list` to list the demo sites.
+- New: Added the WP CLI command `wp astra-sites import <id>` to import the demo with ID.
+- New: Added the WP CLI command `wp astra-sites page_builder list` to list all page builders.
+- New: Added the WP CLI command `wp astra-sites page_builder set <slug>` to set the default page builder by page builder slug.
 
 v1.3.21 - 25-October-2019
 - Security Fix: XSS vulnerability fixed by adding nonce verification and capability checks.
