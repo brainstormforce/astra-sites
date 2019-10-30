@@ -300,11 +300,12 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			$data = apply_filters(
 				'astra_sites_install_theme_localize_vars',
 				array(
-					'installed'  => __( 'Installed! Activating..', 'astra-sites' ),
-					'activating' => __( 'Activating..', 'astra-sites' ),
-					'activated'  => __( 'Activated! Reloading..', 'astra-sites' ),
-					'installing' => __( 'Installing..', 'astra-sites' ),
-					'ajaxurl'    => esc_url( admin_url( 'admin-ajax.php' ) ),
+					'installed'   => __( 'Installed! Activating..', 'astra-sites' ),
+					'activating'  => __( 'Activating..', 'astra-sites' ),
+					'activated'   => __( 'Activated! Reloading..', 'astra-sites' ),
+					'installing'  => __( 'Installing..', 'astra-sites' ),
+					'ajaxurl'     => esc_url( admin_url( 'admin-ajax.php' ) ),
+					'_ajax_nonce' => wp_create_nonce( 'astra-sites' ),
 				)
 			);
 			wp_localize_script( 'astra-sites-install-theme', 'AstraSitesInstallThemeVars', $data );
