@@ -145,7 +145,11 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 			// @todo Remove required `allow_url_fopen` support.
 			if ( ini_get( 'allow_url_fopen' ) ) {
 				if ( is_plugin_active( 'elementor/elementor.php' ) ) {
-					$import = new \Elementor\TemplateLibrary\Astra_Sites_Batch_Processing_Elementor();
+					if ( defined( 'WP_CLI' ) ) {
+						$import = new Elementor\TemplateLibrary\Astra_Sites_Batch_Processing_Elementor();
+					} else {
+						$import = new \Elementor\TemplateLibrary\Astra_Sites_Batch_Processing_Elementor();
+					}
 					self::$process_all->push_to_queue( $import );
 				}
 			} else {

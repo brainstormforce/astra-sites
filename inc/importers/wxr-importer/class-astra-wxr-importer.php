@@ -179,46 +179,50 @@ class Astra_WXR_Importer {
 	 * Constructor.
 	 *
 	 * @since  1.1.0
+	 * @since  1.4.0 The `$xml_url` was added.
+	 *
+	 * @param  string $xml_url XML file URL.
 	 */
-	function sse_import() {
+	function sse_import( $xml_url = '' ) {
 
-		// Verify Nonce.
-		check_ajax_referer( 'astra-sites', '_ajax_nonce' );
+		if ( ! defined( 'WP_CLI' ) ) {
 
-		if ( ! current_user_can( 'customize' ) ) {
-			wp_send_json_error( __( 'You are not allowed to perform this action', 'astra-sites' ) );
+			// Verify Nonce.
+			check_ajax_referer( 'astra-sites', '_ajax_nonce' );
+
+			// Start the event stream.
+			header( 'Content-Type: text/event-stream, charset=UTF-8' );
+
+			// Turn off PHP output compression.
+			$previous = error_reporting( error_reporting() ^ E_WARNING );
+			ini_set( 'output_buffering', 'off' );
+			ini_set( 'zlib.output_compression', false );
+			error_reporting( $previous );
+
+			if ( $GLOBALS['is_nginx'] ) {
+				// Setting this header instructs Nginx to disable fastcgi_buffering
+				// and disable gzip for this request.
+				header( 'X-Accel-Buffering: no' );
+				header( 'Content-Encoding: none' );
+			}
+
+			// 2KB padding for IE
+			echo ':' . str_repeat( ' ', 2048 ) . "\n\n";
 		}
 
-		// Start the event stream.
-		header( 'Content-Type: text/event-stream, charset=UTF-8' );
-
-		// Turn off PHP output compression.
-		$previous = error_reporting( error_reporting() ^ E_WARNING );
-		ini_set( 'output_buffering', 'off' );
-		ini_set( 'zlib.output_compression', false );
-		error_reporting( $previous );
-
-		if ( $GLOBALS['is_nginx'] ) {
-			// Setting this header instructs Nginx to disable fastcgi_buffering
-			// and disable gzip for this request.
-			header( 'X-Accel-Buffering: no' );
-			header( 'Content-Encoding: none' );
-		}
-
-		$xml_url = urldecode( $_REQUEST['xml_url'] );
+		$xml_url = isset( $_REQUEST['xml_url'] ) ? urldecode( $_REQUEST['xml_url'] ) : urldecode( $xml_url );
 		if ( empty( $xml_url ) ) {
 			exit;
 		}
 
-		// 2KB padding for IE
-		echo ':' . str_repeat( ' ', 2048 ) . "\n\n";
+		if ( ! defined( 'WP_CLI' ) ) {
+			// Time to run the import!
+			set_time_limit( 0 );
 
-		// Time to run the import!
-		set_time_limit( 0 );
-
-		// Ensure we're not buffered.
-		wp_ob_end_flush_all();
-		flush();
+			// Ensure we're not buffered.
+			wp_ob_end_flush_all();
+			flush();
+		}
 
 		// Are we allowed to create users?
 		add_filter( 'wxr_importer.pre_process.user', '__return_null' );
@@ -256,7 +260,9 @@ class Astra_WXR_Importer {
 		}
 
 		$this->emit_sse_message( $complete );
-		exit;
+		if ( ! defined( 'WP_CLI' ) ) {
+			exit;
+		}
 	}
 
 	/**
@@ -439,11 +445,14 @@ class Astra_WXR_Importer {
 	 * @param mixed $data Data to be JSON-encoded and sent in the message.
 	 */
 	public function emit_sse_message( $data ) {
-		echo "event: message\n";
-		echo 'data: ' . wp_json_encode( $data ) . "\n\n";
 
-		// Extra padding.
-		echo ':' . str_repeat( ' ', 2048 ) . "\n\n";
+		if ( ! defined( 'WP_CLI' ) ) {
+			echo "event: message\n";
+			echo 'data: ' . wp_json_encode( $data ) . "\n\n";
+
+			// Extra padding.
+			echo ':' . str_repeat( ' ', 2048 ) . "\n\n";
+		}
 
 		flush();
 	}

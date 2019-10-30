@@ -24,15 +24,31 @@ if ( ! class_exists( 'WP_Importer_Logger_ServerSentEvents' ) && class_exists( 'W
 				case 'warning':
 				case 'notice':
 				case 'info':
-					echo "event: log\n";
-					echo 'data: ' . wp_json_encode( $data ) . "\n\n";
+					if( defined( 'WP_CLI' ) ) {
+						if( isset( $data['message'] ) && ! empty( $data['message'] ) ) {
+							WP_CLI::line( $data['message'] );
+						} else {
+							WP_CLI::line( wp_json_encode( $data ) );
+						}
+					} else {
+						echo "event: log\n";
+						echo 'data: ' . wp_json_encode( $data ) . "\n\n";
+					}
 					flush();
 					break;
 
 				case 'debug':
 					if ( defined( 'IMPORT_DEBUG' ) && IMPORT_DEBUG ) {
-						echo "event: log\n";
-						echo 'data: ' . wp_json_encode( $data ) . "\n\n";
+						if( defined( 'WP_CLI' ) ) {
+							if( isset( $data['message'] ) && ! empty( $data['message'] ) ) {
+								WP_CLI::line( $data['message'] );
+							} else {
+								WP_CLI::line( wp_json_encode( $data ) );
+							}
+						} else {
+							echo "event: log\n";
+							echo 'data: ' . wp_json_encode( $data ) . "\n\n";
+						}
 						flush();
 						break;
 					}

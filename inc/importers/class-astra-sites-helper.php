@@ -275,8 +275,8 @@ if ( ! class_exists( 'Astra_Sites_Helper' ) ) :
 				$data->attachment_id = $id;
 				$data->url           = wp_get_attachment_url( $id );
 				$data->thumbnail_url = wp_get_attachment_thumb_url( $id );
-				$data->height        = $meta['height'];
-				$data->width         = $meta['width'];
+				$data->height        = isset( $meta['height'] ) ? $meta['height'] : '';
+				$data->width         = isset( $meta['width'] ) ? $meta['width'] : '';
 			}
 
 			return $data;
