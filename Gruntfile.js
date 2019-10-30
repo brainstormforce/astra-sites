@@ -120,6 +120,47 @@ module.exports = function( grunt ) {
             file: 'package.json'
         },
 
+        replace: {
+            plugin_main: {
+                src: ['astra-sites.php'],
+                overwrite: true,
+                replacements: [
+                    {
+                        from: /Version: \bv?(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)\.(?:0|[1-9]\d*)(?:-[\da-z-A-Z-]+(?:\.[\da-z-A-Z-]+)*)?(?:\+[\da-z-A-Z-]+(?:\.[\da-z-A-Z-]+)*)?\b/g,
+                        to: 'Version: <%= pkg.version %>'
+                    }
+                ]
+            },
+
+            plugin_const: {
+                src: ['astra-sites.php'],
+                overwrite: true,
+                replacements: [
+                    {
+                        from: /ASTRA_SITES_VER', '.*?'/g,
+                        to: 'ASTRA_SITES_VER\', \'<%= pkg.version %>\''
+                    }
+                ]
+            },
+            plugin_function_comment: {
+                src: [
+                    '*.php',
+                    '**/*.php',
+                    '!node_modules/**',
+                    '!php-tests/**',
+                    '!bin/**',
+                    '!admin/bsf-core/**'
+                ],
+                overwrite: true,
+                replacements: [
+                    {
+                        from: 'x.x.x',
+                        to: '<%=pkg.version %>'
+                    }
+                ]
+            }
+        }
+
 	} );
 
     grunt.loadNpmTasks( 'grunt-wp-i18n' );
