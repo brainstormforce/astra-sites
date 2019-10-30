@@ -38,7 +38,8 @@
 					url: AstraSitesInstallThemeVars.ajaxurl,
 					type: 'POST',
 					data: {
-						'action' : 'astra-sites-getting-started-notice'
+						'action' : 'astra-sites-getting-started-notice',
+						'_ajax_nonce' : AstraSitesInstallThemeVars._ajax_nonce,
 					},
 				})
 				.done(function (result) {
@@ -70,7 +71,8 @@
 					url: AstraSitesInstallThemeVars.ajaxurl,
 					type: 'POST',
 					data: {
-						'action' : 'astra-sites-activate-theme'
+						'action' : 'astra-sites-activate-theme',
+						'_ajax_nonce' : AstraSitesInstallThemeVars._ajax_nonce,
 					},
 				})
 				.done(function (result) {
