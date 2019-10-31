@@ -117,6 +117,9 @@ We are open to suggestions and would love to work on topics that our users are l
 
 == Changelog ==
 
+v1.4.1 - 30-October-2019
+- Fix: PHP Error on PHP Versions below 7.0 due to usage of a PHP reserved function name.
+
 v1.4.0 - 30-October-2019
 - New: Added the WP CLI command `wp astra-sites list` to list the demo sites.
 - New: Added the WP CLI command `wp astra-sites import <id>` to import the demo with ID.
