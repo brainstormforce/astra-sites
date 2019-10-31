@@ -59,7 +59,7 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 		 * @since 1.4.0
 		 * @param  array $args        Arguments.
 		 * @param  array $assoc_args Associated Arguments.
-		 * 
+		 *
 		 * @alias list
 		 */
 		public function list_sites( $args, $assoc_args ) {
