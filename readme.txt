@@ -5,7 +5,7 @@ Tags: Elementor,Beaver Builder,Templates,Gutenberg,Astra Starter Sites
 Requires at least: 4.4
 Requires PHP: 5.3
 Tested up to: 5.2
-Stable tag: 1.4.0
+Stable tag: 1.4.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -116,6 +116,9 @@ We are open to suggestions and would love to work on topics that our users are l
 3. Click the import site button to start the import process.
 
 == Changelog ==
+
+v1.4.1 - 31-October-2019
+- Fix: PHP Error on PHP Versions below 7.0 due to usage of a PHP reserved function name.
 
 v1.4.0 - 30-October-2019
 - New: Added the WP CLI command `wp astra-sites list` to list the demo sites.

@@ -59,8 +59,10 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 		 * @since 1.4.0
 		 * @param  array $args        Arguments.
 		 * @param  array $assoc_args Associated Arguments.
+		 *
+		 * @alias list
 		 */
-		public function list( $args, $assoc_args ) {
+		public function list_sites( $args, $assoc_args ) {
 
 			$per_page = isset( $assoc_args['per-page'] ) ? $assoc_args['per-page'] : 10;
 			$search   = isset( $assoc_args['search'] ) ? $assoc_args['search'] : '';
