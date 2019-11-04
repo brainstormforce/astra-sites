@@ -146,7 +146,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 			if ( ini_get( 'allow_url_fopen' ) ) {
 				if ( is_plugin_active( 'elementor/elementor.php' ) ) {
 					if ( defined( 'WP_CLI' ) ) {
-						$import = new Elementor\TemplateLibrary\Astra_Sites_Batch_Processing_Elementor();
+						$import = new \Elementor\TemplateLibrary\Astra_Sites_Batch_Processing_Elementor();
 					} else {
 						$import = new \Elementor\TemplateLibrary\Astra_Sites_Batch_Processing_Elementor();
 					}
