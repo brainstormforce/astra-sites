@@ -159,14 +159,13 @@ if ( ! class_exists( 'Astra_Sites_Helper' ) ) :
 		 * Download File Into Uploads Directory
 		 *
 		 * @param  string $file Download File URL.
+		 * @param  int    $timeout_seconds Timeout in downloading the XML file in seconds.
 		 * @return array        Downloaded file data.
 		 */
-		public static function download_file( $file = '' ) {
+		public static function download_file( $file = '', $timeout_seconds = 300 ) {
 
 			// Gives us access to the download_url() and wp_handle_sideload() functions.
 			require_once( ABSPATH . 'wp-admin/includes/file.php' );
-
-			$timeout_seconds = 5;
 
 			// Download file to temp dir.
 			$temp_file = download_url( $file, $timeout_seconds );
