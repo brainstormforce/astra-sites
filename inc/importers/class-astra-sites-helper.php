@@ -159,6 +159,7 @@ if ( ! class_exists( 'Astra_Sites_Helper' ) ) :
 		 * Download File Into Uploads Directory
 		 *
 		 * @param  string $file Download File URL.
+		 * @param  int    $timeout_seconds Timeout in downloading the XML file in seconds.
 		 * @return array        Downloaded file data.
 		 */
 		public static function download_file( $file = '', $timeout_seconds = 300 ) {
