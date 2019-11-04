@@ -119,6 +119,7 @@ We are open to suggestions and would love to work on topics that our users are l
 
 v1.4.2 - 4-November-2019
 - Fix: Correctly added nonce to allow notice to be dismissed.
+- Fix: Restore the timeout time to be 300 seconds which is the default for `download_url()`
 
 v1.4.1 - 31-October-2019
 - Fix: PHP Error on PHP Versions below 7.0 due to usage of a PHP reserved function name.
