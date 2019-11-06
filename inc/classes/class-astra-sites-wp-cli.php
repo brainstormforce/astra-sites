@@ -59,8 +59,10 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 		 * @since 1.4.0
 		 * @param  array $args        Arguments.
 		 * @param  array $assoc_args Associated Arguments.
+		 *
+		 * @alias list
 		 */
-		public function list( $args, $assoc_args ) {
+		public function list_sites( $args, $assoc_args ) {
 
 			$per_page = isset( $assoc_args['per-page'] ) ? $assoc_args['per-page'] : 10;
 			$search   = isset( $assoc_args['search'] ) ? $assoc_args['search'] : '';
@@ -264,10 +266,20 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 			/**
 			 * Import End.
 			 */
-			Astra_Sites_Importer::get_instance()->import_end();
+			WP_CLI::runcommand( 'astra-sites import_end' );
 
 			/* translators: %s is the site URL. */
 			WP_CLI::line( sprintf( __( "Site Imported Successfully!\nVisit: %s", 'astra-sites' ), $site_url ) );
+		}
+
+		/**
+		 * Import End
+		 *
+		 * @since 1.4.3
+		 * @return void
+		 */
+		function import_end() {
+			Astra_Sites_Importer::get_instance()->import_end();
 		}
 
 		/**
@@ -566,8 +578,8 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 			);
 			$args     = wp_parse_args( (array) $args, $defaults );
 
+			$success    = false;
 			$terms_data = get_transient( 'astra-sites-term-' . $term_slug );
-
 			if ( empty( $terms_data ) || $force ) {
 				$url = add_query_arg( $args, Astra_Sites::get_instance()->get_api_url() . $term_slug );
 
@@ -575,7 +587,6 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 					'timeout' => 60,
 				);
 
-				$success  = false;
 				$response = wp_remote_get( $url, $api_args );
 				if ( ! is_wp_error( $response ) || wp_remote_retrieve_response_code( $response ) === 200 ) {
 					$request_term_data = json_decode( wp_remote_retrieve_body( $response ), true );
@@ -586,11 +597,14 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 						foreach ( $request_term_data as $key => $request_term ) {
 							$new_terms_data[ $request_term['id'] ] = $request_term['name'];
 						}
-						set_transient( 'astra-sites-term-' . $term_slug, $new_terms_data, WEEK_IN_SECONDS );
+						if ( set_transient( 'astra-sites-term-' . $term_slug, $new_terms_data, WEEK_IN_SECONDS ) ) {
+							return array(
+								'success' => $success,
+								'data'    => $new_terms_data,
+							);
+						}
 					}
 				}
-			} else {
-				$success = true;
 			}
 
 			return array(
