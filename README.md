@@ -5,7 +5,7 @@
 **Requires at least:** 4.4  
 **Requires PHP:** 5.3  
 **Tested up to:** 5.2  
-**Stable tag:** 1.4.0  
+**Stable tag:** 1.4.2  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -117,11 +117,18 @@ We are open to suggestions and would love to work on topics that our users are l
 
 ## Changelog ##
 
-v1.4.0 - 25-October-2019
-- New: Added the WP CLI command `wp astra-sitest list` to list the demo sites.
-- New: Added the WP CLI command `wp astra-sitest import <id>` to import the demo with ID.
-- New: Added the WP CLI command `wp astra-sitest page_builder list` to list all page builders.
-- New: Added the WP CLI command `wp astra-sitest page_builder set <slug>` to set the default page builder by page builder slug.
+v1.4.2 - 4-November-2019
+- Fix: Correctly added nonce to allow notice to be dismissed.
+- Fix: Restore the timeout time to be 300 seconds which is the default for `download_url()`
+
+v1.4.1 - 31-October-2019
+- Fix: PHP Error on PHP Versions below 7.0 due to usage of a PHP reserved function name.
+
+v1.4.0 - 30-October-2019
+- New: Added the WP CLI command `wp astra-sites list` to list the demo sites.
+- New: Added the WP CLI command `wp astra-sites import <id>` to import the demo with ID.
+- New: Added the WP CLI command `wp astra-sites page_builder list` to list all page builders.
+- New: Added the WP CLI command `wp astra-sites page_builder set <slug>` to set the default page builder by page builder slug.
 
 v1.3.21 - 25-October-2019
 - Security Fix: XSS vulnerability fixed by adding nonce verification and capability checks.

@@ -132,6 +132,17 @@ module.exports = function( grunt ) {
                 ]
             },
 
+            stable_tag: {
+                src: ['readme.txt'],
+                overwrite: true,
+                replacements: [
+                    {
+                        from: /Stable tag:\ .*/g,
+                        to: 'Stable tag: <%= pkg.version %>'
+                    }
+                ]
+            },
+
             plugin_const: {
                 src: ['astra-sites.php'],
                 overwrite: true,
@@ -142,6 +153,7 @@ module.exports = function( grunt ) {
                     }
                 ]
             },
+
             plugin_function_comment: {
                 src: [
                     '*.php',
