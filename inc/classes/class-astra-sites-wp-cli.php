@@ -12,7 +12,7 @@
 if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) ) :
 
 	/**
-	 * Astra Sites
+	 * WP-Cli commands to manage Astra Starter Sites.
 	 *
 	 * @since 1.4.0
 	 */
@@ -232,19 +232,7 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 			 * Import Content from XML/WXR.
 			 */
 			if ( isset( $demo_data['astra-site-wxr-path'] ) && ! empty( $demo_data['astra-site-wxr-path'] ) ) {
-
-				// Download XML file.
-				/* translators: %s is the XML file URL. */
-				WP_CLI::line( sprintf( __( 'Downloading %s', 'astra-sites' ), $demo_data['astra-site-wxr-path'] ) );
-				$xml_path = Astra_Sites_Helper::download_file( $demo_data['astra-site-wxr-path'] );
-
-				if ( $xml_path['success'] && isset( $xml_path['data']['file'] ) ) {
-					WP_CLI::line( __( 'Importing WXR..', 'astra-sites' ) );
-					Astra_WXR_Importer::instance()->sse_import( $xml_path['data']['file'] );
-				} else {
-					/* translators: %s is error message. */
-					WP_CLI::line( printf( __( 'WXR file Download Failed. Error %s', 'astra-sites' ), $xml_path['data'] ) );
-				}
+				WP_CLI::runcommand( 'astra-sites import_wxr ' . $demo_data['astra-site-wxr-path'] );
 			}
 
 			/**
@@ -266,10 +254,52 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 			/**
 			 * Import End.
 			 */
-			Astra_Sites_Importer::get_instance()->import_end();
+			WP_CLI::runcommand( 'astra-sites import_end' );
 
 			/* translators: %s is the site URL. */
 			WP_CLI::line( sprintf( __( "Site Imported Successfully!\nVisit: %s", 'astra-sites' ), $site_url ) );
+		}
+
+		/**
+		 * Import End
+		 *
+		 * @since 1.4.3
+		 * @return void
+		 */
+		function import_end() {
+			Astra_Sites_Importer::get_instance()->import_end();
+		}
+
+		/**
+		 * Import form XML.
+		 *
+		 * Use: `wp astra-sites import_wxr`
+		 *
+		 * @since 1.4.3
+		 * @param  array $args       Arguments.
+		 * @param  array $assoc_args Associated Arguments.
+		 * @return void.
+		 */
+		public function import_wxr( $args = array(), $assoc_args = array() ) {
+
+			// Valid site ID?
+			$url = isset( $args[0] ) ? esc_url_raw( $args[0] ) : '';
+			if ( empty( $url ) ) {
+				WP_CLI::error( __( 'Invalid XML URL.', 'astra-sites' ) );
+			}
+
+			// Download XML file.
+			/* translators: %s is the XML file URL. */
+			WP_CLI::line( sprintf( __( 'Downloading %s', 'astra-sites' ), $url ) );
+			$xml_path = Astra_Sites_Helper::download_file( $url );
+
+			if ( $xml_path['success'] && isset( $xml_path['data']['file'] ) ) {
+				WP_CLI::line( __( 'Importing WXR..', 'astra-sites' ) );
+				Astra_WXR_Importer::instance()->sse_import( $xml_path['data']['file'] );
+			} else {
+				/* translators: %s is error message. */
+				WP_CLI::line( printf( __( 'WXR file Download Failed. Error %s', 'astra-sites' ), $xml_path['data'] ) );
+			}
 		}
 
 		/**
@@ -465,18 +495,27 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 			$response      = $this->get_term_ids( 'astra-site-page-builder', $page_builder, $args );
 			$args          = $response['args'];
 			$page_builders = $response['terms'];
+			if ( empty( $page_builders['data'] ) ) {
+				WP_CLI::error( __( 'This site page builder is not exist. Try different site page builder.', 'astra-sites' ) );
+			}
 
 			// Add type.
 			$type     = isset( $assoc_args['type'] ) ? $assoc_args['type'] : '';
 			$response = $this->get_term_ids( 'astra-sites-type', $type, $args );
 			$args     = $response['args'];
 			$types    = $response['terms'];
+			if ( empty( $types['data'] ) ) {
+				WP_CLI::error( __( 'This site type is not exist. Try different site type.', 'astra-sites' ) );
+			}
 
 			// Add categories.
 			$category   = isset( $assoc_args['category'] ) ? $assoc_args['category'] : '';
 			$response   = $this->get_term_ids( 'astra-site-category', $category, $args );
 			$args       = $response['args'];
 			$categories = $response['terms'];
+			if ( empty( $categories['data'] ) ) {
+				WP_CLI::error( __( 'This site category is not exist. Try different site category.', 'astra-sites' ) );
+			}
 
 			// Site list.
 			$sites = (array) $this->get_posts( 'astra-sites', $args, $force );
@@ -568,8 +607,8 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 			);
 			$args     = wp_parse_args( (array) $args, $defaults );
 
+			$success    = false;
 			$terms_data = get_transient( 'astra-sites-term-' . $term_slug );
-
 			if ( empty( $terms_data ) || $force ) {
 				$url = add_query_arg( $args, Astra_Sites::get_instance()->get_api_url() . $term_slug );
 
@@ -577,7 +616,6 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 					'timeout' => 60,
 				);
 
-				$success  = false;
 				$response = wp_remote_get( $url, $api_args );
 				if ( ! is_wp_error( $response ) || wp_remote_retrieve_response_code( $response ) === 200 ) {
 					$request_term_data = json_decode( wp_remote_retrieve_body( $response ), true );
@@ -588,11 +626,14 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 						foreach ( $request_term_data as $key => $request_term ) {
 							$new_terms_data[ $request_term['id'] ] = $request_term['name'];
 						}
-						set_transient( 'astra-sites-term-' . $term_slug, $new_terms_data, WEEK_IN_SECONDS );
+						if ( set_transient( 'astra-sites-term-' . $term_slug, $new_terms_data, WEEK_IN_SECONDS ) ) {
+							return array(
+								'success' => $success,
+								'data'    => $new_terms_data,
+							);
+						}
 					}
 				}
-			} else {
-				$success = true;
 			}
 
 			return array(
