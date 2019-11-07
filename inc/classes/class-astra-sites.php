@@ -686,6 +686,9 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 
 			return false;
 		}
+
+
+
 	}
 
 	/**

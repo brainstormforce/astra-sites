@@ -620,11 +620,6 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 		 */
 		public function clear_cache() {
 
-			// Clear 'Elementor' file cache.
-			if ( class_exists( '\Elementor\Plugin' ) ) {
-				Elementor\Plugin::$instance->posts_css_manager->clear_cache();
-			}
-
 			// Clear 'Builder Builder' cache.
 			if ( is_callable( 'FLBuilderModel::delete_asset_cache_for_all_posts' ) ) {
 				FLBuilderModel::delete_asset_cache_for_all_posts();

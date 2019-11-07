@@ -142,7 +142,7 @@ if ( ! class_exists( 'Astra_Sites_Image_Importer' ) ) :
 						"SELECT post_id FROM {$wpdb->postmeta}
 						WHERE meta_key = '_wp_attached_file'
 						AND meta_value LIKE %s",
-						'%' . $filename . '%'
+						'%/' . $filename . '%'
 					)
 				);
 

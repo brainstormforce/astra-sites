@@ -49,13 +49,6 @@ if ( ! class_exists( 'Astra_Sites_Compatibility_SFWD_LMS' ) ) :
 		}
 
 		/**
-		 * Add post types
-		 *
-		 * @since 1.3.13
-		 * @return array Post types.
-		 */
-
-		/**
 		 * Set post types
 		 *
 		 * @since 1.3.13
