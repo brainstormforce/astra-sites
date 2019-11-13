@@ -203,7 +203,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<# } #>
 			</div>
 			<# if ( site_type && 'free' !== site_type ) { #>
-				<div class="agency-ribbons astra-sites-activate-license-button" title="<?php esc_html_e( 'Agency', 'astra-sites' ); ?>"><?php esc_html_e( 'Agency', 'astra-sites' ); ?></div>
+				<div class="agency-ribbons astra-sites-activate-license-button" title="<?php esc_html_e( 'This is a Agency Site demo which import after the purchase Astra Premium Sites plugin.', 'astra-sites' ); ?>"><?php esc_html_e( 'Agency', 'astra-sites' ); ?></div>
 			<# } #>
 		</div>
 	</div>
@@ -370,13 +370,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<p>
 		<?php
 			/* translators: %s is pricing page link */
-			printf( esc_html__( 'This is a premium website demo available only with the Agency Bundles you can purchase it from <a href="%s" target="_blank">here</a>.', 'astra-sites' ), 'https://wpastra.com/pricing/' );
+			printf( __( 'This is a premium website demo available only with the Agency Bundles you can purchase it from <a href="%s" target="_blank">here</a>.', 'astra-sites' ), 'https://wpastra.com/pricing/' );
 		?>
 	</p>
 	<p>
 		<?php
 			/* translators: %s is article link */
-			printf( esc_html__( 'Already own an Agency Bundle? Read an article to know how you can <a href="%s" target="_blank">import a premium website demo</a>.', 'astra-sites' ), 'https://wpastra.com/docs/import-astra-agency-website-demos/' );
+			printf( __( 'Already own an Agency Bundle? Read an article to know how you can <a href="%s" target="_blank">import a premium website demo</a>.', 'astra-sites' ), 'https://wpastra.com/docs/import-astra-agency-website-demos/' );
 		?>
 	</p>
 </script>
@@ -423,7 +423,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		}
 
 			/* translators: %s is pricing page link */
-			printf( esc_html__( 'You have purchased the Astra \'Mini Agency\' package with a choice of \'%1$s\' page builder addon.<br/>While this template is available with Astra \'Mini Agency\' package with \'%2$s\' page bulider addon.<br/><br/>To import this template, you can upgrade the <a href="%3$s" target="_blank">Agency Bundle</a>.', 'astra-sites' ), esc_html( $current_page_builder ), esc_html( $upgrade_page_builder ), esc_url( 'https://wpastra.com/pricing/' ) );
+			printf( __( 'You have purchased the Astra \'Mini Agency\' package with a choice of \'%1$s\' page builder addon.<br/>While this template is available with Astra \'Mini Agency\' package with \'%2$s\' page bulider addon.<br/><br/>To import this template, you can upgrade the <a href="%3$s" target="_blank">Agency Bundle</a>.', 'astra-sites' ), esc_html( $current_page_builder ), esc_html( $upgrade_page_builder ), esc_url( 'https://wpastra.com/pricing/' ) );
 		?>
 	</p>
 </script>
