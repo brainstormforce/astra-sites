@@ -34,7 +34,7 @@ if ( ! class_exists( 'Astra_Sites_Compatibility_SO_Widgets' ) ) :
 		 */
 		public static function instance() {
 			if ( ! isset( self::$instance ) ) {
-				self::$instance = new self;
+				self::$instance = new self();
 			}
 			return self::$instance;
 		}
@@ -57,11 +57,11 @@ if ( ! class_exists( 'Astra_Sites_Compatibility_SO_Widgets' ) ) :
 		 * @param  array  $data               Data.
 		 * @return void
 		 */
-		function site_origin( $plugin_init = '', $data = array() ) {
+		public function site_origin( $plugin_init = '', $data = array() ) {
 
 			if ( 'so-widgets-bundle/so-widgets-bundle.php' === $plugin_init ) {
 
-				$data = json_decode( json_encode( $data ), true );
+				$data = wp_json_decode( wp_json_encode( $data ), true );
 
 				if ( isset( $data['astra_site_options'] ) ) {
 

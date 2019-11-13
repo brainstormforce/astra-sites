@@ -6,7 +6,9 @@
  * @package Astra Addon
  */
 
-defined( 'ABSPATH' ) or exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 /**
  * Customizer Site options importer class.
@@ -21,7 +23,7 @@ class Astra_Site_Options_Import {
 	 * @since  1.0.0
 	 * @var (Object) Astra_Site_Options_Importer
 	 */
-	private static $_instance = null;
+	private static $instance = null;
 
 	/**
 	 * Instanciate Astra_Site_Options_Importer
@@ -30,11 +32,11 @@ class Astra_Site_Options_Import {
 	 * @return (Object) Astra_Site_Options_Importer
 	 */
 	public static function instance() {
-		if ( ! isset( self::$_instance ) ) {
-			self::$_instance = new self();
+		if ( ! isset( self::$instance ) ) {
+			self::$instance = new self();
 		}
 
-		return self::$_instance;
+		return self::$instance;
 	}
 
 	/**
@@ -255,7 +257,7 @@ class Astra_Site_Options_Import {
 
 				if ( ! empty( $cat['slug'] ) && ! empty( $cat['thumbnail_src'] ) ) {
 
-					$image = (object) Astra_Sites_Helper::_sideload_image( $cat['thumbnail_src'] );
+					$image = (object) Astra_Sites_Helper::sideload_image( $cat['thumbnail_src'] );
 
 					if ( ! is_wp_error( $image ) ) {
 
@@ -297,7 +299,7 @@ class Astra_Site_Options_Import {
 	 * @return mixed false|Attachment ID
 	 */
 	private function download_image( $image_url = '' ) {
-		$data = (object) Astra_Sites_Helper::_sideload_image( $image_url );
+		$data = (object) Astra_Sites_Helper::sideload_image( $image_url );
 
 		if ( ! is_wp_error( $data ) ) {
 			if ( isset( $data->attachment_id ) && ! empty( $data->attachment_id ) ) {

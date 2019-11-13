@@ -11,7 +11,9 @@
  * @since x.x.x
  */
 
-defined( 'ABSPATH' ) or exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 ?>
 
@@ -48,40 +50,9 @@ defined( 'ABSPATH' ) or exit;
 			</div>
 		<# } #>
 		<# if ( 0 === count ) { #>
-			<# if ( AstraImageCommon.apiStatus ) { #>
 			<div class="astra-sites-no-sites">
-				<h3><?php _e( 'Sorry No Result Found.', 'astra-sites' ); ?></h3>
+				<h3><?php esc_html_e( 'Sorry No Result Found.', 'astra-sites' ); ?></h3>
 			</div>
-			<# } else { #>
-			<# var ht = 'calc( ' + $scope.find( '.ast-image__skeleton-inner-wrap' ).innerHeight() + 'px - 50px );' #>
-			<# var license_val = ( undefined != astraImages.integration[ 'pixabay_api_key'] ) ? astraImages.integration[ 'pixabay_api_key'] : '' #>
-				<div class="astra-sites-no-license" style="height: {{ht}};">
-				</div>
-				<div class="ast-image__license-wrap">
-					<div class="ast-image__license-heading-wrap">
-						<h3 class="ast-image__license-heading"><?php _e( 'Authenticate to Fetch Images from Pixabay', 'astra-images' ); ?></h3>
-					</div>
-					<div>
-						<p class="ast-image__license-description"><?php _e( 'Please enter your API key below so that you can scan over 1 million+ high quality stock images shared by the Pixabay community.', 'astra-sites' ); ?></p>
-					</div>
-					<div class="ast-image__license-input-wrap">
-						<div class="ast-image__license-input-inner-wrap">
-							<input type="text" data-type="pixabay" value="{{license_val}}" placeholder="<?php _e( 'Enter the API key', 'astra-sites' ); ?>" class="ast-image__license" />
-							<# if ( 200 == astraImages.api_status['code'] ) { #>
-							<div class="dashicons-yes-alt dashicons ast-image-valid-license"></div>
-							<# } #>
-							<div class="ast-image__license-msg"><i class="dashicons-warning dashicons"></i><span></span></div>
-						</div>
-						<button type="button" class="button media-button button-primary button-large ast-image__validate-btn"><?php _e( 'Validate Key', 'astra-sites' ); ?></button>
-					</div>
-					<# if ( 200 == astraImages.api_status['code'] ) { #>
-					<div class="ast-image__browse-images"><?php _e( '&larr; Browse Images', 'astra-sites' ); ?></div>
-					<# } #>
-					<div class="ast-image__license-get-wrap">
-						<h4><?php _e( 'Don\'t have an API Key?', 'astra-sites' ); ?> <a href="#" target="_blank"><?php _e( 'Create here', 'astra-sites' ); ?></a></h4>
-					</div>
-				</div>
-			<# } #>
 		<# } #>
 </script>
 
@@ -109,20 +80,17 @@ defined( 'ABSPATH' ) or exit;
 					<# } #>
 				</select>
 			</li>
-			<li class="ast-image__license-edit-key">
-				<div><a href="javascript:void(0);" title="<?php _e( 'Edit API Key', 'astra-sites' ); ?>" class="dashicons-admin-network dashicons ast-image__edit-api"></a></div>
-			</li>
 		</ul>
 	</div>
 </script>
 
 <script type="text/template" id="tmpl-ast-image-no-result">
 	<div class="astra-sites-no-sites">
-		<h3><?php _e( 'Sorry No Result Found.', 'astra-sites' ); ?></h3>
+		<h3><?php esc_html_e( 'Sorry No Result Found.', 'astra-sites' ); ?></h3>
 		<p class="description">
 			<?php
 			/* translators: %1$s External Link */
-			printf( __( 'Don\'t see a template you would like to import?<br><a target="_blank" href="%1$s">Please Suggest Us!</a>', 'astra-sites' ), esc_url( 'https://wpastra.com/sites-suggestions/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=suggestions' ) );
+			printf( esc_html__( 'Don\'t see a template you would like to import?<br><a target="_blank" href="%1$s">Please Suggest Us!</a>', 'astra-sites' ), esc_url( 'https://wpastra.com/sites-suggestions/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=suggestions' ) );
 			?>
 		</p>
 	</div>
@@ -146,7 +114,7 @@ defined( 'ABSPATH' ) or exit;
 <script type="text/template" id="tmpl-ast-image-go-back">
 	<span class="ast-image__go-back">
 		<i class="icon-chevron-left"></i>
-		<span class="ast-image__go-back-text"><?php _e( 'Back to Images', 'astra-sites' ); ?></span>
+		<span class="ast-image__go-back-text"><?php esc_html_e( 'Back to Images', 'astra-sites' ); ?></span>
 	</span>
 </script>
 
@@ -156,9 +124,9 @@ defined( 'ABSPATH' ) or exit;
 	<div class="ast-image__save-wrap">
 		<button type="button" class="ast-image__save button media-button button-primary button-large media-button-select {{disable_class}}" data-import-status={{is_imported}}>
 			<# if ( is_imported ) { #>
-				<?php _e( 'Already Saved', 'astra-sites' ); ?>
+				<?php esc_html_e( 'Already Saved', 'astra-sites' ); ?>
 			<# } else { #>
-				<?php _e( 'Save & Insert', 'astra-sites' ); ?>
+				<?php esc_html_e( 'Save & Insert', 'astra-sites' ); ?>
 			<# } #>
 		</button>
 	</div>

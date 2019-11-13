@@ -33,7 +33,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Gutenberg' ) ) :
 		public static function get_instance() {
 
 			if ( ! isset( self::$instance ) ) {
-				self::$instance = new self;
+				self::$instance = new self();
 			}
 			return self::$instance;
 		}
@@ -54,7 +54,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Gutenberg' ) ) :
 		 *                                  'pre_user_description'.
 		 * @return array Array of allowed HTML tags and their allowed attributes.
 		 */
-		function allowed_tags_and_attributes( $allowedposttags, $context ) {
+		public function allowed_tags_and_attributes( $allowedposttags, $context ) {
 
 			// Keep only for 'post' contenxt.
 			if ( 'post' === $context ) {
@@ -133,7 +133,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Gutenberg' ) ) :
 
 					$catogory_mapping = ( isset( $tax_mapping['post']['category'] ) ) ? $tax_mapping['post']['category'] : array();
 
-					if ( is_array( $catogory_mapping ) ) {
+					if ( is_array( $catogory_mapping ) && ! empty( $catogory_mapping ) ) {
 
 						foreach ( $catogory_mapping as $key => $value ) {
 
@@ -149,7 +149,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Gutenberg' ) ) :
 			// expects as 'u0026amp;'. So, Converted '&amp;' with 'u0026amp;'.
 			//
 			// @todo This affect for normal page content too. Detect only Gutenberg pages and process only on it.
-			$content = str_replace( '&amp;', "\u0026amp;", $content );
+			// $content = str_replace( '&amp;', "\u0026amp;", $content );
 			$content = $this->get_content( $content );
 
 			// Update content.
@@ -169,7 +169,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Gutenberg' ) ) :
 		 * @param  string $content Mixed post content.
 		 * @return array           Hotlink image array.
 		 */
-		function get_content( $content = '' ) {
+		public function get_content( $content = '' ) {
 
 			$all_links   = wp_extract_urls( $content );
 			$image_links = array();
@@ -195,7 +195,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Gutenberg' ) ) :
 				// Download remote image.
 				$image            = array(
 					'url' => $image_url,
-					'id'  => rand( 000, 999 ),
+					'id'  => wp_rand( 000, 999 ),
 				);
 				$downloaded_image = Astra_Sites_Image_Importer::get_instance()->import( $image );
 				// Old and New image mapping links.

@@ -34,7 +34,7 @@ if ( ! class_exists( 'Astra_Sites_Compatibility_Astra_Pro' ) ) :
 		 */
 		public static function get_instance() {
 			if ( ! isset( self::$instance ) ) {
-				self::$instance = new self;
+				self::$instance = new self();
 			}
 			return self::$instance;
 		}
@@ -70,11 +70,11 @@ if ( ! class_exists( 'Astra_Sites_Compatibility_Astra_Pro' ) ) :
 		 * @param  array  $data               Data.
 		 * @return void
 		 */
-		function astra_pro( $plugin_init = '', $data = array() ) {
+		public function astra_pro( $plugin_init = '', $data = array() ) {
 
 			if ( 'astra-addon/astra-addon.php' === $plugin_init ) {
 
-				$data = json_decode( json_encode( $data ), true );
+				$data = wp_json_decode( wp_json_encode( $data ), true );
 
 				if ( isset( $data['enabled_extensions'] ) ) {
 					$extensions = $data['enabled_extensions'];
@@ -285,7 +285,7 @@ if ( ! class_exists( 'Astra_Sites_Compatibility_Astra_Pro' ) ) :
 		 * @since 1.2.3
 		 * @return void
 		 */
-		function clear_cache() {
+		public function clear_cache() {
 			if ( is_callable( 'Astra_Minify::refresh_assets' ) ) {
 				Astra_Minify::refresh_assets();
 			}

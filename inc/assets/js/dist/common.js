@@ -10,7 +10,7 @@
         offset: 0,
         loadingStatus: true,
         config: {
-            key            : astraImages.integration['pixabay_api_key'],
+            key            : astraImages.pixabay_api_key,
             q              : '',
             lang           : 'en',
             image_type     : 'all',
@@ -50,33 +50,23 @@
          */
         _bind: function() {
 
-            if ( 200 !== astraImages.api_status['code'] ) {
-                AstraImageCommon.apiStatus = false;
-            } else {
-                AstraImageCommon.apiStatus = true;
-            }
-
             // Triggers.
             $( document ).on( "ast-image__refresh", AstraImageCommon._initImages );
             $( document ).on( "ast-image__set-scope", AstraImageCommon._setScope );
-
             $( document ).on( "click", ".ast-image__list-img-overlay", AstraImageCommon._preview );
             $( document ).on( "click", ".ast-image__go-back-text", AstraImageCommon._goBack );
             $( document ).on( "click", ".ast-image__save", AstraImageCommon._save );
-            $( document ).on( "click", ".ast-image__validate-btn" , AstraImageCommon._validate );
             $( document ).on( "change", ".ast-image__filter select", AstraImageCommon._filter );
             $( document ).on( "click", ".ast-image__edit-api", AstraImageCommon._editAPI );
             $( document ).on( "click", ".ast-image__browse-images", AstraImageCommon._browse );
         },
 
         _browse: function() {
-            AstraImageCommon.apiStatus = true;
             $scope.find( '.ast-image__search' ).trigger( 'keyup' );
         },
 
         _editAPI: function( event ) {
             event.stopPropagation();
-            AstraImageCommon.apiStatus = false;
             wp.media.view.AstraAttachmentsBrowser.images = [];
             $scope.find( '.ast-image__loader-wrap' ).show();
             $scope.find( '.ast-image__skeleton' ).html( '' );
@@ -125,6 +115,7 @@
                     'url' : AstraImageCommon.image.largeImageURL,
                     'name' : AstraImageCommon.image.tags,
                     'id' : AstraImageCommon.image.id,
+                    '_ajax_nonce' : astraImages._ajax_nonce,
                 },
             })
             .fail(function( jqXHR ){
@@ -140,70 +131,6 @@
                 thisBtn.text( 'Done' );
                 thisBtn.removeClass( 'installing' );
                 AstraImageCommon._empty();
-            });
-        },
-
-        _validate: function() {
-
-            if ( AstraImageCommon.isValidating ) {
-                return;
-            }
-
-            AstraImageCommon.isValidating = true;
-
-            let thisBtn = $( this )
-            let errWrap = $scope.find( '.ast-image__license-input-inner-wrap .ast-image__license-msg' );
-            let type = $scope.find( '.ast-image__license' ).data( 'type' );
-            let key = $scope.find( '.ast-image__license' ).val();
-            $scope.find( '.ast-image-valid-license' ).hide();
-            $scope.find( '.ast-image__browse-images' ).hide();
-
-            if ( '' == key ) {
-                AstraImageCommon.isValidating = false;
-                errWrap.show();
-                errWrap.find( 'span' ).text( astraImages.empty_api_key );
-                setTimeout( function() {
-                    errWrap.hide();
-                    errWrap.find( 'span' ).text( '' );
-                }, 2000 );
-                return;
-            }
-
-            thisBtn.text( astraImages.validating );
-
-            // Work with JSON page here
-            $.ajax({
-                url: astraImages.ajaxurl,
-                type: 'POST',
-                dataType: 'json',
-                data: {
-                    'action' : 'astra-sites-validate-license',
-                    'key' : key,
-                    'type' : type,
-                },
-            })
-            .fail(function( jqXHR ){
-                console.log( jqXHR );
-            })
-            .done(function ( response ) {
-                console.log(response.data);
-                astraImages.api_status = response.data;
-                AstraImageCommon.isValidating = false;
-                if ( 200 !== astraImages.api_status['code'] ) {
-                    AstraImageCommon.apiStatus = false;
-                    thisBtn.text( 'Validate Key' );
-                    errWrap.show();
-                    errWrap.find( 'span' ).text( astraImages.error_api_key + '"' + astraImages.api_status['code'] + '"' );
-                    setTimeout( function() {
-                        errWrap.hide();
-                        errWrap.find( 'span' ).text( '' );
-                    }, 2000 );
-                } else {
-                    AstraImageCommon.apiStatus = true;
-                    AstraImageCommon.config.key = key;
-                    astraImages.integration[ type + '_api_key'] = key;
-                    $scope.find( '.ast-image__search' ).trigger( 'keyup' );
-                }
             });
         },
 
@@ -288,9 +215,7 @@
             let wrapHeight = ( AstraImageCommon.offset - 210 );
             $scope.find( '.ast-image__skeleton-inner-wrap' ).css( 'height', wrapHeight );
             $scope.find( '.ast-image__search' ).trigger( 'keyup' );
-            if ( AstraImageCommon.apiStatus ) {
-                $scope.find( '.ast-image__loader-wrap' ).show();
-            }
+            $scope.find( '.ast-image__loader-wrap' ).show();
             $scope.find( '.ast-image__skeleton-inner-wrap' ).scroll( AstraImageCommon._loadMore );
         },
 
@@ -330,10 +255,6 @@
         _loadMore: function() {
 
             if( AstraImageCommon.isPreview ) {
-                return;
-            }
-
-            if ( !AstraImageCommon.apiStatus ) {
                 return;
             }
 

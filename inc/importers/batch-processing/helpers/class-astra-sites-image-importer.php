@@ -49,7 +49,7 @@ if ( ! class_exists( 'Astra_Sites_Image_Importer' ) ) :
 		 */
 		public static function get_instance() {
 			if ( ! isset( self::$instance ) ) {
-				self::$instance = new self;
+				self::$instance = new self();
 			}
 			return self::$instance;
 		}
@@ -144,7 +144,7 @@ if ( ! class_exists( 'Astra_Sites_Image_Importer' ) ) :
 						"SELECT post_id FROM {$wpdb->postmeta}
 						WHERE meta_key = '_wp_attached_file'
 						AND meta_value LIKE %s",
-						'%' . $filename . '%'
+						'%/' . $filename . '%'
 					)
 				);
 
@@ -198,11 +198,13 @@ if ( ! class_exists( 'Astra_Sites_Image_Importer' ) ) :
 			// Extract the file name and extension from the URL.
 			$filename = basename( $attachment['url'] );
 
+			// @codingStandardsIgnoreStart
 			$upload = wp_upload_bits(
 				$filename,
 				null,
 				$file_content
 			);
+			// @codingStandardsIgnoreEnd
 
 			$post = array(
 				'post_title' => $filename,
@@ -246,7 +248,7 @@ if ( ! class_exists( 'Astra_Sites_Image_Importer' ) ) :
 		 * @param  string $url URL.
 		 * @return boolean
 		 */
-		function is_image_url( $url = '' ) {
+		public function is_image_url( $url = '' ) {
 			if ( empty( $url ) ) {
 				return false;
 			}

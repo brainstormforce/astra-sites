@@ -54,8 +54,10 @@
 
 .ast-attachments-browser input.ast-image__search {
 	line-height: 1.8em;
-	width: 300px;
+	width: 620px;
+    height: 35px;
 	background: #fff;
+    border-color: #d5dadf;
 }
 
 .ast-attachments-browser .ast-image__list-wrap.loaded .ast-image__list-img-wrap {
@@ -116,6 +118,7 @@
     display: flex;
     height: 36px;
     justify-content: space-between;
+    align-items: center;
     padding-right: 0px;
 }
 
@@ -127,7 +130,7 @@
 }
 
 .ast-attachments-browser .ast-image__filter li {
-    padding: 0 5px;
+    padding: 0 8px;
     margin: 0;
 }
 

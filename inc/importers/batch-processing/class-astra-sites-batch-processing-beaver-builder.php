@@ -33,7 +33,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Beaver_Builder' ) ) :
 		public static function get_instance() {
 
 			if ( ! isset( self::$instance ) ) {
-				self::$instance = new self;
+				self::$instance = new self();
 			}
 			return self::$instance;
 		}
@@ -173,7 +173,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Beaver_Builder' ) ) :
 		 */
 		private static function get_wpforms_mapping( $content = '' ) {
 			$ids_mapping = get_option( 'astra_sites_wpforms_ids_mapping', array() );
-			error_log( json_encode( $ids_mapping ) );
+			error_log( wp_json_encode( $ids_mapping ) );
 			if ( $ids_mapping ) {
 				// Update WP form IDs.
 				foreach ( $ids_mapping as $old_id => $new_id ) {

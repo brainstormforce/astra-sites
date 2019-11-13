@@ -33,7 +33,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Brizy' ) ) :
 		public static function get_instance() {
 
 			if ( ! isset( self::$instance ) ) {
-				self::$instance = new self;
+				self::$instance = new self();
 			}
 			return self::$instance;
 		}
@@ -94,8 +94,10 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Brizy' ) ) :
 			$post = Brizy_Editor_Post::get( (int) $post_id );
 			$data = $post->storage()->get( Brizy_Editor_Post::BRIZY_POST, false );
 
+			// @codingStandardsIgnoreStart
 			// Decode current data.
 			$json_value = base64_decode( $data['editor_data'] );
+			// @codingStandardsIgnoreEnd
 
 			// Empty mapping? Then return.
 			if ( ! empty( $ids_mapping ) ) {
@@ -109,8 +111,10 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Brizy' ) ) :
 				}
 			}
 
+			// @codingStandardsIgnoreStart
 			// Encode modified data.
 			$data['editor_data'] = base64_encode( $json_value );
+			// @codingStandardsIgnoreEnd
 
 			$post->set_editor_data( $json_value );
 			$post->storage()->set( Brizy_Editor_Post::BRIZY_POST, $data );

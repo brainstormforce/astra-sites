@@ -57,16 +57,6 @@ AstraSearch = wp.Backbone.View.extend({
     // Runs a search on the theme collection.
     doSearch: function( event ) {
 
-        if ( ! AstraImageCommon.apiStatus ) {            
-            this.images = [];
-            wp.media.view.AstraAttachmentsBrowser.images = this.images;
-            $( document ).trigger( 'ast-image__refresh' );
-            $scope.addClass( 'preview-mode' );
-            return;
-        } else {
-            $scope.removeClass( 'preview-mode' );
-        }
-
         if ( this.searching ) {
             return;
         }

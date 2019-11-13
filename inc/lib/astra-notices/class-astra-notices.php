@@ -35,7 +35,7 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		 * @var array Notices.
 		 * @since 1.4.0
 		 */
-		private static $version = '1.1.4';
+		private static $version = '1.1.5';
 
 		/**
 		 * Notices
@@ -63,7 +63,7 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		 */
 		public static function get_instance() {
 			if ( ! isset( self::$instance ) ) {
-				self::$instance = new self;
+				self::$instance = new self();
 			}
 			return self::$instance;
 		}
@@ -114,6 +114,11 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		public function dismiss_notice() {
 			$notice_id           = ( isset( $_POST['notice_id'] ) ) ? sanitize_key( $_POST['notice_id'] ) : '';
 			$repeat_notice_after = ( isset( $_POST['repeat_notice_after'] ) ) ? absint( $_POST['repeat_notice_after'] ) : '';
+			$nonce               = ( isset( $_POST['nonce'] ) ) ? sanitize_key( $_POST['nonce'] ) : '';
+
+			if ( false === wp_verify_nonce( $nonce, 'astra-notices' ) ) {
+				wp_send_json_error( esc_html_e( 'WordPress Nonce not validated.', 'astra-sites' ) );
+			}
 
 			// Valid inputs?
 			if ( ! empty( $notice_id ) ) {
@@ -137,7 +142,14 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		 * @return void
 		 */
 		public function enqueue_scripts() {
-			wp_register_script( 'astra-notices', self::_get_uri() . 'notices.js', array( 'jquery' ), self::$version, true );
+			wp_register_script( 'astra-notices', self::get_uri() . 'notices.js', array( 'jquery' ), self::$version, true );
+			wp_localize_script(
+				'astra-notices',
+				'astraNotices',
+				array(
+					'_notice_nonce' => wp_create_nonce( 'astra-notices' ),
+				)
+			);
 		}
 
 		/**
@@ -322,7 +334,7 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		 *
 		 * @return mixed URL.
 		 */
-		public static function _get_uri() {
+		public static function get_uri() {
 			$path       = wp_normalize_path( dirname( __FILE__ ) );
 			$theme_dir  = wp_normalize_path( get_template_directory() );
 			$plugin_dir = wp_normalize_path( WP_PLUGIN_DIR );
@@ -335,7 +347,7 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 				return plugin_dir_url( __FILE__ );
 			}
 
-			return;
+			return false;
 		}
 
 	}

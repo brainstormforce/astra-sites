@@ -34,7 +34,7 @@ if ( ! class_exists( 'Astra_Sites_Compatibility_SFWD_LMS' ) ) :
 		 */
 		public static function get_instance() {
 			if ( ! isset( self::$instance ) ) {
-				self::$instance = new self;
+				self::$instance = new self();
 			}
 			return self::$instance;
 		}
@@ -49,20 +49,13 @@ if ( ! class_exists( 'Astra_Sites_Compatibility_SFWD_LMS' ) ) :
 		}
 
 		/**
-		 * Add post types
-		 *
-		 * @since 1.3.13
-		 * @return array Post types.
-		 */
-
-		/**
 		 * Set post types
 		 *
 		 * @since 1.3.13
 		 *
 		 * @param array $post_types Post types.
 		 */
-		function set_post_types( $post_types = array() ) {
+		public function set_post_types( $post_types = array() ) {
 			return array_merge( $post_types, array( 'sfwd-courses', 'sfwd-lessons', 'sfwd-topic', 'sfwd-quiz', 'sfwd-certificates', 'sfwd-assignment' ) );
 		}
 	}

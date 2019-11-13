@@ -6,7 +6,9 @@
  * @package Astra Sites
  */
 
-defined( 'ABSPATH' ) or exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 if ( ! class_exists( 'Astra_Sites_Importer_Log' ) ) :
 
@@ -21,7 +23,7 @@ if ( ! class_exists( 'Astra_Sites_Importer_Log' ) ) :
 		 * @since 1.1.0
 		 * @var (Object) Class object
 		 */
-		private static $_instance = null;
+		private static $instance = null;
 
 		/**
 		 * Log File
@@ -39,11 +41,11 @@ if ( ! class_exists( 'Astra_Sites_Importer_Log' ) ) :
 		 * @return object Class object.
 		 */
 		public static function get_instance() {
-			if ( ! isset( self::$_instance ) ) {
-				self::$_instance = new self;
+			if ( ! isset( self::$instance ) ) {
+				self::$instance = new self();
 			}
 
-			return self::$_instance;
+			return self::$instance;
 		}
 
 		/**
@@ -64,7 +66,7 @@ if ( ! class_exists( 'Astra_Sites_Importer_Log' ) ) :
 		 * @since 1.1.0
 		 * @return null
 		 */
-		function has_file_read_write() {
+		public function has_file_read_write() {
 
 			// Get user credentials for WP file-system API.
 			$astra_sites_import = wp_nonce_url( admin_url( 'themes.php?page=astra-sites' ), 'astra-import' );
@@ -105,7 +107,7 @@ if ( ! class_exists( 'Astra_Sites_Importer_Log' ) ) :
 		 * @return string Current time with time zone.
 		 */
 		public static function current_time() {
-			return date( 'H:i:s' ) . ' ' . date_default_timezone_get();
+			return gmdate( 'H:i:s' ) . ' ' . date_default_timezone_get();
 		}
 
 		/**
@@ -116,31 +118,31 @@ if ( ! class_exists( 'Astra_Sites_Importer_Log' ) ) :
 		 * @param  string $demo_api_uri Import site API URL.
 		 * @return void
 		 */
-		function start( $data = array(), $demo_api_uri = '' ) {
+		public function start( $data = array(), $demo_api_uri = '' ) {
 
-			Astra_Sites_Importer_Log::add( 'Started Import Process' );
+			self::add( 'Started Import Process' );
 
-			Astra_Sites_Importer_Log::add( '# System Details: ' );
-			Astra_Sites_Importer_Log::add( "Debug Mode \t\t: " . self::get_debug_mode() );
-			Astra_Sites_Importer_Log::add( "Operating System \t: " . self::get_os() );
-			Astra_Sites_Importer_Log::add( "Software \t\t: " . self::get_software() );
-			Astra_Sites_Importer_Log::add( "MySQL version \t\t: " . self::get_mysql_version() );
-			Astra_Sites_Importer_Log::add( "XML Reader \t\t: " . self::get_xmlreader_status() );
-			Astra_Sites_Importer_Log::add( "PHP Version \t\t: " . self::get_php_version() );
-			Astra_Sites_Importer_Log::add( "PHP Max Input Vars \t: " . self::get_php_max_input_vars() );
-			Astra_Sites_Importer_Log::add( "PHP Max Post Size \t: " . self::get_php_max_post_size() );
-			Astra_Sites_Importer_Log::add( "PHP Extension GD \t: " . self::get_php_extension_gd() );
-			Astra_Sites_Importer_Log::add( "PHP Max Execution Time \t: " . self::get_max_execution_time() );
-			Astra_Sites_Importer_Log::add( "Max Upload Size \t: " . size_format( wp_max_upload_size() ) );
-			Astra_Sites_Importer_Log::add( "Memory Limit \t\t: " . self::get_memory_limit() );
-			Astra_Sites_Importer_Log::add( "Timezone \t\t: " . self::get_timezone() );
-			Astra_Sites_Importer_Log::add( PHP_EOL . '-----' . PHP_EOL );
-			Astra_Sites_Importer_Log::add( 'Importing Started! - ' . self::current_time() );
+			self::add( '# System Details: ' );
+			self::add( "Debug Mode \t\t: " . self::get_debug_mode() );
+			self::add( "Operating System \t: " . self::get_os() );
+			self::add( "Software \t\t: " . self::get_software() );
+			self::add( "MySQL version \t\t: " . self::get_mysql_version() );
+			self::add( "XML Reader \t\t: " . self::get_xmlreader_status() );
+			self::add( "PHP Version \t\t: " . self::get_php_version() );
+			self::add( "PHP Max Input Vars \t: " . self::get_php_max_input_vars() );
+			self::add( "PHP Max Post Size \t: " . self::get_php_max_post_size() );
+			self::add( "PHP Extension GD \t: " . self::get_php_extension_gd() );
+			self::add( "PHP Max Execution Time \t: " . self::get_max_execution_time() );
+			self::add( "Max Upload Size \t: " . size_format( wp_max_upload_size() ) );
+			self::add( "Memory Limit \t\t: " . self::get_memory_limit() );
+			self::add( "Timezone \t\t: " . self::get_timezone() );
+			self::add( PHP_EOL . '-----' . PHP_EOL );
+			self::add( 'Importing Started! - ' . self::current_time() );
 
-			Astra_Sites_Importer_Log::add( '---' . PHP_EOL );
-			Astra_Sites_Importer_Log::add( 'WHY IMPORT PROCESS CAN FAIL? READ THIS - ' );
-			Astra_Sites_Importer_Log::add( 'https://wpastra.com/docs/?p=1314&utm_source=demo-import-panel&utm_campaign=import-error&utm_medium=wp-dashboard' . PHP_EOL );
-			Astra_Sites_Importer_Log::add( '---' . PHP_EOL );
+			self::add( '---' . PHP_EOL );
+			self::add( 'WHY IMPORT PROCESS CAN FAIL? READ THIS - ' );
+			self::add( 'https://wpastra.com/docs/?p=1314&utm_source=demo-import-panel&utm_campaign=import-error&utm_medium=wp-dashboard' . PHP_EOL );
+			self::add( '---' . PHP_EOL );
 
 		}
 
@@ -150,7 +152,7 @@ if ( ! class_exists( 'Astra_Sites_Importer_Log' ) ) :
 		 * @since 1.1.0
 		 * @return object A WP_Filesystem_Direct instance.
 		 */
-		static public function get_filesystem() {
+		public static function get_filesystem() {
 			global $wp_filesystem;
 
 			require_once ABSPATH . '/wp-admin/includes/file.php';
@@ -212,7 +214,7 @@ if ( ! class_exists( 'Astra_Sites_Importer_Log' ) ) :
 			$upload_path = trailingslashit( $upload_dir['path'] );
 
 			// File format e.g. 'import-31-Oct-2017-06-39-12.txt'.
-			self::$log_file = $upload_path . 'import-' . date( 'd-M-Y-h-i-s' ) . '.txt';
+			self::$log_file = $upload_path . 'import-' . gmdate( 'd-M-Y-h-i-s' ) . '.txt';
 
 			if ( ! get_option( 'astra_sites_recent_import_log_file', false ) ) {
 				update_option( 'astra_sites_recent_import_log_file', self::$log_file );
@@ -366,7 +368,9 @@ if ( ! class_exists( 'Astra_Sites_Importer_Log' ) ) :
 		 * @return string Current PHP Max Input Vars
 		 */
 		public static function get_php_max_input_vars() {
+			// @codingStandardsIgnoreStart
 			return ini_get( 'max_input_vars' ); // phpcs:disable PHPCompatibility.IniDirectives.NewIniDirectives.max_input_varsFound
+			// @codingStandardsIgnoreEnd
 		}
 
 		/**

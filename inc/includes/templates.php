@@ -11,7 +11,9 @@
  * @since 1.0.0
  */
 
-defined( 'ABSPATH' ) or exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 ?>
 
@@ -21,13 +23,13 @@ defined( 'ABSPATH' ) or exit;
 			<div class="astra-sites-content-wrap">
 				<div id="ast-sites-floating-notice-wrap-id" class="ast-sites-floating-notice-wrap"><div class="ast-sites-floating-notice"></div></div>
 				<?php
-				$status = get_option( 'astra-sites-batch-is-complete', 'no' );
-				if ( 'yes' === $status ) {
+				$batch_status = get_option( 'astra-sites-batch-is-complete', 'no' );
+				if ( 'yes' === $batch_status ) {
 					?>
 					<div class="ast-sites-floating-notice-wrap refreshed-notice slide-in">
 						<div class="ast-sites-floating-notice">
 							<div class="astra-sites-sync-library-message success notice notice-success is-dismissible">
-								<?php _e( 'Template library refreshed!', 'astra-sites' ); ?> <button type="button" class="notice-dismiss"><span class="screen-reader-text"><?php _e( 'Dismiss', 'astra-sites' ); ?></span></button>
+								<?php esc_html_e( 'Template library refreshed!', 'astra-sites' ); ?> <button type="button" class="notice-dismiss"><span class="screen-reader-text"><?php esc_html_e( 'Dismiss', 'astra-sites' ); ?></span></button>
 							</div>
 						</div>
 					</div>
@@ -37,6 +39,16 @@ defined( 'ABSPATH' ) or exit;
 					<div class="theme-preview"></div>
 				</div>
 				<div class="dialog-message dialog-lightbox-message-block" data-type="blocks">
+					<div class="astra-blocks-category-wrap">
+						<div class="astra-blocks-category-inner-wrap">
+							<select id="elementor-template-library-filter" class="astra-blocks-category elementor-template-library-filter-select elementor-select2">
+								<option value=""><?php esc_html_e( 'All', 'astra-sites' ); ?></option>
+								<# for ( key in astraElementorSites.astra_block_categories ) { #>
+								<option value="{{astraElementorSites.astra_block_categories[key].id}}">{{astraElementorSites.astra_block_categories[key].name}}</option>
+								<# } #>
+							</select>
+						</div>
+					</div>
 					<div class="dialog-content dialog-lightbox-content-block theme-browser"></div>
 					<div class="theme-preview-block"></div>
 				</div>
@@ -48,7 +60,7 @@ defined( 'ABSPATH' ) or exit;
 </script>
 
 <script type="text/template" id="tmpl-ast-template-modal__header-back">
-	<div class="dialog-lightbox-back"><span class="dialog-lightbox-back-text"><?php echo __( 'Back to Pages', 'astra-sites' ); ?></span></div>
+	<div class="dialog-lightbox-back"><span class="dialog-lightbox-back-text"><?php esc_html_e( 'Back to Pages', 'astra-sites' ); ?></span></div>
 </script>
 
 <script type="text/template" id="tmpl-ast-template-modal__header">
@@ -58,12 +70,12 @@ defined( 'ABSPATH' ) or exit;
 				<div class="ast-sites-modal__header__logo">
 					<span class="ast-sites-modal__header__logo__icon-wrapper"></span>
 				</div>
-				<div class="back-to-layout" title="<?php _e( 'Back to Layout', 'astra-sites' ); ?>" data-step="1"><i class="icon-chevron-left"></i></div>
+				<div class="back-to-layout" title="<?php esc_html_e( 'Back to Layout', 'astra-sites' ); ?>" data-step="1"><i class="icon-chevron-left"></i></div>
 			</div>
 			<div class="ast-sites-modal__header__menu-area astra-sites-step-1-wrap">
 				<div class="elementor-template-library-header-menu">
 					<div class="search-form">
-						<input autocomplete="off" placeholder="<?php _e( 'Search...', 'astra-sites' ); ?>" type="search" aria-describedby="live-search-desc" id="wp-filter-search-input" class="wp-filter-search">
+						<input autocomplete="off" placeholder="<?php esc_html_e( 'Search...', 'astra-sites' ); ?>" type="search" aria-describedby="live-search-desc" id="wp-filter-search-input" class="wp-filter-search">
 						<span class="icon-search search-icon"></span>
 						<div class="astra-sites-autocomplete-result"></div>
 					</div>
@@ -71,19 +83,19 @@ defined( 'ABSPATH' ) or exit;
 			</div>
 			<div class="elementor-templates-modal__header__menu-area astra-sites-step-1-wrap ast-sites-modal__options">
 				<div class="elementor-template-library-header-menu">
-					<div class="elementor-template-library-menu-item elementor-active" data-template-source="remote" data-template-type="pages"><span class="icon-file"></span><?php _e( 'Pages', 'astra-sites' ); ?></div>		
-					<div class="elementor-template-library-menu-item" data-template-source="remote" data-template-type="blocks"><span class="icon-layers"></span><?php _e( 'Blocks', 'astra-sites' ); ?></div>
+					<div class="elementor-template-library-menu-item elementor-active" data-template-source="remote" data-template-type="pages"><span class="icon-file"></span><?php esc_html_e( 'Pages', 'astra-sites' ); ?></div>		
+					<div class="elementor-template-library-menu-item" data-template-source="remote" data-template-type="blocks"><span class="icon-layers"></span><?php esc_html_e( 'Blocks', 'astra-sites' ); ?></div>
 					<div class="astra-sites__sync-wrap">
 						<div class="astra-sites-sync-library-button">
-							<span class="icon-refresh" aria-hidden="true" title="<?php _e( 'Sync Library', 'astra-sites' ); ?>"></span>
+							<span class="icon-refresh" aria-hidden="true" title="<?php esc_html_e( 'Sync Library', 'astra-sites' ); ?>"></span>
 						</div>
 					</div>
 				</div>
 			</div>
 			<div class="elementor-templates-modal__header__items-area">
 				<div class="ast-sites-modal__header__close ast-sites-modal__header__close--normal ast-sites-modal__header__item">
-					<i class="eicon-close" aria-hidden="true" title="<?php _e( 'Close', 'astra-sites' ); ?>"></i>
-					<span class="elementor-screen-only"><?php _e( 'Close', 'astra-sites' ); ?></span>
+					<i class="eicon-close" aria-hidden="true" title="<?php esc_html_e( 'Close', 'astra-sites' ); ?>"></i>
+					<span class="elementor-screen-only"><?php esc_html_e( 'Close', 'astra-sites' ); ?></span>
 				</div>
 			</div>
 		</div>
@@ -96,11 +108,14 @@ defined( 'ABSPATH' ) or exit;
 		var count = 0;
 		for ( key in data ) {
 			var page_data = data[ key ][ 'pages' ];
+			var site_type = data[ key ][ 'astra-sites-type' ] || '';
 			if ( 0 == Object.keys( page_data ).length ) {
 				continue;
 			}
+			if ( undefined == site_type ) {
+				continue;
+			}
 			var type_class = ' site-type-' + data[ key ]['astra-sites-type'];
-			var site_type = data[ key ][ 'astra-sites-type' ] || '';
 			var site_title = data[ key ]['title'].slice( 0, 25 );
 			if ( data[ key ]['title'].length > 25 ) {
 				site_title += '...';
@@ -116,7 +131,7 @@ defined( 'ABSPATH' ) or exit;
 						<h3 class="theme-name">{{{site_title}}}</h3>
 					</div>
 					<# if ( site_type && 'free' !== site_type ) { #>
-						<img class="agency-icon" src="<?php echo ASTRA_SITES_URI . 'inc/assets/images/agency.svg'; ?>" alt="<?php _e( 'Agency Template', 'astra-sites' ); ?>" title="<?php _e( 'Agency Template', 'astra-sites' ); ?>" />
+						<div class="agency-ribbons" title="<?php esc_html_e( 'Agency', 'astra-sites' ); ?>"><?php esc_html_e( 'Agency', 'astra-sites' ); ?></div>
 					<# } #>
 				</div>
 			</div>
@@ -130,8 +145,13 @@ defined( 'ABSPATH' ) or exit;
 	<#
 		var count = 0;
 		for ( key in data ) {
-			var site_title = ( undefined == data[ key ]['category'][0] ) ? data[ key ]['title'] : data[ key ]['category'][0];
+			var site_title = ( undefined == data[ key ]['category'] ) ? data[ key ]['title'] : astraElementorSites.astra_block_categories[data[ key ]['category']].name;
 			count++;
+			if ( '' !== AstraElementorSitesAdmin.blockCategory ) {
+				if ( AstraElementorSitesAdmin.blockCategory != data[ key ]['category'] ) {
+					continue;
+				}
+			}
 	#>
 		<div class="astra-sites-library-template astra-theme" data-block-id={{key}}>
 			<div class="astra-sites-library-template-inner theme-screenshot" data-step="1">
@@ -149,16 +169,16 @@ defined( 'ABSPATH' ) or exit;
 	#>
 		<div class="astra-sites-no-sites">
 			<div class="inner">
-				<h3><?php _e( 'Sorry No Result Found.', 'astra-sites' ); ?></h3>
+				<h3><?php esc_html_e( 'Sorry No Result Found.', 'astra-sites' ); ?></h3>
 				<div class="content">
 					<div class="description">
 						<p>
 						<?php
 						/* translators: %1$s External Link */
-						printf( __( 'Don\'t see a template you would like to import?<br><a target="_blank" href="%1$s">Please Suggest Us!</a>', 'astra-sites' ), esc_url( 'https://wpastra.com/sites-suggestions/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=suggestions' ) );
+						printf( esc_html__( 'Don\'t see a template you would like to import?<br><a target="_blank" href="%1$s">Please Suggest Us!</a>', 'astra-sites' ), esc_url( 'https://wpastra.com/sites-suggestions/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=suggestions' ) );
 						?>
 						</p>
-						<div class="back-to-layout-button"><span class="button astra-sites-back"><?php _e( 'Back to Templates', 'astra-sites' ); ?></span></div>
+						<div class="back-to-layout-button"><span class="button astra-sites-back"><?php esc_html_e( 'Back to Templates', 'astra-sites' ); ?></span></div>
 					</div>
 				</div>
 			</div>
@@ -198,7 +218,7 @@ defined( 'ABSPATH' ) or exit;
 					<h3 class="theme-name">{{{site_title}}}</h3>
 				</div>
 				<# if ( site_type && 'free' !== site_type ) { #>
-					<img class="agency-icon" src="<?php echo ASTRA_SITES_URI . 'inc/assets/images/agency.svg'; ?>" alt="<?php _e( 'Agency Template', 'astra-sites' ); ?>" title="<?php _e( 'Agency Template', 'astra-sites' ); ?>" />
+					<div class="agency-ribbons" title="<?php esc_html_e( 'Agency', 'astra-sites' ); ?>"><?php esc_html_e( 'Agency', 'astra-sites' ); ?></div>
 				<# } #>
 			</div>
 		</div>
@@ -209,16 +229,16 @@ defined( 'ABSPATH' ) or exit;
 	#>
 		<div class="astra-sites-no-sites">
 			<div class="inner">
-				<h3><?php _e( 'Sorry No Result Found.', 'astra-sites' ); ?></h3>
+				<h3><?php esc_html_e( 'Sorry No Result Found.', 'astra-sites' ); ?></h3>
 				<div class="content">
 					<div class="description">
 						<p>
 						<?php
 						/* translators: %1$s External Link */
-						printf( __( 'Don\'t see a template you would like to import?<br><a target="_blank" href="%1$s">Please Suggest Us!</a>', 'astra-sites' ), esc_url( 'https://wpastra.com/sites-suggestions/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=suggestions' ) );
+						printf( esc_html__( 'Don\'t see a template you would like to import?<br><a target="_blank" href="%1$s">Please Suggest Us!</a>', 'astra-sites' ), esc_url( 'https://wpastra.com/sites-suggestions/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=suggestions' ) );
 						?>
 						</p>
-						<div class="back-to-layout-button"><span class="button astra-sites-back"><?php _e( 'Back to Templates', 'astra-sites' ); ?></span></div>
+						<div class="back-to-layout-button"><span class="button astra-sites-back"><?php esc_html_e( 'Back to Templates', 'astra-sites' ); ?></span></div>
 					</div>
 				</div>
 			</div>
@@ -243,6 +263,10 @@ defined( 'ABSPATH' ) or exit;
 
 			if ( 'site' == data[ind]['type'] ) {
 				site_type = data[ ind ]['astra-sites-type'];
+			}
+
+			if ( undefined == site_type ) {
+				continue;
 			}
 
 			var parent_name = '';
@@ -279,7 +303,7 @@ defined( 'ABSPATH' ) or exit;
 					<h3 class="theme-name"><strong>{{title1}}</strong>{{title2}}</h3>
 				</div>
 				<# if ( site_type && 'free' !== site_type ) { #>
-					<img class="agency-icon" src="<?php echo ASTRA_SITES_URI . 'inc/assets/images/agency.svg'; ?>" alt="<?php _e( 'Agency Template', 'astra-sites' ); ?>" title="<?php _e( 'Agency Template', 'astra-sites' ); ?>" />
+					<div class="agency-ribbons" title="<?php esc_html_e( 'Agency', 'astra-sites' ); ?>"><?php esc_html_e( 'Agency', 'astra-sites' ); ?></div>
 				<# } #>
 			</div>
 		</div>
@@ -290,16 +314,16 @@ defined( 'ABSPATH' ) or exit;
 	#>
 		<div class="astra-sites-no-sites">
 			<div class="inner">
-				<h3><?php _e( 'Sorry No Result Found.', 'astra-sites' ); ?></h3>
+				<h3><?php esc_html_e( 'Sorry No Result Found.', 'astra-sites' ); ?></h3>
 				<div class="content">
 					<div class="description">
 						<p>
 						<?php
 						/* translators: %1$s External Link */
-						printf( __( 'Don\'t see a template you would like to import?<br><a target="_blank" href="%1$s">Please Suggest Us!</a>', 'astra-sites' ), esc_url( 'https://wpastra.com/sites-suggestions/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=suggestions' ) );
+						printf( esc_html__( 'Don\'t see a template you would like to import?<br><a target="_blank" href="%1$s">Please Suggest Us!</a>', 'astra-sites' ), esc_url( 'https://wpastra.com/sites-suggestions/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=suggestions' ) );
 						?>
 						</p>
-						<div class="back-to-layout-button"><span class="button astra-sites-back"><?php _e( 'Back to Templates', 'astra-sites' ); ?></span></div>
+						<div class="back-to-layout-button"><span class="button astra-sites-back"><?php esc_html_e( 'Back to Templates', 'astra-sites' ); ?></span></div>
 					</div>
 				</div>
 			</div>
@@ -313,7 +337,7 @@ defined( 'ABSPATH' ) or exit;
 	<div id="elementor-template-library-header-preview-insert-wrapper" class="elementor-templates-modal__header__item" data-template-id={{data.template_id}} data-site-id={{data.site_id}}>
 		<a class="elementor-template-library-template-action elementor-template-library-template-insert elementor-button">
 			<i class="eicon-file-download" aria-hidden="true"></i>
-			<span class="elementor-button-title"><?php _e( 'Insert', 'astra-sites' ); ?></span>
+			<span class="elementor-button-title"><?php esc_html_e( 'Insert', 'astra-sites' ); ?></span>
 		</a>
 
 	</div>
@@ -338,19 +362,19 @@ defined( 'ABSPATH' ) or exit;
 <script type="text/template" id="tmpl-astra-sites-no-sites">
 	<div class="astra-sites-no-sites">
 		<div class="inner">
-			<h3><?php _e( 'Sorry No Result Found.', 'astra-sites' ); ?></h3>
+			<h3><?php esc_html_e( 'Sorry No Result Found.', 'astra-sites' ); ?></h3>
 			<div class="content">
 				<div class="empty-item">
-					<img class="empty-collection-part" src="<?php echo ASTRA_SITES_URI . 'inc/assets/images/empty-collection.svg'; ?>" alt="empty-collection">
+					<img class="empty-collection-part" src="<?php echo esc_url( ASTRA_SITES_URI . 'inc/assets/images/empty-collection.svg' ); ?>" alt="empty-collection">
 				</div>
 				<div class="description">
 					<p>
 					<?php
 					/* translators: %1$s External Link */
-					printf( __( 'Don\'t see a template you would like to import?<br><a target="_blank" href="%1$s">Please Suggest Us!</a>', 'astra-sites' ), esc_url( 'https://wpastra.com/sites-suggestions/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=suggestions' ) );
+					printf( esc_html__( 'Don\'t see a template you would like to import?<br><a target="_blank" href="%1$s">Please Suggest Us!</a>', 'astra-sites' ), esc_url( 'https://wpastra.com/sites-suggestions/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=suggestions' ) );
 					?>
 					</p>
-					<div class="back-to-layout-button"><span class="button astra-sites-back"><?php _e( 'Back to Templates', 'astra-sites' ); ?></span></div>
+					<div class="back-to-layout-button"><span class="button astra-sites-back"><?php esc_html_e( 'Back to Templates', 'astra-sites' ); ?></span></div>
 				</div>
 			</div>
 		</div>
@@ -361,7 +385,7 @@ defined( 'ABSPATH' ) or exit;
 <script type="text/template" id="tmpl-astra-sites-elementor-preview">
 	<#
 	let wrap_height = $elscope.find( '.astra-sites-content-wrap' ).height();
-	wrap_height = ( wrap_height - 45 );
+	wrap_height = ( wrap_height - 55 );
 	wrap_height = wrap_height + 'px';
 	#>
 	<div id="astra-blocks" class="themes wp-clearfix" data-site-id="{{data.id}}" style="display: block;">
@@ -405,8 +429,8 @@ defined( 'ABSPATH' ) or exit;
 						if( ! is_free ) { #>
 							<a class="button button-hero button-primary" href="{{astraElementorSites.getProURL}}" target="_blank">{{astraElementorSites.getProText}}<i class="dashicons dashicons-external"></i></a>
 						<# } else { #>
-							<div type="button" class="button button-hero button-primary ast-library-template-insert disabled"><?php _e( 'Import ', 'astra-sites' ); ?>{{action_str}}</div>
-							<div type="button" class="button button-hero button-primary ast-import-elementor-template disabled"><?php _e( 'Save ', 'astra-sites' ); ?>{{action_str}}</div>
+							<div type="button" class="button button-hero button-primary ast-library-template-insert disabled"><?php esc_html_e( 'Import ', 'astra-sites' ); ?>{{action_str}}</div>
+							<div type="button" class="button button-hero button-primary ast-import-elementor-template disabled"><?php esc_html_e( 'Save ', 'astra-sites' ); ?>{{action_str}}</div>
 						<# } #>
 
 
