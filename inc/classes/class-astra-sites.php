@@ -160,7 +160,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				}
 			}
 
-			$file_name    = 'astra-sites-backup-' . date( 'd-M-Y-h-i-s' ) . '.json';
+			$file_name    = 'astra-sites-backup-' . gmdate( 'd-M-Y-h-i-s' ) . '.json';
 			$old_settings = get_option( 'astra-settings', array() );
 			$upload_dir   = Astra_Sites_Importer_Log::get_instance()->log_dir();
 			$upload_path  = trailingslashit( $upload_dir['path'] );
