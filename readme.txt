@@ -4,8 +4,8 @@ Donate link: https://wpastra.com/pro/
 Tags: Elementor,Beaver Builder,Templates,Gutenberg,Astra Starter Sites
 Requires at least: 4.4
 Requires PHP: 5.3
-Tested up to: 5.2
-Stable tag: 1.4.3
+Tested up to: 5.3
+Stable tag: 1.4.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -116,6 +116,10 @@ We are open to suggestions and would love to work on topics that our users are l
 3. Click the import site button to start the import process.
 
 == Changelog ==
+
+v1.4.4 - 14-November-2019
+- Improvement: Added the old browser compatibility in which Astra Sites not loading.
+- Improvement: Used `gmdate()` function instead of `date()` which affected by runtime timezone changes.
 
 v1.4.3 - 7-November-2019
 - Fix: Installing premium plugin from the WP CLI import.

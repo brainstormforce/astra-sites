@@ -105,7 +105,7 @@ if ( ! class_exists( 'Astra_Sites_Importer_Log' ) ) :
 		 * @return string Current time with time zone.
 		 */
 		public static function current_time() {
-			return date( 'H:i:s' ) . ' ' . date_default_timezone_get();
+			return gmdate( 'H:i:s' ) . ' ' . date_default_timezone_get();
 		}
 
 		/**
@@ -212,7 +212,7 @@ if ( ! class_exists( 'Astra_Sites_Importer_Log' ) ) :
 			$upload_path = trailingslashit( $upload_dir['path'] );
 
 			// File format e.g. 'import-31-Oct-2017-06-39-12.txt'.
-			self::$log_file = $upload_path . 'import-' . date( 'd-M-Y-h-i-s' ) . '.txt';
+			self::$log_file = $upload_path . 'import-' . gmdate( 'd-M-Y-h-i-s' ) . '.txt';
 
 			if ( ! get_option( 'astra_sites_recent_import_log_file', false ) ) {
 				update_option( 'astra_sites_recent_import_log_file', self::$log_file );

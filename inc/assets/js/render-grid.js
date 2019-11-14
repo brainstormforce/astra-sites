@@ -213,8 +213,8 @@
 		},
 
 		_apiAddParam_siteground: function() {
-			if( astraSitesAdmin['siteground'] ) {
-				AstraRender._api_params['siteground'] = astraSitesAdmin['siteground'];
+			if( astraRenderGrid['siteground'] ) {
+				AstraRender._api_params['siteground'] = astraRenderGrid['siteground'];
 			}
 		},
 
