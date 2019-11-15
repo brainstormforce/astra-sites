@@ -79,6 +79,39 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Importer' ) ) :
 		}
 
 		/**
+		 * Import Categories
+		 *
+		 * @since 2.0.0
+		 * @return void
+		 */
+		public function import_site_categories() {
+			error_log( 'Requesting Site Categories' );
+			update_option( 'astra-sites-batch-status-string', 'Requesting Site Categories' );
+
+			$api_args           = array(
+				'timeout' => 30,
+			);
+			$categories_request = wp_remote_get( trailingslashit( Astra_Sites::get_instance()->get_api_domain() ) . '/wp-json/wp/v2/astra-site-category/?_fields=id,name,slug&per_page=100', $api_args );
+			if ( ! is_wp_error( $categories_request ) && 200 === (int) wp_remote_retrieve_response_code( $categories_request ) ) {
+				$categories = json_decode( wp_remote_retrieve_body( $categories_request ), true );
+
+				if ( isset( $categories['code'] ) ) {
+					$message = isset( $categories['message'] ) ? $categories['message'] : '';
+					if ( ! empty( $message ) ) {
+						error_log( 'HTTP Request Error: ' . $message );
+					} else {
+						error_log( 'HTTP Request Error!' );
+					}
+				} else {
+					update_option( 'astra-sites-categories', $categories );
+				}
+			}
+
+			error_log( 'Site Categories Imported Successfully!' );
+			update_option( 'astra-sites-batch-status-string', 'Site Categories Imported Successfully!' );
+		}
+
+		/**
 		 * Import Block Categories
 		 *
 		 * @since 2.0.0

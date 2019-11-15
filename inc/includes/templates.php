@@ -28,7 +28,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					?>
 					<div class="ast-sites-floating-notice-wrap refreshed-notice slide-in">
 						<div class="ast-sites-floating-notice">
-							<div class="astra-sites-sync-library-message success notice notice-success is-dismissible">
+							<div class="astra-sites-sync-library-message success astra-sites-notice notice notice-success is-dismissible">
 								<?php esc_html_e( 'Template library refreshed!', 'astra-sites' ); ?> <button type="button" class="notice-dismiss"><span class="screen-reader-text"><?php esc_html_e( 'Dismiss', 'astra-sites' ); ?></span></button>
 							</div>
 						</div>

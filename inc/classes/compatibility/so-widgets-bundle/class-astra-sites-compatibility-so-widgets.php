@@ -61,7 +61,7 @@ if ( ! class_exists( 'Astra_Sites_Compatibility_SO_Widgets' ) ) :
 
 			if ( 'so-widgets-bundle/so-widgets-bundle.php' === $plugin_init ) {
 
-				$data = wp_json_decode( wp_json_encode( $data ), true );
+				$data = json_decode( wp_json_encode( $data ), true );
 
 				if ( isset( $data['astra_site_options'] ) ) {
 

@@ -418,6 +418,7 @@ var AstraSitesAjaxQueue = (function() {
 				data : {
 					action      : 'astra-sites-import-wpforms',
 					wpforms_url : wpforms_url,
+					_ajax_nonce : astraElementorSites._ajax_nonce,
 				},
 				beforeSend: function() {
 					console.log( 'Importing WP Forms..' );

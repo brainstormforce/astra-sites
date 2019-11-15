@@ -71,6 +71,60 @@
 .astra-sites-page-import-popup .astra-sites-import-plugins .dashicons {
     display: none;
 }
+.astra-sites__anchor-wrap {
+	
+}
+#astra-sites__category-filter {
+	display: inline-block;
+}
+#astra-sites__category-filter .astra-sites__category-filter-anchor {
+	height: 44px;
+	position: relative;
+	cursor: pointer;
+	display: flex;
+	padding: 0 10px 0 10px;
+	border: 0;
+	width: 100px;
+	justify-content: space-between;
+	align-items: center;
+}
+#astra-sites__category-filter .astra-sites__category-filter-anchor:after {
+	position: absolute;
+	content: "";
+	border-right: 2px solid #555;
+	border-top: 2px solid #555;
+	padding: 3px;
+	left: 10px;
+	top: 35%;
+	-moz-transform: rotate(135deg);
+	-ms-transform: rotate(135deg);
+	-o-transform: rotate(135deg);
+	-webkit-transform: rotate(135deg);
+	transform: rotate(135deg);
+}
+#astra-sites__category-filter .ast-sites__filter-wrap-checkbox.first-wrap {
+	border-top: 1px solid #eee;
+	padding-top: 8px;
+}
+#astra-sites__category-filter ul.astra-sites__category-filter-items {
+	padding: 2px;
+	display: none;
+	margin: 0;
+	border-top: none;
+	position: absolute;
+	background: rgb(255, 255, 255);
+	padding: 5px 10px;
+	width: 98px;
+	top: 46px;
+	box-sizing: content-box;
+	border: 1px solid #ccc;
+	border-top: 0;
+}
+#astra-sites__category-filter ul.astra-sites__category-filter-items li {
+	list-style: none;
+	margin-bottom: 8px;
+	cursor: pointer;
+}
 
 #astra-sites .astra-theme .inner {
 	position: relative;
@@ -145,14 +199,14 @@
     background: #fff;
     line-height: 32px;
     border-bottom: 1px solid #ececec;
-    border-radius: 20px;
+    border-radius: 6px 0 0 6px;
     font-size: 13px;
     padding: 5px 20px;
     border: 1px solid #dedede;
     box-shadow: none;
 }
-#wp-filter-search-input:hover,
-#wp-filter-search-input:focus {
+.search-form:hover,
+.search-form:focus {
     box-shadow: 0 1px 4px 0 rgba(32,33,36,0.18);
 }
 .searching #wp-filter-search-input {
@@ -358,7 +412,7 @@
 }
 
 .astra-sites-activate-license .astra-sites-import-content {
-	padding: 20px 35px;
+	padding: 20px 35px 30px 35px;
 }
 
 .astra-sites-import-content .install-theme-info {
@@ -561,7 +615,13 @@
 .wp-filter .search-form {
 	margin-right: 1em;
 	position: relative;
+	display: flex;
 	border-bottom: 1px solid #ccc;
+}
+.wp-filter .search-form #astra-sites__category-filter {
+	border: 1px solid #dedede;
+    border-left: 0;
+    border-radius: 0 6px 6px 0;
 }
 .wp-filter .search-form input[type="search"] {
 	width: 20px;
@@ -880,6 +940,7 @@ body.loading-content .select-page-builder {
 	font-weight: normal;
 	border: none;
 	margin: 0;
+	border-radius: 6px;
 }
 
 .astra-sites-nav-items a:before {
@@ -2045,17 +2106,14 @@ body.loading-content .select-page-builder {
     position: fixed;
 }
 
-.astra-sites-change-page-builder #wpbody-content > .notice,
-.astra-sites-change-page-builder #wpbody-content > .error,
-.astra-sites-change-page-builder #wpbody-content > .fs-notice,
-.astra-previewing-single-pages #wpbody-content > .notice,
-.astra-previewing-single-pages #wpbody-content > .error,
-.astra-previewing-single-pages #wpbody-content > .fs-notice {
-    display: none !important;
+.appearance_page_astra-sites .update-nag,
+.appearance_page_astra-sites .notice,
+.appearance_page_astra-sites div.error {
+    display: none;
 }
 
-.astra-sites-change-page-builder #wpbody-content .notice {
-	display: none !important;
+.appearance_page_astra-sites .astra-sites-notice {
+    display: block;
 }
 
 .astra-previewing-single-pages #wpbody-content > .notice.astra-sites-sync-library-message.success,
@@ -2151,11 +2209,11 @@ body.loading-content .select-page-builder {
     display: none !important;
 }
 
-#astra-sites.temp .theme-id-container .title {
+#astra-sites.temp .placeholder-site .theme-id-container .title {
     background: #f1f1f1;
 }
 
-#astra-sites.temp .theme-id-container .site-title {
+#astra-sites.temp .placeholder-site .theme-id-container .site-title {
     color: transparent;
 }
 
@@ -2486,4 +2544,54 @@ body.loading-content .select-page-builder {
 .ast-sites__search-wrap {
 	display:flex;
 	flex-wrap: wrap;
+}
+
+/**
+ * License Form
+ */
+#astra-pro-sites-license-form p:first-child {
+    margin-top: 0;
+}
+
+#astra-pro-sites-license-form p {
+    margin: .3em 0;
+}
+
+#astra-pro-sites-license-form .bsf-license-key-registration {
+    margin-top: 1em;
+}
+
+#astra-pro-sites-license-form .inner {
+    position: relative;
+    box-shadow: none;
+    height: auto;
+    width: auto;
+    min-height: auto;
+    transition: none;
+    top: 0;
+    right: 0;
+    transform: none;
+}
+
+#astra-pro-sites-license-form h3 {
+    display: none;
+}
+
+#astra-pro-sites-license-form .astra-product-license {
+    line-height: normal;
+    margin-top: 0;
+    margin-right: 0.5em;
+}
+
+#astra-pro-sites-license-form .license-form-field {
+    float: right;
+    width: calc( 100% - 120px );
+}
+
+#astra-pro-sites-license-form .regular-text {
+    width: 100%;
+}
+
+#astra-pro-sites-license-form .submit-button-wrap p {
+    margin-top: 1em;
 }

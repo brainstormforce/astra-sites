@@ -8,7 +8,7 @@
  * TMPL - List
  *
  * @package Astra Sites
- * @since x.x.x
+ * @since 2.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {

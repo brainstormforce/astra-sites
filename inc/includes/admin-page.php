@@ -20,7 +20,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <div class="wrap" id="astra-sites-admin" data-slug="<?php echo esc_html( $global_cpt_meta['cpt_slug'] ); ?>">
 
 	<?php
-	if ( isset( $_GET['debug'] ) ) {
+	if ( isset( $_GET['debug'] ) && 'yes' === $_GET['debug'] ) {
 		$crons  = _get_cron_array();
 		$events = array();
 
@@ -99,7 +99,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<p>
 					<?php
 					/* translators: %1$s External Link */
-					printf( esc_html__( 'Don\'t see a template you would like to import?<br><a target="_blank" href="%1$s">Please Suggest Us!</a>', 'astra-sites' ), esc_url( 'https://wpastra.com/sites-suggestions/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=suggestions' ) );
+					printf( __( 'Don\'t see a template you would like to import?<br><a target="_blank" href="%1$s">Please Suggest Us!</a>', 'astra-sites' ), esc_url( 'https://wpastra.com/sites-suggestions/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=suggestions' ) );
 					?>
 					</p>
 					<div class="back-to-layout-button"><span class="button astra-sites-back"><?php esc_html_e( 'Back to Templates', 'astra-sites' ); ?></span></div>
@@ -141,6 +141,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<#
 		var current_site_id     = site_id;
 		var type                = data[site_id]['type'] || 'site';
+		var wrapper_class       = data[site_id]['class'] || '';
 		var page_site_id        = data[site_id]['site_id'] || '';
 		var favorite_status     = false;
 		var favorite_class      = '';
@@ -164,7 +165,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 		var title = data[site_id]['title'] || '';
 		var pages_count = parseInt( data[site_id]['pages-count'] ) || 0;
-		console.log( pages_count );
 		var pages_count_class = '';
 		var pages_count_string = ( pages_count !== 1 ) ? pages_count + ' Templates' : pages_count + ' Template';
 		if( 'site' === type ) {
@@ -177,7 +177,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		var site_title = data[site_id]['site-title'] || '';
 
 	#>
-	<div class="theme astra-theme site-single {{favorite_class}} {{pages_count_class}} astra-sites-previewing-{{type}}" data-site-id="{{current_site_id}}" data-page-id="{{page_id}}">
+	<div class="theme astra-theme site-single {{favorite_class}} {{pages_count_class}} astra-sites-previewing-{{type}} {{wrapper_class}}" data-site-id="{{current_site_id}}" data-page-id="{{page_id}}">
 		<div class="inner">
 			<span class="site-preview" data-title="{{{title}}}">
 				<div class="theme-screenshot one loading" data-src="{{thumbnail_image_url}}" data-featured-src="{{featured_image_url}}"></div>
@@ -203,7 +203,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<# } #>
 			</div>
 			<# if ( site_type && 'free' !== site_type ) { #>
-				<div class="agency-ribbons astra-sites-activate-license-button" title="<?php esc_html_e( 'This is a Agency Site demo which import after the purchase Astra Premium Sites plugin.', 'astra-sites' ); ?>"><?php esc_html_e( 'Agency', 'astra-sites' ); ?></div>
+				<div class="agency-ribbons" title="<?php esc_attr_e( 'This premium template is accessible with Astra "Agency" Package.', 'astra-sites' ); ?>"><?php esc_html_e( 'Agency', 'astra-sites' ); ?></div>
 			<# } #>
 		</div>
 	</div>
@@ -370,13 +370,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<p>
 		<?php
 			/* translators: %s is pricing page link */
-			printf( __( 'This is a premium website demo available only with the Agency Bundles you can purchase it from <a href="%s" target="_blank">here</a>.', 'astra-sites' ), 'https://wpastra.com/pricing/' );
+			printf( __( 'This is a premium template available with Astra \'Agency\' package. you can purchase it from <a href="%s" target="_blank">here</a>.', 'astra-sites' ), 'https://wpastra.com/pricing/' );
 		?>
 	</p>
 	<p>
 		<?php
 			/* translators: %s is article link */
-			printf( __( 'Already own an Agency Bundle? Read an article to know how you can <a href="%s" target="_blank">import a premium website demo</a>.', 'astra-sites' ), 'https://wpastra.com/docs/import-astra-agency-website-demos/' );
+			printf( __( 'If you already own an Agency pack. Read an article to know how you can <a href="%s" target="_blank">import a premium website demo</a>.', 'astra-sites' ), 'https://wpastra.com/docs/import-astra-agency-website-demos/' );
 		?>
 	</p>
 </script>
@@ -397,12 +397,9 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 ?>
 <script type="text/template" id="tmpl-astra-sites-activate-license">
-	<p>
-		<?php
-			/* translators: %s is pricing page link */
-			printf( __( 'This is a premium template available with Astra \'Agency\' packages. <a href="%s" target="_blank">Validate Your License</a> Key to import this template.', 'astra-sites' ), esc_url( admin_url( 'plugins.php?bsf-inline-license-form=astra-pro-sites' ) ) );
-		?>
-	</p>
+	<?php
+		do_action( 'astra_sites_activate_license_popup' );
+	?>
 </script>
 
 <?php
@@ -439,7 +436,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<p>
 		<?php
 			/* translators: %s is article link */
-			printf( esc_html__( 'Learn how you can <a href="%s" target="_blank">activate the license</a> of the Astra Premium Sites plugin.', 'astra-sites' ), 'https://wpastra.com/docs/activate-license-for-astra-premium-sites-plugin/' );
+			printf( __( 'Learn how you can <a href="%s" target="_blank">activate the license</a> of the Astra Premium Sites plugin.', 'astra-sites' ), 'https://wpastra.com/docs/activate-license-for-astra-premium-sites-plugin/' );
 		?>
 	</p>
 </script>
@@ -523,11 +520,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 							<a class="button button-hero button-primary disabled" href="#" target="_blank"><?php esc_html_e( 'Not Valid License', 'astra-sites' ); ?></a>
 							<span class="dashicons dashicons-editor-help astra-sites-invalid-mini-agency-license-button"></span>
 						<# } else if( 'free' !== data['astra-sites-type'] && ! astraSitesVars.license_status ) { #>
-							<a class="button button-hero button-primary" href="{{astraSitesVars.getProURL}}" target="_blank">{{astraSitesVars.getProText}}<i class="dashicons dashicons-external"></i></a>
 							<# if( ! astraSitesVars.isPro ) { #>
+								<a class="button button-hero button-primary " href="{{astraSitesVars.getProURL}}" target="_blank">{{astraSitesVars.getProText}}<i class="dashicons dashicons-external"></i></a>
 								<span class="dashicons dashicons-editor-help astra-sites-get-agency-bundle-button"></span>
 							<# } else { #>
-								<span class="dashicons dashicons-editor-help astra-sites-activate-license-button"></span>
+								<span class="button button-hero button-primary astra-sites-activate-license-button">{{astraSitesVars.getProText}}</span>
 							<# } #>
 						<# } else { #>
 							<div class="button button-hero button-primary site-import-site-button">Import Site</div>

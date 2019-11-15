@@ -32,15 +32,14 @@ use Elementor\Utils;
  * Elementor template library local source handler class is responsible for
  * handling local Elementor templates saved by the user locally on his site.
  *
- * @since x.x.x Added compatibility for Elemetnor v2.5.0
- * @since x.x.x
+ * @since 2.0.0 Added compatibility for Elemetnor v2.5.0
  */
 class Astra_Elementor_Pages extends Source_Local {
 
 	/**
 	 * Update post meta.
 	 *
-	 * @since x.x.x
+	 * @since 2.0.0
 	 * @param  integer $post_id Post ID.
 	 * @param  array   $data Elementor Data.
 	 * @return array   $data Elementor Imported Data.
