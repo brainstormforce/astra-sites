@@ -5,7 +5,7 @@ Tags: Elementor,Beaver Builder,Templates,Gutenberg,Astra Starter Sites
 Requires at least: 4.4
 Requires PHP: 5.3
 Tested up to: 5.3
-Stable tag: 1.4.4
+Stable tag: 1.4.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -116,6 +116,9 @@ We are open to suggestions and would love to work on topics that our users are l
 3. Click the import site button to start the import process.
 
 == Changelog ==
+
+v1.4.5 - 21-November-2019
+- Improvement: Added missing font awesome icons support for the Elementor sites.
 
 v1.4.4 - 14-November-2019
 - Improvement: Added the old browser compatibility in which Astra Sites not loading.

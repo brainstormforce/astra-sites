@@ -71,6 +71,7 @@ class Astra_Site_Options_Import {
 			'elementor_scheme_typography',
 			'elementor_space_between_widgets',
 			'elementor_stretched_section_container',
+			'elementor_load_fa4_shim',
 
 			// Plugin: Beaver Builder.
 			'_fl_builder_enabled_icons',
