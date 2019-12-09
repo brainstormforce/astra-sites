@@ -190,7 +190,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				array(
 					'id'               => 'astra-theme-activation-nag',
 					'type'             => 'error',
-					'show_if'          => ( ! defined( 'ASTRA_THEME_SETTINGS' ) ) ? true : false,
+					'show_if'          => ( defined( 'ASTRA_THEME_SETTINGS' ) ) ? true : false,
 					/* translators: 1: theme.php file*/
 					'message'          => sprintf( __( '<p>Astra Theme needs to be active for you to use currently installed "%1$s" plugin. <a href="#" class="%3$s" data-theme-slug="astra">Install & Activate Now</a></p>', 'astra-sites' ), ASTRA_SITES_NAME, esc_url( admin_url( 'themes.php?theme=astra' ) ), $theme_status ),
 					'dismissible'      => true,
