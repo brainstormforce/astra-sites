@@ -84,6 +84,35 @@ if ( ! class_exists( 'BSF_Connect_Rest_API' ) ) :
 				)
 			);
 
+			register_rest_route(
+				'bsf-connect/v1/', '/plugins',
+				array(
+					array(
+						'methods'  => 'GET',
+						'callback' => array( $this, 'get_plugins' ),
+					),
+				)
+			);
+
+		}
+
+		function get_plugins( ) {
+
+			require_once ABSPATH . '/wp-admin/includes/plugin.php';
+
+			$list = array();
+			$plugins = get_plugins();
+
+			asort( $plugins );
+
+			foreach ( $plugins as $plugin_file => $plugin_data ) {
+				if ( is_plugin_active( $plugin_file ) ) {
+					$plugins[ $plugin_file ]['status'] = 'active';
+				} else {
+					$plugins[ $plugin_file ]['status'] = 'inactive';
+				}
+			}
+			return rest_ensure_response( $plugins );
 		}
 
 		/**
