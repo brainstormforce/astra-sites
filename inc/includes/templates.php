@@ -131,7 +131,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<h3 class="theme-name">{{{site_title}}}</h3>
 					</div>
 					<# if ( site_type && 'free' !== site_type ) { #>
-						<div class="agency-ribbons" title="<?php esc_html_e( 'Agency', 'astra-sites' ); ?>"><?php esc_html_e( 'Agency', 'astra-sites' ); ?></div>
+						<div class="agency-ribbons" title="<?php esc_attr_e( 'This premium template is accessible with Astra "Agency" Package.', 'astra-sites' ); ?>"><?php esc_html_e( 'Agency', 'astra-sites' ); ?></div>
 					<# } #>
 				</div>
 			</div>
@@ -175,7 +175,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<p>
 						<?php
 						/* translators: %1$s External Link */
-						printf( esc_html__( 'Don\'t see a template you would like to import?<br><a target="_blank" href="%1$s">Please Suggest Us!</a>', 'astra-sites' ), esc_url( 'https://wpastra.com/sites-suggestions/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=suggestions' ) );
+						printf( __( 'Don\'t see a template you would like to import?<br><a target="_blank" href="%1$s">Please Suggest Us!</a>', 'astra-sites' ), esc_url( 'https://wpastra.com/sites-suggestions/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=suggestions' ) );
 						?>
 						</p>
 						<div class="back-to-layout-button"><span class="button astra-sites-back"><?php esc_html_e( 'Back to Templates', 'astra-sites' ); ?></span></div>
@@ -218,7 +218,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<h3 class="theme-name">{{{site_title}}}</h3>
 				</div>
 				<# if ( site_type && 'free' !== site_type ) { #>
-					<div class="agency-ribbons" title="<?php esc_html_e( 'Agency', 'astra-sites' ); ?>"><?php esc_html_e( 'Agency', 'astra-sites' ); ?></div>
+					<div class="agency-ribbons" title="<?php esc_attr_e( 'This premium template is accessible with Astra "Agency" Package.', 'astra-sites' ); ?>"><?php esc_html_e( 'Agency', 'astra-sites' ); ?></div>
 				<# } #>
 			</div>
 		</div>
@@ -235,7 +235,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<p>
 						<?php
 						/* translators: %1$s External Link */
-						printf( esc_html__( 'Don\'t see a template you would like to import?<br><a target="_blank" href="%1$s">Please Suggest Us!</a>', 'astra-sites' ), esc_url( 'https://wpastra.com/sites-suggestions/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=suggestions' ) );
+						printf( __( 'Don\'t see a template you would like to import?<br><a target="_blank" href="%1$s">Please Suggest Us!</a>', 'astra-sites' ), esc_url( 'https://wpastra.com/sites-suggestions/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=suggestions' ) );
 						?>
 						</p>
 						<div class="back-to-layout-button"><span class="button astra-sites-back"><?php esc_html_e( 'Back to Templates', 'astra-sites' ); ?></span></div>
@@ -303,7 +303,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<h3 class="theme-name"><strong>{{title1}}</strong>{{title2}}</h3>
 				</div>
 				<# if ( site_type && 'free' !== site_type ) { #>
-					<div class="agency-ribbons" title="<?php esc_html_e( 'Agency', 'astra-sites' ); ?>"><?php esc_html_e( 'Agency', 'astra-sites' ); ?></div>
+					<div class="agency-ribbons" title="<?php esc_attr_e( 'This premium template is accessible with Astra "Agency" Package.', 'astra-sites' ); ?>"><?php esc_html_e( 'Agency', 'astra-sites' ); ?></div>
 				<# } #>
 			</div>
 		</div>
@@ -320,7 +320,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<p>
 						<?php
 						/* translators: %1$s External Link */
-						printf( esc_html__( 'Don\'t see a template you would like to import?<br><a target="_blank" href="%1$s">Please Suggest Us!</a>', 'astra-sites' ), esc_url( 'https://wpastra.com/sites-suggestions/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=suggestions' ) );
+						printf( __( 'Don\'t see a template you would like to import?<br><a target="_blank" href="%1$s">Please Suggest Us!</a>', 'astra-sites' ), esc_url( 'https://wpastra.com/sites-suggestions/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=suggestions' ) );
 						?>
 						</p>
 						<div class="back-to-layout-button"><span class="button astra-sites-back"><?php esc_html_e( 'Back to Templates', 'astra-sites' ); ?></span></div>
@@ -371,7 +371,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<p>
 					<?php
 					/* translators: %1$s External Link */
-					printf( esc_html__( 'Don\'t see a template you would like to import?<br><a target="_blank" href="%1$s">Please Suggest Us!</a>', 'astra-sites' ), esc_url( 'https://wpastra.com/sites-suggestions/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=suggestions' ) );
+					printf( __( 'Don\'t see a template you would like to import?<br><a target="_blank" href="%1$s">Please Suggest Us!</a>', 'astra-sites' ), esc_url( 'https://wpastra.com/sites-suggestions/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=suggestions' ) );
 					?>
 					</p>
 					<div class="back-to-layout-button"><span class="button astra-sites-back"><?php esc_html_e( 'Back to Templates', 'astra-sites' ); ?></span></div>

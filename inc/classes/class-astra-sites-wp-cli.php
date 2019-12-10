@@ -180,7 +180,12 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 						WP_CLI::line( __( 'Installing Plugins..', 'astra-sites' ) );
 						foreach ( $plugin_status['required_plugins']['notinstalled'] as $key => $plugin ) {
 							if ( isset( $plugin['slug'] ) ) {
-								WP_CLI::runcommand( 'plugin install ' . $plugin['slug'] . ' --activate' );
+
+								// Install plugin.
+								WP_CLI::runcommand( 'plugin install ' . $plugin['slug'] );
+
+								// Activate plugin.
+								Astra_Sites::get_instance()->required_plugin_activate( $plugin['init'], $demo_data['astra-site-options-data'], $demo_data['astra-enabled-extensions'] );
 							}
 						}
 					}

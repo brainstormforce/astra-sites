@@ -26,6 +26,14 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		public $api_url;
 
 		/**
+		 * Search API URL which is used to get the response from.
+		 *
+		 * @since  x.x.x
+		 * @var (String) URL
+		 */
+		public $search_url;
+
+		/**
 		 * API URL which is used to get the response from Pixabay.
 		 *
 		 * @since  2.0.0
@@ -118,6 +126,38 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			add_action( 'wp_ajax_astra-page-elementor-batch-process', array( $this, 'elementor_batch_process' ) );
 
 			add_action( 'delete_attachment', array( $this, 'delete_astra_images' ) );
+			add_filter( 'heartbeat_received', array( $this, 'search_push' ), 10, 2 );
+		}
+
+		/**
+		 * Push Data to Search API.
+		 *
+		 * @since  x.x.x
+		 * @param Object $response Response data object.
+		 * @param Object $data Data object.
+		 * @return void
+		 */
+		public function search_push ( $response, $data ) {
+
+			// If we didn't receive our data, don't send any back.
+			if ( empty( $data['ast-sites-search-terms'] ) ) {
+				return $response;
+			}
+
+			$args = array(
+				'timeout'   => 3,
+				'blocking'  => true,
+				'sslverify' => apply_filters( 'https_local_ssl_verify', false ),
+				'body'		=> array(
+					'search' => $data['ast-sites-search-terms'],
+					'url'    => esc_url( site_url() ),
+				),
+			);
+
+			$result = wp_remote_post( $this->search_url, $args );
+			$response['ast-sites-search-terms'] = wp_remote_retrieve_body( $result );
+
+			return $response;
 		}
 
 		/**
@@ -244,7 +284,12 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			} elseif ( is_wp_error( $request ) ) {
 				wp_send_json_error( 'API Request is failed due to ' . $request->get_error_message() );
 			} elseif ( 200 !== (int) wp_remote_retrieve_response_code( $request ) ) {
-				wp_send_json_error( wp_remote_retrieve_body( $request ) );
+				$demo_data = json_decode( wp_remote_retrieve_body( $request ), true );
+				if( is_array( $demo_data ) && isset( $demo_data['code'] ) ) {
+					wp_send_json_error( $demo_data['message'] );
+				} else {
+					wp_send_json_error( wp_remote_retrieve_body( $request ) );
+				}
 			}
 		}
 
@@ -948,6 +993,8 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		public function set_api_url() {
 			$this->api_url = apply_filters( 'astra_sites_api_url', trailingslashit( self::get_api_domain() ) . '/wp-json/wp/v2/' );
 
+			$this->search_url = apply_filters( 'astra_sites_search_api_url', trailingslashit( self::get_api_domain() ) . '/wp-json/analytics/v2/search/' );
+
 			$this->pixabay_url     = 'https://pixabay.com/api/';
 			$this->pixabay_api_key = '2727911-c4d7c1031949c7e0411d7e81e';
 		}
@@ -1019,7 +1066,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 						'horizontal' => __( 'Horizontal', 'astra-sites' ),
 					),
 					'integration'         => get_option( '_astra_images_integration', array() ),
-					'title'               => __( 'Free Images by Astra', 'astra-sites' ),
+					'title'               => __( 'Free Images by Pixabay', 'astra-sites' ),
 					'search_placeholder'  => __( 'Pixabay Search - Ex: flowers', 'astra-sites' ),
 					'downloading'         => __( 'Downloading...', 'astra-sites' ),
 					'validating'          => __( 'Validating...', 'astra-sites' ),
@@ -1185,6 +1232,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 						'bulkInstall'          => __( 'Installing Required Plugins..', 'astra-sites' ),
 						'serverConfiguration'  => esc_url( 'https://wpastra.com/docs/?p=1314&utm_source=demo-import-panel&utm_campaign=import-error&utm_medium=wp-dashboard' ),
 						'importWidgetsSuccess' => __( 'Imported Widgets!', 'astra-sites' ),
+						'themeInstall'         => __( 'Installing Astra Theme..', 'astra-sites' ),
 					),
 					'default_page_builder'       => $default_page_builder,
 					'default_page_builder_sites' => Astra_Sites_Page::get_instance()->get_sites_by_page_builder( $default_page_builder ),
@@ -1205,10 +1253,31 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 					'page_builder'               => 'astra-site-page-builder',
 					'cpt_slug'                   => 'astra-sites',
 					'parent_category'            => '',
+					'compatibility_status' 		 => $this->get_compatibility_status(),
+
 				)
 			);
 
 			return $data;
+		}
+	
+		/**
+		 * Import Compatibility Errors
+		 *
+		 * @since 2.0.0
+		 * @return mixed
+		 */
+		function get_compatibility_status() {
+
+			if ( ! class_exists( 'XMLReader' ) ) {
+				return 'xmlreader';
+			}
+
+			if ( ! function_exists( 'curl_version' ) ) {
+				return 'curl';
+			}
+
+			return '';
 		}
 
 		/**
@@ -1293,6 +1362,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 					'astra_block_categories'     => get_option( 'astra-blocks-categories', array() ),
 					'siteURL'                    => site_url(),
 					'_ajax_nonce'                => wp_create_nonce( 'astra-sites' ),
+					'syncCompleteMessage'        => self::get_instance()->get_sync_complete_message(),
 				)
 			);
 
@@ -1411,7 +1481,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				}
 			}
 
-			$options = ( isset( $_POST['options'] ) ) ? json_decode( stripslashes( $_POST['options'] ) ) : $options;
+			$options            = ( isset( $_POST['options'] ) ) ? json_decode( stripslashes( $_POST['options'] ) ) : $options;
 			$enabled_extensions = ( isset( $_POST['enabledExtensions'] ) ) ? json_decode( stripslashes( $_POST['enabledExtensions'] ) ) : $enabled_extensions;
 
 			$this->after_plugin_activate( $plugin_init, $options, $enabled_extensions );
@@ -1434,8 +1504,8 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		 * @since 2.0.0
 		 *
 		 * @param  array $required_plugins Required Plugins.
-		 * @param  array  $options            Site Options.
-		 * @param  array  $enabled_extensions Enabled Extensions.
+		 * @param  array $options            Site Options.
+		 * @param  array $enabled_extensions Enabled Extensions.
 		 * @return mixed
 		 */
 		public function required_plugin( $required_plugins = array(), $options = array(), $enabled_extensions = array() ) {
@@ -1475,10 +1545,10 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				),
 			);
 
-			$options = ( isset( $_POST['options'] ) ) ? json_decode( stripslashes( $_POST['options'] ) ) : $options;
+			$options            = ( isset( $_POST['options'] ) ) ? json_decode( stripslashes( $_POST['options'] ) ) : $options;
 			$enabled_extensions = ( isset( $_POST['enabledExtensions'] ) ) ? json_decode( stripslashes( $_POST['enabledExtensions'] ) ) : $enabled_extensions;
 
-			if ( count( $required_plugins ) > 0 ) {
+			if ( ! empty( $required_plugins ) ) {
 				foreach ( $required_plugins as $key => $plugin ) {
 
 					/**
@@ -1544,7 +1614,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		 * After Plugin Activate
 		 *
 		 * @since 2.0.0
-		 * 
+		 *
 		 * @param  string $plugin_init        Plugin Init File.
 		 * @param  array  $options            Site Options.
 		 * @param  array  $enabled_extensions Enabled Extensions.

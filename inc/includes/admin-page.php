@@ -291,7 +291,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<# } #>
 					</div>
 					<# if ( site_type && 'free' !== site_type ) { #>
-						<div class="agency-ribbons" title="<?php esc_html_e( 'Agency', 'astra-sites' ); ?>"><?php esc_html_e( 'Agency', 'astra-sites' ); ?></div>
+						<div class="agency-ribbons" title="<?php esc_attr_e( 'This premium template is accessible with Astra "Agency" Package.', 'astra-sites' ); ?>"><?php esc_html_e( 'Agency', 'astra-sites' ); ?></div>
 					<# } #>
 				</div>
 			</div>
@@ -351,7 +351,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<# } #>
 					</div>
 					<# if ( site_type && 'free' !== site_type ) { #>
-						<div class="agency-ribbons" title="<?php esc_html_e( 'Agency', 'astra-sites' ); ?>"><?php esc_html_e( 'Agency', 'astra-sites' ); ?></div>
+						<div class="agency-ribbons" title="<?php esc_attr_e( 'This premium template is accessible with Astra "Agency" Package.', 'astra-sites' ); ?>"><?php esc_html_e( 'Agency', 'astra-sites' ); ?></div>
 					<# } #>
 				</div>
 			</div>
@@ -587,6 +587,54 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <?php
 /**
+ * TMPL - Curl Compatibility Error
+ */
+?>
+<script type="text/template" id="tmpl-astra-sites-compatibility-error-xmlreader">
+	<div class="overlay"></div>
+	<div class="inner">
+		<div class="heading">
+			<h3><?php esc_html_e( 'Compatibility Error', 'astra-sites' ); ?></h3>
+			<span class="dashicons close dashicons-no-alt"></span>
+		</div>
+		<div class="astra-sites-import-content">
+			<p>To import the site XMLReader support is required. On your website the XMLReader is disabled.</p>
+			<p>Please contact your server administrator to enable the XMLReader support.</p>
+		</div>
+	</div>
+</script>
+
+<?php
+/**
+ * TMPL - Curl Compatibility Error
+ */
+?>
+<script type="text/template" id="tmpl-astra-sites-compatibility-error-curl">
+	<div class="overlay"></div>
+	<div class="inner">
+		<div class="heading">
+			<h3><?php esc_html_e( 'Compatibility Error', 'astra-sites' ); ?></h3>
+			<span class="dashicons close dashicons-no-alt"></span>
+		</div>
+		<div class="astra-sites-import-content">
+			<p>To import the site cURL support is required. On your website the cURL is disabled.</p>
+			<p>Please contact your server administrator to enable the cURL support.</p>
+		</div>
+	</div>
+</script>
+
+<?php
+/**
+ * TMPL - Request Failed
+ */
+?>
+<script type="text/template" id="tmpl-astra-sites-request-failed">
+	<p><?php esc_html_e( 'Not able to connect to the website. Please try again.', 'astra-sites' ); ?></p>
+	<p><?php esc_html_e( 'Error:', 'astra-sites' ); ?></p>
+</script>
+
+<?php
+/**
  * TMPL - First Screen
  */
 ?>
@@ -641,51 +689,38 @@ if ( ! defined( 'ABSPATH' ) ) {
 								<li class="astra-sites-import-widgets">
 									<label>
 										<input type="checkbox" name="widgets" checked="checked" class="checkbox">
-										<strong>Import Widgets</strong>
+										<strong><?php esc_html_e( 'Import Widgets', 'astra-sites' ); ?></strong>
 									</label>
 								</li>
 							<# } #>
 						</ul>
 						<# if( 'astra-sites' === data ) { #>
-							<ul>
+							<ul class="astra-site-contents">
 								<li class="astra-sites-reset-data">
 									<label>
 										<input type="checkbox" name="reset" class="checkbox">
-										<strong>Delete Previously Imported Site</strong>
+										<strong><?php esc_html_e( 'Delete Previously Imported Site', 'astra-sites' ); ?></strong>
 										<div class="astra-sites-tooltip-message" id="astra-sites-tooltip-reset-data" style="display: none;"><p><?php esc_html_e( 'WARNING: Selecting this option will delete all data from the previous import. Choose this option only if this is intended.', 'astra-sites' ); ?></p></div>
 									</label>
 								</li>
+								<?php
+								$theme_status = Astra_Sites::get_instance()->get_theme_status();
+								if ( 'installed-and-active' !== $theme_status ) {
+									?>
+								<li class="astra-sites-theme-activation">
+									<label>
+										<input type="checkbox" name="reset" class="checkbox" checked="checked" data-status="<?php echo $theme_status; ?>">
+										<strong><?php esc_html_e( 'Install & Activate Astra Theme', 'astra-sites' ); ?></strong>
+										<div class="astra-sites-tooltip-message" id="astra-sites-tooltip-theme-activation" style="display: none;"><p><?php esc_html_e( 'To import the site in the original format, you would need the Astra theme activated. You can import it with any other theme, but the site might lose some of the design settings and look a bit different.', 'astra-sites' ); ?></p></div>
+									</label>
+								</li>
+									<?php
+								}
+								?>
 							</ul>
 						<# } #>
 					</div>
 				</div>
-				<?php
-				$theme_status = Astra_Sites::get_instance()->get_theme_status();
-				if ( 'installed-and-active' !== $theme_status ) {
-					$link_class = 'astra-sites-theme-' . $theme_status;
-					?>
-					<hr />
-					<div id="astra-theme-activation-nag">
-						<p><strong><?php esc_html_e( 'Astra Theme', 'astra-sites' ); ?></strong>
-							<span class="astra-sites-tooltip-icon" data-tip-id="astra-sites-tooltip-theme-settings">
-								<span class="dashicons dashicons-editor-help"></span>
-							</span>
-							<div class="astra-sites-tooltip-message" id="astra-sites-tooltip-theme-settings" style="display: none;">
-								<?php /* translators: %1$s is the plugin name, %2$s is the CSS class name. */ ?>
-								<# if( 'astra-sites' === data ) { #>
-									<p><?php esc_html_e( 'To import the site in the original format, you would need the Astra theme activated.', 'astra-sites' ); ?></p>
-									<p><?php esc_html_e( 'You can import it with any other theme, but the site might lose some of the design settings and look a bit different.', 'astra-sites' ); ?></p>
-								<# } else { #>
-									<p><?php esc_html_e( 'To import the template in the original format, you would need the Astra theme activated.', 'astra-sites' ); ?></p>
-									<p><?php esc_html_e( 'You can import it with any other theme, but the template might lose some of the design settings and look a bit different.', 'astra-sites' ); ?></p>
-								<# } #>
-							</div>
-						</p>
-						<p><a href="#" class="astra-sites-theme-action-link <?php echo esc_html( $link_class ); ?>" data-theme-slug="astra"><?php esc_html_e( 'Install & Activate Astra Theme', 'astra-sites' ); ?></a></p>
-					</div>
-					<?php
-				}
-				?>
 			</div>
 			<div class="ast-importing-wrap">
 				<#

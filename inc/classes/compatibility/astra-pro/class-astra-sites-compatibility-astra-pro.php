@@ -74,10 +74,10 @@ if ( ! class_exists( 'Astra_Sites_Compatibility_Astra_Pro' ) ) :
 
 			if ( 'astra-addon/astra-addon.php' === $plugin_init && ! empty( $data ) ) {
 
-				if( is_array( $data ) ) {
+				if ( is_array( $data ) ) {
 					$data = json_decode( wp_json_encode( $data ), true );
 				}
-			
+
 				if ( isset( $data['enabled_extensions'] ) ) {
 					$extensions = $data['enabled_extensions'];
 
