@@ -1089,9 +1089,10 @@ var AstraSitesAjaxQueue = (function() {
 			var sites = astraSitesVars.default_page_builder_sites || [];
 
 			var data = sites[site_id];
+				data['site_id'] = AstraSitesAdmin._get_id( site_id );
 
 			if( 'undefined' !== typeof data ) {
-				var site_template  = wp.template('astra-sites-single-site-preview');
+				var site_template = wp.template( 'astra-sites-single-site-preview' );
 
 				if( ! AstraSitesAdmin._getParamFromURL( 'astra-site' ) ) {
 					var url_params = {

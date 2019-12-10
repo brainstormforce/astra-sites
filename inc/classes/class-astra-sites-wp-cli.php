@@ -151,10 +151,7 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 			}
 
 			// License Status.
-			$license_status = false;
-			if ( is_callable( 'BSF_License_Manager::bsf_is_active_license' ) ) {
-				$license_status = BSF_License_Manager::bsf_is_active_license( 'astra-pro-sites' );
-			}
+			$license_status = bsf_is_active_license( 'astra-pro-sites' );
 
 			if ( 'free' !== $demo_data['site-type'] && 'upgrade' === $demo_data['license-status'] && ! $license_status ) {
 

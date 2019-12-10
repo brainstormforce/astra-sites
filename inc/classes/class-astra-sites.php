@@ -1184,18 +1184,18 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			$request_params = apply_filters(
 				'astra_sites_api_params',
 				array(
-					'purchase_key' => '',
-					'site_url'     => '',
+					'purchase_key' => Astra_Sites::get_instance()->get_license_key(),
+					'site_url'     => site_url(),
 					'per-page'     => 15,
 				)
 			);
 
-			$license_status = false;
-			if ( is_callable( 'BSF_License_Manager::bsf_is_active_license' ) ) {
-				$license_status = BSF_License_Manager::bsf_is_active_license( 'astra-pro-sites' );
-			}
+			$license_status = bsf_is_active_license( 'astra-pro-sites' );
 
 			$default_page_builder = Astra_Sites_Page::get_instance()->get_setting( 'page_builder' );
+
+			$api_url = BSF_Connect::get_instance()->get_api_url( );
+			$api_button_text = BSF_Connect::get_instance()->get_api_status_text( );
 
 			$data = apply_filters(
 				'astra_sites_localize_vars',
@@ -1208,8 +1208,8 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 					'ajaxurl'                    => esc_url( admin_url( 'admin-ajax.php' ) ),
 					'siteURL'                    => site_url(),
 					'docUrl'                     => 'https://wpastra.com/',
-					'getProText'                 => __( 'Get Agency Bundle', 'astra-sites' ),
-					'getProURL'                  => esc_url( 'https://wpastra.com/agency/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=wp-dashboard' ),
+					'getProText'                 => $api_button_text,
+					'getProURL'                  => $api_url,
 					'getUpgradeText'             => __( 'Upgrade', 'astra-sites' ),
 					'getUpgradeURL'              => esc_url( 'https://wpastra.com/agency/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=wp-dashboard' ),
 					'_ajax_nonce'                => wp_create_nonce( 'astra-sites' ),
@@ -1318,16 +1318,13 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			$request_params = apply_filters(
 				'astra_sites_api_params',
 				array(
-					'purchase_key' => '',
-					'site_url'     => '',
+					'purchase_key' => Astra_Sites::get_instance()->get_license_key(),
+					'site_url'     => site_url(),
 					'per-page'     => 15,
 				)
 			);
 
-			$license_status = false;
-			if ( is_callable( 'BSF_License_Manager::bsf_is_active_license' ) ) {
-				$license_status = BSF_License_Manager::bsf_is_active_license( 'astra-pro-sites' );
-			}
+			$license_status = bsf_is_active_license( 'astra-pro-sites' );
 
 			/* translators: %s are link. */
 			$license_msg = sprintf( __( 'This is a premium website demo available only with the Agency Bundles you can purchase it from <a href="%s" target="_blank">here</a>.', 'astra-sites' ), 'https://wpastra.com/pricing/' );
@@ -1430,6 +1427,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		private function includes() {
 
 			require_once ASTRA_SITES_DIR . 'inc/lib/astra-notices/class-astra-notices.php';
+			require_once ASTRA_SITES_DIR . 'inc/lib/bsf-connect/bsf-connect.php';
 			require_once ASTRA_SITES_DIR . 'inc/classes/class-astra-sites-white-label.php';
 			require_once ASTRA_SITES_DIR . 'inc/classes/class-astra-sites-page.php';
 			require_once ASTRA_SITES_DIR . 'inc/classes/class-astra-elementor-pages.php';
@@ -1766,10 +1764,8 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		 * @return array
 		 */
 		public function get_license_key() {
-			if ( class_exists( 'BSF_License_Manager' ) ) {
-				if ( BSF_License_Manager::bsf_is_active_license( 'astra-pro-sites' ) ) {
-					return BSF_License_Manager::instance()->bsf_get_product_info( 'astra-pro-sites', 'purchase_key' );
-				}
+			if ( bsf_is_active_license( 'astra-pro-sites' ) ) {
+				return bsf_get_product_info( 'astra-pro-sites', 'purchase_key' );
 			}
 
 			return '';

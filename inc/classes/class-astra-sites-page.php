@@ -505,7 +505,10 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 					<div class="form">
 						<div class="filters-wrap favorite-filters-wrap header-actions">
 							<div class="filters-slug">
+								<?php bsf_connect_link(); ?>
 								<ul class="filter-links">
+									<li>
+									</li>
 									<li>
 										<a title="<?php esc_html_e( 'My Favorite', 'astra-sites' ); ?>" href="#" class="astra-sites-show-favorite-button">
 											<i class="icon-heart"></i>

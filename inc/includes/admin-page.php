@@ -521,13 +521,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 							<span class="dashicons dashicons-editor-help astra-sites-invalid-mini-agency-license-button"></span>
 						<# } else if( 'free' !== data['astra-sites-type'] && ! astraSitesVars.license_status ) { #>
 							<# if( ! astraSitesVars.isPro ) { #>
-								<a class="button button-hero button-primary " href="{{astraSitesVars.getProURL}}" target="_blank">{{astraSitesVars.getProText}}<i class="dashicons dashicons-external"></i></a>
-								<span class="dashicons dashicons-editor-help astra-sites-get-agency-bundle-button"></span>
+								<a class="button button-hero button-primary " href="{{astraSitesVars.getProURL}}" >{{astraSitesVars.getProText}}</a>
 							<# } else { #>
 								<span class="button button-hero button-primary astra-sites-activate-license-button">{{astraSitesVars.getProText}}</span>
 							<# } #>
-						<# } else { #>
-							<div class="button button-hero button-primary site-import-site-button">Import Site</div>
+						<# } else {
+						console.log( data );
+						#>
+							<a class="button button-hero button-primary" href="<?php echo bsf_install_demo_site_url(); ?>&site_id={{data['site_id']}}">Install Plugins & Import Site</a>
+							<!-- <div class="button button-hero button-primary site-import-site-button">Import Site</div> -->
 							<div style="margin-left: 5px;" class="button button-hero button-primary site-import-layout-button disabled"><?php esc_html_e( 'Import Template', 'astra-sites' ); ?></div>
 						<# } #>
 					</div>

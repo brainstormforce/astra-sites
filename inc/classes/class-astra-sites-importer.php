@@ -488,8 +488,8 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) {
 			$request_params = apply_filters(
 				'astra_sites_api_params',
 				array(
-					'purchase_key' => '',
-					'site_url'     => '',
+					'purchase_key' => Astra_Sites::get_instance()->get_license_key(),
+					'site_url'     => site_url(),
 				)
 			);
 
