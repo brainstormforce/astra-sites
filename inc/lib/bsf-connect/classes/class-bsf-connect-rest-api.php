@@ -127,40 +127,60 @@ if ( ! class_exists( 'BSF_Connect_Rest_API' ) ) :
 		 * @return WP_Error|WP_REST_Response Response object on success, or WP_Error object on failure.
 		 */
 		public function install_plugin( $request ) {
+
 			$args = $request->get_params();
 
 			include_once( ABSPATH . 'wp-admin/includes/plugin.php' );
-			include_once( ABSPATH . 'wp-admin/includes/class-wp-upgrader.php' );
-			include_once( ABSPATH . 'wp-admin/includes/plugin-install.php' );
 
 			$api = new stdClass();			
 			// $api->version = isset( $args['version'] ) ? $args['version'] : '';
 			$api->slug = isset( $args['slug'] ) ? $args['slug'] : '';
+			$api->init = isset( $args['init'] ) ? $args['init'] : '';
 			$api->name = isset( $args['name'] ) ? $args['name'] : '';
 			$api->download_link = isset( $args['download_link'] ) ? $args['download_link'] : '';
 
-			$skin     = new WP_Ajax_Upgrader_Skin();
-			$upgrader = new Plugin_Upgrader( $skin );
-			$result   = $upgrader->install( $api->download_link );
 
-			if ( is_wp_error( $result ) ) {
-				return $result->get_error_message();
-			} elseif ( is_wp_error( $skin->result ) ) {
-				return $skin->result->get_error_message();
-			} elseif ( $skin->get_errors()->has_errors() ) {
-				return $skin->get_error_messages();
-			} elseif ( is_null( $result ) ) {
-				global $wp_filesystem;
+			if( file_exists( WP_PLUGIN_DIR . '/' . $api->init ) ) {
 
-				// Pass through the error from WP_Filesystem if one was raised.
-				if ( $wp_filesystem instanceof WP_Filesystem_Base && is_wp_error( $wp_filesystem->errors ) && $wp_filesystem->errors->has_errors() ) {
-					return esc_html( $wp_filesystem->errors->get_error_message() );
+				$activate = activate_plugin( $api->init, '', false, true );
+
+				if ( is_wp_error( $activate ) ) {
+					return __( 'Plugin Activation Error: ' . $activate->get_error_message() );
+				}
+			} else {
+				include_once( ABSPATH . 'wp-admin/includes/class-wp-upgrader.php' );
+				include_once( ABSPATH . 'wp-admin/includes/plugin-install.php' );
+
+				$skin     = new WP_Ajax_Upgrader_Skin();
+				$upgrader = new Plugin_Upgrader( $skin );
+				$result   = $upgrader->install( $api->download_link );
+
+				if ( is_wp_error( $result ) ) {
+					return $result->get_error_message();
+				} elseif ( is_wp_error( $skin->result ) ) {
+					return $skin->result->get_error_message();
+				} elseif ( $skin->get_errors()->has_errors() ) {
+					return $skin->get_error_messages();
+				} elseif ( is_null( $result ) ) {
+					global $wp_filesystem;
+
+					// Pass through the error from WP_Filesystem if one was raised.
+					if ( $wp_filesystem instanceof WP_Filesystem_Base && is_wp_error( $wp_filesystem->errors ) && $wp_filesystem->errors->has_errors() ) {
+						return esc_html( $wp_filesystem->errors->get_error_message() );
+					}
+
+					return __( 'Unable to connect to the filesystem. Please confirm your credentials.', 'astra-sites' );
 				}
 
-				return __( 'Unable to connect to the filesystem. Please confirm your credentials.', 'astra-sites' );
+				$activate = activate_plugin( $api->init, '', false, true );
+
+				if ( is_wp_error( $activate ) ) {
+					return __( 'Plugin Activation Error: ' . $activate->get_error_message() );
+				}
+
+				return __( 'Plugin Installed and Activated!', 'astra-sites' );
 			}
 
-			return __( 'Plugin installed!', 'astra-sites' );
 		}
 
 		/**
