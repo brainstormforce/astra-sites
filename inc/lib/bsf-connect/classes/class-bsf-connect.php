@@ -39,10 +39,10 @@ if( ! class_exists( 'BSF_Connect' ) ) :
 		public function __construct() {
 			require_once BSF_CONNECT_DIR . 'classes/helper-functions.php';
 			require_once BSF_CONNECT_DIR . 'classes/class-bsf-connect-rest-api.php';
-			add_action( 'admin_notices', array( $this, 'admin_notices' ) );
+			// add_action( 'admin_notices', array( $this, 'admin_notices' ) );
 		}
 
-		function admin_notices() {
+		/*function admin_notices() {
 			$url = add_query_arg( array(
 				'site_url'    => site_url(),
 				'product'     => 'astra-pro-sites',
@@ -56,7 +56,7 @@ if( ! class_exists( 'BSF_Connect' ) ) :
 				<p><a href="<?php echo $url; ?>">Connect</a></p>
 			</div>
 			<?php
-		}
+		}*/
 
 		function get_api_args( $args ) {
 
