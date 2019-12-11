@@ -55,3 +55,8 @@ function bsf_install_demo_site_url() {
 
 	return BSF_Connect::get_instance()->get_api_url( $args );
 }
+
+function bsf_install_demo_site_args( $args = array() )
+{
+	return BSF_Connect::get_instance()->get_api_args( $args );
+}

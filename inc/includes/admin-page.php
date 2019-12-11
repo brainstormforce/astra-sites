@@ -528,8 +528,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						<# } else {
 						console.log( data );
 						#>
-							<a class="button button-hero button-primary" href="<?php echo bsf_install_demo_site_url(); ?>&site_id={{data['site_id']}}">Install Plugins & Import Site</a>
-							<!-- <div class="button button-hero button-primary site-import-site-button">Import Site</div> -->
+							<div class="button button-hero button-primary site-import-site-button">Import Site</div>
 							<div style="margin-left: 5px;" class="button button-hero button-primary site-import-layout-button disabled"><?php esc_html_e( 'Import Template', 'astra-sites' ); ?></div>
 						<# } #>
 					</div>

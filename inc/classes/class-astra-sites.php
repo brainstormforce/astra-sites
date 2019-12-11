@@ -1254,7 +1254,9 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 					'cpt_slug'                   => 'astra-sites',
 					'parent_category'            => '',
 					'compatibility_status' 		 => $this->get_compatibility_status(),
-
+					'bsf_connect_server_url'     => BSF_CONNECT_SERVER_URL,
+					'bsf_install_demo_site_url'  => bsf_install_demo_site_url(),
+					'bsf_install_demo_site_args' => bsf_install_demo_site_args(),
 				)
 			);
 
@@ -1764,11 +1766,13 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		 * @return array
 		 */
 		public function get_license_key() {
+			$purchase_key = '';
+
 			if ( bsf_is_active_license( 'astra-pro-sites' ) ) {
-				return bsf_get_product_info( 'astra-pro-sites', 'purchase_key' );
+				$purchase_key = bsf_get_product_info( 'astra-pro-sites', 'purchase_key' );
 			}
 
-			return '';
+			return apply_filters( 'astra_sites_get_license_key', $purchase_key );
 		}
 
 		/**

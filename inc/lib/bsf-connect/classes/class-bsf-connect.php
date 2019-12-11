@@ -58,7 +58,7 @@ if( ! class_exists( 'BSF_Connect' ) ) :
 			<?php
 		}
 
-		function get_api_url( $args = array() ) {
+		function get_api_args( $args ) {
 
 			$query_args = isset( $_SERVER['QUERY_STRING'] ) ? $_SERVER['QUERY_STRING'] : '';
 
@@ -72,16 +72,23 @@ if( ! class_exists( 'BSF_Connect' ) ) :
 			$defaults = array(
 				'site_url'     => site_url(),
 				'product'      => 'astra-pro-sites',
-				'redirect_url' => $url,
+				'open-popup'   => 'yes',
 			);
 
-			if( bsf_is_active_license( 'astra-pro-sites' ) ) {
-				$defaults['action'] = 'deactivation';
-			} else {
-				$defaults['action'] = 'activation';
-			}
+			// if( bsf_is_active_license( 'astra-pro-sites' ) ) {
+			// 	$defaults['action'] = 'deactivation';
+			// } else {
+			// 	$defaults['action'] = 'activation';
+			// }
 
-			$args = wp_parse_args( $args, $defaults );
+			$defaults['redirect_url'] = $url;
+
+			return wp_parse_args( $args, $defaults );
+		}
+
+		function get_api_url( $args = array() ) {
+
+			$args = $this->get_api_args( $args );
 
 			return add_query_arg( $args, BSF_CONNECT_SERVER_URL );
 		}
