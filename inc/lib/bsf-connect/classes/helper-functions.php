@@ -40,7 +40,12 @@ function bsf_get_product_info( $product_id, $key ) {
 }
 
 function bsf_connect_link() {
-	$api_url = BSF_Connect::get_instance()->get_api_url();
+
+	$args = array(
+		'action' => bsf_is_active_license( 'astra-pro-sites' ) ? 'deactivate' : 'activate',
+	);
+
+	$api_url = BSF_Connect::get_instance()->get_api_url( $args );
 	$api_text = BSF_Connect::get_instance()->get_api_status_text();
 	?>
 	<a href="<?php echo $api_url; ?>"><?php echo $api_text; ?></a>
