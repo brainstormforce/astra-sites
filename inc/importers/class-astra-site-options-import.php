@@ -54,9 +54,6 @@ class Astra_Site_Options_Import {
 			'page_on_front',
 			'page_for_posts',
 
-			// Plugin: SiteOrigin Widgets Bundle.
-			'siteorigin_widgets_active',
-
 			// Plugin: Elementor.
 			'elementor_container_width',
 			'elementor_cpt_support',

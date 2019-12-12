@@ -114,6 +114,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 			add_action( 'wp_ajax_astra-sites-update-library', array( $this, 'update_library' ) );
 			add_action( 'wp_ajax_astra-sites-update-library-complete', array( $this, 'update_library_complete' ) );
 			add_action( 'wp_ajax_astra-sites-import-categories', array( $this, 'import_categories' ) );
+			add_action( 'wp_ajax_astra-sites-import-site-categories', array( $this, 'import_site_categories' ) );
 			add_action( 'wp_ajax_astra-sites-import-block-categories', array( $this, 'import_block_categories' ) );
 			add_action( 'wp_ajax_astra-sites-import-page-builders', array( $this, 'import_page_builders' ) );
 			add_action( 'wp_ajax_astra-sites-import-blocks', array( $this, 'import_blocks' ) );
@@ -129,6 +130,17 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 		 */
 		public function import_categories() {
 			Astra_Sites_Batch_Processing_Importer::get_instance()->import_categories();
+			wp_send_json_success();
+		}
+
+		/**
+		 * Import Site Categories
+		 *
+		 * @since 2.0.0
+		 * @return void
+		 */
+		function import_site_categories() {
+			Astra_Sites_Batch_Processing_Importer::get_instance()->import_site_categories();
 			wp_send_json_success();
 		}
 
@@ -300,12 +312,22 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 			update_option( 'astra-sites-batch-status-string', 'Batch Started!' );
 
 			// Added the categories.
-			error_log( 'Added Categories in queue.' );
-			update_option( 'astra-sites-batch-status-string', 'Added Categories in queue.' );
+			error_log( 'Added Tags in queue.' );
+			update_option( 'astra-sites-batch-status-string', 'Added Tags in queue.' );
 			self::$process_site_importer->push_to_queue(
 				array(
 					'instance' => Astra_Sites_Batch_Processing_Importer::get_instance(),
 					'method'   => 'import_categories',
+				)
+			);
+
+			// Added the categories.
+			error_log( 'Added Site Categories in queue.' );
+			update_option( 'astra-sites-batch-status-string', 'Added Site Categories in queue.' );
+			self::$process_site_importer->push_to_queue(
+				array(
+					'instance' => Astra_Sites_Batch_Processing_Importer::get_instance(),
+					'method'   => 'import_site_categories',
 				)
 			);
 

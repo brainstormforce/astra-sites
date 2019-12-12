@@ -26,9 +26,17 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		public $api_url;
 
 		/**
-		 * API URL which is used to get the response from Pixabay.
+		 * Search API URL which is used to get the response from.
 		 *
 		 * @since  x.x.x
+		 * @var (String) URL
+		 */
+		public $search_url;
+
+		/**
+		 * API URL which is used to get the response from Pixabay.
+		 *
+		 * @since  2.0.0
 		 * @var (String) URL
 		 */
 		public $pixabay_url;
@@ -36,7 +44,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		/**
 		 * API Key which is used to get the response from Pixabay.
 		 *
-		 * @since  x.x.x
+		 * @since  2.0.0
 		 * @var (String) URL
 		 */
 		public $pixabay_api_key;
@@ -60,7 +68,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		/**
 		 * Localization variable
 		 *
-		 * @since  x.x.x
+		 * @since  2.0.0
 		 * @var (Array) $wp_upload_url
 		 */
 		public $wp_upload_url = '';
@@ -118,12 +126,44 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			add_action( 'wp_ajax_astra-page-elementor-batch-process', array( $this, 'elementor_batch_process' ) );
 
 			add_action( 'delete_attachment', array( $this, 'delete_astra_images' ) );
+			add_filter( 'heartbeat_received', array( $this, 'search_push' ), 10, 2 );
+		}
+
+		/**
+		 * Push Data to Search API.
+		 *
+		 * @since  x.x.x
+		 * @param Object $response Response data object.
+		 * @param Object $data Data object.
+		 * @return void
+		 */
+		public function search_push ( $response, $data ) {
+
+			// If we didn't receive our data, don't send any back.
+			if ( empty( $data['ast-sites-search-terms'] ) ) {
+				return $response;
+			}
+
+			$args = array(
+				'timeout'   => 3,
+				'blocking'  => true,
+				'sslverify' => apply_filters( 'https_local_ssl_verify', false ),
+				'body'		=> array(
+					'search' => $data['ast-sites-search-terms'],
+					'url'    => esc_url( site_url() ),
+				),
+			);
+
+			$result = wp_remote_post( $this->search_url, $args );
+			$response['ast-sites-search-terms'] = wp_remote_retrieve_body( $result );
+
+			return $response;
 		}
 
 		/**
 		 * Before Astra Image delete, remove from options.
 		 *
-		 * @since  x.x.x
+		 * @since  2.0.0
 		 * @param int $id ID to deleting image.
 		 * @return void
 		 */
@@ -152,7 +192,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		/**
 		 * Enqueue Image Search scripts into Beaver Builder Editor.
 		 *
-		 * @since  x.x.x
+		 * @since  2.0.0
 		 * @return void
 		 */
 		public function image_search_scripts() {
@@ -175,7 +215,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		/**
 		 * Elementor Batch Process via AJAX
 		 *
-		 * @since x.x.x
+		 * @since 2.0.0
 		 */
 		public function elementor_batch_process() {
 
@@ -244,7 +284,12 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			} elseif ( is_wp_error( $request ) ) {
 				wp_send_json_error( 'API Request is failed due to ' . $request->get_error_message() );
 			} elseif ( 200 !== (int) wp_remote_retrieve_response_code( $request ) ) {
-				wp_send_json_error( wp_remote_retrieve_body( $request ) );
+				$demo_data = json_decode( wp_remote_retrieve_body( $request ), true );
+				if( is_array( $demo_data ) && isset( $demo_data['code'] ) ) {
+					wp_send_json_error( $demo_data['message'] );
+				} else {
+					wp_send_json_error( wp_remote_retrieve_body( $request ) );
+				}
 			}
 		}
 
@@ -500,7 +545,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		/**
 		 * Import Image.
 		 *
-		 * @since  x.x.x
+		 * @since  2.0.0
 		 */
 		public function create_image() {
 
@@ -857,6 +902,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				array(
 					'id'               => 'astra-theme-activation-nag',
 					'type'             => 'error',
+					'class'            => 'astra-sites-notice',
 					'show_if'          => ( ! defined( 'ASTRA_THEME_SETTINGS' ) ) ? true : false,
 					/* translators: 1: theme.php file*/
 					'message'          => sprintf( __( '<p>Astra Theme needs to be active for you to use currently installed "%1$s" plugin. <a href="#" class="%3$s" data-theme-slug="astra">Install & Activate Now</a></p>', 'astra-sites' ), ASTRA_SITES_NAME, esc_url( admin_url( 'themes.php?theme=astra' ) ), $theme_status ),
@@ -947,6 +993,8 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		public function set_api_url() {
 			$this->api_url = apply_filters( 'astra_sites_api_url', trailingslashit( self::get_api_domain() ) . '/wp-json/wp/v2/' );
 
+			$this->search_url = apply_filters( 'astra_sites_search_api_url', trailingslashit( self::get_api_domain() ) . '/wp-json/analytics/v2/search/' );
+
 			$this->pixabay_url     = 'https://pixabay.com/api/';
 			$this->pixabay_api_key = '2727911-c4d7c1031949c7e0411d7e81e';
 		}
@@ -954,7 +1002,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		/**
 		 * Enqueue Image Search scripts.
 		 *
-		 * @since  x.x.x
+		 * @since  2.0.0
 		 * @return void
 		 */
 		public function image_search_assets() {
@@ -1018,7 +1066,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 						'horizontal' => __( 'Horizontal', 'astra-sites' ),
 					),
 					'integration'         => get_option( '_astra_images_integration', array() ),
-					'title'               => __( 'Free Images by Astra', 'astra-sites' ),
+					'title'               => __( 'Free Images by Pixabay', 'astra-sites' ),
 					'search_placeholder'  => __( 'Pixabay Search - Ex: flowers', 'astra-sites' ),
 					'downloading'         => __( 'Downloading...', 'astra-sites' ),
 					'validating'          => __( 'Validating...', 'astra-sites' ),
@@ -1169,7 +1217,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 					'XMLReaderDisabled'          => ! class_exists( 'XMLReader' ) ? true : false,
 					'strings'                    => array(
 						/* translators: %s are HTML tags. */
-						'warningXMLReader'         => sprintf( __( '%1$sRequired XMLReader PHP extension is missing on your server!%2$sAstra Sites import requires XMLReader extension to be installed. Please contact your web hosting provider and ask them to install and activate the XMLReader PHP extension.', 'astra-sites' ), '<div class="notice astra-sites-xml-notice notice-error"><p><b>', '</b></p><p>', '</p></div>' ),
+						'warningXMLReader'         => sprintf( __( '%1$sRequired XMLReader PHP extension is missing on your server!%2$sAstra Sites import requires XMLReader extension to be installed. Please contact your web hosting provider and ask them to install and activate the XMLReader PHP extension.', 'astra-sites' ), '<div class="notice astra-sites-notice astra-sites-xml-notice notice-error"><p><b>', '</b></p><p>', '</p></div>' ),
 						'warningBeforeCloseWindow' => __( 'Warning! Astra Site Import process is not complete. Don\'t close the window until import process complete. Do you still want to leave the window?', 'astra-sites' ),
 						'importFailedBtnSmall'     => __( 'Error!', 'astra-sites' ),
 						'importFailedBtnLarge'     => __( 'Error! Read Possibilities.', 'astra-sites' ),
@@ -1184,6 +1232,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 						'bulkInstall'          => __( 'Installing Required Plugins..', 'astra-sites' ),
 						'serverConfiguration'  => esc_url( 'https://wpastra.com/docs/?p=1314&utm_source=demo-import-panel&utm_campaign=import-error&utm_medium=wp-dashboard' ),
 						'importWidgetsSuccess' => __( 'Imported Widgets!', 'astra-sites' ),
+						'themeInstall'         => __( 'Installing Astra Theme..', 'astra-sites' ),
 					),
 					'default_page_builder'       => $default_page_builder,
 					'default_page_builder_sites' => Astra_Sites_Page::get_instance()->get_sites_by_page_builder( $default_page_builder ),
@@ -1204,10 +1253,31 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 					'page_builder'               => 'astra-site-page-builder',
 					'cpt_slug'                   => 'astra-sites',
 					'parent_category'            => '',
+					'compatibility_status' 		 => $this->get_compatibility_status(),
+
 				)
 			);
 
 			return $data;
+		}
+	
+		/**
+		 * Import Compatibility Errors
+		 *
+		 * @since 2.0.0
+		 * @return mixed
+		 */
+		function get_compatibility_status() {
+
+			if ( ! class_exists( 'XMLReader' ) ) {
+				return 'xmlreader';
+			}
+
+			if ( ! function_exists( 'curl_version' ) ) {
+				return 'curl';
+			}
+
+			return '';
 		}
 
 		/**
@@ -1292,6 +1362,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 					'astra_block_categories'     => get_option( 'astra-blocks-categories', array() ),
 					'siteURL'                    => site_url(),
 					'_ajax_nonce'                => wp_create_nonce( 'astra-sites' ),
+					'syncCompleteMessage'        => self::get_instance()->get_sync_complete_message(),
 				)
 			);
 
@@ -1393,14 +1464,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				}
 			}
 
-			$plugin_init        = ( isset( $_POST['init'] ) ) ? esc_attr( $_POST['init'] ) : $init;
-			$astra_site_options = ( isset( $_POST['options'] ) ) ? json_decode( stripslashes( $_POST['options'] ) ) : $options;
-			$enabled_extensions = ( isset( $_POST['enabledExtensions'] ) ) ? json_decode( stripslashes( $_POST['enabledExtensions'] ) ) : $enabled_extensions;
-
-			$data = array(
-				'astra_site_options' => $astra_site_options,
-				'enabled_extensions' => $enabled_extensions,
-			);
+			$plugin_init = ( isset( $_POST['init'] ) ) ? esc_attr( $_POST['init'] ) : $init;
 
 			$activate = activate_plugin( $plugin_init, '', false, true );
 
@@ -1417,7 +1481,10 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				}
 			}
 
-			do_action( 'astra_sites_after_plugin_activation', $plugin_init, $data );
+			$options            = ( isset( $_POST['options'] ) ) ? json_decode( stripslashes( $_POST['options'] ) ) : $options;
+			$enabled_extensions = ( isset( $_POST['enabledExtensions'] ) ) ? json_decode( stripslashes( $_POST['enabledExtensions'] ) ) : $enabled_extensions;
+
+			$this->after_plugin_activate( $plugin_init, $options, $enabled_extensions );
 
 			if ( defined( 'WP_CLI' ) ) {
 				WP_CLI::line( 'Plugin Activated!' );
@@ -1437,9 +1504,11 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		 * @since 2.0.0
 		 *
 		 * @param  array $required_plugins Required Plugins.
+		 * @param  array $options            Site Options.
+		 * @param  array $enabled_extensions Enabled Extensions.
 		 * @return mixed
 		 */
-		public function required_plugin( $required_plugins = array() ) {
+		public function required_plugin( $required_plugins = array(), $options = array(), $enabled_extensions = array() ) {
 
 			// Verify Nonce.
 			if ( ! defined( 'WP_CLI' ) ) {
@@ -1476,7 +1545,10 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				),
 			);
 
-			if ( count( $required_plugins ) > 0 ) {
+			$options            = ( isset( $_POST['options'] ) ) ? json_decode( stripslashes( $_POST['options'] ) ) : $options;
+			$enabled_extensions = ( isset( $_POST['enabledExtensions'] ) ) ? json_decode( stripslashes( $_POST['enabledExtensions'] ) ) : $enabled_extensions;
+
+			if ( ! empty( $required_plugins ) ) {
 				foreach ( $required_plugins as $key => $plugin ) {
 
 					/**
@@ -1490,6 +1562,8 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 						// Pro - Active.
 						if ( is_plugin_active( $plugin_pro['init'] ) ) {
 							$response['active'][] = $plugin_pro;
+
+							$this->after_plugin_activate( $plugin['init'], $options, $enabled_extensions );
 
 							// Pro - Inactive.
 						} else {
@@ -1515,6 +1589,8 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 							// Lite - Active.
 						} else {
 							$response['active'][] = $plugin;
+
+							$this->after_plugin_activate( $plugin['init'], $options, $enabled_extensions );
 						}
 					}
 				}
@@ -1532,6 +1608,25 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				wp_send_json_success( $data );
 			}
 
+		}
+
+		/**
+		 * After Plugin Activate
+		 *
+		 * @since 2.0.0
+		 *
+		 * @param  string $plugin_init        Plugin Init File.
+		 * @param  array  $options            Site Options.
+		 * @param  array  $enabled_extensions Enabled Extensions.
+		 * @return void
+		 */
+		function after_plugin_activate( $plugin_init = '', $options = array(), $enabled_extensions = array() ) {
+			$data = array(
+				'astra_site_options' => $options,
+				'enabled_extensions' => $enabled_extensions,
+			);
+
+			do_action( 'astra_sites_after_plugin_activation', $plugin_init, $data );
 		}
 
 		/**

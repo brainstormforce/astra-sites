@@ -736,6 +736,7 @@
 
 #ast-sites-modal .search-form {
     width: 100%;
+    border-radius: 6px;
 }
 
 #ast-sites-modal .astra-sites-sync-library-button.updating-message {
@@ -748,7 +749,7 @@
     background: #fff;
     line-height: 40px;
     border-bottom: 1px solid #ececec;
-    border-radius: 20px;
+    border-radius: 6px;
     font-size: 13px;
     padding: 5px 20px;
     border: 1px solid #dedede;
@@ -795,6 +796,7 @@
     margin-left: 15px;
     font-size: 13px;
     line-height: 1.5em;
+    position: relative;
 }
 
 #ast-sites-modal .notice-dismiss:before {
@@ -831,7 +833,7 @@
     background: none;
     color: #72777c;
     cursor: pointer;
-    padding:8px 5px;
+    padding:0;
 }
 
 #ast-sites-modal .button-hero {
@@ -908,8 +910,6 @@
     background: #ffffff;
     padding: 8px 15px;
     border-right: 4px solid #00a0d2;
-    transform: translateX(-120%);
-    -webkit-transform: translateX(-120%);
     box-shadow: 0 1px 1px rgba(0,0,0,.04);
     border-radius: 2px;
     vertical-align: middle;
@@ -920,14 +920,10 @@
 }
 
 #ast-sites-modal .ast-sites-floating-notice-wrap.slide-out {
-    animation: slide-out 0.5s forwards;
-    -webkit-animation: slide-out 0.5s forwards;
     display: none;
 }
 
 #ast-sites-modal .ast-sites-floating-notice-wrap.slide-in {
-    animation: slide-in 0.5s forwards;
-    -webkit-animation: slide-in 0.5s forwards;
     display: block;
 }
 

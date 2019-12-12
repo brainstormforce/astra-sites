@@ -72,9 +72,11 @@ if ( ! class_exists( 'Astra_Sites_Compatibility_Astra_Pro' ) ) :
 		 */
 		public function astra_pro( $plugin_init = '', $data = array() ) {
 
-			if ( 'astra-addon/astra-addon.php' === $plugin_init ) {
+			if ( 'astra-addon/astra-addon.php' === $plugin_init && ! empty( $data ) ) {
 
-				$data = wp_json_decode( wp_json_encode( $data ), true );
+				if ( is_array( $data ) ) {
+					$data = json_decode( wp_json_encode( $data ), true );
+				}
 
 				if ( isset( $data['enabled_extensions'] ) ) {
 					$extensions = $data['enabled_extensions'];

@@ -64,6 +64,10 @@ if ( class_exists( 'WP_Background_Process' ) ) :
 				error_log( '-------- Importing Blocks Categories --------' );
 				update_option( 'astra-sites-batch-status-string', 'Importing Blocks Categories' );
 				$process->import_block_categories();
+			} elseif ( 'import_site_categories' === $method ) {
+				error_log( '-------- Importing Site Categories --------' );
+				update_option( 'astra-sites-batch-status-string', 'Importing Site Categories' );
+				$process->import_site_categories();
 			}
 
 			return false;

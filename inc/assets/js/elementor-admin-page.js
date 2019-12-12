@@ -278,7 +278,7 @@ var AstraSitesAjaxQueue = (function() {
 			}
 
 			button.addClass( 'updating-message');
-			$elscope.find( '#ast-sites-floating-notice-wrap-id .ast-sites-floating-notice' ).html( 'Syncing template library in the background. The process can take anywhere between 2 to 3 minutes. We will notify you once done. <button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss</span></button>' );
+			$elscope.find( '#ast-sites-floating-notice-wrap-id .ast-sites-floating-notice' ).html( '<span class="message">Syncing template library in the background. The process can take anywhere between 2 to 3 minutes. We will notify you once done.<span><button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss</span></button>' );
 			$elscope.find( '#ast-sites-floating-notice-wrap-id' ).addClass( 'slide-in' );
 
 			$.ajax({
@@ -294,62 +294,91 @@ var AstraSitesAjaxQueue = (function() {
 			.done(function ( response ) {
 				button.removeClass( 'updating-message');
 
-				if( 'ajax' === response.data ) {
+				// Import categories.
+				$.ajax({
+					url  : astraElementorSites.ajaxurl,
+					type : 'POST',
+					data : {
+						action : 'astra-sites-import-categories',
+					},
+				})
+				.fail(function( jqXHR ){
+					console.log( jqXHR );
+				});
 
-					// Import categories.
-					$.ajax({
-						url  : astraElementorSites.ajaxurl,
-						type : 'POST',
-						data : {
-							action : 'astra-sites-import-categories',
-						},
-					})
-					.fail(function( jqXHR ){
-						console.log( jqXHR );
-					});
+				// Import Site Categories.
+				$.ajax({
+					url  : astraElementorSites.ajaxurl,
+					type : 'POST',
+					data : {
+						action : 'astra-sites-import-site-categories',
+					},
+				})
+				.fail(function( jqXHR ){
+					console.log( jqXHR );
+				});
 
-					// Import Blocks.
-					$.ajax({
-						url  : astraElementorSites.ajaxurl,
-						type : 'POST',
-						data : {
-							action : 'astra-sites-import-blocks',
-						},
-					})
-					.fail(function( jqXHR ){
-						console.log( jqXHR );
-					});
+				// Import Blocks.
+				$.ajax({
+					url  : astraElementorSites.ajaxurl,
+					type : 'POST',
+					data : {
+						action : 'astra-sites-import-blocks',
+					},
+				})
+				.fail(function( jqXHR ){
+					console.log( jqXHR );
+				});
 
-					$.ajax({
-						url  : astraElementorSites.ajaxurl,
-						type : 'POST',
-						data : {
-							action : 'astra-sites-get-sites-request-count',
-						},
-					})
-					.fail(function( jqXHR ){
-						console.log( jqXHR );
-				    })
-					.done(function ( response ) {
-						if( response.success ) {
-							var total = response.data;
+				// Import Block Categories.
+				$.ajax({
+					url  : astraElementorSites.ajaxurl,
+					type : 'POST',
+					data : {
+						action : 'astra-sites-import-block-categories',
+					},
+				})
+				.fail(function( jqXHR ){
+					console.log( jqXHR );
+				});
 
-							for( let i = 1; i <= total; i++ ) {
-								AstraSitesAjaxQueue.add({
-									url: astraElementorSites.ajaxurl,
-									type: 'POST',
-									data: {
-										action  : 'astra-sites-import-sites',
-										page_no : i,
+				$.ajax({
+					url  : astraElementorSites.ajaxurl,
+					type : 'POST',
+					data : {
+						action : 'astra-sites-get-sites-request-count',
+					},
+				})
+				.fail(function( jqXHR ){
+					console.log( jqXHR );
+			    })
+				.done(function ( response ) {
+					if( response.success ) {
+						var total = response.data;
+
+						for( let i = 1; i <= total; i++ ) {
+							AstraSitesAjaxQueue.add({
+								url: astraElementorSites.ajaxurl,
+								type: 'POST',
+								data: {
+									action  : 'astra-sites-import-sites',
+									page_no : i,
+								},
+								success: function( result ){
+
+									if( i === total && astraElementorSites.syncCompleteMessage ) {
+										$elscope.find( '#ast-sites-floating-notice-wrap-id').addClass('refreshed-notice').find('.ast-sites-floating-notice' ).html( '<span class="message">'+astraElementorSites.syncCompleteMessage+'</span><button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss</span></button>' );
+									} else {
+										$elscope.find( '#ast-sites-floating-notice-wrap-id .ast-sites-floating-notice' ).find('.message').text('Importing 15 Templates for each page. Now imported ' + i + ' page of ' + total + '. You can close this window. The Import process works in the background too. ');
 									}
-								});
-							}
-
-							// Run the AJAX queue.
-							AstraSitesAjaxQueue.run();
+								}
+							});
 						}
-					});
-				}
+
+						// Run the AJAX queue.
+						AstraSitesAjaxQueue.run();
+					}
+				});
 			});
 		},
 
@@ -418,6 +447,7 @@ var AstraSitesAjaxQueue = (function() {
 				data : {
 					action      : 'astra-sites-import-wpforms',
 					wpforms_url : wpforms_url,
+					_ajax_nonce : astraElementorSites._ajax_nonce,
 				},
 				beforeSend: function() {
 					console.log( 'Importing WP Forms..' );
@@ -594,7 +624,7 @@ var AstraSitesAjaxQueue = (function() {
 			AstraElementorSitesAdmin._bulkPluginInstallActivate();
 		},
 
-		_unescape( input_string ) {
+		_unescape: function( input_string ) {
 			var title = _.unescape( input_string );
 
 			// @todo check why below character not escape with function _.unescape();
@@ -603,7 +633,7 @@ var AstraSitesAjaxQueue = (function() {
 			return title;
 		},
 
-		_unescape_lower( input_string ) {
+		_unescape_lower: function( input_string ) {
 			input_string = $( "<textarea/>") .html( input_string ).text()
 			var input_string = AstraElementorSitesAdmin._unescape( input_string );
 			return input_string.toLowerCase();
@@ -796,7 +826,6 @@ var AstraSitesAjaxQueue = (function() {
 			$elscope.find( '.dialog-lightbox-message' ).show();
 			$elscope.find( '.dialog-lightbox-content' ).html( pages_list );
 			AstraElementorSitesAdmin._loadLargeImages();
-			AstraElementorSitesAdmin._autocomplete();
 		},
 
 		_appendBlocks: function( data ) {
@@ -807,7 +836,6 @@ var AstraSitesAjaxQueue = (function() {
 			$elscope.find( '.dialog-lightbox-message-block' ).show();
 			$elscope.find( '.dialog-lightbox-content-block' ).html( blocks_list );
 			AstraElementorSitesAdmin._masonry();
-			AstraElementorSitesAdmin._autocomplete();
 		},
 
 		_masonry: function() {
@@ -821,56 +849,6 @@ var AstraSitesAjaxQueue = (function() {
 					itemSelector: '.astra-sites-library-template'
 				});
 			});
-		},
-
-		_autocomplete: function() {
-
-			return;
-
-			var tags = astraElementorSites.api_sites_and_pages_tags || [];
-			var sites = astraElementorSites.default_page_builder_sites || [];
-
-			// Add site & pages tags in autocomplete.
-			var strings = [];
-			for( tag_index in tags ) {
-				strings.push( _.unescape( tags[ tag_index ]['name'] ));
-			}
-
-			// Add site title's in autocomplete.
-			for( site_id in sites ) {
-				var title = _.unescape( sites[ site_id ]['title'] );
-
-				// @todo check why below character not escape with function _.unescape();
-				title = title.replace('&#8211;', '-' );
-
-				strings.push( title );
-			}
-			
-			strings = strings.filter(function(item, pos) {
-			    return strings.indexOf(item) == pos;
-			})
-			strings = _.sortBy( strings );
-
-		    $elscope.find( "#wp-filter-search-input" ).autocomplete({
-		    	appendTo: ".astra-sites-autocomplete-result",
-		    	classes: {
-				    "ui-autocomplete": "astra-sites-auto-suggest"
-				},
-		    	source: function(request, response) {
-			        var results = $.ui.autocomplete.filter(strings, request.term);
-
-			        // Show only 10 results.
-			        response(results.slice(0, 15));
-			    },
-		    	open: function( event, ui ) {
-		    		$('.search-form').addClass( 'Searching' );
-		    	},
-		    	close: function( event, ui ) {
-		    		$('.search-form').removeClass( 'Searching' );
-		    	}
-		    });
-
-		    $elscope.find( "#wp-filter-search-input" ).focus();
 		},
 
 		_enableImport: function() {

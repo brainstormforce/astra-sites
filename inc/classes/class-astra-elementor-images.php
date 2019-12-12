@@ -5,7 +5,7 @@
  * This class is used to manage Pixabay Images.
  *
  * @package Astra Sites
- * @since x.x.x
+ * @since 2.0.0
  */
 
 use Elementor\Utils;
@@ -23,7 +23,7 @@ class Astra_Elementor_Images {
 	/**
 	 * Instance of Astra_Sites
 	 *
-	 * @since  x.x.x
+	 * @since  2.0.0
 	 * @var (Object) Astra_Sites
 	 */
 	private static $_instance = null;
@@ -31,7 +31,7 @@ class Astra_Elementor_Images {
 	/**
 	 * Instance of Astra_Elementor_Images.
 	 *
-	 * @since  x.x.x
+	 * @since  2.0.0
 	 *
 	 * @return object Class object.
 	 */
@@ -46,7 +46,7 @@ class Astra_Elementor_Images {
 	/**
 	 * Import Image.
 	 *
-	 * @since  x.x.x
+	 * @since  2.0.0
 	 * @param array $image Downloaded Image array.
 	 */
 	public function get_attachment_data( $image ) {

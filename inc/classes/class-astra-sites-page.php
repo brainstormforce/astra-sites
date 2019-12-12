@@ -65,7 +65,7 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 		/**
 		 * Admin Body Classes
 		 *
-		 * @since x.x.x
+		 * @since 2.0.0
 		 * @param string $classes Space separated class string.
 		 */
 		public function admin_body_class( $classes = '' ) {
@@ -100,7 +100,7 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 				$status = get_option( 'astra-sites-batch-is-complete', 'no' );
 				if ( 'yes' === $status ) {
 					?>
-					<div class="astra-sites-sync-library-message success notice notice-success is-dismissible">
+					<div class="astra-sites-sync-library-message success astra-sites-notice notice notice-success is-dismissible">
 						<p><?php Astra_Sites::get_instance()->get_sync_complete_message( true ); ?></p>
 					</div>
 					<?php
@@ -116,7 +116,7 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 				}
 
 				?>
-				<div class="notice notice-info is-dismissible astra-sites-getting-started-notice">
+				<div class="notice notice-info is-dismissible astra-sites-notice astra-sites-getting-started-notice">
 					<?php /* translators: %1$s is the admin page URL, %2$s is product name. */ ?>
 					<p><?php printf( __( 'Thank you for choosing %1$s! Check the library of <a class="astra-sites-getting-started-btn" href="%2$s">ready starter sites here »</a>', 'astra-sites' ), esc_html( $product_name ), esc_url( admin_url( 'themes.php?page=astra-sites' ) ) ); ?></p>
 				</div>
@@ -304,7 +304,7 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 
 			if ( ! class_exists( 'XMLReader' ) ) {
 				?>
-				<div class="notice astra-sites-xml-notice notice-error">
+				<div class="notice astra-sites-xml-notice astra-sites-notice notice-error">
 					<p><b><?php esc_html_e( 'Required XMLReader PHP extension is missing on your server!', 'astra-sites' ); ?></b></p>
 					<?php /* translators: %s is the white label name. */ ?>
 					<p><?php printf( esc_html__( '%s import requires XMLReader extension to be installed. Please contact your web hosting provider and ask them to install and activate the XMLReader PHP extension.', 'astra-sites' ), esc_html( ASTRA_SITES_NAME ) ); ?></p>
@@ -369,7 +369,7 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 			// Settings update message.
 			if ( isset( $_REQUEST['message'] ) && ( 'saved' === $_REQUEST['message'] || 'saved_ext' === $_REQUEST['message'] ) ) {
 				?>
-					<span id="message" class="notice notice-success is-dismissive"><p> <?php esc_html_e( 'Settings saved successfully.', 'astra-sites' ); ?> </p></span>
+					<span id="message" class="notice astra-sites-notice notice-success is-dismissive"><p> <?php esc_html_e( 'Settings saved successfully.', 'astra-sites' ); ?> </p></span>
 				<?php
 			}
 
@@ -414,7 +414,7 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 									<ul class="page-builders">
 										<?php
 										$default_page_builder = $this->get_setting( 'page_builder' );
-										$page_builders        = Astra_Sites::get_instance()->get_page_builders();
+										$page_builders        = $this->get_page_builders();
 										foreach ( $page_builders as $key => $page_builder ) {
 											?>
 											<li data-page-builder="<?php echo esc_html( $page_builder['slug'] ); ?>">
@@ -465,6 +465,36 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 						<div class="wp-filter hide-if-no-js">
 							<div class="section-left">
 								<div class="search-form">
+									<span class="page-builder-icon astra-sites__category-filter">
+										<div class="selected-page-builder">
+											<?php
+											$page_builder = $this->get_default_page_builder();
+											if ( $page_builder ) {
+												?>
+												<img src="<?php echo esc_url( $this->get_page_builder_image( $page_builder['slug'] ) ); ?>" />
+												<span class="page-builder-title"><?php echo esc_html( $page_builder['name'] ); ?></span>
+												<span class="dashicons dashicons-arrow-down"></span>
+											<?php } ?>
+										</div>
+										<ul class="page-builders">
+											<?php
+											$default_page_builder = $this->get_setting( 'page_builder' );
+											$page_builders        = Astra_Sites::get_instance()->get_page_builders();
+											foreach ( $page_builders as $key => $page_builder ) {
+												$class = '';
+												if ( $default_page_builder === $page_builder['slug'] ) {
+													$class = 'active';
+												}
+												?>
+												<li data-page-builder="<?php echo esc_html( $page_builder['slug'] ); ?>" class="<?php echo esc_html( $class ); ?>">
+													<img src="<?php echo esc_url( $this->get_page_builder_image( $page_builder['slug'] ) ); ?>" />
+													<div class="title"><?php echo esc_html( $page_builder['name'] ); ?></div>
+												</li>
+												<?php
+											}
+											?>
+										</ul>
+									</span>
 									<input autocomplete="off" placeholder="<?php esc_html_e( 'Search...', 'astra-sites' ); ?>" type="search" aria-describedby="live-search-desc" id="wp-filter-search-input" class="wp-filter-search">
 									<span class="icon-search search-icon"></span>
 									<div class="astra-sites-autocomplete-result"></div>
@@ -489,35 +519,17 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 								</ul>
 							</div>
 						</div>
-						<span class="page-builder-icon">
+						<span class="site-type-wrap">
 							<div class="selected-page-builder">
-								<?php
-								$page_builder = $this->get_default_page_builder();
-								if ( $page_builder ) {
-									?>
-									<img src="<?php echo esc_url( $this->get_page_builder_image( $page_builder['slug'] ) ); ?>" />
-									<span class="page-builder-title"><?php echo esc_html( $page_builder['name'] ); ?></span>
-									<span class="dashicons dashicons-arrow-down"></span>
-								<?php } ?>
+								<div id="astra-sites__category-filter" class="dropdown-check-list" tabindex="100">
+									<span class="astra-sites__category-filter-anchor" data-slug=""><?php esc_html_e( 'All', 'astra-sites' ); ?></span>
+									<ul class="astra-sites__category-filter-items">
+										<li class="ast-sites__filter-wrap-checkbox"><label for="radio-all"><input id="radio-all" type="radio" name="ast-sites-radio" class="checkbox" value="" checked /><?php esc_html_e( 'All', 'astra-sites' ); ?></label> </li>
+										<li class="ast-sites__filter-wrap-checkbox"><label for="radio-free"><input id="radio-free" type="radio" name="ast-sites-radio" class="checkbox" value="free" /><?php esc_html_e( 'Free', 'astra-sites' ); ?></label> </li>
+										<li class="ast-sites__filter-wrap-checkbox"><label for="radio-agency"><input id="radio-agency" type="radio" name="ast-sites-radio" class="checkbox" value="agency" /><?php esc_html_e( 'Agency', 'astra-sites' ); ?></label> </li>
+									</ul>
+								</div>
 							</div>
-							<ul class="page-builders">
-								<?php
-								$default_page_builder = $this->get_setting( 'page_builder' );
-								$page_builders        = Astra_Sites::get_instance()->get_page_builders();
-								foreach ( $page_builders as $key => $page_builder ) {
-									$class = '';
-									if ( $default_page_builder === $page_builder['slug'] ) {
-										$class = 'active';
-									}
-									?>
-									<li data-page-builder="<?php echo esc_html( $page_builder['slug'] ); ?>" class="<?php echo esc_html( $class ); ?>">
-										<img src="<?php echo esc_url( $this->get_page_builder_image( $page_builder['slug'] ) ); ?>" />
-										<div class="title"><?php echo esc_html( $page_builder['name'] ); ?></div>
-									</li>
-									<?php
-								}
-								?>
-							</ul>
 							<form id="astra-sites-welcome-form-inline" enctype="multipart/form-data" method="post" style="display: none;">
 								<div class="fields">
 									<input type="hidden" name="page_builder" class="page-builder-input" required="required" />
