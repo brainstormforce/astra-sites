@@ -2912,23 +2912,44 @@ var AstraSitesAjaxQueue = (function() {
 						}
 					}
 
-
 					if( parseInt( required_plugins.notinstalled.length ) ) {
 						var site_id = $('#site-pages').attr( 'data-site-id') || '';
 						site_id = AstraSitesAdmin._get_id( site_id );
 
-						console.log( astraSitesVars.bsf_connect_server_url );
-						if( Object.keys( astraSitesVars.bsf_install_demo_site_args ).length ) {
-							astraSitesVars.bsf_install_demo_site_args['site_id'] = site_id;
-							astraSitesVars.bsf_install_demo_site_args['action'] = 'site-import';
-						    var params = Object.keys( astraSitesVars.bsf_install_demo_site_args ).map(function(key) {
-						        return [key, astraSitesVars.bsf_install_demo_site_args[key]].map(encodeURIComponent).join("=");
-						    }).join("&");
-						    astraSitesVars.bsf_connect_server_url = astraSitesVars.bsf_connect_server_url + '/?' + params;
-							// console.log( astraSitesVars.bsf_connect_server_url );
-							// console.log( astraSitesVars.bsf_install_demo_site_args );
+						// Have any premium plugin which is not installed?
+						var has_any_premium_plugin = false;
+						for ( key in required_plugins.notinstalled ) {
+							// required_plugins.notinstalled[key]['slug'];
+							console.log( astraSitesVars.bsf_premium_plugins_slugs.includes( required_plugins.notinstalled[key]['slug'] ) );
+							if( astraSitesVars.bsf_premium_plugins_slugs.includes( required_plugins.notinstalled[key]['slug'] ) ) {
+								has_any_premium_plugin = true;
+								break;
+							}
+						}
 
-							$('.site-install-site-button').attr('href', astraSitesVars.bsf_connect_server_url ).text('Install Plugins & Import Site').removeClass('site-install-site-button astra-demo-import');
+
+						console.log( 'has_any_premium_plugin' );
+						console.log( has_any_premium_plugin );
+
+						if( has_any_premium_plugin ) {
+							console.log( astraSitesVars.bsf_connect_server_url );
+							if( Object.keys( astraSitesVars.bsf_install_demo_site_args ).length ) {
+
+								astraSitesVars.bsf_install_demo_site_args['plugins'] = required_plugins.notinstalled.map(function( value ) {
+								    return value.slug;
+								}).join(',');
+
+								astraSitesVars.bsf_install_demo_site_args['site_id'] = site_id;
+								astraSitesVars.bsf_install_demo_site_args['action'] = 'site-import';
+							    var params = Object.keys( astraSitesVars.bsf_install_demo_site_args ).map(function(key) {
+							        return [key, astraSitesVars.bsf_install_demo_site_args[key]].map(encodeURIComponent).join("=");
+							    }).join("&");
+							    astraSitesVars.bsf_connect_server_url = astraSitesVars.bsf_connect_server_url + '/?' + params;
+								// console.log( astraSitesVars.bsf_connect_server_url );
+								// console.log( astraSitesVars.bsf_install_demo_site_args );
+
+								$('.site-install-site-button').attr('href', astraSitesVars.bsf_connect_server_url ).text('Install Plugins & Import Site').removeClass('site-install-site-button astra-demo-import');
+							}
 						}
 					}
 				}

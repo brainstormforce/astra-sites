@@ -1194,7 +1194,22 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 
 			$default_page_builder = Astra_Sites_Page::get_instance()->get_setting( 'page_builder' );
 
-			$api_url = BSF_Connect::get_instance()->get_api_url( );
+			$args = array(
+				'action' => bsf_is_active_license( 'astra-pro-sites' ) ? 'deactivate' : 'activate',
+			);
+
+			$premium_plugins_slugs = array(
+				'ultimate-elementor',
+				'astra-addon',
+				'convertpro',
+				'convertpro-addon',
+				'wp-schema-pro',
+				'bb-ultimate-addon',
+				'ultimate-elementor',
+				'astra-portfolio',
+			);
+
+			$api_url = BSF_Connect::get_instance()->get_api_url( $args );
 			$api_button_text = BSF_Connect::get_instance()->get_api_status_text( );
 
 			$data = apply_filters(
@@ -1257,6 +1272,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 					'bsf_connect_server_url'     => BSF_CONNECT_SERVER_URL,
 					'bsf_install_demo_site_url'  => bsf_install_demo_site_url(),
 					'bsf_install_demo_site_args' => bsf_install_demo_site_args(),
+					'bsf_premium_plugins_slugs'  => $premium_plugins_slugs,
 				)
 			);
 
