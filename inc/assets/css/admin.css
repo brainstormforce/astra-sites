@@ -264,12 +264,14 @@
 .appearance_page_astra-sites .search-form:focus {
     box-shadow: 0 1px 4px 0 rgba(32,33,36,0.18);
 }
+
 .appearance_page_astra-sites .searching #wp-filter-search-input {
     border-bottom-left-radius: 0;
     border-bottom-right-radius: 0;
     border-bottom-color: transparent;
 }
-.ui-widget.ui-widget-content {
+
+#astra-sites-filters .ui-widget.ui-widget-content {
 	border-top-left-radius: 0;
 	border-top-right-radius: 0;
 	border-bottom-left-radius: 15px;
@@ -284,26 +286,15 @@
     background: #fff;
 }
 
-#astra-sites-filters .search-form.searching:before {
-    content: '';
-    position: absolute;
-    bottom: 0;
-    right: 20px;
-    left: 20px;
-    height: 1px;
-    background: #dedede;
-}
-
-.ui-autocomplete li,
-.ui-autocomplete li:focus,
-.ui-autocomplete li:hover {
+#astra-sites-filters .ui-autocomplete li,
+#astra-sites-filters .ui-autocomplete li:focus,
+#astra-sites-filters .ui-autocomplete li:hover {
     outline: none;
 }
-
-.ui-autocomplete li {
+#astra-sites-filters .ui-autocomplete li {
     padding: 2px 20px;
 }
-.ui-autocomplete .ui-state-active {
+#astra-sites-filters .ui-autocomplete .ui-state-active {
     background: #c0c0c0;
     border-color: #c0c0c0;
     margin: 0;
