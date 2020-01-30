@@ -14,7 +14,7 @@
 		 * Binds events for the Astra Sites.
 		 *
 		 * @since 1.3.2
-		 * 
+		 *
 		 * @access private
 		 * @method _bind
 		 */
@@ -22,17 +22,17 @@
 		{
 			$( document ).on( 'click', '.astra-sites-theme-not-installed', AstraSitesInstallTheme._install_and_activate );
 			$( document ).on( 'click', '.astra-sites-theme-installed-but-inactive', AstraSitesInstallTheme._activateTheme );
-			$( document ).on('wp-theme-install-success' , AstraSitesInstallTheme._activateTheme);
+			$( document ).on( 'wp-theme-install-success' , AstraSitesInstallTheme._activateTheme);
 		},
 
 		/**
 		 * Close Getting Started Notice
-		 * 
+		 *
 		 * @param  {object} event
 		 * @return void
 		 */
 		_auto_close_notice: function() {
-			
+
 			if( $( '.astra-sites-getting-started-btn' ).length ) {
 				$.ajax({
 					url: AstraSitesInstallThemeVars.ajaxurl,
@@ -77,11 +77,7 @@
 				})
 				.done(function (result) {
 					if( result.success ) {
-						$('#astra-theme-activation-nag a').text( AstraSitesInstallThemeVars.activated );
-
-						setTimeout(function() {
-							location.reload();
-						}, 1000);
+						$('.astra-sites-theme-action-link').parent().html( AstraSitesInstallThemeVars.activated + ' 🎉' );
 					}
 
 				});
@@ -94,7 +90,7 @@
 		 * Install and activate
 		 *
 		 * @since 1.3.2
-		 * 
+		 *
 		 * @param  {object} event Current event.
 		 * @return void
 		 */
@@ -112,7 +108,7 @@
 			if ( wp.updates.shouldRequestFilesystemCredentials && ! wp.updates.ajaxLocked ) {
 				wp.updates.requestFilesystemCredentials( event );
 			}
-			
+
 			wp.updates.installTheme( {
 				slug: theme_slug
 			});

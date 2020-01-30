@@ -1,6 +1,9 @@
 <?php
-
 /**
+ * WordPress Importer
+ *
+ * @package WordPress Importer
+ *
  * Describes a logger instance
  *
  * Based on PSR-3: http://www.php-fig.org/psr/psr-3/
@@ -17,13 +20,19 @@
  * See https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-3-logger-interface.md
  * for the full interface specification.
  */
-if( ! class_exists( 'WP_Importer_Logger' ) ) :
+
+if ( ! class_exists( 'WP_Importer_Logger' ) ) :
+
+	/**
+	 * WP Importer Log
+	 */
 	class WP_Importer_Logger {
+
 		/**
 		 * System is unusable.
 		 *
-		 * @param string $message
-		 * @param array  $context
+		 * @param string $message Error message.
+		 * @param array  $context Error context.
 		 * @return null
 		 */
 		public function emergency( $message, array $context = array() ) {
@@ -36,8 +45,8 @@ if( ! class_exists( 'WP_Importer_Logger' ) ) :
 		 * Example: Entire website down, database unavailable, etc. This should
 		 * trigger the SMS alerts and wake you up.
 		 *
-		 * @param string $message
-		 * @param array  $context
+		 * @param string $message Error message.
+		 * @param array  $context Error context.
 		 * @return null
 		 */
 		public function alert( $message, array $context = array() ) {
@@ -49,8 +58,8 @@ if( ! class_exists( 'WP_Importer_Logger' ) ) :
 		 *
 		 * Example: Application component unavailable, unexpected exception.
 		 *
-		 * @param string $message
-		 * @param array  $context
+		 * @param string $message Error message.
+		 * @param array  $context Error context.
 		 * @return null
 		 */
 		public function critical( $message, array $context = array() ) {
@@ -61,8 +70,8 @@ if( ! class_exists( 'WP_Importer_Logger' ) ) :
 		 * Runtime errors that do not require immediate action but should typically
 		 * be logged and monitored.
 		 *
-		 * @param string $message
-		 * @param array  $context
+		 * @param string $message Error message.
+		 * @param array  $context Error context.
 		 * @return null
 		 */
 		public function error( $message, array $context = array() ) {
@@ -75,8 +84,8 @@ if( ! class_exists( 'WP_Importer_Logger' ) ) :
 		 * Example: Use of deprecated APIs, poor use of an API, undesirable things
 		 * that are not necessarily wrong.
 		 *
-		 * @param string $message
-		 * @param array  $context
+		 * @param string $message Error message.
+		 * @param array  $context Error context.
 		 * @return null
 		 */
 		public function warning( $message, array $context = array() ) {
@@ -86,8 +95,8 @@ if( ! class_exists( 'WP_Importer_Logger' ) ) :
 		/**
 		 * Normal but significant events.
 		 *
-		 * @param string $message
-		 * @param array  $context
+		 * @param string $message Error message.
+		 * @param array  $context Error context.
 		 * @return null
 		 */
 		public function notice( $message, array $context = array() ) {
@@ -99,8 +108,8 @@ if( ! class_exists( 'WP_Importer_Logger' ) ) :
 		 *
 		 * Example: User logs in, SQL logs.
 		 *
-		 * @param string $message
-		 * @param array  $context
+		 * @param string $message Error message.
+		 * @param array  $context Error context.
 		 * @return null
 		 */
 		public function info( $message, array $context = array() ) {
@@ -110,8 +119,8 @@ if( ! class_exists( 'WP_Importer_Logger' ) ) :
 		/**
 		 * Detailed debug information.
 		 *
-		 * @param string $message
-		 * @param array  $context
+		 * @param string $message Error message.
+		 * @param array  $context Error context.
 		 * @return null
 		 */
 		public function debug( $message, array $context = array() ) {
@@ -121,10 +130,10 @@ if( ! class_exists( 'WP_Importer_Logger' ) ) :
 		/**
 		 * Logs with an arbitrary level.
 		 *
-		 * @param mixed  $level
-		 * @param string $message
-		 * @param array  $context
-		 * @return null
+		 * @param mixed  $level Error level.
+		 * @param string $message Error message.
+		 * @param array  $context Error context.
+		 * @return void
 		 */
 		public function log( $level, $message, array $context = array() ) {
 

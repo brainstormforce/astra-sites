@@ -19,19 +19,19 @@ if ( ! is_callable( 'Astra_Ext_White_Label_Markup::branding_key_to_constant' ) )
 			<span class="toggle-indicator" aria-hidden="true"></span>
 		</button>
 
-		<h2 class="hndle ui-sortable-handle">
+		<h3 class="hndle ui-sortable-handle">
 			<span><?php echo esc_html( $plugin_name ); ?></span>
-		</h2>
+		</h3>
 
 		<div class="inside">
 			<div class="form-wrap">
 				<div class="form-field">
-					<label><?php _e( 'Plugin Name:', 'astra-sites' ); ?>
+					<label><?php esc_html_e( 'Plugin Name:', 'astra-sites' ); ?>
 						<input type="text" name="ast_white_label[astra-sites][name]" class="placeholder placeholder-active" <?php disabled( defined( Astra_Ext_White_Label_Markup::branding_key_to_constant( 'astra-sites', 'name' ) ), true, true ); ?> value="<?php echo esc_attr( Astra_Ext_White_Label_Markup::get_whitelabel_string( 'astra-sites', 'name' ) ); ?>">
 					</label>
 				</div>
 				<div class="form-field">
-					<label><?php _e( 'Plugin Description:', 'astra-sites' ); ?>
+					<label><?php esc_html_e( 'Plugin Description:', 'astra-sites' ); ?>
 						<textarea name="ast_white_label[astra-sites][description]" class="placeholder placeholder-active" <?php disabled( defined( Astra_Ext_White_Label_Markup::branding_key_to_constant( 'astra-sites', 'description' ) ), true, true ); ?> rows="2"><?php echo esc_attr( Astra_Ext_White_Label_Markup::get_whitelabel_string( 'astra-sites', 'description' ) ); ?></textarea>
 					</label>
 				</div>
