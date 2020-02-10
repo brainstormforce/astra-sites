@@ -1206,7 +1206,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 					'requiredPlugins'            => array(),
 					'strings'                    => array(
 						/* translators: %s are white label strings. */
-						'warningBeforeCloseWindow' => sprintf( __( 'Warning! %1$s Import process is not complete. Don\'t close the window until import process complete. Do you still want to leave the window?', 'astra-sites' ), Astra_Pro_Sites_White_Label::get_option( 'astra-sites', 'name', ASTRA_SITES_NAME ) ),
+						'warningBeforeCloseWindow' => sprintf( __( 'Warning! %1$s Import process is not complete. Don\'t close the window until import process complete. Do you still want to leave the window?', 'astra-sites' ), Astra_Sites_White_Label::get_instance()->get_white_label_name() ),
 						'viewSite'                 => __( 'Done! View Site', 'astra-sites' ),
 						'syncCompleteMessage'      => self::get_instance()->get_sync_complete_message(),
 					),
