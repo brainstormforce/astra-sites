@@ -417,18 +417,18 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 						<div class="inner">
 							<div class="header">
 								<?php
-								$while_label       = false;
-								$while_label_class = '';
+								$white_label       = false;
+								$white_label_class = '';
 								if ( is_callable( 'Astra_Ext_White_Label_Markup::get_whitelabel_string' ) ) {
-									$while_label_title = Astra_Ext_White_Label_Markup::get_whitelabel_string( 'astra-sites', 'name' );
-									if ( $while_label_title ) {
-										$while_label       = true;
-										$while_label_class = 'white-label-enabled';
+									$white_label_title = Astra_Ext_White_Label_Markup::get_whitelabel_string( 'astra-sites', 'name' );
+									if ( $white_label_title ) {
+										$white_label       = true;
+										$white_label_class = 'white-label-enabled';
 									}
 								}
 								?>
-								<span class="logo <?php echo esc_attr( $while_label_class ); ?>">
-									<?php if ( ! $while_label ) { ?>
+								<span class="logo <?php echo esc_attr( $white_label_class ); ?>">
+									<?php if ( ! $white_label ) { ?>
 										<img src="<?php echo esc_url( ASTRA_SITES_URI . 'inc/assets/images/logo.svg' ); ?>">
 									<?php } else { ?>
 										<?php echo esc_html( Astra_Sites_White_Label::get_instance()->get_white_label_name() ); ?>
@@ -469,19 +469,19 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 
 				<div class="nav-tab-wrapper">
 					<?php
-					$while_label       = false;
-					$while_label_class = '';
+					$white_label       = false;
+					$white_label_class = '';
 					if ( is_callable( 'Astra_Ext_White_Label_Markup::get_whitelabel_string' ) ) {
-						$while_label_title = Astra_Ext_White_Label_Markup::get_whitelabel_string( 'astra-sites', 'name' );
-						if ( $while_label_title ) {
-							$while_label       = true;
-							$while_label_class = 'white-label-enabled';
+						$white_label_title = Astra_Ext_White_Label_Markup::get_whitelabel_string( 'astra-sites', 'name' );
+						if ( $white_label_title ) {
+							$white_label       = true;
+							$white_label_class = 'white-label-enabled';
 						}
 					}
 					?>
-					<div class="logo <?php echo esc_attr( $while_label_class ); ?>">
+					<div class="logo <?php echo esc_attr( $white_label_class ); ?>">
 						<div class="astra-sites-logo-wrap">
-							<?php if ( ! $while_label ) { ?>
+							<?php if ( ! $white_label ) { ?>
 								<img src="<?php echo esc_url( ASTRA_SITES_URI . 'inc/assets/images/logo.svg' ); ?>">
 							<?php } else { ?>
 								<?php echo esc_html( Astra_Sites_White_Label::get_instance()->get_white_label_name() ); ?>

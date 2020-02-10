@@ -107,7 +107,7 @@
     right: 0;
     width: 100%;
     height: 100%;
-    background-color: rgba(0, 0, 0, 0.2);
+    background-color: rgba(0, 0, 0, 0.5);
     -webkit-transition: opacity .2s;
     -o-transition: opacity .2s;
     transition: opacity .2s;
@@ -115,7 +115,6 @@
 }
 #ast-sites-modal .astra-sites-library-template .elementor-template-library-template-preview i,
 #ast-sites-modal .inner .elementor-template-library-template-preview i {
-    font-size: 20px;
     color: #d5dadf;
     position: absolute;
     top: 50%;
@@ -147,6 +146,9 @@
     margin-top: 4px;
     font-size: 11px;
     line-height: 1;
+}
+#ast-sites-modal .theme-browser .theme .theme-screenshot:after {
+    padding-top: 200px;
 }
 #ast-sites-modal .required-plugins-list li {
     list-style-type: disc;
@@ -347,7 +349,7 @@
 }
 
 #ast-sites-modal .astra-sites__sync-wrap:hover span {
-    color: #0073aa;
+    color: #6d7882;
 }
 
 #ast-sites-modal .back-to-layout:hover {
@@ -453,7 +455,7 @@
 }
 
 #ast-sites-modal .ast-sites-modal__header__close--normal:hover i {
-    color: #0073aa;
+    color: #6d7882;
 }
 
 #ast-sites-modal .ast-sites-modal__header__close--normal i {
@@ -513,12 +515,13 @@
 
 #ast-sites-modal .inner {
     position: relative;
-    transition: all 250ms cubic-bezier(0.02, 0.01, 0.47, 1);
-    border-radius: 2px;
-    box-shadow: 0 0 2px 1px rgba(0, 0, 0, 0.07);
     padding: 8px 8px 0 8px;
     background: #fff;
     overflow: initial;
+    -webkit-box-shadow: 0 1px 20px 0 rgba(0, 0, 0, 0.07);
+    box-shadow: 0 1px 20px 0 rgba(0, 0, 0, 0.07);
+    -webkit-border-radius: 3px;
+    border-radius: 3px;
 }
 
 #ast-sites-modal .astra-sites-no-sites .description {
@@ -587,9 +590,10 @@
     background: none;
     padding: 7px;
     padding-right: 0;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: normal;
     text-align: right;
+    color: #6d7882;
 }
 
 #ast-sites-modal .theme-browser {
@@ -613,7 +617,7 @@
 }
 
 #ast-sites-modal .elementor-template-library-menu-item:hover {
-    color: #0073aa;
+    color: #6d7882;
 }
 
 #ast-sites-modal .elementor-template-library-menu-item span {
@@ -628,7 +632,7 @@
 #ast-sites-modal .elementor-template-library-menu-item.elementor-active {
     border-bottom: 4px solid #0073aa;
     background-image: linear-gradient(to bottom, #f1f3f5, #fff);
-    color: #0073aa;
+    color: #6d7882;
 }
 
 #ast-sites-modal .theme-preview,
