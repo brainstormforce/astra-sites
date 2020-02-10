@@ -125,6 +125,30 @@ if ( ! class_exists( 'Astra_Sites_White_Label' ) ) :
 		}
 
 		/**
+		 * Get value of single key from option array.
+		 *
+		 * @since  2.0.0.
+		 * @param  string $type Option type.
+		 * @param  string $key  Option key.
+		 * @param  string $default  Default value if key not found.
+		 * @return mixed        Return stored option value.
+		 */
+		public static function get_option( $type = '', $key = '', $default = null ) {
+
+			if ( ! is_callable( 'Astra_Ext_White_Label_Markup::get_white_label' ) ) {
+				return $default;
+			}
+
+			$value = Astra_Ext_White_Label_Markup::get_white_label( $type, $key );
+			if ( ! empty( $value ) ) {
+				return $value;
+			}
+
+			return $default;
+
+		}
+
+		/**
 		 * Remove a "view details" link from the plugin list table
 		 *
 		 * @since 1.0.12

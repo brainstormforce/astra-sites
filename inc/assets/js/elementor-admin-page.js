@@ -436,6 +436,9 @@ var AstraSitesAjaxQueue = (function() {
 
 		_home: function() {
 			$elscope.find( '#wp-filter-search-input' ).val( '' );
+			// Hide Back button.
+			$elscope.find( '.back-to-layout' ).css( 'visibility', 'hidden' );
+			$elscope.find( '.back-to-layout' ).css( 'opacity', '0' );
 			$elscope.find( '.elementor-template-library-menu-item:first-child' ).trigger( 'click' );
 		},
 
