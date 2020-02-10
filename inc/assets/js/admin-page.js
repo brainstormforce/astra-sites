@@ -600,6 +600,9 @@ var AstraSitesAjaxQueue = (function() {
 
 		_search: function(event) {
 
+			var search_input  = $( this ),
+				search_term   = $.trim( search_input.val() ) || '';
+
 			if( 13 === event.keyCode ) {
 				$('.astra-sites-autocomplete-result .ui-autocomplete').hide();
 				$('.search-form').removeClass('searching');
@@ -608,9 +611,7 @@ var AstraSitesAjaxQueue = (function() {
 
 			$('body').removeClass('astra-sites-no-search-result');
 
-			var search_input  = $( this ),
-				search_term   = search_input.val() || '',
-				sites         = $('#astra-sites .astra-theme'),
+			var sites         = $('#astra-sites .astra-theme'),
 				titles = $('#astra-sites .astra-theme .theme-name'),
 				searchTemplateFlag = false,
 				items = [];
@@ -635,7 +636,9 @@ var AstraSitesAjaxQueue = (function() {
 					AstraSitesAdmin.add_sites( items );
 				}
 			} else {
-				$('body').addClass('astra-sites-no-search-result');
+				if( search_term.length ) {
+					$('body').addClass('astra-sites-no-search-result');
+				}
 				$('#astra-sites').html( wp.template('astra-sites-no-sites') );
 			}
 		},
@@ -3163,11 +3166,15 @@ var AstraSitesAjaxQueue = (function() {
 					$('.astra-sites-result-preview').removeClass('preparing');
 
 					// Compatibility.
-					if( Object.keys( compatibilities.errors ).length || Object.keys( compatibilities.warnings ).length ) {
+					if( Object.keys( compatibilities.errors ).length || Object.keys( compatibilities.warnings ).length || Object.keys( AstraSitesAdmin.skip_and_import_popups ).length ) {
 
-						AstraSitesAdmin.skip_and_import_popups['astra-sites-compatibility-messages'] = compatibilities;
+						if( Object.keys( compatibilities.errors ).length || Object.keys( compatibilities.warnings ).length ) {
+							AstraSitesAdmin.skip_and_import_popups['astra-sites-compatibility-messages'] = compatibilities;
+						}
 
-						AstraSitesAdmin.add_skip_and_import_popups( AstraSitesAdmin.skip_and_import_popups );
+						if( Object.keys( AstraSitesAdmin.skip_and_import_popups ).length ) {
+							AstraSitesAdmin.add_skip_and_import_popups( AstraSitesAdmin.skip_and_import_popups );
+						}
 
 					} else {
 

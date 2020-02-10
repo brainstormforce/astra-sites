@@ -1,12 +1,36 @@
 module.exports = function( grunt ) {
 
 	'use strict';
-	var banner = '/**\n * <%= pkg.homepage %>\n * Copyright (c) <%= grunt.template.today("yyyy") %>\n * This file is generated automatically. Do not edit.\n */\n';
 
     var pkg = grunt.file.readJSON('package.json');
+	var banner = '/**\n * <%= pkg.homepage %>\n * Copyright (c) <%= grunt.template.today("yyyy") %>\n * This file is generated automatically. Do not edit.\n */\n';
 
 	// Project configuration
 	grunt.initConfig( {
+
+        rtlcss: {
+            options: {
+                // rtlcss options
+                config: {
+                    preserveComments: true,
+                    greedy: true
+                },
+                // generate source maps
+                map: false
+            },
+            dist: {
+                files: [{
+                    expand: true,
+                    cwd: "inc/assets/css/",
+                    src: [
+                        '*.css',
+                        '!*-rtl.css',
+                    ],
+                    dest: "inc/assets/css/",
+                    ext: '-rtl.css'
+                }]
+            }
+        },
 
 		addtextdomain: {
 			options: {
@@ -18,11 +42,13 @@ module.exports = function( grunt ) {
 						'*.php',
 						'**/*.php',
 						'!node_modules/**',
+                        '!vendor/**',
 						'!php-tests/**',
 						'!bin/**',
-						'!inc/importers/class-widgets-importer.php',
-						'!inc/importers/wxr-importer/class-logger.php',
-						'!inc/importers/wxr-importer/class-wxr-importer.php'
+                        '!admin/bsf-core/**',
+						'!inc/importers/class-astra-widget-importer.php',
+                        '!inc/importers/wxr-importer/class-wp-importer-logger.php',
+                        '!inc/importers/wxr-importer/class-wxr-importer.php'
 					]
 				}
 			}
@@ -83,6 +109,7 @@ module.exports = function( grunt ) {
                         '!composer.lock',
                         '!package-lock.json',
                         '!phpcs.xml.dist',
+                        '!inc/assets/js/src/**',
                     ],
                     dest: 'astra-sites/'
                 }
@@ -153,7 +180,6 @@ module.exports = function( grunt ) {
                     }
                 ]
             },
-
             plugin_function_comment: {
                 src: [
                     '*.php',
@@ -175,6 +201,7 @@ module.exports = function( grunt ) {
 
 	} );
 
+    grunt.loadNpmTasks( 'grunt-rtlcss' );
     grunt.loadNpmTasks( 'grunt-wp-i18n' );
     grunt.loadNpmTasks( 'grunt-contrib-copy' );
     grunt.loadNpmTasks( 'grunt-contrib-compress' );
@@ -182,6 +209,9 @@ module.exports = function( grunt ) {
     grunt.loadNpmTasks( 'grunt-bumpup' );
     grunt.loadNpmTasks( 'grunt-text-replace' );
 	grunt.loadNpmTasks( 'grunt-wp-readme-to-markdown' );
+
+    //rtlcss, you will still need to install ruby and sass on your system manually to run this
+    grunt.registerTask('rtl', ['rtlcss']);
 
 	// Generate README.md file.
     grunt.registerTask( 'readme', ['wp_readme_to_markdown'] );

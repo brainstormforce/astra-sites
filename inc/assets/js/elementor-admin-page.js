@@ -1011,7 +1011,7 @@ var AstraSitesAjaxQueue = (function() {
 						elementor.channels.data.trigger('template:before:insert', templateModel);
 						elementor.getPreviewView().addChildModel( page_content, { at : AstraElementorSitesAdmin.index } || {} );
 						elementor.channels.data.trigger('template:after:insert', {});
-						if ( undefined != $e ) {
+						if ( undefined != $e && 'undefined' != typeof $e.internal ) {
 							$e.internal( 'document/save/set-is-modified', { status: true } )
 						} else {
 							elementor.saver.setFlagEditorChange(true);

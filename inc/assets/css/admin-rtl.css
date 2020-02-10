@@ -2090,6 +2090,7 @@ body.loading-content .select-page-builder {
     position: fixed;
 }
 
+.appearance_page_starter-templates div#setting-error-tgmpa,
 .appearance_page_starter-templates .update-nag,
 .appearance_page_starter-templates .notice,
 .appearance_page_starter-templates div.error {

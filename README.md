@@ -5,7 +5,7 @@
 **Requires at least:** 4.4  
 **Requires PHP:** 5.3  
 **Tested up to:** 5.3  
-**Stable tag:** 1.4.5  
+**Stable tag:** 2.0.0-beta.1  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -117,6 +117,16 @@ We are open to suggestions and would love to work on topics that our users are l
 
 ## Changelog ##
 
+v2.0.0 - Unreleased
+- New: Added favorite or unfavorite the demo site.
+- New: Improve the sites and pages loading time speed.
+- New: Added block import support with 200+ blocks in elementor editor window.
+- New: Added single page import as elementor template in elementor editor window.
+- New: Added single page import support from any demo site with 1800+ pages.
+- Improvement: Showing all Astra sites with more user friendly and interactive UI.
+- Improvement: Updated the Astra Notices library.
+
+- Improvement: Added missing font awesome icons support for the Elementor sites.
 v1.4.5 - 21-November-2019
 - Improvement: Added missing font awesome icons support for the Elementor sites.
 

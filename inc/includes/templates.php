@@ -23,17 +23,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<div class="astra-sites-content-wrap">
 				<div id="ast-sites-floating-notice-wrap-id" class="ast-sites-floating-notice-wrap"><div class="ast-sites-floating-notice"></div></div>
 				<?php
-				$batch_status = get_option( 'astra-sites-batch-is-complete', 'no' );
-				if ( 'yes' === $batch_status ) {
-					?>
-					<div class="ast-sites-floating-notice-wrap refreshed-notice slide-in">
-						<div class="ast-sites-floating-notice">
-							<div class="astra-sites-sync-library-message success astra-sites-notice notice notice-success is-dismissible">
-								<?php esc_html_e( 'Template library refreshed!', 'astra-sites' ); ?> <button type="button" class="notice-dismiss"><span class="screen-reader-text"><?php esc_html_e( 'Dismiss', 'astra-sites' ); ?></span></button>
+				$manual_sync = get_option( 'astra-sites-manual-sync-complete', 'no' );
+				if ( 'yes' === $manual_sync ) {
+					$batch_status = get_option( 'astra-sites-batch-is-complete', 'no' );
+					if ( 'yes' === $batch_status ) {
+						?>
+						<div class="ast-sites-floating-notice-wrap refreshed-notice slide-in">
+							<div class="ast-sites-floating-notice">
+								<div class="astra-sites-sync-library-message success astra-sites-notice notice notice-success is-dismissible">
+									<?php Astra_Sites::get_instance()->get_sync_complete_message( true ); ?> <button type="button" class="notice-dismiss"><span class="screen-reader-text"><?php esc_html_e( 'Dismiss', 'astra-sites' ); ?></span></button>
+								</div>
 							</div>
 						</div>
-					</div>
-				<?php } ?>
+						<?php
+					}
+				}
+				?>
 				<div class="dialog-message dialog-lightbox-message" data-type="pages">
 					<div class="dialog-content dialog-lightbox-content theme-browser"></div>
 					<div class="theme-preview"></div>
@@ -144,7 +149,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<div class="theme astra-theme site-single publish page-builder-elementor {{type_class}}" data-site-id={{key}} data-template-id="">
 				<div class="inner">
 					<span class="site-preview" data-href="" data-title={{site_title}}>
-						<div class="theme-screenshot one loading" data-step="1" data-src={{data[ key ]['thumbnail-image-url']}} data-featured-src={{data[ key ]['featured-image-url']}}></div>
+						<div class="theme-screenshot one loading" data-step="1" data-src={{data[ key ]['thumbnail-image-url']}} data-featured-src={{data[ key ]['featured-image-url']}}>
+							<div class="elementor-template-library-template-preview">
+								<i class="eicon-zoom-in" aria-hidden="true"></i>
+							</div>
+						</div>
 					</span>
 					<div class="theme-id-container">
 						<h3 class="theme-name">{{{site_title}}}</h3>
@@ -245,7 +254,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<div class="theme astra-theme site-single publish page-builder-elementor {{type_class}}" data-template-id={{ind}} data-site-id={{site_id}}>
 			<div class="inner">
 				<span class="site-preview" data-href="" data-title={{site_title}}>
-					<div class="theme-screenshot one loading" data-step="2" data-src={{data[ ind ]['thumbnail-image-url']}} data-featured-src={{data[ ind ]['featured-image-url']}}></div>
+					<div class="theme-screenshot one loading" data-step="2" data-src={{data[ ind ]['thumbnail-image-url']}} data-featured-src={{data[ ind ]['featured-image-url']}}>
+						<div class="elementor-template-library-template-preview">
+							<i class="eicon-zoom-in" aria-hidden="true"></i>
+						</div>
+					</div>
 				</span>
 				<div class="theme-id-container">
 					<h3 class="theme-name">{{{site_title}}}</h3>

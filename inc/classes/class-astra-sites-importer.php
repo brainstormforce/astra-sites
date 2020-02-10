@@ -236,6 +236,50 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) {
 		}
 
 		/**
+		 * Import CartFlows
+		 *
+		 * @since 2.0.0
+		 *
+		 * @param  string $url Cartflows JSON file URL.
+		 * @return void
+		 */
+		public function import_cartflows( $url = '' ) {
+
+			// Make the flow publish.
+			add_action( 'cartflows_flow_importer_args', array( $this, 'change_flow_status' ) );
+			add_action( 'cartflows_flow_imported', array( $this, 'track_flows' ) );
+			add_action( 'cartflows_step_imported', array( $this, 'track_flows' ) );
+
+			$url = ( isset( $_REQUEST['cartflows_url'] ) ) ? urldecode( $_REQUEST['cartflows_url'] ) : urldecode( $url ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			if ( ! empty( $url ) && is_callable( 'CartFlows_Importer::get_instance' ) ) {
+
+				// Download JSON file.
+				$file_path = Astra_Sites_Helper::download_file( $url );
+
+				if ( $file_path['success'] ) {
+					if ( isset( $file_path['data']['file'] ) ) {
+
+						$ext = strtolower( pathinfo( $file_path['data']['file'], PATHINFO_EXTENSION ) );
+
+						if ( 'json' === $ext ) {
+							$flows = json_decode( Astra_Sites::get_instance()->get_filesystem()->get_contents( $file_path['data']['file'] ), true );
+
+							if ( ! empty( $flows ) ) {
+								CartFlows_Importer::get_instance()->import_from_json_data( $flows );
+							}
+						}
+					}
+				}
+			}
+
+			if ( defined( 'WP_CLI' ) ) {
+				WP_CLI::line( 'Imported from ' . $url );
+			} else {
+				wp_send_json_success( $url );
+			}
+		}
+
+		/**
 		 * Import Customizer Settings.
 		 *
 		 * @since 1.0.14

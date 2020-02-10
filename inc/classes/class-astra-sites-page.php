@@ -98,21 +98,24 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 			}
 
 			if ( 'appearance_page_starter-templates' === $current_screen->base ) {
-				$status = get_option( 'astra-sites-batch-is-complete', 'no' );
-				if ( 'yes' === $status ) {
-					?>
-					<div class="astra-sites-sync-library-message success astra-sites-notice notice notice-success is-dismissible">
-						<p><?php Astra_Sites::get_instance()->get_sync_complete_message( true ); ?></p>
-					</div>
-					<?php
+				$manual_sync = get_option( 'astra-sites-manual-sync-complete', 'no' );
+				if ( 'yes' === $manual_sync ) {
+					$status = get_option( 'astra-sites-batch-is-complete', 'no' );
+					if ( 'yes' === $status ) {
+						?>
+						<div class="astra-sites-sync-library-message success astra-sites-notice notice notice-success is-dismissible">
+							<p><?php Astra_Sites::get_instance()->get_sync_complete_message( true ); ?></p>
+						</div>
+						<?php
+					}
 				}
 			}
 
 			if ( 'plugins' === $current_screen->base ) {
-				$processed    = get_user_meta( get_current_user_id(), '_astra_sites_gettings_started', true );
+				$processed    = get_option( '_astra_sites_gettings_started', 'no' );
 				$product_name = Astra_Sites_White_Label::get_instance()->get_white_label_name( 'Astra' );
 
-				if ( $processed ) {
+				if ( 'yes' === $processed ) {
 					return;
 				}
 

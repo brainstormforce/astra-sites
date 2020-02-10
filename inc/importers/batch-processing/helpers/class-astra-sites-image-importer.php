@@ -93,7 +93,7 @@ if ( ! class_exists( 'Astra_Sites_Image_Importer' ) ) :
 		 * @param  string $attachment_url Attachment URL.
 		 * @return string                 Hash string.
 		 */
-		private function get_hash_image( $attachment_url ) {
+		public function get_hash_image( $attachment_url ) {
 			return sha1( $attachment_url );
 		}
 

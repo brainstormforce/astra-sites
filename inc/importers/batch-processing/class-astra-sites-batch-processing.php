@@ -239,6 +239,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 			Astra_Sites_Importer::get_instance()->update_latest_checksums();
 
 			update_option( 'astra-sites-batch-is-complete', 'no' );
+			update_option( 'astra-sites-manual-sync-complete', 'yes' );
 			wp_send_json_success();
 		}
 
@@ -328,7 +329,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 		 */
 		public function start_importer() {
 
-			$is_fresh_user = get_user_meta( get_current_user_id(), 'astra-sites-fresh-user', true );
+			$is_fresh_site = get_option( 'astra-sites-fresh-site', '' );
 
 			// Process initially for the fresh user.
 			if ( isset( $_GET['reset'] ) ) { // phpcs:ignore WordPress.Security.NonceVerification.Recommended
@@ -336,7 +337,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 				// Process import.
 				$this->process_batch();
 
-			} elseif ( empty( $is_fresh_user ) ) {
+			} elseif ( empty( $is_fresh_site ) ) {
 
 				// First time user save the data of sites, pages, categories etc from the JSON file.
 				$dir        = ASTRA_SITES_DIR . 'inc/json';
@@ -356,7 +357,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 				// If batch failed then user have at least the data from the JSON file.
 				$this->process_batch();
 
-				update_user_meta( get_current_user_id(), 'astra-sites-fresh-user', 'yes' );
+				update_option( 'astra-sites-fresh-site', 'yes' );
 
 				// If not fresh user then trigger batch import on the transient and option
 				// Only on the Astra Sites page.

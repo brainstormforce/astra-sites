@@ -67,12 +67,30 @@ class Astra_WXR_Importer {
 	/**
 	 * Track Imported Post
 	 *
-	 * @param  int $post_id Post ID.
+	 * @param  int   $post_id Post ID.
+	 * @param array $data Raw data imported for the post.
 	 * @return void
 	 */
-	public function track_post( $post_id ) {
+	public function track_post( $post_id = 0, $data = array() ) {
 		Astra_Sites_Importer_Log::add( 'Inserted - Post ' . $post_id . ' - ' . get_post_type( $post_id ) . ' - ' . get_the_title( $post_id ) );
+
 		update_post_meta( $post_id, '_astra_sites_imported_post', true );
+
+		// Set the full width template for the pages.
+		if ( isset( $data['post_type'] ) && 'page' === $data['post_type'] ) {
+			$is_elementor_page = get_post_meta( $post_id, '_elementor_version', true );
+			if ( $is_elementor_page ) {
+				update_post_meta( $post_id, '_wp_page_template', 'elementor_header_footer' );
+			}
+		} elseif ( isset( $data['post_type'] ) && 'attachment' === $data['post_type'] ) {
+			$remote_url          = isset( $data['guid'] ) ? $data['guid'] : '';
+			$attachment_hash_url = Astra_Sites_Image_Importer::get_instance()->get_hash_image( $remote_url );
+			if ( ! empty( $attachment_hash_url ) ) {
+				update_post_meta( $post_id, '_astra_sites_image_hash', $attachment_hash_url );
+				update_post_meta( $post_id, '_elementor_source_image_hash', $attachment_hash_url );
+			}
+		}
+
 	}
 
 	/**
@@ -177,6 +195,22 @@ class Astra_WXR_Importer {
 	}
 
 	/**
+	 * Set GUID as per the attachment URL which avoid duplicate images issue due to the different GUID.
+	 *
+	 * @param array $data Post data. (Return empty to skip).
+	 * @param array $meta Meta data.
+	 * @param array $comments Comments on the post.
+	 * @param array $terms Terms on the post.
+	 */
+	public function fix_image_duplicate_issue( $data, $meta, $comments, $terms ) {
+
+		$remote_url   = ! empty( $data['attachment_url'] ) ? $data['attachment_url'] : $data['guid'];
+		$data['guid'] = $remote_url;
+
+		return $data;
+	}
+
+	/**
 	 * Constructor.
 	 *
 	 * @since  1.1.0
@@ -226,6 +260,9 @@ class Astra_WXR_Importer {
 			flush();
 		}
 
+		// Change GUID image URL.
+		add_filter( 'wxr_importer.pre_process.post', array( $this, 'fix_image_duplicate_issue' ), 10, 4 );
+
 		// Are we allowed to create users?
 		add_filter( 'wxr_importer.pre_process.user', '__return_null' );
 
@@ -243,7 +280,7 @@ class Astra_WXR_Importer {
 		add_action( 'wxr_importer.process_failed.user', array( $this, 'imported_user' ) );
 
 		// Keep track of our progress.
-		add_action( 'wxr_importer.processed.post', array( $this, 'track_post' ) );
+		add_action( 'wxr_importer.processed.post', array( $this, 'track_post' ), 10, 2 );
 		add_action( 'wxr_importer.processed.term', array( $this, 'track_term' ) );
 
 		// Flush once more.

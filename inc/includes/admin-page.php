@@ -58,14 +58,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<div class="skip-and-import">
 		<div class="heading">
-			<h3><?php esc_html_e( 'Errors & Warnings', 'astra-sites' ); ?></h3>
+			<h3><?php esc_html_e( 'We\'re Almost There!', 'astra-sites' ); ?></h3>
 			<span class="dashicons close dashicons-no-alt"></span>
 		</div>
 		<div class="astra-sites-import-content">
 
-			<p><?php esc_html_e( 'We found below compatibility issues.', 'astra-sites' ); ?></p>
-
-			<hr />
+			<p><?php esc_html_e( 'You\'re close to importing the template. To complete the process, please clear the following conditions.', 'astra-sites' ); ?></p>
 
 			<ul class="astra-site-contents">
 
@@ -724,10 +722,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 											<div class="astra-sites-tooltip-message" id="astra-sites-tooltip-customizer-settings" style="display: none;">
 											<?php /* translators: %s are white label strings. */ ?>
 											<p><?php printf( esc_html__( '%1$s customizer serves global settings that give uniform design to the website. Choosing this option will override your current customizer settings.', 'astra-sites' ), Astra_Sites_White_Label::get_instance()->get_white_label_name() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
-											<?php if ( ! Astra_Sites_White_Label::get_instance()->is_white_labeled() ) { ?>
-											<p><?php esc_html_e( 'In case you need to restore the previous customizer settings, a backup can be found at "wp-content/uploads/astra-sites" directory.', 'astra-sites' ); ?></p>
-											<?php } ?>
-
 											</div>
 										</label>
 									</li>

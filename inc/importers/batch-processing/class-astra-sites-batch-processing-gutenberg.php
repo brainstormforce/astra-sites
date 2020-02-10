@@ -107,6 +107,15 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Gutenberg' ) ) :
 		 */
 		public function import_single_post( $post_id = 0 ) {
 
+			$is_elementor_page      = get_post_meta( $post_id, '_elementor_version', true );
+			$is_beaver_builder_page = get_post_meta( $post_id, '_fl_builder_enabled', true );
+			$is_brizy_page          = get_post_meta( $post_id, 'brizy_post_uid', true );
+
+			// If page contain Elementor, Brizy or Beaver Builder meta then skip this page.
+			if ( $is_elementor_page || $is_beaver_builder_page || $is_brizy_page ) {
+				return;
+			}
+
 			Astra_Sites_Importer_Log::add( '---- Processing WordPress Page - for Gutenberg ---- "' . $post_id . '"' );
 
 			$ids_mapping = get_option( 'astra_sites_wpforms_ids_mapping', array() );
