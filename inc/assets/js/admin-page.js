@@ -2869,6 +2869,7 @@ var AstraSitesAjaxQueue = (function() {
 
 						AstraSitesAdmin.process_site_data( AstraSitesAdmin.templateData );
 					} else {
+						$('.astra-sites-result-preview .inner > h3').text('Import Process Interrupted');
 						$('.astra-sites-import-content').find( '.astra-loading-wrap' ).remove();
 						$('.astra-sites-result-preview').removeClass('preparing');
 						$('.astra-sites-import-content').html( wp.template( 'astra-sites-request-failed' ) );
@@ -2970,6 +2971,7 @@ var AstraSitesAjaxQueue = (function() {
 
 						AstraSitesAdmin.required_plugins_list_markup( AstraSitesAdmin.templateData['site-pages-required-plugins'] );
 					} else {
+						$('.astra-sites-result-preview .inner > h3').text('Import Process Interrupted');
 						$('.astra-sites-import-content').find( '.astra-loading-wrap' ).remove();
 						$('.astra-sites-result-preview').removeClass('preparing');
 						$('.astra-sites-import-content').html( wp.template( 'astra-sites-request-failed' ) );

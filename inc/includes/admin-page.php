@@ -625,7 +625,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <?php
 /**
- * TMPL - Request Failed
+ * TMPL - Import Process Interrupted
  */
 ?>
 <script type="text/template" id="tmpl-astra-sites-request-failed">

@@ -439,7 +439,7 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 							</div>
 							<form id="astra-sites-welcome-form" enctype="multipart/form-data" method="post">
 								<h1><?php esc_html_e( 'Select Page Builder', 'astra-sites' ); ?></h1>
-								<p><?php esc_html_e( 'We offers starter templates that can be imported in one click. These sites are available in the following page builders. Please choose your preferred page builder from the list below.', 'astra-sites' ); ?></p>
+								<p><?php esc_html_e( 'We offer starter templates that can be imported in one click. These sites are available in the following page builders. Please choose your preferred page builder from the list below.', 'astra-sites' ); ?></p>
 								<div class="fields">
 									<ul class="page-builders">
 										<?php

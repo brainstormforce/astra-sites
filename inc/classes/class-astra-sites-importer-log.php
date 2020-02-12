@@ -96,7 +96,8 @@ if ( ! class_exists( 'Astra_Sites_Importer_Log' ) ) :
 		public function file_permission_notice() {
 			?>
 			<div class="notice notice-error astra-sites-must-notices astra-sites-file-permission-issue">
-				<p><?php esc_html_e( 'File permissions are missing on your end. To update the permission, please update the following code into the wp-config.php file.', 'astra-sites' ); ?></p>
+				<p><?php esc_html_e( 'Required File Permissions to import the templates are missing.', 'astra-sites' ); ?></p>
+				<p><?php esc_html_e( 'You can easily update permissions by adding the following code into the wp-config.php file.', 'astra-sites' ); ?></p>
 				<p><code>define( 'FS_METHOD', 'direct' );</code></p>
 			</div>
 			<?php

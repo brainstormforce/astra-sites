@@ -155,9 +155,12 @@ var AstraSitesAjaxQueue = (function() {
 						let base_skeleton = wp.template( 'ast-template-base-skeleton' );
 						let header_template = $( '#tmpl-ast-template-modal__header' ).text();
 
-						$( 'body' ).append( base_skeleton() );
-						$elscope = $( '#ast-sites-modal' );
-						$elscope.find( '.astra-sites-content-wrap' ).before( header_template );
+						if ( $( '#ast-sites-modal' ).length == 0 ) {
+
+							$( 'body' ).append( base_skeleton() );
+							$elscope = $( '#ast-sites-modal' );
+							$elscope.find( '.astra-sites-content-wrap' ).before( header_template );
+						}
 
 						$elscope.find( '.astra-blocks-category' ).select2();
 
@@ -1519,6 +1522,15 @@ var AstraSitesAjaxQueue = (function() {
 		},
 
 		_beforeOpen: function( e ) {
+
+			let userPrefersDark = matchMedia( '(prefers-color-scheme: dark)' ).matches;
+			let uiTheme = elementor.settings.editorPreferences.model.get( 'ui_theme' );
+
+			if ( 'dark' === uiTheme || ( 'auto' === uiTheme && userPrefersDark ) ) {
+				$( 'body' ).addClass( 'ast-sites-dark-mode' );
+			} else {
+				$( 'body' ).removeClass( 'ast-sites-dark-mode' );
+			}
 
 			// Hide preview page.
 			$elscope.find( '.theme-preview' ).hide();

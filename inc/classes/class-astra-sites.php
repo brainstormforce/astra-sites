@@ -1406,6 +1406,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		public function popup_styles() {
 
 			wp_enqueue_style( 'astra-sites-elementor-admin-page', ASTRA_SITES_URI . 'inc/assets/css/elementor-admin.css', ASTRA_SITES_VER, true );
+			wp_enqueue_style( 'astra-sites-elementor-admin-page-dark', ASTRA_SITES_URI . 'inc/assets/css/elementor-admin-dark.css', ASTRA_SITES_VER, true );
 			wp_style_add_data( 'astra-sites-elementor-admin-page', 'rtl', 'replace' );
 
 		}
