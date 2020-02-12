@@ -5,6 +5,12 @@
     background-color: #404349;
 }
 
+.ast-sites-dark-mode #ast-sites-modal .astra-sites__sync-wrap:hover span,
+.ast-sites-dark-mode #ast-sites-modal .ast-sites-modal__header__close--normal:hover i,
+.ast-sites-dark-mode #ast-sites-modal .back-to-layout:hover i {
+    color: #ffffff;
+}
+
 .ast-sites-dark-mode #ast-sites-modal .astra-blocks-filter {
 	border-color: #7d7e82;
 }

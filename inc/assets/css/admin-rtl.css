@@ -79,6 +79,11 @@
     top: 0 !important;
 }
 
+.ast-white-label-flag {
+	opacity: 0;
+	visibility: hidden;
+}
+
 .single-site-footer .dashicons-editor-help {
 	cursor: pointer;
 	display: inline-block;
