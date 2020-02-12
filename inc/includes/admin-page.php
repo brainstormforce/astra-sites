@@ -693,7 +693,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 									</li>
 
 									<?php $theme_status = Astra_Sites::get_instance()->get_theme_status(); ?>
+									<?php $theme_dependancy_class = ''; ?>
 									<?php if ( 'installed-and-active' !== $theme_status ) { ?>
+										<?php $theme_dependancy_class = 'astra-theme-module'; ?>
 										<li class="astra-sites-theme-activation">
 											<label>
 												<input type="checkbox" name="reset" class="checkbox" checked="checked" data-status="<?php echo esc_attr( $theme_status ); ?>">
@@ -703,6 +705,27 @@ if ( ! defined( 'ABSPATH' ) ) {
 										</li>
 									<?php } ?>
 
+									<li class="astra-sites-import-customizer <?php echo esc_attr( $theme_dependancy_class ); ?>">
+										<label>
+											<input type="checkbox" name="customizer" checked="checked" class="checkbox">
+											<strong><?php esc_html_e( 'Import Customizer Settings', 'astra-sites' ); ?></strong>
+											<span class="astra-sites-tooltip-icon" data-tip-id="astra-sites-tooltip-customizer-settings"><span class="dashicons dashicons-editor-help"></span></span>
+											<div class="astra-sites-tooltip-message" id="astra-sites-tooltip-customizer-settings" style="display: none;">
+											<?php /* translators: %s are white label strings. */ ?>
+											<p><?php printf( esc_html__( '%1$s customizer serves global settings that give uniform design to the website. Choosing this option will override your current customizer settings.', 'astra-sites' ), Astra_Sites_White_Label::get_instance()->get_white_label_name() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
+											</div>
+										</label>
+									</li>
+
+								<# } #>
+
+								<# if( 'astra-sites' === data ) { #>
+									<li class="astra-sites-import-widgets">
+										<label>
+											<input type="checkbox" name="widgets" checked="checked" class="checkbox">
+											<strong><?php esc_html_e( 'Import Widgets', 'astra-sites' ); ?></strong>
+										</label>
+									</li>
 								<# } #>
 
 								<li class="astra-sites-import-plugins">
@@ -714,18 +737,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 										<ul class="required-plugins-list"><span class="spinner is-active"></span></ul>
 									</div>
 								</li>
+
 								<# if( 'astra-sites' === data ) { #>
-									<li class="astra-sites-import-customizer">
-										<label>
-											<input type="checkbox" name="customizer" checked="checked" class="checkbox">
-											<strong><?php esc_html_e( 'Import Customizer Settings', 'astra-sites' ); ?></strong>
-											<span class="astra-sites-tooltip-icon" data-tip-id="astra-sites-tooltip-customizer-settings"><span class="dashicons dashicons-editor-help"></span></span>
-											<div class="astra-sites-tooltip-message" id="astra-sites-tooltip-customizer-settings" style="display: none;">
-											<?php /* translators: %s are white label strings. */ ?>
-											<p><?php printf( esc_html__( '%1$s customizer serves global settings that give uniform design to the website. Choosing this option will override your current customizer settings.', 'astra-sites' ), Astra_Sites_White_Label::get_instance()->get_white_label_name() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
-											</div>
-										</label>
-									</li>
 									<li class="astra-sites-import-xml">
 										<label>
 											<input type="checkbox" name="xml" checked="checked" class="checkbox">
@@ -733,12 +746,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 										</label>
 										<span class="astra-sites-tooltip-icon" data-tip-id="astra-sites-tooltip-site-content"><span class="dashicons dashicons-editor-help"></span></span>
 										<div class="astra-sites-tooltip-message" id="astra-sites-tooltip-site-content" style="display: none;"><p><?php esc_html_e( 'Selecting this option will import dummy pages, posts, images, and menus. If you do not want to import dummy content, please uncheck this option.', 'astra-sites' ); ?></p></div>
-									</li>
-									<li class="astra-sites-import-widgets">
-										<label>
-											<input type="checkbox" name="widgets" checked="checked" class="checkbox">
-											<strong><?php esc_html_e( 'Import Widgets', 'astra-sites' ); ?></strong>
-										</label>
 									</li>
 								<# } #>
 							</ul>

@@ -2798,3 +2798,7 @@ body.loading-content .select-page-builder {
     list-style-type: circle;
     margin-right: 1.7em;
 }
+
+.astra-site-contents .astra-theme-module {
+    margin-right: 2em;
+}
