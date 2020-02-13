@@ -1267,7 +1267,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				),
 				'third-party-required' => array(
 					'title'   => esc_html__( 'Required Plugins Missing', 'astra-sites' ),
-					'tooltip' => '<p>' . esc_html__( 'This starter site requires premium plugins. As these are third party premium plugins, you\'ll need to purchase, install and activate them first.', 'astra-sites' ) . '</p>',
+					'tooltip' => '<p>' . esc_html__( 'This starter template requires premium plugins. As these are third party premium plugins, you\'ll need to purchase, install and activate them first.', 'astra-sites' ) . '</p>',
 				),
 				'dynamic-page'         => array(
 					'title'   => esc_html__( 'Dynamic Page', 'astra-sites' ),

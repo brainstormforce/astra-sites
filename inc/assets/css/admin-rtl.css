@@ -2807,3 +2807,8 @@ body.loading-content .select-page-builder {
 .astra-site-contents .astra-theme-module {
     margin-right: 2em;
 }
+
+.dont-use-astra-theme .plugin-card-astra-addon,
+.required-plugins-count-1.dont-use-astra-theme .astra-sites-import-plugins {
+    display: none;
+}

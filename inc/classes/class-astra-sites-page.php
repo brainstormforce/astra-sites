@@ -133,7 +133,7 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 				?>
 				<div class="notice notice-info is-dismissible astra-sites-notice astra-sites-getting-started-notice">
 					<?php /* translators: %1$s is the admin page URL, %2$s is product name. */ ?>
-					<p><?php printf( __( 'Thank you for choosing %1$s! Check the library of <a class="astra-sites-getting-started-btn" href="%2$s">ready starter sites here »</a>', 'astra-sites' ), esc_html( $product_name ), esc_url( $url ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
+					<p><?php printf( __( 'Thank you for choosing %1$s! Check the library of <a class="astra-sites-getting-started-btn" href="%2$s">ready starter templates here »</a>', 'astra-sites' ), esc_html( $product_name ), esc_url( $url ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
 				</div>
 				<?php
 			}
