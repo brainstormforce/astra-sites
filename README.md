@@ -120,10 +120,10 @@ We are open to suggestions and would love to work on topics that our users are l
 v2.0.0 - 18-February-2020
 - New: Added favorite or unfavorite the demo site.
 - New: Improve the sites and pages loading time speed.
-- New: Added block import support with 200+ blocks in elementor editor window.
-- New: Added single page import as elementor template in elementor editor window.
+- New: Added block import support with 200+ blocks in the Elementor editor window.
+- New: Added single page import as Elementor template in the Elementor editor window.
 - New: Added single page import support from any demo site with 1800+ pages.
-- Improvement: Showing all Astra sites with more user friendly and interactive UI.
+- Improvement: Showing all Astra sites with more user-friendly and interactive UI.
 - Improvement: Updated the Astra Notices library.
 
 - Improvement: Added missing font awesome icons support for the Elementor sites.
