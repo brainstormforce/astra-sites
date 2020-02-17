@@ -2109,34 +2109,42 @@ var AstraSitesAjaxQueue = (function() {
 		},
 
 		_backupOptions: function( trigger_name ) {
-			$.ajax({
-				url  : astraSitesVars.ajaxurl,
-				type : 'POST',
-				data : {
-					action : 'astra-sites-backup-settings',
-					_ajax_nonce      : astraSitesVars._ajax_nonce,
-				},
-				beforeSend: function() {
-					console.groupCollapsed( 'Processing Customizer Settings Backup' );
-					AstraSitesAdmin._log_title( 'Processing Customizer Settings Backup..' );
-					// console.log( '# Processing Customizer Settings Backup..' );
-				},
-			})
-			.fail(function( jqXHR ){
-				AstraSitesAdmin._log( jqXHR );
-				AstraSitesAdmin._importFailMessage( 'Request Failed!<br/><br/>Error: ' + jqXHR.status + ' ' + jqXHR.responseText + ' ' + jqXHR.statusText + '<br/><br/>Try again!', 'Backup Customizer Settings Failed!' );
-				console.groupEnd();
-		    })
-			.done(function ( data ) {
-				AstraSitesAdmin._log( data );
 
-				// 1. Pass - Import Customizer Options.
-				AstraSitesAdmin._log_title( 'Customizer Settings Backup Done..' );
+			// Customizer backup is already taken then return.
+			if( AstraSitesAdmin.backup_taken ) {
+				$( document ).trigger( trigger_name );
+			} else {
 
-				console.groupEnd();
-				// Custom trigger.
-				$(document).trigger( trigger_name );
-			});
+				$.ajax({
+					url  : astraSitesVars.ajaxurl,
+					type : 'POST',
+					data : {
+						action : 'astra-sites-backup-settings',
+						_ajax_nonce      : astraSitesVars._ajax_nonce,
+					},
+					beforeSend: function() {
+						console.groupCollapsed( 'Processing Customizer Settings Backup' );
+						AstraSitesAdmin._log_title( 'Processing Customizer Settings Backup..' );
+						// console.log( '# Processing Customizer Settings Backup..' );
+					},
+				})
+				.fail(function( jqXHR ){
+					AstraSitesAdmin._log( jqXHR );
+					AstraSitesAdmin._importFailMessage( 'Request Failed!<br/><br/>Error: ' + jqXHR.status + ' ' + jqXHR.responseText + ' ' + jqXHR.statusText + '<br/><br/>Try again!', 'Backup Customizer Settings Failed!' );
+					console.groupEnd();
+			    })
+				.done(function ( data ) {
+					AstraSitesAdmin._log( data );
+
+					// 1. Pass - Import Customizer Options.
+					AstraSitesAdmin._log_title( 'Customizer Settings Backup Done..' );
+
+					console.groupEnd();
+					// Custom trigger.
+					$(document).trigger( trigger_name );
+				});
+			}
+
 		},
 
 		/**
@@ -2221,8 +2229,6 @@ var AstraSitesAjaxQueue = (function() {
 					} else {
 
 						// 4. Pass - Import Widgets.
-						AstraSitesAdmin._log( astraSitesVars.log.importWidgetsSuccess );
-
 						$(document).trigger( 'astra-sites-import-widgets-done' );
 					}
 				});
@@ -2359,6 +2365,10 @@ var AstraSitesAjaxQueue = (function() {
 
 									break;
 							}
+						};
+						evtSource.onerror = function( error ) {
+							$('.astra-sites-result-preview .inner > h3').text('Import Process Interrupted');
+							$('.astra-sites-import-content').html( wp.template( 'astra-sites-request-failed' ) );
 						};
 						evtSource.addEventListener( 'log', function ( message ) {
 							var data = JSON.parse( message.data );

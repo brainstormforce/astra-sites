@@ -5,7 +5,7 @@
 **Requires at least:** 4.4  
 **Requires PHP:** 5.3  
 **Tested up to:** 5.3  
-**Stable tag:** 2.0.0-beta.1  
+**Stable tag:** 2.0.0  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -117,7 +117,7 @@ We are open to suggestions and would love to work on topics that our users are l
 
 ## Changelog ##
 
-v2.0.0 - Unreleased
+v2.0.0 - 18-February-2020
 - New: Added favorite or unfavorite the demo site.
 - New: Improve the sites and pages loading time speed.
 - New: Added block import support with 200+ blocks in elementor editor window.
