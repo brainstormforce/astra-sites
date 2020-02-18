@@ -311,7 +311,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 				wp_send_json_success( 'updated' );
 			}
 
-			$status = Astra_Sites_Page::get_instance()::test_cron();
+			$status = Astra_Sites_Page::get_instance()->test_cron();
 			if ( is_wp_error( $status ) ) {
 				$import_with = 'ajax';
 			} else {
@@ -396,7 +396,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 				return;
 			}
 
-			$status = Astra_Sites_Page::get_instance()::test_cron();
+			$status = Astra_Sites_Page::get_instance()->test_cron();
 			if ( is_wp_error( $status ) ) {
 				astra_sites_error_log( 'Error! Batch Not Start due to disabled cron events!' );
 				update_option( 'astra-sites-batch-status-string', 'Error! Batch Not Start due to disabled cron events!' );
