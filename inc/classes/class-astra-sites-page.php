@@ -673,7 +673,7 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 					break;
 
 				case 'beaver-builder':
-					$image = ASTRA_SITES_URI . 'inc/assets/images/beaver-builder.png';
+					$image = ASTRA_SITES_URI . 'inc/assets/images/beaver-builder.jpg';
 					break;
 
 				case 'gutenberg':
@@ -797,6 +797,8 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 		/**
 		 * Converts a period of time in seconds into a human-readable format representing the interval.
 		 *
+		 * @since  2.0.0
+		 *
 		 * Example:
 		 *
 		 *     echo self::interval( 90 );
@@ -870,7 +872,7 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 		 *
 		 * Gets the current cron status by performing a test spawn. Cached for one hour when all is well.
 		 *
-		 * @since 1.7.0
+		 * @since 2.0.0
 		 *
 		 * @param bool $cache Whether to use the cached result from previous calls.
 		 * @return true|WP_Error Boolean true if the cron spawner is working as expected, or a WP_Error object if not.

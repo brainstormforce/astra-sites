@@ -36,7 +36,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 		/**
 		 * Last Export Checksums
 		 *
-		 * @since 2.0.4
+		 * @since 2.0.0
 		 * @var object Class object.
 		 * @access public
 		 */

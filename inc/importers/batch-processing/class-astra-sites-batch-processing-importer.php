@@ -3,7 +3,7 @@
  * Batch Processing
  *
  * @package Astra Sites
- * @since 1.0.14
+ * @since 2.0.0
  */
 
 if ( ! class_exists( 'Astra_Sites_Batch_Processing_Importer' ) ) :

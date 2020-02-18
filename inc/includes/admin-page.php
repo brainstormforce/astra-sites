@@ -440,7 +440,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		}
 
 			/* translators: %s is pricing page link */
-			printf( __( 'You have purchased the %4$s \'Mini Agency\' package with a choice of \'%1$s\' page builder addon.<br/>While this template is available with Astra \'Mini Agency\' package with \'%2$s\' page bulider addon.<br/><br/>To import this template, you can upgrade the <a href="%3$s" target="_blank">Agency Bundle</a>.', 'astra-sites' ), esc_html( $current_page_builder ), esc_html( $upgrade_page_builder ), esc_url( 'https://wpastra.com/pricing/' ), Astra_Sites_White_Label::get_instance()->get_white_label_name() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			printf( __( 'You have purchased the %4$s \'Mini Agency\' package with a choice of \'%1$s\' page builder addon.<br/>While this template is available with %4$s \'Mini Agency\' package with \'%2$s\' page bulider addon.<br/><br/>To import this template, you can upgrade the <a href="%3$s" target="_blank">Agency Bundle</a>.', 'astra-sites' ), esc_html( $current_page_builder ), esc_html( $upgrade_page_builder ), esc_url( 'https://wpastra.com/pricing/' ), Astra_Sites_White_Label::get_instance()->get_white_label_name() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		?>
 	</p>
 </script>

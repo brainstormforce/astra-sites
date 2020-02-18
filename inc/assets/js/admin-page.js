@@ -2398,9 +2398,7 @@ var AstraSitesAjaxQueue = (function() {
 							}
 						};
 						evtSource.onerror = function( error ) {
-							$('.astra-sites-result-preview .inner > h3').text('Import Process Interrupted');
-							$('.astra-sites-import-content').html( wp.template( 'astra-sites-request-failed' ) );
-							$('.astra-demo-import').removeClass('updating-message installing button-primary').addClass('disabled').text('Import Failed!');
+							AstraSitesAdmin._importFailMessage('', 'Import Process Interrupted');
 						};
 						evtSource.addEventListener( 'log', function ( message ) {
 							var data = JSON.parse( message.data );

@@ -50,16 +50,6 @@ if ( ! class_exists( 'Astra_Sites_Compatibility' ) ) :
 			// Plugin - WooCommerce.
 			require_once ASTRA_SITES_DIR . 'inc/classes/compatibility/woocommerce/class-astra-sites-compatibility-woocommerce.php';
 
-			$page_builders = Astra_Sites::get_instance()->get_page_builders();
-			$has_elementor = false;
-
-			foreach ( $page_builders as $page_builder ) {
-
-				if ( 'elementor' === $page_builder['slug'] ) {
-					$has_elementor = true;
-				}
-			}
-
 			// Plugin - LearnDash LMS.
 			require_once ASTRA_SITES_DIR . 'inc/classes/compatibility/sfwd-lms/class-astra-sites-compatibility-sfwd-lms.php';
 

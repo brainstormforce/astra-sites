@@ -257,7 +257,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				update_option( 'elementor_load_fa4_shim', $data['astra-page-options-data']['elementor_load_fa4_shim'] );
 			}
 
-			$import      = new \Elementor\TemplateLibrary\Astra_Elementor_Pages();
+			$import      = new \Elementor\TemplateLibrary\Astra_Sites_Elementor_Pages();
 			$import_data = $import->import( $post_id, $meta );
 
 			wp_send_json_success( $import_data );
@@ -1463,8 +1463,8 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			require_once ASTRA_SITES_DIR . 'inc/lib/astra-notices/class-astra-notices.php';
 			require_once ASTRA_SITES_DIR . 'inc/classes/class-astra-sites-white-label.php';
 			require_once ASTRA_SITES_DIR . 'inc/classes/class-astra-sites-page.php';
-			require_once ASTRA_SITES_DIR . 'inc/classes/class-astra-elementor-pages.php';
-			require_once ASTRA_SITES_DIR . 'inc/classes/class-astra-elementor-images.php';
+			require_once ASTRA_SITES_DIR . 'inc/classes/class-astra-sites-elementor-pages.php';
+			require_once ASTRA_SITES_DIR . 'inc/classes/class-astra-sites-elementor-images.php';
 			require_once ASTRA_SITES_DIR . 'inc/classes/compatibility/class-astra-sites-compatibility.php';
 			require_once ASTRA_SITES_DIR . 'inc/classes/class-astra-sites-importer.php';
 			require_once ASTRA_SITES_DIR . 'inc/classes/class-astra-sites-wp-cli.php';

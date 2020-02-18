@@ -34,7 +34,7 @@ use Elementor\Utils;
  *
  * @since 2.0.0 Added compatibility for Elemetnor v2.5.0
  */
-class Astra_Elementor_Pages extends Source_Local {
+class Astra_Sites_Elementor_Pages extends Source_Local {
 
 	/**
 	 * Update post meta.

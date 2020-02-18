@@ -1,6 +1,6 @@
 <?php
 /**
- * Astra_Elementor_Images class
+ * Astra_Sites_Elementor_Images class
  *
  * This class is used to manage Pixabay Images.
  *
@@ -11,14 +11,14 @@
 use Elementor\Utils;
 
 // If plugin - 'Elementor' not exist then return.
-if ( class_exists( 'Astra_Elementor_Images' ) ) {
+if ( class_exists( 'Astra_Sites_Elementor_Images' ) ) {
 	return;
 }
 
 /**
- * Astra_Elementor_Images
+ * Astra_Sites_Elementor_Images
  */
-class Astra_Elementor_Images {
+class Astra_Sites_Elementor_Images {
 
 	/**
 	 * Instance of Astra_Sites
@@ -29,7 +29,7 @@ class Astra_Elementor_Images {
 	private static $instance = null;
 
 	/**
-	 * Instance of Astra_Elementor_Images.
+	 * Instance of Astra_Sites_Elementor_Images.
 	 *
 	 * @since  2.0.0
 	 *
@@ -91,4 +91,4 @@ class Astra_Elementor_Images {
 /**
  * Kicking this off by calling 'get_instance()' method
  */
-Astra_Elementor_Images::get_instance();
+Astra_Sites_Elementor_Images::get_instance();

@@ -3,7 +3,7 @@
  * Astra Sites Compatibility for 'Elementor'
  *
  * @package Astra Sites
- * @since x.x.x
+ * @since 2.0.0
  */
 
 namespace AstraSites\Elementor;
@@ -15,7 +15,7 @@ if ( ! class_exists( 'Astra_Sites_Compatibility_Elementor' ) ) :
 	/**
 	 * Elementor Compatibility
 	 *
-	 * @since x.x.x
+	 * @since 2.0.0
 	 */
 	class Astra_Sites_Compatibility_Elementor {
 
@@ -24,14 +24,14 @@ if ( ! class_exists( 'Astra_Sites_Compatibility_Elementor' ) ) :
 		 *
 		 * @access private
 		 * @var object Class object.
-		 * @since x.x.x
+		 * @since 2.0.0
 		 */
 		private static $instance;
 
 		/**
 		 * Initiator
 		 *
-		 * @since x.x.x
+		 * @since 2.0.0
 		 * @return object initialized object of class.
 		 */
 		public static function get_instance() {
@@ -44,7 +44,7 @@ if ( ! class_exists( 'Astra_Sites_Compatibility_Elementor' ) ) :
 		/**
 		 * Constructor
 		 *
-		 * @since x.x.x
+		 * @since 2.0.0
 		 */
 		public function __construct() {
 

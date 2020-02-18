@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Starter Templates 2.0.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/astra-sites\n"
-"POT-Creation-Date: 2020-02-18 06:26:49+00:00\n"
+"POT-Creation-Date: 2020-02-18 11:33:12+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -190,74 +190,74 @@ msgstr ""
 msgid "Brizy"
 msgstr ""
 
-#: inc/classes/class-astra-sites-page.php:812
+#: inc/classes/class-astra-sites-page.php:814
 #. translators: 1: The number of years in an interval of time.
 msgid "%s year"
 msgid_plural "%s years"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/classes/class-astra-sites-page.php:814
+#: inc/classes/class-astra-sites-page.php:816
 #. translators: 1: The number of months in an interval of time.
 msgid "%s month"
 msgid_plural "%s months"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/classes/class-astra-sites-page.php:816
+#: inc/classes/class-astra-sites-page.php:818
 #. translators: 1: The number of weeks in an interval of time.
 msgid "%s week"
 msgid_plural "%s weeks"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/classes/class-astra-sites-page.php:818
+#: inc/classes/class-astra-sites-page.php:820
 #. translators: 1: The number of days in an interval of time.
 msgid "%s day"
 msgid_plural "%s days"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/classes/class-astra-sites-page.php:820
+#: inc/classes/class-astra-sites-page.php:822
 #. translators: 1: The number of hours in an interval of time.
 msgid "%s hour"
 msgid_plural "%s hours"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/classes/class-astra-sites-page.php:822
+#: inc/classes/class-astra-sites-page.php:824
 #. translators: 1: The number of minutes in an interval of time.
 msgid "%s minute"
 msgid_plural "%s minutes"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/classes/class-astra-sites-page.php:824
+#: inc/classes/class-astra-sites-page.php:826
 #. translators: 1: The number of seconds in an interval of time.
 msgid "%s second"
 msgid_plural "%s seconds"
 msgstr[0] ""
 msgstr[1] ""
 
-#: inc/classes/class-astra-sites-page.php:828
+#: inc/classes/class-astra-sites-page.php:830
 msgid "now"
 msgstr ""
 
-#: inc/classes/class-astra-sites-page.php:882
+#: inc/classes/class-astra-sites-page.php:884
 msgid ""
 "ERROR! Cron schedules are disabled by setting constant DISABLE_WP_CRON to "
 "true.<br/>To start the import process please enable the cron by setting the "
 "constant to false. E.g. define( 'DISABLE_WP_CRON', false );"
 msgstr ""
 
-#: inc/classes/class-astra-sites-page.php:886
+#: inc/classes/class-astra-sites-page.php:888
 msgid ""
 "ERROR! Cron schedules are disabled by setting constant ALTERNATE_WP_CRON to "
 "true.<br/>To start the import process please enable the cron by setting the "
 "constant to false. E.g. define( 'ALTERNATE_WP_CRON', false );"
 msgstr ""
 
-#: inc/classes/class-astra-sites-page.php:922
+#: inc/classes/class-astra-sites-page.php:924
 #. translators: 1: The HTTP response code.
 msgid "Unexpected HTTP response code: %s"
 msgstr ""
@@ -1076,7 +1076,7 @@ msgstr ""
 #. translators: %s is pricing page link
 msgid ""
 "You have purchased the %4$s 'Mini Agency' package with a choice of '%1$s' "
-"page builder addon.<br/>While this template is available with Astra 'Mini "
+"page builder addon.<br/>While this template is available with %4$s 'Mini "
 "Agency' package with '%2$s' page bulider addon.<br/><br/>To import this "
 "template, you can upgrade the <a href=\"%3$s\" target=\"_blank\">Agency "
 "Bundle</a>."

@@ -558,6 +558,7 @@ var AstraSitesAjaxQueue = (function() {
 					data: {
 						'action' : 'astra-required-plugin-activate',
 						'init' : single_plugin.init,
+						'_ajax_nonce' : astraElementorSites._ajax_nonce,
 					},
 					success: function( result ){
 
@@ -1583,6 +1584,7 @@ var AstraSitesAjaxQueue = (function() {
 					data: {
 						'action' : 'astra-required-plugin-activate',
 						'init' : curr_plugin.init,
+						'_ajax_nonce' : astraElementorSites._ajax_nonce,
 					},
 				})
 				.done(function (result) {
