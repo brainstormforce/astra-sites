@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Starter Templates 2.0.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/astra-sites\n"
-"POT-Creation-Date: 2020-02-17 10:40:30+00:00\n"
+"POT-Creation-Date: 2020-02-18 06:26:49+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -48,13 +48,11 @@ msgstr ""
 
 #: inc/classes/class-astra-sites-importer-log.php:352
 #: inc/classes/class-astra-sites-importer-log.php:411
-#: inc/classes/compatibility/elementor/class-astra-sites-compatibility-elementor.php:123
 msgid "Yes"
 msgstr ""
 
 #: inc/classes/class-astra-sites-importer-log.php:355
 #: inc/classes/class-astra-sites-importer-log.php:414
-#: inc/classes/compatibility/elementor/class-astra-sites-compatibility-elementor.php:124
 msgid "No"
 msgstr ""
 
@@ -743,65 +741,6 @@ msgstr ""
 
 #: inc/classes/class-astra-sites.php:1822
 msgid "Template library refreshed!"
-msgstr ""
-
-#: inc/classes/compatibility/elementor/class-astra-sites-compatibility-elementor.php:98
-msgid "Starter Templates Settings"
-msgstr ""
-
-#: inc/classes/compatibility/elementor/class-astra-sites-compatibility-elementor.php:112
-#. translators: %s: Admin link
-msgid ""
-"We have noticed that your Elementor Default Colors and Fonts settings are "
-"enabled. To see Starter Template settings in action you need to turn off "
-"the Global Settings from %1$s."
-msgstr ""
-
-#: inc/classes/compatibility/elementor/class-astra-sites-compatibility-elementor.php:121
-msgid "Enable "
-msgstr ""
-
-#: inc/classes/compatibility/elementor/class-astra-sites-compatibility-elementor.php:125
-msgid ""
-"Enables the page settings. You can still override individual values for "
-"each element."
-msgstr ""
-
-#: inc/classes/compatibility/elementor/class-astra-sites-compatibility-elementor.php:134
-msgid "Colors"
-msgstr ""
-
-#: inc/classes/compatibility/elementor/class-astra-sites-compatibility-elementor.php:146
-msgid "Main Color"
-msgstr ""
-
-#: inc/classes/compatibility/elementor/class-astra-sites-compatibility-elementor.php:161
-msgid "Text Color"
-msgstr ""
-
-#: inc/classes/compatibility/elementor/class-astra-sites-compatibility-elementor.php:175
-msgid "Link Color"
-msgstr ""
-
-#: inc/classes/compatibility/elementor/class-astra-sites-compatibility-elementor.php:189
-msgid "Link Hover Color"
-msgstr ""
-
-#: inc/classes/compatibility/elementor/class-astra-sites-compatibility-elementor.php:203
-msgid "Heading Base Color (H1-H6)"
-msgstr ""
-
-#: inc/classes/compatibility/elementor/class-astra-sites-compatibility-elementor.php:217
-msgid "Typography"
-msgstr ""
-
-#: inc/classes/compatibility/elementor/class-astra-sites-compatibility-elementor.php:230
-msgid "Body"
-msgstr ""
-
-#: inc/classes/compatibility/elementor/class-astra-sites-compatibility-elementor.php:250
-#. translators: %s: Heading 1-6 type
-msgid "Heading %s"
 msgstr ""
 
 #: inc/importers/batch-processing/helpers/class-wp-background-process-astra-site-importer.php:87

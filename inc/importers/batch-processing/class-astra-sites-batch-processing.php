@@ -255,15 +255,17 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 
 			$new_last_export_checksums = $this->set_last_export_checksums();
 
+			$checksums_status = 'no';
+
 			if ( empty( $old_last_export_checksums ) ) {
-				return 'yes';
+				$checksums_status = 'yes';
 			}
 
 			if ( $new_last_export_checksums !== $old_last_export_checksums ) {
-				return 'yes';
+				$checksums_status = 'yes';
 			}
 
-			return 'no';
+			return apply_filters( 'astra_sites_checksums_status', $checksums_status );
 		}
 
 		/**
@@ -561,8 +563,8 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 				return;
 			}
 
-			// For 1 hour.
-			set_transient( 'astra-sites-import-check', 'true', WEEK_IN_SECONDS );
+			// For 1 week.
+			set_transient( 'astra-sites-import-check', 'true', apply_filters( 'astra_sites_sync_check_time', WEEK_IN_SECONDS ) );
 
 			update_option( 'astra-sites-batch-status', 'in-process' );
 
