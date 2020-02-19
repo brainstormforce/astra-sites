@@ -614,7 +614,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 
 					$result['attachmentData'] = wp_prepare_attachment_for_js( $image );
 					if ( did_action( 'elementor/loaded' ) ) {
-						$result['data'] = Astra_Elementor_Images::get_instance()->get_attachment_data( $image );
+						$result['data'] = Astra_Sites_Elementor_Images::get_instance()->get_attachment_data( $image );
 					}
 				}
 			}
