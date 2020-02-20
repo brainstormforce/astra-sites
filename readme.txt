@@ -132,8 +132,12 @@ We are open to suggestions and would love to work on topics that our users are l
 == Screenshots ==
 
 1. Select the page builder of your choice.
-2. Browse through available Astra sites and select the site that you like.
-3. Click the import site button to start the import process.
+2. Browse through available Starter Templtes and select the site that you like.
+3. Filter using available Starter Temapltes categories.
+4. View all the pages for the starter site.
+5. Click the import button to start the import process.
+6. Blocks import in Elementor editor.
+7. Free Images by Pixabay right inside the WordPress media popup.
 
 == Changelog ==
 
