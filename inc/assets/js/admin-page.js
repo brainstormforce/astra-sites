@@ -1399,17 +1399,18 @@ var AstraSitesAjaxQueue = (function() {
 					site_id 		: site_id
 				},
 				beforeSend: function() {
-					AstraSitesAdmin._log( '------------------------------------------------------------------------' );
-					AstraSitesAdmin._log( 'Toggle Favorite..' );
+					console.groupCollapsed( 'Toggle Favorite' );
 					AstraSitesAdmin._log( ! is_favorite );
 				},
 			})
 			.fail(function( jqXHR ){
 				AstraSitesAdmin._log( jqXHR );
 				AstraSitesAdmin._importFailMessage( jqXHR.status + ' ' + jqXHR.statusText, 'Favorite/Unfavorite Failed!' );
+				console.groupEnd();
 		    })
 			.done(function ( response ) {
 				AstraSitesAdmin._log( response );
+				console.groupEnd();
 			});
 		},
 
@@ -1691,7 +1692,7 @@ var AstraSitesAjaxQueue = (function() {
 					page_builder : page_builder,
 				},
 				beforeSend: function() {
-					AstraSitesAdmin._log( '------------------------------------------------------------------------' );
+					console.groupCollapsed( 'Change Page Builder' );
 					AstraSitesAdmin._log( 'Change Page Builder..' );
 				},
 			})
@@ -1701,6 +1702,7 @@ var AstraSitesAjaxQueue = (function() {
 				AstraSitesAdmin._clean_url_params( 'astra-page' );
 				AstraSitesAdmin._clean_url_params( 'change-page-builder' );
 				AstraSitesAdmin._clean_url_params( 'license' );
+				console.groupEnd();
 				location.reload();
 			});
 		},
@@ -1743,12 +1745,13 @@ var AstraSitesAjaxQueue = (function() {
 						page_builder : page_builder_slug,
 					},
 					beforeSend: function() {
-						AstraSitesAdmin._log( '------------------------------------------------------------------------' );
+						console.groupCollapsed( 'Change Page Builder' );
 						AstraSitesAdmin._log( 'Change Page Builder..' );
 					},
 				})
 				.done(function ( response ) {
 					AstraSitesAdmin._log( response );
+					console.groupEnd();
 					if( response.success ) {
 						$( '.astra-sites__category-filter-items' ).find( '.ast-sites__filter-wrap' ).removeClass( 'category-active' );
 						$( '.ast-sites__filter-wrap' ).first().addClass( 'category-active' );
@@ -3072,16 +3075,18 @@ var AstraSitesAjaxQueue = (function() {
 						url : astraSitesVars.cpt_slug + '/' + page_id + '?' + decodeURIComponent( $.param( AstraSitesAdmin._api_params ) ),
 					},
 					beforeSend: function() {
-						AstraSitesAdmin._log( '------------------------------------------------------------------------' );
+						console.groupCollapsed( 'Requesting API URL' );
 						AstraSitesAdmin._log( 'Requesting API URL' );
 					}
 				})
 				.fail(function( jqXHR ){
 					AstraSitesAdmin._log( jqXHR );
 					AstraSitesAdmin._importFailMessage( jqXHR.status + ' ' + jqXHR.statusText, 'Page Import API Request Failed!' );
+					console.groupEnd();
 				})
 				.done(function ( response ) {
 					AstraSitesAdmin._log( response );
+					console.groupEnd();
 
 					if( response.success ) {
 						AstraSitesAdmin.visited_sites_and_pages[ response.data.id ] = response.data;

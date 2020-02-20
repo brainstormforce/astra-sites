@@ -439,8 +439,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 			$upgrade_page_builder = 'Elementor';
 		}
 
-			/* translators: %s is pricing page link */
-			printf( __( 'You have purchased the %4$s \'Mini Agency\' package with a choice of \'%1$s\' page builder addon.<br/>While this template is available with %4$s \'Mini Agency\' package with \'%2$s\' page bulider addon.<br/><br/>To import this template, you can upgrade the <a href="%3$s" target="_blank">Agency Bundle</a>.', 'astra-sites' ), esc_html( $current_page_builder ), esc_html( $upgrade_page_builder ), esc_url( 'https://wpastra.com/pricing/' ), Astra_Sites_White_Label::get_instance()->get_white_label_name() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		/* translators: %s is pricing page link */
+		printf( __( '<p>Seems like you have purchased the %4$s \'Mini Agency\' package with a choice of \'%1$s\' page builder addon.</p><p>While this template is built with \'%2$s\' page builder addon.</p><p>Read article <a href="%3$s" target="_blank">here</a> to see how you can proceed.</p>', 'astra-sites' ), esc_html( $current_page_builder ), esc_html( $upgrade_page_builder ), esc_url( Astra_Sites_White_Label::get_instance()->get_white_label_link( 'https://wpastra.com/docs/not-valid-license/' ) ), Astra_Sites_White_Label::get_instance()->get_white_label_name() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		?>
 	</p>
 </script>
@@ -574,7 +574,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<a href="{{data['astra-site-url']}}" class="button button-hero site-preview-button <?php echo esc_html( $white_label_class ); ?>" target="_blank">Preview "{{{data['title']}}}" Site <i class="dashicons dashicons-external"></i></a>
 					<div class="site-action-buttons-right">
 						<# if( 'free' !== data['astra-sites-type'] && '' !== astraSitesVars.license_page_builder && data['astra-site-page-builder'] !== astraSitesVars.license_page_builder && ( 'brizy' !== data['astra-site-page-builder'] && 'gutenberg' !== data['astra-site-page-builder']  ) ) { #>
-							<a class="button button-hero button-primary disabled" href="#" target="_blank"><?php esc_html_e( 'Not Valid License', 'astra-sites' ); ?></a>
+							<a class="button button-hero button-primary disabled astra-sites-invalid-mini-agency-license-button"><?php esc_html_e( 'Not Valid License', 'astra-sites' ); ?></a>
 							<span class="dashicons dashicons-editor-help astra-sites-invalid-mini-agency-license-button"></span>
 						<# } else if( 'free' !== data['astra-sites-type'] && ! astraSitesVars.license_status ) { #>
 							<# if( ! astraSitesVars.isPro ) { #>

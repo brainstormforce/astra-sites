@@ -5,7 +5,7 @@
  * Description: Starter Templates is all in one solution for complete starter sites, single page templates, blocks & images. This plugin offers the premium library of ready templates & provides quick access to beautiful Pixabay images that can be imported in your website easily.
  * Version: 2.0.0
  * Author: Brainstorm Force
- * Author URI: http://www.brainstormforce.com
+ * Author URI: https://www.brainstormforce.com
  * Text Domain: astra-sites
  *
  * @package Astra Sites

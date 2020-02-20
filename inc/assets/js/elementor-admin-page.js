@@ -243,6 +243,8 @@ var AstraSitesAjaxQueue = (function() {
 
 		_done: function( data ) {
 
+			console.groupEnd( 'Process Done.' );
+
 			var str = ( AstraElementorSitesAdmin.type == 'pages' ) ? 'Template' : 'Block';
 			$elscope.find( '.ast-import-elementor-template' ).removeClass( 'installing' );
 			$elscope.find( '.ast-import-elementor-template' ).attr( 'data-demo-link', data.data.link );
@@ -475,17 +477,19 @@ var AstraSitesAjaxQueue = (function() {
 					_ajax_nonce : astraElementorSites._ajax_nonce,
 				},
 				beforeSend: function() {
-					console.log( 'Importing WP Forms..' );
+					console.groupCollapsed( 'Importing WP Forms' );
 				},
 			})
 			.fail(function( jqXHR ){
 				console.log( jqXHR.status + ' ' + jqXHR.responseText, true );
-		    })
+				console.groupEnd();
+		    }) 
 			.done(function ( data ) {
 
 				// 1. Fail - Import WPForms Options.
 				if( false === data.success ) {
 					console.log( data.data );
+					console.groupEnd();
 				} else {
 					if( callback && typeof callback == "function"){
 						callback( data );
@@ -495,6 +499,8 @@ var AstraSitesAjaxQueue = (function() {
 		},
 
 		_createTemplate: function( data ) {
+
+			console.groupEnd();
 
 			// Work with JSON page here
 			$.ajax({
@@ -509,7 +515,7 @@ var AstraSitesAjaxQueue = (function() {
 					'_ajax_nonce' : astraElementorSites._ajax_nonce,
 				},
 				beforeSend: function() {
-					console.log( 'Creating Template..' );
+					console.groupCollapsed( 'Creating Template' );
 				}
 			})
 			.fail(function( jqXHR ){
@@ -607,12 +613,14 @@ var AstraSitesAjaxQueue = (function() {
 				return;
 			}
 
-			console.log( 'Bulk Plugin Install Process Started' );
+			console.groupCollapsed( 'Bulk Plugin Install Process Started' );
 
 			// If has class the skip-plugins then,
 			// Avoid installing 3rd party plugins.
 			var not_installed = AstraElementorSitesAdmin.requiredPlugins.notinstalled || '';
 			var activate_plugins = AstraElementorSitesAdmin.requiredPlugins.inactive || '';
+
+			console.log( AstraElementorSitesAdmin.requiredPlugins );
 
 			// First Install Bulk.
 			if( not_installed.length > 0 ) {
@@ -879,7 +887,8 @@ var AstraSitesAjaxQueue = (function() {
 
 		_enableImport: function() {
 
-			console.log( 'Import Enabled' );
+			console.log( 'Required Plugins Process Done.' );
+			console.groupEnd();
 
 			if ( 'pages' == AstraElementorSitesAdmin.type ) {
 
@@ -896,6 +905,7 @@ var AstraSitesAjaxQueue = (function() {
 						}
 					}).catch( err => {
 						console.log( err );
+						console.groupEnd();
 					});
 				});
 
@@ -914,53 +924,11 @@ var AstraSitesAjaxQueue = (function() {
 			}
 		},
 
-		_insert_from_link: function( e ) {
-
-			let step = $( this ).attr( 'data-step' );
-
-			AstraElementorSitesAdmin.site_id = $( this ).closest( '.astra-theme' ).data( 'site-id' );
-			AstraElementorSitesAdmin.page_id = $( this ).closest( '.astra-theme' ).data( 'template-id' );
-			AstraElementorSitesAdmin.block_id = $( this ).closest( '.astra-theme' ).data( 'block-id' );
-
-			$elscope.find( '.back-to-layout' ).css( 'visibility', 'visible' );
-			$elscope.find( '.back-to-layout' ).css( 'opacity', '1' );
-
-			// if ( 1 == step ) {
-
-			// 	$elscope.find( '.back-to-layout' ).attr( 'data-step', 2 );
-			// 	$( document ).trigger( 'astra-sites__elementor-do-step-1' );
-
-			// } else {
-
-			// 	$elscope.find( '.back-to-layout' ).attr( 'data-step', 3 );
-			// 	$( document ).trigger( 'astra-sites__elementor-do-step-2' );
-
-			// }
-
-			if ( ! AstraElementorSitesAdmin.canInsert ) {
-				return;
-			}
-
-			console.log( 'Insert Process Started' );
-
-			AstraElementorSitesAdmin.canInsert = false;
-			var str = ( AstraElementorSitesAdmin.type == 'pages' ) ? 'Template' : 'Block';
-
-			$( this ).addClass( 'installing' );
-			$( this ).text( 'Importing ' + str + '...' );
-
-			AstraElementorSitesAdmin.action = 'insert';
-
-			AstraElementorSitesAdmin._bulkPluginInstallActivate();
-		},
-
 		_insert: function( e ) {
 
 			if ( ! AstraElementorSitesAdmin.canInsert ) {
 				return;
 			}
-
-			console.log( 'Insert Process Started' );
 
 			AstraElementorSitesAdmin.canInsert = false;
 			var str = ( AstraElementorSitesAdmin.type == 'pages' ) ? 'Template' : 'Block';
@@ -1002,17 +970,19 @@ var AstraSitesAjaxQueue = (function() {
 						_ajax_nonce : astraElementorSites._ajax_nonce,
 					},
 					beforeSend: function() {
-						console.log( 'Demo Batch Process Started..' );
+						console.groupCollapsed( 'Inserting Demo.' );
 					},
 				})
 				.fail(function( jqXHR ){
 					console.log( jqXHR );
+					console.groupEnd();
 				})
 				.done(function ( response ) {
 
 					page_content = response.data;
 
 					console.log( page_content );
+					console.groupEnd();
 
 					if ( undefined !== page_content && '' !== page_content ) {
 						elementor.channels.data.trigger('template:before:insert', templateModel);
@@ -1369,6 +1339,7 @@ var AstraSitesAjaxQueue = (function() {
 			})
 			.fail(function( jqXHR ){
 				console.log( jqXHR );
+				console.groupEnd();
 			})
 			.done(function ( response ) {
 
@@ -1489,6 +1460,7 @@ var AstraSitesAjaxQueue = (function() {
 		},
 
 		_close: function( e ) {
+			console.groupEnd( 'Process Done.' );
 			$( document ).trigger( 'astra-sites__elementor-close-before' );
 			setTimeout( function() {
 				$elscope.fadeOut();
@@ -1611,33 +1583,15 @@ var AstraSitesAjaxQueue = (function() {
 		 * Plugin Installation Error.
 		 */
 		_installError: function( event, response ) {
-
-			// var $card = $( '.plugin-card-' + response.slug );
-			// var $name = $card.data('name');
-
-			// AstraElementorSitesAdmin._log_title( response.errorMessage + ' ' + AstraElementorSitesAdmin.ucwords($name) );
-
-
-			// $card
-			// 	.removeClass( 'button-primary' )
-			// 	.addClass( 'disabled' )
-			// 	.html( wp.updates.l10n.installFailedShort );
-
+			console.log( 'Error Installing Plugin - ' + args.slug );
+			console.log( response.errorMessage );
 		},
 
 		/**
 		 * Installing Plugin
 		 */
 		_pluginInstalling: function(event, args) {
-			// event.preventDefault();
-
-			// var $card = $( '.plugin-card-' + args.slug );
-			// var $name = $card.data('name');
-
-			// AstraElementorSitesAdmin._log_title( 'Installing Plugin - ' + AstraElementorSitesAdmin.ucwords( $name ));
-
-			// $card.addClass('updating-message');
-
+			console.log( 'Installing Plugin - ' + args.slug );
 		},
 	};
 

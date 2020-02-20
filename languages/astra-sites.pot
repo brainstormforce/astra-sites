@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Starter Templates 2.0.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/astra-sites\n"
-"POT-Creation-Date: 2020-02-19 03:39:03+00:00\n"
+"POT-Creation-Date: 2020-02-20 06:28:07+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -780,7 +780,7 @@ msgstr ""
 msgid "No Title"
 msgstr ""
 
-#: inc/importers/wxr-importer/class-astra-wxr-importer.php:359
+#: inc/importers/wxr-importer/class-astra-wxr-importer.php:360
 msgid "Import complete!"
 msgstr ""
 
@@ -1075,11 +1075,10 @@ msgstr ""
 #: inc/includes/admin-page.php:443
 #. translators: %s is pricing page link
 msgid ""
-"You have purchased the %4$s 'Mini Agency' package with a choice of '%1$s' "
-"page builder addon.<br/>While this template is available with %4$s 'Mini "
-"Agency' package with '%2$s' page bulider addon.<br/><br/>To import this "
-"template, you can upgrade the <a href=\"%3$s\" target=\"_blank\">Agency "
-"Bundle</a>."
+"<p>Seems like you have purchased the %4$s 'Mini Agency' package with a "
+"choice of '%1$s' page builder addon.</p><p>While this template is built "
+"with '%2$s' page builder addon.</p><p>Read article <a href=\"%3$s\" "
+"target=\"_blank\">here</a> to see how you can proceed.</p>"
 msgstr ""
 
 #: inc/includes/admin-page.php:454
@@ -1331,7 +1330,7 @@ msgid "Brainstorm Force"
 msgstr ""
 
 #. Author URI of the plugin/theme
-msgid "http://www.brainstormforce.com"
+msgid "https://www.brainstormforce.com"
 msgstr ""
 
 #: inc/classes/class-astra-sites-importer-log.php:285

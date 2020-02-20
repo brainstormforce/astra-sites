@@ -233,6 +233,22 @@ if ( ! class_exists( 'Astra_Sites_White_Label' ) ) :
 		}
 
 		/**
+		 * White Label Link
+		 *
+		 * @since 2.0.0
+		 *
+		 * @param  string $link  Default link.
+		 * @return string        Filtered Page Title.
+		 */
+		public function get_white_label_link( $link = '' ) {
+			if ( is_callable( 'Astra_Ext_White_Label_Markup::get_whitelabel_string' ) ) {
+				return Astra_Ext_White_Label_Markup::get_whitelabel_string( 'astra-agency', 'licence' );
+			}
+
+			return $link;
+		}
+
+		/**
 		 * Is Astra sites White labeled
 		 *
 		 * @since 1.2.13

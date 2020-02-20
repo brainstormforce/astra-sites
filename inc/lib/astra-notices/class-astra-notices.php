@@ -241,10 +241,10 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 
 			?>
 			<div id="<?php echo esc_attr( $notice['id'] ); ?>" class="<?php echo esc_attr( $notice['classes'] ); ?>" data-repeat-notice-after="<?php echo esc_attr( $notice['repeat-notice-after'] ); ?>">
-				<div class="notice-container">
+				<p class="notice-container">
 					<?php do_action( "astra_notice_inside_markup_{$notice['id']}" ); ?>
 					<?php echo wp_kses_post( $notice['message'] ); ?>
-				</div>
+				</p>
 			</div>
 			<?php
 

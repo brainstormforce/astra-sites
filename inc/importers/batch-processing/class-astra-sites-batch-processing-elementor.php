@@ -116,7 +116,6 @@ class Astra_Sites_Batch_Processing_Elementor extends Source_Local {
 
 				// Update processed meta.
 				update_metadata( 'post', $post_id, '_elementor_data', $data );
-				update_post_meta( $post_id, '_wp_page_template', 'elementor_header_footer' );
 				update_metadata( 'post', $post_id, '_astra_sites_hotlink_imported', true );
 
 				// !important, Clear the cache after images import.
