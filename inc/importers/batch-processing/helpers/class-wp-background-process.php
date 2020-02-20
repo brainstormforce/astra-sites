@@ -62,7 +62,7 @@ if ( ! class_exists( 'WP_Background_Process' ) ) {
 			$this->cron_interval_identifier = $this->identifier . '_cron_interval';
 
 			add_action( $this->cron_hook_identifier, array( $this, 'handle_cron_healthcheck' ) );
-			add_filter( 'cron_schedules', array( $this, 'schedule_cron_healthcheck' ) );
+			add_filter( 'cron_schedules', array( $this, 'schedule_cron_healthcheck' ) ); // phpcs:ignore WordPress.WP.CronInterval.ChangeDetected
 		}
 
 		/**
@@ -146,7 +146,7 @@ if ( ! class_exists( 'WP_Background_Process' ) ) {
 		 * @return string
 		 */
 		protected function generate_key( $length = 64 ) {
-			$unique  = md5( microtime() . rand() );
+			$unique  = md5( microtime() . wp_rand() );
 			$prepend = $this->identifier . '_batch_';
 
 			return substr( $prepend . $unique, 0, $length );
@@ -199,11 +199,14 @@ if ( ! class_exists( 'WP_Background_Process' ) ) {
 
 			$count = $wpdb->get_var(
 				$wpdb->prepare(
+					// phpcs:disable
 					"
 			SELECT COUNT(*)
 			FROM {$table}
 			WHERE {$column} LIKE %s
-		", $key
+		",
+					$key
+					// phpcs:enable
 				)
 			);
 
@@ -278,13 +281,16 @@ if ( ! class_exists( 'WP_Background_Process' ) ) {
 
 			$query = $wpdb->get_row(
 				$wpdb->prepare(
+					// phpcs:disable
 					"
 			SELECT *
 			FROM {$table}
 			WHERE {$column} LIKE %s
 			ORDER BY {$key_column} ASC
 			LIMIT 1
-		", $key
+		",
+					$key
+					// phpcs:enable
 				)
 			);
 
@@ -430,6 +436,7 @@ if ( ! class_exists( 'WP_Background_Process' ) ) {
 			// Adds every 5 minutes to the existing schedules.
 			$schedules[ $this->identifier . '_cron_interval' ] = array(
 				'interval' => MINUTE_IN_SECONDS * $interval,
+				/* translators: %d are the minutes. */
 				'display'  => sprintf( __( 'Every %d Minutes', 'astra-sites' ), $interval ),
 			);
 

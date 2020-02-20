@@ -5,7 +5,7 @@ Tags: Elementor,Beaver Builder,Templates,Gutenberg,Astra Starter Sites
 Requires at least: 4.4
 Requires PHP: 5.3
 Tested up to: 5.3
-Stable tag: 1.4.5
+Stable tag: 2.0.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -13,25 +13,44 @@ The growing library of 90+ ready-to-use free website templates built for Element
 
 == Description ==
 
-= FREE TEMPLATES FOR ELEMENTOR, BEAVER BUILDER AND GUTENBERG =
+= FREE TEMPLATES FOR ELEMENTOR, BEAVER BUILDER, BRIZY AND GUTENBERG =
 
-Create professional designed pixel perfect websites in minutes with the Astra Starter Sites plugin.
+Create professional designed pixel perfect websites in minutes with the Starter Templates plugin.
 
-This plugin gives you access to 90+ pre-made full website demos for your favorite page builder such as Elementor, Beaver Builder, Brizy and the WordPress default editor Gutenberg.
+This plugin gives you access to 280+ pre-made full website templates and individual pages for your favorite page builder such as Elementor, Beaver Builder, Brizy and the WordPress default editor Gutenberg.
 
 All you need to do is select the demo that suits your needs, import, tweak and go live!
 
-> I love the fact that the Astra Starter Sites plugin comes with dozens of pre-built sites that were built using Elementor and that can be used to create a full website with one click. - Ben Pines, CMO at Elementor
+> I love the fact that the Astra Starter Sites plugin comes with dozens of pre-built sites that were built using Elementor and that can be used to create a full website with one click. – Ben Pines, CMO at Elementor
 
-> Astra Sites allows anyone to have a beautiful website in under 5 minutes while using all open source software. The theme is free, the plugin is free, it’s almost unbelievable. You have to see it with your own eyes. - Adam Preiser, WPCrafter
+> Astra Sites allows anyone to have a beautiful website in under 5 minutes while using all open source software. The theme is free, the plugin is free, it’s almost unbelievable. You have to see it with your own eyes. – Adam Preiser, WPCrafter
+
+= INTRODUCING STARTER TEMPLATES 2.0! =
+
+The Astra Starter Sites plugin allowed you to import complete website demos, tweak them and build professional websites.
+
+With Starter Templates 2.0, you can now do that by importing specific pages, complete websites or even Elementor blocks that give you lots of flexibility to import only what you need.
+
+= HIGHLIGHTS OF STARTER TEMPLATES 2.0 =
+
+- An improved and easier template search option.
+- Filters that let you pick templates of a specific page builder.
+- Ability to mark your favorite templates.
+- Easier way to fetch the latest templates with a single click.
+- Ability to import individual pages to mix-n-match and build websites.
+- Option to inherit theme settings while importing a template.
+- Image search to import images from Pixabay through the WordPress Media Library.
+- Import ready Elementor blocks and templates through the page builder itself!
 
 = GET A WEBSITE LIVE IN 5 CLICKS! =
 
-1.Install and activate Astra Starter Sites Plugin
-2.Pick a website demo that suits your needs
-3.Install required plugins with a single click
-4.Import the website
-5.Done!
+1. Install and activate Starter Templates Plugin
+2. Select the page builder you wish to work with
+3. Pick a website / page demo that suits your needs
+4. Install required plugins with a single click
+5. Import the website / page template
+6. Done!
+
 
 = FULL WEBSITE TEMPLATES FOR =
 
@@ -46,9 +65,9 @@ You can extend this library with premium ready-to-use website demos by purchasin
 
 = WHY PEOPLE LOVE THE ASTRA THEME? =
 
-Over 200,000+ users are empowering their websites with Astra! From beginners to industry experts, everyone is loving Astra for its performance and ease of use.
+Over 600,000+ users are empowering their websites with Astra! From beginners to industry experts, everyone is loving Astra for its performance and ease of use.
 
-= Here are a few reasons why they love Astra - =
+= HERE ARE A FEW REASONS WHY THEY LOVE ASTRA – =
 
 **Faster Performance** - Built with speed and performance in mind, Astra follows the best coding standards and lets you build faster loading and better performing websites.
 
@@ -60,7 +79,7 @@ Over 200,000+ users are empowering their websites with Astra! From beginners to 
 
 Fetch the website, tweak images and content and go live!
 
-Use this imported site as a base for your project and don't waste time starting from scratch!
+Use this imported site as a base for your project and don’t waste time starting from scratch!
 
 _<a href="https://wpastra.com/ready-websites/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme">See list of all available sites to import »</a>_
 
@@ -75,30 +94,31 @@ _<a href="https://wpastra.com/ready-websites/?utm_source=wp-repo&utm_medium=link
 
 == Frequently Asked Questions ==
 
-= Will the Astra Starter Sites work with my theme? =
+= Will the Starter Templates plugin work with my theme? =
 
-All the website demos are built using the Astra theme. Therefore, in order to use the Astra Starter Sites plugin and import a ready-to-use website, you will need to have the Astra theme installed.
+We've certainly used Astra to build all our starter templates and recommend you to do so. However, in Starter Templates 2.0 onward all the starter sites or individual page templates you import are theme independent and blend well with the theme you have.
 
-= Are all the starter sites free? =
+= Are all the starter templates FREE? =
 
-You get over 90+ FREE ready-to-use websites as of now. There are many more premium website demos that can be accessed when you purchase one of our Agency Bundles.
+You get over 90+ FREE ready-to-use websites as of now. There are many more premium website demos that can be accessed when you purchase one of our Agency Bundles - (i.e. either the Mini Agency or the Agency Bundles)
 
-= How can I import and install the starter sites? =
+= How can I install and import starter templates? =
 
-Here is an article that will help you [install and import Astra starter sites](https://wpastra.com/docs/installing-importing-astra-sites/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) on your website.
+Here is an article that will help you install and import [Starter Templates](https://wpastra.com/docs/installing-importing-astra-sites/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme) on your website.
 
-
-= Can I import a website demo on an existing website? =
+= Can I import a website / page demo on an existing website? =
 
 It is recommended to install and import a website demo on a fresh WordPress installation or a blank website to avoid overriding of settings and page design.
 
-= Can I deactivate the Astra Starter Sites plugin after importing a website? =
+A page template can however be imported on an existing website as well.
 
-Yes! The Astra Strater Sites plugin acts as a medium through which you can import and install a website from our cloud server. Once you have the website at your end, you can go ahead and deactivate the plugin.
+= Can I deactivate the Starter Templates plugin after importing a website? =
+
+Yes! The Starter Templates plugin acts as a medium through which you can import and install a website from our cloud server. Once you have the website at your end, you can go ahead and deactivate the plugin.
 
 = Do I need to install any other plugin before importing a website? =
 
-You just need to activate the Astra theme and import the website through the Astra Starter Sites plugin. During the process of importing, you will come across a step in which you can install necessary plugins with one click.
+All you need to do is install the Starter Templates plugin and select the website demo you wish to import. While the site is being imported, you will come across a step in which the plugin asks you to click on a button that says Install plugins. This step will install and activate the necessary plugins.
 
 = Will you add more website demos? =
 
@@ -106,7 +126,7 @@ Yes! We are working on many more free website demos built using Elementor, Beave
 
 = What if I do not find a website for the topic I am looking for? =
 
-We are open to suggestions and would love to work on topics that our users are looking out for. Please feel free to drop your suggestions through the form [here](https://wpastra.com/sites-suggestions/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme).
+We are open to suggestions and would love to work on topics that our users are looking out for. Please feel free to drop your suggestions through the [form here].(https://wpastra.com/sites-suggestions/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme).
 
 
 == Screenshots ==
@@ -116,6 +136,16 @@ We are open to suggestions and would love to work on topics that our users are l
 3. Click the import site button to start the import process.
 
 == Changelog ==
+
+v2.0.0 - 20-February-2020
+- New: Astra Sites is now **Starter Templates**
+- New: Added favorite or unfavorite the demo site.
+- New: Improve the sites and pages loading time speed.
+- New: Added block import support with 200+ blocks in the Elementor editor window.
+- New: Added single page import as Elementor template in the Elementor editor window.
+- New: Added single page import support from any demo site with 1800+ pages.
+- Improvement: Showing all Astra sites with more user-friendly and interactive UI.
+- Improvement: Updated the Astra Notices library.
 
 v1.4.5 - 21-November-2019
 - Improvement: Added missing font awesome icons support for the Elementor sites.

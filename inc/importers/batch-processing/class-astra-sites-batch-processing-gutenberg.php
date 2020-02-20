@@ -33,7 +33,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Gutenberg' ) ) :
 		public static function get_instance() {
 
 			if ( ! isset( self::$instance ) ) {
-				self::$instance = new self;
+				self::$instance = new self();
 			}
 			return self::$instance;
 		}
@@ -54,7 +54,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Gutenberg' ) ) :
 		 *                                  'pre_user_description'.
 		 * @return array Array of allowed HTML tags and their allowed attributes.
 		 */
-		function allowed_tags_and_attributes( $allowedposttags, $context ) {
+		public function allowed_tags_and_attributes( $allowedposttags, $context ) {
 
 			// Keep only for 'post' contenxt.
 			if ( 'post' === $context ) {
@@ -107,11 +107,23 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Gutenberg' ) ) :
 		 */
 		public function import_single_post( $post_id = 0 ) {
 
+			$is_elementor_page      = get_post_meta( $post_id, '_elementor_version', true );
+			$is_beaver_builder_page = get_post_meta( $post_id, '_fl_builder_enabled', true );
+			$is_brizy_page          = get_post_meta( $post_id, 'brizy_post_uid', true );
+
+			// If page contain Elementor, Brizy or Beaver Builder meta then skip this page.
+			if ( $is_elementor_page || $is_beaver_builder_page || $is_brizy_page ) {
+				return;
+			}
+
+			Astra_Sites_Importer_Log::add( '---- Processing WordPress Page - for Gutenberg ---- "' . $post_id . '"' );
+
 			$ids_mapping = get_option( 'astra_sites_wpforms_ids_mapping', array() );
 
 			// Post content.
 			$content = get_post_field( 'post_content', $post_id );
 
+			// Empty mapping? Then return.
 			if ( ! empty( $ids_mapping ) ) {
 				// Replace ID's.
 				foreach ( $ids_mapping as $old_id => $new_id ) {
@@ -130,7 +142,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Gutenberg' ) ) :
 
 					$catogory_mapping = ( isset( $tax_mapping['post']['category'] ) ) ? $tax_mapping['post']['category'] : array();
 
-					if ( is_array( $catogory_mapping ) ) {
+					if ( is_array( $catogory_mapping ) && ! empty( $catogory_mapping ) ) {
 
 						foreach ( $catogory_mapping as $key => $value ) {
 
@@ -146,7 +158,8 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Gutenberg' ) ) :
 			// expects as 'u0026amp;'. So, Converted '&amp;' with 'u0026amp;'.
 			//
 			// @todo This affect for normal page content too. Detect only Gutenberg pages and process only on it.
-			$content = str_replace( '&amp;', "\u0026amp;", $content );
+			// $content = str_replace( '&amp;', "\u0026amp;", $content );
+			$content = $this->get_content( $content );
 
 			// Update content.
 			wp_update_post(
@@ -155,6 +168,55 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Gutenberg' ) ) :
 					'post_content' => $content,
 				)
 			);
+		}
+
+		/**
+		 * Download and Replace hotlink images
+		 *
+		 * @since 2.0.0
+		 *
+		 * @param  string $content Mixed post content.
+		 * @return array           Hotlink image array.
+		 */
+		public function get_content( $content = '' ) {
+
+			$all_links   = wp_extract_urls( $content );
+			$image_links = array();
+			$image_map   = array();
+
+			// Not have any link.
+			if ( empty( $all_links ) ) {
+				return $content;
+			}
+
+			foreach ( $all_links as $key => $link ) {
+
+				if ( preg_match( '/^((https?:\/\/)|(www\.))([a-z0-9-].?)+(:[0-9]+)?\/[\w\-]+\.(jpg|png|gif|jpeg)\/?$/i', $link ) ) {
+					$image_links[] = $link;
+				}
+			}
+			// Not have any image link.
+			if ( empty( $image_links ) ) {
+				return $content;
+			}
+
+			foreach ( $image_links as $key => $image_url ) {
+				// Download remote image.
+				$image            = array(
+					'url' => $image_url,
+					'id'  => wp_rand( 000, 999 ),
+				);
+				$downloaded_image = Astra_Sites_Image_Importer::get_instance()->import( $image );
+				// Old and New image mapping links.
+				$image_map[ $image_url ] = $downloaded_image['url'];
+			}
+
+			// Replace old image links with new image links.
+			foreach ( $image_map as $old_url => $new_url ) {
+				$content = str_replace( $old_url, $new_url, $content );
+			}
+
+			return $content;
 		}
 
 	}

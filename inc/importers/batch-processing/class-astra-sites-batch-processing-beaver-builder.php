@@ -33,7 +33,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Beaver_Builder' ) ) :
 		public static function get_instance() {
 
 			if ( ! isset( self::$instance ) ) {
-				self::$instance = new self;
+				self::$instance = new self();
 			}
 			return self::$instance;
 		}
@@ -55,6 +55,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Beaver_Builder' ) ) :
 		public function import() {
 
 			Astra_Sites_Importer_Log::add( '---- Processing WordPress Posts / Pages - for Beaver Builder ----' );
+
 			if ( ! is_callable( 'FLBuilderModel::get_post_types' ) ) {
 				return;
 			}
@@ -85,7 +86,8 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Beaver_Builder' ) ) :
 		 */
 		public function import_single_post( $post_id = 0 ) {
 
-			Astra_Sites_Importer_Log::add( 'Post ID: ' . $post_id );
+			Astra_Sites_Importer_Log::add( '---- Processing WordPress Page - for Beaver Builder ---- "' . $post_id . '"' );
+
 			if ( ! empty( $post_id ) ) {
 
 				// Get page builder data.
@@ -145,6 +147,21 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Beaver_Builder' ) ) :
 				$settings->data = FLBuilderPhoto::get_attachment_data( $settings->photo );
 			}
 
+			if ( 'uabb-wp-forms-styler' === $settings->type ) {
+				astra_sites_error_log( '--------WP Form Styler ID replacement start-------' );
+				$ids_mapping = get_option( 'astra_sites_wpforms_ids_mapping', array() );
+				if ( $ids_mapping ) {
+					// Update WP form IDs.
+					foreach ( $ids_mapping as $old_id => $new_id ) {
+						if ( isset( $settings->wp_form_id ) && $old_id === $settings->wp_form_id ) {
+							astra_sites_error_log( '--------WP Form Styler ID ' . $old_id . ' replaced to ' . $new_id . '-------' );
+							$settings->wp_form_id = $new_id;
+						}
+					}
+				}
+				astra_sites_error_log( '--------WP Form Styler ID replacement done-------' );
+			}
+
 			// 3) Set `list item` module images.
 			if ( isset( $settings->add_list_item ) ) {
 				foreach ( $settings->add_list_item as $key => $value ) {
@@ -154,23 +171,32 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Beaver_Builder' ) ) :
 
 			// 4) Set `list item` module images.
 			if ( isset( $settings->text ) ) {
-				$ids_mapping = get_option( 'astra_sites_wpforms_ids_mapping', array() );
-				if ( $ids_mapping ) {
-
-					// Keep old data in temp.
-					$updated_data = $settings->text;
-
-					// Update WP form IDs.
-					foreach ( $ids_mapping as $old_id => $new_id ) {
-						$updated_data = str_replace( '[wpforms id="' . $old_id, '[wpforms id="' . $new_id, $updated_data );
-					}
-
-					// Update modified data.
-					$settings->text = $updated_data;
-				}
+				$settings->text = self::get_wpforms_mapping( $settings->text );
+			} elseif ( isset( $settings->html ) ) {
+				$settings->html = self::get_wpforms_mapping( $settings->html );
 			}
 
 			return $settings;
+		}
+
+		/**
+		 * Replace WP Forms shortcode.
+		 *
+		 * @since 2.0.0
+		 * @param  string $content Content.
+		 * @return string          Content.
+		 */
+		private static function get_wpforms_mapping( $content = '' ) {
+			$ids_mapping = get_option( 'astra_sites_wpforms_ids_mapping', array() );
+			astra_sites_error_log( wp_json_encode( $ids_mapping ) );
+			if ( $ids_mapping ) {
+				// Update WP form IDs.
+				foreach ( $ids_mapping as $old_id => $new_id ) {
+					$content = str_replace( '[wpforms id="' . $old_id, '[wpforms id="' . $new_id, $content );
+				}
+			}
+
+			return $content;
 		}
 
 		/**

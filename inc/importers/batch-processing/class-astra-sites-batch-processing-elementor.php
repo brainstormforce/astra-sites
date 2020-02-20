@@ -44,7 +44,9 @@ class Astra_Sites_Batch_Processing_Elementor extends Source_Local {
 	 */
 	public function import() {
 
+		\Astra_Sites_Importer_Log::add( '---- Processing WordPress Posts / Pages - for Elementor ----' );
 		$post_types = \Astra_Sites_Batch_Processing::get_post_types_supporting( 'elementor' );
+
 		if ( empty( $post_types ) && ! is_array( $post_types ) ) {
 			return;
 		}
@@ -70,44 +72,54 @@ class Astra_Sites_Batch_Processing_Elementor extends Source_Local {
 	 */
 	public function import_single_post( $post_id = 0 ) {
 
+		\Astra_Sites_Importer_Log::add( '---- Processing WordPress Page - for Elementor ---- "' . $post_id . '"' );
+
 		if ( ! empty( $post_id ) ) {
 
-			$hotlink_imported = get_post_meta( $post_id, '_astra_sites_hotlink_imported', true );
+			$data = get_post_meta( $post_id, '_elementor_data', true );
 
-			if ( empty( $hotlink_imported ) ) {
+			if ( ! empty( $data ) ) {
 
-				$data = get_post_meta( $post_id, '_elementor_data', true );
-
-				if ( ! empty( $data ) ) {
-
-					// Update WP form IDs.
-					$ids_mapping = get_option( 'astra_sites_wpforms_ids_mapping', array() );
-					if ( $ids_mapping ) {
-						foreach ( $ids_mapping as $old_id => $new_id ) {
-							$data = str_replace( '[wpforms id=\"' . $old_id, '[wpforms id=\"' . $new_id, $data );
-						}
+				// Update WP form IDs.
+				$ids_mapping = get_option( 'astra_sites_wpforms_ids_mapping', array() );
+				if ( $ids_mapping ) {
+					foreach ( $ids_mapping as $old_id => $new_id ) {
+						$data = str_replace( '[wpforms id=\"' . $old_id, '[wpforms id=\"' . $new_id, $data );
+						$data = str_replace( '"select_form":"' . $old_id, '"select_form":"' . $new_id, $data );
 					}
-
-					if ( ! is_array( $data ) ) {
-						$data = json_decode( $data, true );
-					}
-
-					$document = Plugin::$instance->documents->get( $post_id );
-					if ( $document ) {
-						$data = $document->get_elements_raw_data( $data, true );
-					}
-
-					// Import the data.
-					$data = $this->process_export_import_content( $data, 'on_import' );
-
-					// Update processed meta.
-					update_metadata( 'post', $post_id, '_elementor_data', $data );
-					update_metadata( 'post', $post_id, '_astra_sites_hotlink_imported', true );
-
-					// !important, Clear the cache after images import.
-					Plugin::$instance->files_manager->clear_cache();
-
 				}
+
+				if ( ! is_array( $data ) ) {
+					$data = json_decode( $data, true );
+				}
+				$document = Plugin::$instance->documents->get( $post_id );
+				if ( $document ) {
+					$data = $document->get_elements_raw_data( $data, true );
+				}
+
+				// Import the data.
+				$data = $this->process_export_import_content( $data, 'on_import' );
+
+				// Replace the site urls.
+				$demo_data = get_option( 'astra_sites_import_data', array() );
+				if ( isset( $demo_data['astra-site-url'] ) ) {
+					$data = wp_json_encode( $data, true );
+					if ( ! empty( $data ) ) {
+						$site_url      = get_site_url();
+						$site_url      = str_replace( '/', '\/', $site_url );
+						$demo_site_url = 'https:' . $demo_data['astra-site-url'];
+						$demo_site_url = str_replace( '/', '\/', $demo_site_url );
+						$data          = str_replace( $demo_site_url, $site_url, $data );
+						$data          = json_decode( $data, true );
+					}
+				}
+
+				// Update processed meta.
+				update_metadata( 'post', $post_id, '_elementor_data', $data );
+				update_metadata( 'post', $post_id, '_astra_sites_hotlink_imported', true );
+
+				// !important, Clear the cache after images import.
+				Plugin::$instance->files_manager->clear_cache();
 			}
 		}
 	}

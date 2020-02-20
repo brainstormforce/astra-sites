@@ -1,11 +1,11 @@
 <?php
 /**
- * Plugin Name: Astra Starter Sites
- * Plugin URI: http://www.wpastra.com/pro/
- * Description: Import free sites build with Astra theme.
- * Version: 1.4.5
+ * Plugin Name: Starter Templates
+ * Plugin URI: https://wpastra.com/
+ * Description: Starter Templates is all in one solution for complete starter sites, single page templates, blocks & images. This plugin offers the premium library of ready templates & provides quick access to beautiful Pixabay images that can be imported in your website easily.
+ * Version: 2.0.0
  * Author: Brainstorm Force
- * Author URI: http://www.brainstormforce.com
+ * Author URI: https://www.brainstormforce.com
  * Text Domain: astra-sites
  *
  * @package Astra Sites
@@ -15,11 +15,11 @@
  * Set constants.
  */
 if ( ! defined( 'ASTRA_SITES_NAME' ) ) {
-	define( 'ASTRA_SITES_NAME', __( 'Astra Sites', 'astra-sites' ) );
+	define( 'ASTRA_SITES_NAME', __( 'Starter Templates', 'astra-sites' ) );
 }
 
 if ( ! defined( 'ASTRA_SITES_VER' ) ) {
-	define( 'ASTRA_SITES_VER', '1.4.5' );
+	define( 'ASTRA_SITES_VER', '2.0.0' );
 }
 
 if ( ! defined( 'ASTRA_SITES_FILE' ) ) {

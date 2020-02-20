@@ -32,7 +32,7 @@ if ( ! class_exists( 'Astra_Sites_Helper' ) ) :
 		 */
 		public static function get_instance() {
 			if ( ! isset( self::$instance ) ) {
-				self::$instance = new self;
+				self::$instance = new self();
 			}
 			return self::$instance;
 		}
@@ -56,7 +56,7 @@ if ( ! class_exists( 'Astra_Sites_Helper' ) ) :
 		 * @param object $attachment Attachment object.
 		 * @param array  $meta        Attachment meta data.
 		 */
-		function add_svg_image_support( $response, $attachment, $meta ) {
+		public function add_svg_image_support( $response, $attachment, $meta ) {
 			if ( ! function_exists( 'simplexml_load_file' ) ) {
 				return $response;
 			}
@@ -124,7 +124,7 @@ if ( ! class_exists( 'Astra_Sites_Helper' ) ) :
 		 * @param  object $all_sidebars Widget data.
 		 * @return object               Set custom menu id by slug.
 		 */
-		function custom_menu_widget( $all_sidebars ) {
+		public function custom_menu_widget( $all_sidebars ) {
 
 			// Get current menu ID & Slugs.
 			$menu_locations = array();
@@ -165,7 +165,7 @@ if ( ! class_exists( 'Astra_Sites_Helper' ) ) :
 		public static function download_file( $file = '', $timeout_seconds = 300 ) {
 
 			// Gives us access to the download_url() and wp_handle_sideload() functions.
-			require_once( ABSPATH . 'wp-admin/includes/file.php' );
+			require_once ABSPATH . 'wp-admin/includes/file.php';
 
 			// Download file to temp dir.
 			$temp_file = download_url( $file, $timeout_seconds );
@@ -236,13 +236,13 @@ if ( ! class_exists( 'Astra_Sites_Helper' ) ) :
 		 * @param string $file The image file path.
 		 * @return array An array of image data.
 		 */
-		static public function _sideload_image( $file ) {
+		public static function sideload_image( $file ) {
 			$data = new stdClass();
 
 			if ( ! function_exists( 'media_handle_sideload' ) ) {
-				require_once( ABSPATH . 'wp-admin/includes/media.php' );
-				require_once( ABSPATH . 'wp-admin/includes/file.php' );
-				require_once( ABSPATH . 'wp-admin/includes/image.php' );
+				require_once ABSPATH . 'wp-admin/includes/media.php';
+				require_once ABSPATH . 'wp-admin/includes/file.php';
+				require_once ABSPATH . 'wp-admin/includes/image.php';
 			}
 
 			if ( ! empty( $file ) ) {
@@ -289,7 +289,7 @@ if ( ! class_exists( 'Astra_Sites_Helper' ) ) :
 		 * @param string $string The string to check.
 		 * @return bool Whether the string is an image url or not.
 		 */
-		static public function _is_image_url( $string = '' ) {
+		public static function is_image_url( $string = '' ) {
 			if ( is_string( $string ) ) {
 
 				if ( preg_match( '/\.(jpg|jpeg|svg|png|gif)/i', $string ) ) {

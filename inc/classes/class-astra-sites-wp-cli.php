@@ -159,7 +159,7 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 			if ( 'free' !== $demo_data['site-type'] && 'upgrade' === $demo_data['license-status'] && ! $license_status ) {
 
 				if ( ! defined( 'ASTRA_PRO_SITES_NAME' ) ) {
-					WP_CLI::line( __( 'This is Agency site. Please activate the "Astra Premium Sites" license!', 'astra-sites' ) );
+					WP_CLI::line( __( 'This is Agency site. Please activate the "Starter Templates" license!', 'astra-sites' ) );
 					WP_CLI::line( __( 'Use `wp plugin deactivate astra-sites` and then `wp plugin activate astra-pro-sites`', 'astra-sites' ) );
 				}
 
@@ -173,14 +173,19 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 			if ( isset( $demo_data['required-plugins'] ) ) {
 				$plugins = (array) $demo_data['required-plugins'];
 				if ( ! empty( $plugins ) ) {
-					$plugin_status = Astra_Sites::get_instance()->required_plugin( $plugins );
+					$plugin_status = Astra_Sites::get_instance()->required_plugin( $plugins, $demo_data['astra-site-options-data'], $demo_data['astra-enabled-extensions'] );
 
 					// Install Plugins.
 					if ( ! empty( $plugin_status['required_plugins']['notinstalled'] ) ) {
 						WP_CLI::line( __( 'Installing Plugins..', 'astra-sites' ) );
 						foreach ( $plugin_status['required_plugins']['notinstalled'] as $key => $plugin ) {
 							if ( isset( $plugin['slug'] ) ) {
-								WP_CLI::runcommand( 'plugin install ' . $plugin['slug'] . ' --activate' );
+
+								// Install plugin.
+								WP_CLI::runcommand( 'plugin install ' . $plugin['slug'] );
+
+								// Activate plugin.
+								Astra_Sites::get_instance()->required_plugin_activate( $plugin['init'], $demo_data['astra-site-options-data'], $demo_data['astra-enabled-extensions'] );
 							}
 						}
 					}
@@ -266,7 +271,7 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 		 * @since 1.4.3
 		 * @return void
 		 */
-		function import_end() {
+		public function import_end() {
 			Astra_Sites_Importer::get_instance()->import_end();
 		}
 
@@ -285,20 +290,20 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 			// Valid site ID?
 			$url = isset( $args[0] ) ? esc_url_raw( $args[0] ) : '';
 			if ( empty( $url ) ) {
-				WP_CLI::error( __( 'Invalid XML URL.', 'astra-sites' ) );
+				WP_CLI::error( esc_html__( 'Invalid XML URL.', 'astra-sites' ) );
 			}
 
 			// Download XML file.
 			/* translators: %s is the XML file URL. */
-			WP_CLI::line( sprintf( __( 'Downloading %s', 'astra-sites' ), $url ) );
+			WP_CLI::line( sprintf( esc_html__( 'Downloading %s', 'astra-sites' ), $url ) );
 			$xml_path = Astra_Sites_Helper::download_file( $url );
 
 			if ( $xml_path['success'] && isset( $xml_path['data']['file'] ) ) {
-				WP_CLI::line( __( 'Importing WXR..', 'astra-sites' ) );
+				WP_CLI::line( esc_html__( 'Importing WXR..', 'astra-sites' ) );
 				Astra_WXR_Importer::instance()->sse_import( $xml_path['data']['file'] );
 			} else {
 				/* translators: %s is error message. */
-				WP_CLI::line( printf( __( 'WXR file Download Failed. Error %s', 'astra-sites' ), $xml_path['data'] ) );
+				WP_CLI::line( printf( esc_html__( 'WXR file Download Failed. Error %s', 'astra-sites' ), esc_html( $xml_path['data'] ) ) );
 			}
 		}
 
@@ -436,7 +441,7 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 				$page_builder_slugs = array_keys( $page_builders );
 				$page_builder_slug  = isset( $args[1] ) ? $args[1] : '';
 				if ( in_array( $page_builder_slug, $page_builder_slugs, true ) ) {
-					Astra_Sites_Page::get_instance()->save_page_builder( $page_builder_slug );
+					Astra_Sites_Page::get_instance()->save_page_builder_on_submit( $page_builder_slug );
 					/* translators: %s is the page builder name. */
 					WP_CLI::line( sprintf( __( '"%s" is set as default page builder.', 'astra-sites' ), $page_builders[ $page_builder_slug ]['name'] ) );
 
@@ -496,7 +501,7 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 			$args          = $response['args'];
 			$page_builders = $response['terms'];
 			if ( empty( $page_builders['data'] ) ) {
-				WP_CLI::error( __( 'This site page builder is not exist. Try different site page builder.', 'astra-sites' ) );
+				WP_CLI::error( __( 'This page builder plugin is not installed. Please try a different page builder.', 'astra-sites' ) );
 			}
 
 			// Add type.
@@ -505,7 +510,7 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 			$args     = $response['args'];
 			$types    = $response['terms'];
 			if ( empty( $types['data'] ) ) {
-				WP_CLI::error( __( 'This site type is not exist. Try different site type.', 'astra-sites' ) );
+				WP_CLI::error( __( 'This site type does not exist. Please try a different site type.', 'astra-sites' ) );
 			}
 
 			// Add categories.
@@ -514,7 +519,7 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 			$args       = $response['args'];
 			$categories = $response['terms'];
 			if ( empty( $categories['data'] ) ) {
-				WP_CLI::error( __( 'This site category is not exist. Try different site category.', 'astra-sites' ) );
+				WP_CLI::error( __( 'This site category does not exist. Please try a different site category.', 'astra-sites' ) );
 			}
 
 			// Site list.
@@ -683,6 +688,22 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 				'success' => $success,
 				'data'    => $all_posts,
 			);
+		}
+
+		/**
+		 * Sync Library.
+		 *
+		 * Sync the library and create the .json files.
+		 *
+		 * Use: `wp astra-sites sync`
+		 *
+		 * @since 2.0.0
+		 * @param  array $args       Arguments.
+		 * @param  array $assoc_args Associated Arguments.
+		 * @return void.
+		 */
+		public function sync( $args = array(), $assoc_args = array() ) {
+			Astra_Sites_Batch_Processing::get_instance()->process_batch();
 		}
 	}
 

@@ -1,16 +1,28 @@
 <?php
+/**
+ * Import Log ServerSendEvents
+ *
+ * @since 2.0.0
+ *
+ * @package Astra Sites
+ */
 
 if ( ! class_exists( 'WP_Importer_Logger_ServerSentEvents' ) && class_exists( 'WP_Importer_Logger' ) ) {
 
+	/**
+	 * Import Log ServerSendEvents
+	 *
+	 * @since 2.0.0
+	 */
 	class WP_Importer_Logger_ServerSentEvents extends WP_Importer_Logger {
 
 		/**
 		 * Logs with an arbitrary level.
 		 *
-		 * @param mixed  $level
-		 * @param string $message
-		 * @param array  $context
-		 * @return null
+		 * @param mixed  $level Log level.
+		 * @param string $message Log message.
+		 * @param array  $context Log context.
+		 * @return void
 		 */
 		public function log( $level, $message, array $context = array() ) {
 
@@ -24,8 +36,8 @@ if ( ! class_exists( 'WP_Importer_Logger_ServerSentEvents' ) && class_exists( 'W
 				case 'warning':
 				case 'notice':
 				case 'info':
-					if( defined( 'WP_CLI' ) ) {
-						if( isset( $data['message'] ) && ! empty( $data['message'] ) ) {
+					if ( defined( 'WP_CLI' ) ) {
+						if ( isset( $data['message'] ) && ! empty( $data['message'] ) ) {
 							WP_CLI::line( $data['message'] );
 						} else {
 							WP_CLI::line( wp_json_encode( $data ) );
@@ -39,8 +51,8 @@ if ( ! class_exists( 'WP_Importer_Logger_ServerSentEvents' ) && class_exists( 'W
 
 				case 'debug':
 					if ( defined( 'IMPORT_DEBUG' ) && IMPORT_DEBUG ) {
-						if( defined( 'WP_CLI' ) ) {
-							if( isset( $data['message'] ) && ! empty( $data['message'] ) ) {
+						if ( defined( 'WP_CLI' ) ) {
+							if ( isset( $data['message'] ) && ! empty( $data['message'] ) ) {
 								WP_CLI::line( $data['message'] );
 							} else {
 								WP_CLI::line( wp_json_encode( $data ) );

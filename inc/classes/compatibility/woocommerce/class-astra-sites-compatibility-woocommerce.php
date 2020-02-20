@@ -34,7 +34,7 @@ if ( ! class_exists( 'Astra_Sites_Compatibility_WooCommerce' ) ) :
 		 */
 		public static function instance() {
 			if ( ! isset( self::$instance ) ) {
-				self::$instance = new self;
+				self::$instance = new self();
 			}
 			return self::$instance;
 		}
@@ -57,7 +57,7 @@ if ( ! class_exists( 'Astra_Sites_Compatibility_WooCommerce' ) ) :
 		 * @param  array  $demo_api_uri     Demo site URL.
 		 * @return void
 		 */
-		function add_attributes( $demo_data = array(), $demo_api_uri = '' ) {
+		public function add_attributes( $demo_data = array(), $demo_api_uri = '' ) {
 			$attributes = ( isset( $demo_data['astra-site-options-data']['woocommerce_product_attributes'] ) ) ? $demo_data['astra-site-options-data']['woocommerce_product_attributes'] : array();
 
 			if ( ! empty( $attributes ) && function_exists( 'wc_create_attribute' ) ) {

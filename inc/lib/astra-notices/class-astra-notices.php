@@ -117,7 +117,7 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 			$nonce               = ( isset( $_POST['nonce'] ) ) ? sanitize_key( $_POST['nonce'] ) : '';
 
 			if ( false === wp_verify_nonce( $nonce, 'astra-notices' ) ) {
-				wp_send_json_error( _e( 'WordPress Nonce not validated.', 'astra-sites' ) );
+				wp_send_json_error( esc_html_e( 'WordPress Nonce not validated.', 'astra-sites' ) );
 			}
 
 			// Valid inputs?
@@ -142,7 +142,7 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		 * @return void
 		 */
 		public function enqueue_scripts() {
-			wp_register_script( 'astra-notices', self::_get_uri() . 'notices.js', array( 'jquery' ), self::$version, true );
+			wp_register_script( 'astra-notices', self::get_uri() . 'notices.js', array( 'jquery' ), self::$version, true );
 			wp_localize_script(
 				'astra-notices',
 				'astraNotices',
@@ -241,10 +241,10 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 
 			?>
 			<div id="<?php echo esc_attr( $notice['id'] ); ?>" class="<?php echo esc_attr( $notice['classes'] ); ?>" data-repeat-notice-after="<?php echo esc_attr( $notice['repeat-notice-after'] ); ?>">
-				<div class="notice-container">
+				<p class="notice-container">
 					<?php do_action( "astra_notice_inside_markup_{$notice['id']}" ); ?>
 					<?php echo wp_kses_post( $notice['message'] ); ?>
-				</div>
+				</p>
 			</div>
 			<?php
 
@@ -334,7 +334,7 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		 *
 		 * @return mixed URL.
 		 */
-		public static function _get_uri() {
+		public static function get_uri() {
 			$path       = wp_normalize_path( dirname( __FILE__ ) );
 			$theme_dir  = wp_normalize_path( get_template_directory() );
 			$plugin_dir = wp_normalize_path( WP_PLUGIN_DIR );
@@ -347,7 +347,7 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 				return plugin_dir_url( __FILE__ );
 			}
 
-			return;
+			return false;
 		}
 
 	}

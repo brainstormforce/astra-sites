@@ -6,7 +6,9 @@
  * @package Astra Sites
  */
 
-defined( 'ABSPATH' ) or exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit;
+}
 
 if ( ! class_exists( 'Astra_Sites_Importer_Log' ) ) :
 
@@ -21,7 +23,7 @@ if ( ! class_exists( 'Astra_Sites_Importer_Log' ) ) :
 		 * @since 1.1.0
 		 * @var (Object) Class object
 		 */
-		private static $_instance = null;
+		private static $instance = null;
 
 		/**
 		 * Log File
@@ -39,11 +41,11 @@ if ( ! class_exists( 'Astra_Sites_Importer_Log' ) ) :
 		 * @return object Class object.
 		 */
 		public static function get_instance() {
-			if ( ! isset( self::$_instance ) ) {
-				self::$_instance = new self;
+			if ( ! isset( self::$instance ) ) {
+				self::$instance = new self();
 			}
 
-			return self::$_instance;
+			return self::$instance;
 		}
 
 		/**
@@ -64,12 +66,17 @@ if ( ! class_exists( 'Astra_Sites_Importer_Log' ) ) :
 		 * @since 1.1.0
 		 * @return null
 		 */
-		function has_file_read_write() {
+		public function has_file_read_write() {
+
+			$upload_dir  = self::log_dir();
+			$upload_path = trailingslashit( $upload_dir['url'] );
 
 			// Get user credentials for WP file-system API.
-			$astra_sites_import = wp_nonce_url( admin_url( 'themes.php?page=astra-sites' ), 'astra-import' );
-			$creds              = request_filesystem_credentials( $astra_sites_import, '', false, false, null );
-			if ( false === $creds ) {
+			$astra_sites_import = wp_nonce_url( admin_url( 'themes.php?page=starter-templates' ), 'astra-import' );
+			$creds              = request_filesystem_credentials( $astra_sites_import, '', false, $upload_dir['path'], null );
+			$file_created       = Astra_Sites::get_instance()->get_filesystem()->put_contents( $upload_dir['path'] . 'index.html', '' );
+			if ( false === $creds || ( ! $file_created ) ) {
+				add_action( 'admin_notices', array( $this, 'file_permission_notice' ) );
 				return;
 			}
 
@@ -78,6 +85,22 @@ if ( ! class_exists( 'Astra_Sites_Importer_Log' ) ) :
 
 			// Initial AJAX Import Hooks.
 			add_action( 'astra_sites_import_start', array( $this, 'start' ), 10, 2 );
+		}
+
+		/**
+		 * File Permission Notice
+		 *
+		 * @since 2.0.0
+		 * @return void
+		 */
+		public function file_permission_notice() {
+			?>
+			<div class="notice notice-error astra-sites-must-notices astra-sites-file-permission-issue">
+				<p><?php esc_html_e( 'Required File Permissions to import the templates are missing.', 'astra-sites' ); ?></p>
+				<p><?php esc_html_e( 'You can easily update permissions by adding the following code into the wp-config.php file.', 'astra-sites' ); ?></p>
+				<p><code>define( 'FS_METHOD', 'direct' );</code></p>
+			</div>
+			<?php
 		}
 
 		/**
@@ -116,48 +139,32 @@ if ( ! class_exists( 'Astra_Sites_Importer_Log' ) ) :
 		 * @param  string $demo_api_uri Import site API URL.
 		 * @return void
 		 */
-		function start( $data = array(), $demo_api_uri = '' ) {
+		public function start( $data = array(), $demo_api_uri = '' ) {
 
-			Astra_Sites_Importer_Log::add( 'Started Import Process' );
+			self::add( 'Started Import Process' );
 
-			Astra_Sites_Importer_Log::add( '# System Details: ' );
-			Astra_Sites_Importer_Log::add( "Debug Mode \t\t: " . self::get_debug_mode() );
-			Astra_Sites_Importer_Log::add( "Operating System \t: " . self::get_os() );
-			Astra_Sites_Importer_Log::add( "Software \t\t: " . self::get_software() );
-			Astra_Sites_Importer_Log::add( "MySQL version \t\t: " . self::get_mysql_version() );
-			Astra_Sites_Importer_Log::add( "XML Reader \t\t: " . self::get_xmlreader_status() );
-			Astra_Sites_Importer_Log::add( "PHP Version \t\t: " . self::get_php_version() );
-			Astra_Sites_Importer_Log::add( "PHP Max Input Vars \t: " . self::get_php_max_input_vars() );
-			Astra_Sites_Importer_Log::add( "PHP Max Post Size \t: " . self::get_php_max_post_size() );
-			Astra_Sites_Importer_Log::add( "PHP Extension GD \t: " . self::get_php_extension_gd() );
-			Astra_Sites_Importer_Log::add( "PHP Max Execution Time \t: " . self::get_max_execution_time() );
-			Astra_Sites_Importer_Log::add( "Max Upload Size \t: " . size_format( wp_max_upload_size() ) );
-			Astra_Sites_Importer_Log::add( "Memory Limit \t\t: " . self::get_memory_limit() );
-			Astra_Sites_Importer_Log::add( "Timezone \t\t: " . self::get_timezone() );
-			Astra_Sites_Importer_Log::add( PHP_EOL . '-----' . PHP_EOL );
-			Astra_Sites_Importer_Log::add( 'Importing Started! - ' . self::current_time() );
+			self::add( '# System Details: ' );
+			self::add( "Debug Mode \t\t: " . self::get_debug_mode() );
+			self::add( "Operating System \t: " . self::get_os() );
+			self::add( "Software \t\t: " . self::get_software() );
+			self::add( "MySQL version \t\t: " . self::get_mysql_version() );
+			self::add( "XML Reader \t\t: " . self::get_xmlreader_status() );
+			self::add( "PHP Version \t\t: " . self::get_php_version() );
+			self::add( "PHP Max Input Vars \t: " . self::get_php_max_input_vars() );
+			self::add( "PHP Max Post Size \t: " . self::get_php_max_post_size() );
+			self::add( "PHP Extension GD \t: " . self::get_php_extension_gd() );
+			self::add( "PHP Max Execution Time \t: " . self::get_max_execution_time() );
+			self::add( "Max Upload Size \t: " . size_format( wp_max_upload_size() ) );
+			self::add( "Memory Limit \t\t: " . self::get_memory_limit() );
+			self::add( "Timezone \t\t: " . self::get_timezone() );
+			self::add( PHP_EOL . '-----' . PHP_EOL );
+			self::add( 'Importing Started! - ' . self::current_time() );
 
-			Astra_Sites_Importer_Log::add( '---' . PHP_EOL );
-			Astra_Sites_Importer_Log::add( 'WHY IMPORT PROCESS CAN FAIL? READ THIS - ' );
-			Astra_Sites_Importer_Log::add( 'https://wpastra.com/docs/?p=1314&utm_source=demo-import-panel&utm_campaign=import-error&utm_medium=wp-dashboard' . PHP_EOL );
-			Astra_Sites_Importer_Log::add( '---' . PHP_EOL );
+			self::add( '---' . PHP_EOL );
+			self::add( 'WHY IMPORT PROCESS CAN FAIL? READ THIS - ' );
+			self::add( 'https://wpastra.com/docs/?p=1314&utm_source=demo-import-panel&utm_campaign=import-error&utm_medium=wp-dashboard' . PHP_EOL );
+			self::add( '---' . PHP_EOL );
 
-		}
-
-		/**
-		 * Get an instance of WP_Filesystem_Direct.
-		 *
-		 * @since 1.1.0
-		 * @return object A WP_Filesystem_Direct instance.
-		 */
-		static public function get_filesystem() {
-			global $wp_filesystem;
-
-			require_once ABSPATH . '/wp-admin/includes/file.php';
-
-			WP_Filesystem();
-
-			return $wp_filesystem;
 		}
 
 		/**
@@ -194,7 +201,7 @@ if ( ! class_exists( 'Astra_Sites_Importer_Log' ) ) :
 				wp_mkdir_p( $dir_info['path'] );
 
 				// Add an index file for security.
-				self::get_filesystem()->put_contents( $dir_info['path'] . 'index.html', '' );
+				Astra_Sites::get_instance()->get_filesystem()->put_contents( $dir_info['path'] . 'index.html', '' );
 			}
 
 			return $dir_info;
@@ -235,13 +242,15 @@ if ( ! class_exists( 'Astra_Sites_Importer_Log' ) ) :
 
 			$existing_data = '';
 			if ( file_exists( $log_file ) ) {
-				$existing_data = self::get_filesystem()->get_contents( $log_file );
+				$existing_data = Astra_Sites::get_instance()->get_filesystem()->get_contents( $log_file );
 			}
 
 			// Style separator.
 			$separator = PHP_EOL;
 
-			self::get_filesystem()->put_contents( $log_file, $existing_data . $separator . $content, FS_CHMOD_FILE );
+			astra_sites_error_log( $content );
+
+			Astra_Sites::get_instance()->get_filesystem()->put_contents( $log_file, $existing_data . $separator . $content, FS_CHMOD_FILE );
 		}
 
 		/**
@@ -366,7 +375,9 @@ if ( ! class_exists( 'Astra_Sites_Importer_Log' ) ) :
 		 * @return string Current PHP Max Input Vars
 		 */
 		public static function get_php_max_input_vars() {
+			// @codingStandardsIgnoreStart
 			return ini_get( 'max_input_vars' ); // phpcs:disable PHPCompatibility.IniDirectives.NewIniDirectives.max_input_varsFound
+			// @codingStandardsIgnoreEnd
 		}
 
 		/**
@@ -401,6 +412,104 @@ if ( ! class_exists( 'Astra_Sites_Importer_Log' ) ) :
 			}
 
 			return __( 'No', 'astra-sites' );
+		}
+
+		/**
+		 * Display Data
+		 *
+		 * @since 2.0.0
+		 * @return void
+		 */
+		public function display_data() {
+
+			$crons  = _get_cron_array();
+			$events = array();
+
+			if ( empty( $crons ) ) {
+				esc_html_e( 'You currently have no scheduled cron events.', 'astra-sites' );
+			}
+
+			foreach ( $crons as $time => $cron ) {
+				$keys           = array_keys( $cron );
+				$key            = $keys[0];
+				$events[ $key ] = $time;
+			}
+
+			$expired = get_transient( 'astra-sites-import-check' );
+			if ( $expired ) {
+				global $wpdb;
+				$transient = 'astra-sites-import-check';
+
+				$transient_timeout = $wpdb->get_col(
+					$wpdb->prepare(
+						"SELECT option_value
+					FROM $wpdb->options
+					WHERE option_name
+					LIKE %s",
+						'%_transient_timeout_' . $transient . '%'
+					)
+				);
+
+				$older_date       = $transient_timeout[0];
+				$transient_status = 'Transient: Not Expired! Recheck in ' . human_time_diff( time(), $older_date );
+			} else {
+				$transient_status = 'Transient: Starting.. Process for each 5 minutes.';
+			}
+			$temp  = get_option( 'astra-sites-batch-status-string', '' );
+			$temp .= isset( $events['wp_astra_site_importer_cron'] ) ? '<br/>Batch: Recheck batch in ' . human_time_diff( time(), $events['wp_astra_site_importer_cron'] ) : '<br/>Batch: Not Started! Until the Transient expire.';
+
+			$upload_dir   = self::get_instance()->log_dir();
+			$list_files   = list_files( $upload_dir['path'] );
+			$backup_files = array();
+			$log_files    = array();
+			foreach ( $list_files as $key => $file ) {
+				if ( strpos( $file, '.json' ) ) {
+					$backup_files[] = $file;
+				}
+				if ( strpos( $file, '.txt' ) ) {
+					$log_files[] = $file;
+				}
+			}
+			?>
+			<table>
+				<tr>
+					<td>
+						<h2>Log Files</h2>
+						<ul>
+							<?php
+							foreach ( $log_files as $key => $file ) {
+								$file_name = basename( $file );
+								$file      = str_replace( $upload_dir['path'], $upload_dir['url'], $file );
+								?>
+								<li>
+									<a target="_blank" href="<?php echo esc_attr( $file ); ?>"><?php echo esc_html( $file_name ); ?></a>
+								</li>
+							<?php } ?>
+						</ul>
+					</td>
+					<td>
+						<h2>Backup Files</h2>
+						<ul>
+							<?php
+							foreach ( $backup_files as $key => $file ) {
+								$file_name = basename( $file );
+								$file      = str_replace( $upload_dir['path'], $upload_dir['url'], $file );
+								?>
+								<li>
+									<a target="_blank" href="<?php echo esc_attr( $file ); ?>"><?php echo esc_html( $file_name ); ?></a>
+								</li>
+							<?php } ?>
+						</ul>
+					</td>
+					<td>
+						<div class="batch-log">
+							<p><?php echo wp_kses_post( $temp ); ?></p>
+							<p><?php echo wp_kses_post( $transient_status ); ?></p>
+						</div>
+					</td>
+				</tr>
+			</table>
+			<?php
 		}
 
 	}

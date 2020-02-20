@@ -6,7 +6,9 @@
  * @package Astra Addon
  */
 
-defined( 'ABSPATH' ) or exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
 /**
  * Customizer Data importer class.
@@ -21,7 +23,7 @@ class Astra_Customizer_Import {
 	 * @since  1.0.0
 	 * @var Astra_Customizer_Import
 	 */
-	private static $_instance = null;
+	private static $instance = null;
 
 	/**
 	 * Instantiate Astra_Customizer_Import
@@ -31,11 +33,11 @@ class Astra_Customizer_Import {
 	 */
 	public static function instance() {
 
-		if ( ! isset( self::$_instance ) ) {
-			self::$_instance = new self;
+		if ( ! isset( self::$instance ) ) {
+			self::$instance = new self();
 		}
 
-		return self::$_instance;
+		return self::$instance;
 	}
 
 	/**
@@ -49,7 +51,7 @@ class Astra_Customizer_Import {
 
 		// Update Astra Theme customizer settings.
 		if ( isset( $options['astra-settings'] ) ) {
-			self::_import_settings( $options['astra-settings'] );
+			self::import_settings( $options['astra-settings'] );
 		}
 
 		// Add Custom CSS.
@@ -69,12 +71,12 @@ class Astra_Customizer_Import {
 	 * @param  array $options Astra Customizer setting array.
 	 * @return void
 	 */
-	static public function _import_settings( $options = array() ) {
+	public static function import_settings( $options = array() ) {
 		foreach ( $options as $key => $val ) {
 
-			if ( Astra_Sites_Helper::_is_image_url( $val ) ) {
+			if ( Astra_Sites_Helper::is_image_url( $val ) ) {
 
-				$data = Astra_Sites_Helper::_sideload_image( $val );
+				$data = Astra_Sites_Helper::sideload_image( $val );
 
 				if ( ! is_wp_error( $data ) ) {
 					$options[ $key ] = $data->url;

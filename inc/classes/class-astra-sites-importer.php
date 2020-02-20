@@ -6,9 +6,11 @@
  * @package Astra Sites
  */
 
-defined( 'ABSPATH' ) or exit;
+if ( ! defined( 'ABSPATH' ) ) {
+	exit; // Exit if accessed directly.
+}
 
-if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
+if ( ! class_exists( 'Astra_Sites_Importer' ) ) {
 
 	/**
 	 * Astra Sites Importer
@@ -21,7 +23,7 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 		 * @since  1.0.0
 		 * @var (Object) Class object
 		 */
-		public static $_instance = null;
+		public static $instance = null;
 
 		/**
 		 * Set Instance
@@ -31,11 +33,11 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 		 * @return object Class object.
 		 */
 		public static function get_instance() {
-			if ( ! isset( self::$_instance ) ) {
-				self::$_instance = new self;
+			if ( ! isset( self::$instance ) ) {
+				self::$instance = new self();
 			}
 
-			return self::$_instance;
+			return self::$instance;
 		}
 
 		/**
@@ -47,13 +49,13 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 
 			require_once ASTRA_SITES_DIR . 'inc/classes/class-astra-sites-importer-log.php';
 			require_once ASTRA_SITES_DIR . 'inc/importers/class-astra-sites-helper.php';
-			require_once ASTRA_SITES_DIR . 'inc/importers/class-widgets-importer.php';
+			require_once ASTRA_SITES_DIR . 'inc/importers/class-astra-widget-importer.php';
 			require_once ASTRA_SITES_DIR . 'inc/importers/class-astra-customizer-import.php';
 			require_once ASTRA_SITES_DIR . 'inc/importers/class-astra-site-options-import.php';
 
 			// Import AJAX.
-			add_action( 'wp_ajax_astra-sites-import-set-site-data', array( $this, 'import_start' ) );
 			add_action( 'wp_ajax_astra-sites-import-wpforms', array( $this, 'import_wpforms' ) );
+			add_action( 'wp_ajax_astra-sites-import-cartflows', array( $this, 'import_cartflows' ) );
 			add_action( 'wp_ajax_astra-sites-import-customizer-settings', array( $this, 'import_customizer_settings' ) );
 			add_action( 'wp_ajax_astra-sites-import-prepare-xml', array( $this, 'prepare_xml_data' ) );
 			add_action( 'wp_ajax_astra-sites-import-options', array( $this, 'import_options' ) );
@@ -61,12 +63,12 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 			add_action( 'wp_ajax_astra-sites-import-end', array( $this, 'import_end' ) );
 
 			// Hooks in AJAX.
-			add_action( 'astra_sites_import_complete', array( $this, 'clear_cache' ) );
+			add_action( 'astra_sites_import_complete', array( $this, 'after_batch_complete' ) );
 			add_action( 'init', array( $this, 'load_importer' ) );
 
 			require_once ASTRA_SITES_DIR . 'inc/importers/batch-processing/class-astra-sites-batch-processing.php';
 
-			add_action( 'astra_sites_image_import_complete', array( $this, 'clear_cache' ) );
+			add_action( 'astra_sites_image_import_complete', array( $this, 'after_batch_complete' ) );
 
 			// Reset Customizer Data.
 			add_action( 'wp_ajax_astra-sites-reset-customizer-data', array( $this, 'reset_customizer_data' ) );
@@ -93,7 +95,7 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 		 * @param int    $timeout_value Time in seconds until a request times out. Default 5.
 		 * @param string $url           The request URL.
 		 */
-		function set_timeout_for_images( $timeout_value, $url ) {
+		public function set_timeout_for_images( $timeout_value, $url ) {
 
 			// URL not contain `https://websitedemos.net` then return $timeout_value.
 			if ( strpos( $url, 'https://websitedemos.net' ) === false ) {
@@ -102,8 +104,9 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 
 			// Check is image URL of type jpg|png|gif|jpeg.
 			if ( Astra_Sites_Image_Importer::get_instance()->is_image_url( $url ) ) {
-				$timeout_value = 30;
+				$timeout_value = 300;
 			}
+
 			return $timeout_value;
 		}
 
@@ -115,54 +118,14 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 		}
 
 		/**
-		 * Start Site Import
-		 *
-		 * @since 1.1.0
-		 * @return void
-		 */
-		function import_start() {
-
-			// Verify Nonce.
-			check_ajax_referer( 'astra-sites', '_ajax_nonce' );
-
-			if ( ! current_user_can( 'customize' ) ) {
-				wp_send_json_error( __( 'You are not allowed to perform this action', 'astra-sites' ) );
-			}
-
-			$demo_api_uri = isset( $_POST['api_url'] ) ? esc_url( $_POST['api_url'] ) : '';
-
-			if ( ! empty( $demo_api_uri ) ) {
-
-				$demo_data = self::get_single_demo( $demo_api_uri );
-				update_option( 'astra_sites_import_data', $demo_data );
-
-				if ( is_wp_error( $demo_data ) ) {
-					wp_send_json_error( $demo_data->get_error_message() );
-				} else {
-					$log_file = Astra_Sites_Importer_Log::add_log_file_url();
-					if ( isset( $log_file['url'] ) && ! empty( $log_file['url'] ) ) {
-						$demo_data['log_file'] = $log_file['url'];
-					}
-					do_action( 'astra_sites_import_start', $demo_data, $demo_api_uri );
-				}
-
-				wp_send_json_success( $demo_data );
-
-			} else {
-				wp_send_json_error( __( 'Request site API URL is empty. Try again!', 'astra-sites' ) );
-			}
-
-		}
-
-		/**
 		 * Change flow status
 		 *
-		 * @since 1.4.0
+		 * @since 2.0.0
 		 *
 		 * @param  array $args Flow query args.
 		 * @return array Flow query args.
 		 */
-		function change_flow_status( $args ) {
+		public function change_flow_status( $args ) {
 			$args['post_status'] = 'publish';
 			return $args;
 		}
@@ -170,58 +133,14 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 		/**
 		 * Track Flow
 		 *
-		 * @since 1.4.0
+		 * @since 2.0.0
 		 *
 		 * @param  integer $flow_id Flow ID.
 		 * @return void
 		 */
-		function track_flows( $flow_id ) {
-			error_log( 'Flow ID ' . $flow_id );
+		public function track_flows( $flow_id ) {
+			astra_sites_error_log( 'Flow ID ' . $flow_id );
 			Astra_WXR_Importer::instance()->track_post( $flow_id );
-		}
-
-		/**
-		 * Import CartFlows
-		 *
-		 * @since 1.4.0
-		 *
-		 * @param  string $url Cartflows JSON file URL.
-		 * @return void
-		 */
-		function import_cartflows( $url = '' ) {
-
-			// Make the flow publish.
-			add_action( 'cartflows_flow_importer_args', array( $this, 'change_flow_status' ) );
-			add_action( 'cartflows_flow_imported', array( $this, 'track_flows' ) );
-			add_action( 'cartflows_step_imported', array( $this, 'track_flows' ) );
-
-			$url = ( isset( $_REQUEST['cartflows_url'] ) ) ? urldecode( $_REQUEST['cartflows_url'] ) : urldecode( $url );
-			if ( ! empty( $url ) && is_callable( 'CartFlows_Importer::get_instance' ) ) {
-
-				// Download JSON file.
-				$file_path = Astra_Sites_Helper::download_file( $url );
-
-				if ( $file_path['success'] ) {
-					if ( isset( $file_path['data']['file'] ) ) {
-
-						$ext = strtolower( pathinfo( $file_path['data']['file'], PATHINFO_EXTENSION ) );
-
-						if ( 'json' === $ext ) {
-							$flows = json_decode( file_get_contents( $file_path['data']['file'] ), true );
-
-							if ( ! empty( $flows ) ) {
-								CartFlows_Importer::get_instance()->import_from_json_data( $flows );
-							}
-						}
-					}
-				}
-			}
-
-			if ( defined( 'WP_CLI' ) ) {
-				WP_CLI::line( 'Imported from ' . $url );
-			} else {
-				wp_send_json_success( $url );
-			}
 		}
 
 		/**
@@ -233,7 +152,7 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 		 * @param  string $wpforms_url WP Forms JSON file URL.
 		 * @return void
 		 */
-		function import_wpforms( $wpforms_url = '' ) {
+		public function import_wpforms( $wpforms_url = '' ) {
 
 			if ( ! defined( 'WP_CLI' ) ) {
 				// Verify Nonce.
@@ -249,16 +168,16 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 
 			if ( ! empty( $wpforms_url ) && function_exists( 'wpforms_encode' ) ) {
 
-				// Download XML file.
-				$xml_path = Astra_Sites_Helper::download_file( $wpforms_url );
+				// Download JSON file.
+				$file_path = Astra_Sites_Helper::download_file( $wpforms_url );
 
-				if ( $xml_path['success'] ) {
-					if ( isset( $xml_path['data']['file'] ) ) {
+				if ( $file_path['success'] ) {
+					if ( isset( $file_path['data']['file'] ) ) {
 
-						$ext = strtolower( pathinfo( $xml_path['data']['file'], PATHINFO_EXTENSION ) );
+						$ext = strtolower( pathinfo( $file_path['data']['file'], PATHINFO_EXTENSION ) );
 
 						if ( 'json' === $ext ) {
-							$forms = json_decode( file_get_contents( $xml_path['data']['file'] ), true );
+							$forms = json_decode( Astra_Sites::get_instance()->get_filesystem()->get_contents( $file_path['data']['file'] ), true );
 
 							if ( ! empty( $forms ) ) {
 
@@ -317,6 +236,50 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 		}
 
 		/**
+		 * Import CartFlows
+		 *
+		 * @since 2.0.0
+		 *
+		 * @param  string $url Cartflows JSON file URL.
+		 * @return void
+		 */
+		public function import_cartflows( $url = '' ) {
+
+			// Make the flow publish.
+			add_action( 'cartflows_flow_importer_args', array( $this, 'change_flow_status' ) );
+			add_action( 'cartflows_flow_imported', array( $this, 'track_flows' ) );
+			add_action( 'cartflows_step_imported', array( $this, 'track_flows' ) );
+
+			$url = ( isset( $_REQUEST['cartflows_url'] ) ) ? urldecode( $_REQUEST['cartflows_url'] ) : urldecode( $url ); // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			if ( ! empty( $url ) && is_callable( 'CartFlows_Importer::get_instance' ) ) {
+
+				// Download JSON file.
+				$file_path = Astra_Sites_Helper::download_file( $url );
+
+				if ( $file_path['success'] ) {
+					if ( isset( $file_path['data']['file'] ) ) {
+
+						$ext = strtolower( pathinfo( $file_path['data']['file'], PATHINFO_EXTENSION ) );
+
+						if ( 'json' === $ext ) {
+							$flows = json_decode( Astra_Sites::get_instance()->get_filesystem()->get_contents( $file_path['data']['file'] ), true );
+
+							if ( ! empty( $flows ) ) {
+								CartFlows_Importer::get_instance()->import_from_json_data( $flows );
+							}
+						}
+					}
+				}
+			}
+
+			if ( defined( 'WP_CLI' ) ) {
+				WP_CLI::line( 'Imported from ' . $url );
+			} else {
+				wp_send_json_success( $url );
+			}
+		}
+
+		/**
 		 * Import Customizer Settings.
 		 *
 		 * @since 1.0.14
@@ -325,7 +288,7 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 		 * @param  array $customizer_data Customizer Data.
 		 * @return void
 		 */
-		function import_customizer_settings( $customizer_data = array() ) {
+		public function import_customizer_settings( $customizer_data = array() ) {
 
 			if ( ! defined( 'WP_CLI' ) ) {
 				// Verify Nonce.
@@ -340,9 +303,11 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 
 			if ( ! empty( $customizer_data ) ) {
 
-				Astra_Sites_Importer_Log::add( 'Imported Customizer Settings ' . json_encode( $customizer_data ) );
+				Astra_Sites_Importer_Log::add( 'Imported Customizer Settings ' . wp_json_encode( $customizer_data ) );
 
 				// Set meta for tracking the post.
+				astra_sites_error_log( 'Customizer Data ' . wp_json_encode( $customizer_data ) );
+
 				update_option( '_astra_sites_old_customizer_data', $customizer_data );
 
 				Astra_Customizer_Import::instance()->import( $customizer_data );
@@ -368,7 +333,7 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 		 * @since 1.1.0
 		 * @return void
 		 */
-		function prepare_xml_data() {
+		public function prepare_xml_data() {
 
 			// Verify Nonce.
 			check_ajax_referer( 'astra-sites', '_ajax_nonce' );
@@ -416,7 +381,7 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 		 * @param  array $options_data Site Options.
 		 * @return void
 		 */
-		function import_options( $options_data = array() ) {
+		public function import_options( $options_data = array() ) {
 
 			if ( ! defined( 'WP_CLI' ) ) {
 				// Verify Nonce.
@@ -432,7 +397,7 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 			if ( ! empty( $options_data ) ) {
 				// Set meta for tracking the post.
 				if ( is_array( $options_data ) ) {
-					Astra_Sites_Importer_Log::add( 'Imported - Site Options ' . json_encode( $options_data ) );
+					Astra_Sites_Importer_Log::add( 'Imported - Site Options ' . wp_json_encode( $options_data ) );
 					update_option( '_astra_sites_old_site_options', $options_data );
 				}
 
@@ -462,7 +427,7 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 		 * @param  string $widgets_data Widgets Data.
 		 * @return void
 		 */
-		function import_widgets( $widgets_data = '' ) {
+		public function import_widgets( $widgets_data = '' ) {
 
 			if ( ! defined( 'WP_CLI' ) ) {
 				// Verify Nonce.
@@ -475,7 +440,7 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 
 			$widgets_data = ( isset( $_POST['widgets_data'] ) ) ? (object) json_decode( stripslashes( $_POST['widgets_data'] ) ) : (object) $widgets_data;
 
-			Astra_Sites_Importer_Log::add( 'Imported - Widgets ' . json_encode( $widgets_data ) );
+			Astra_Sites_Importer_Log::add( 'Imported - Widgets ' . wp_json_encode( $widgets_data ) );
 
 			if ( ! empty( $widgets_data ) ) {
 
@@ -485,6 +450,7 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 				// Set meta for tracking the post.
 				if ( is_object( $widgets_data ) ) {
 					$widgets_data = (array) $widgets_data;
+
 					update_option( '_astra_sites_old_widgets_data', $widgets_data );
 				}
 
@@ -509,7 +475,7 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 		 * @since 1.0.14
 		 * @return void
 		 */
-		function import_end() {
+		public function import_end() {
 
 			if ( ! defined( 'WP_CLI' ) ) {
 				// Verify Nonce.
@@ -520,7 +486,9 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 				}
 			}
 
-			do_action( 'astra_sites_import_complete' );
+			$demo_data = get_option( 'astra_sites_import_data', array() );
+
+			do_action( 'astra_sites_import_complete', $demo_data );
 		}
 
 		/**
@@ -618,7 +586,7 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 		 *
 		 * @since  1.0.9
 		 */
-		public function clear_cache() {
+		public function after_batch_complete() {
 
 			// Clear 'Builder Builder' cache.
 			if ( is_callable( 'FLBuilderModel::delete_asset_cache_for_all_posts' ) ) {
@@ -630,7 +598,22 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 				Astra_Minify::refresh_assets();
 			}
 
+			$this->update_latest_checksums();
+
 			Astra_Sites_Importer_Log::add( 'Complete ' );
+		}
+
+		/**
+		 * Update Latest Checksums
+		 *
+		 * Store latest checksum after batch complete.
+		 *
+		 * @since 2.0.0
+		 * @return void
+		 */
+		public function update_latest_checksums() {
+			$latest_checksums = get_option( 'astra-sites-last-export-checksums-latest', '' );
+			update_option( 'astra-sites-last-export-checksums', $latest_checksums );
 		}
 
 		/**
@@ -639,7 +622,7 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 		 * @since 1.3.0
 		 * @return void
 		 */
-		function reset_customizer_data() {
+		public function reset_customizer_data() {
 
 			if ( ! defined( 'WP_CLI' ) ) {
 				// Verify Nonce.
@@ -650,7 +633,7 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 				}
 			}
 
-			Astra_Sites_Importer_Log::add( 'Deleted customizer Settings ' . json_encode( get_option( 'astra-settings', array() ) ) );
+			Astra_Sites_Importer_Log::add( 'Deleted customizer Settings ' . wp_json_encode( get_option( 'astra-settings', array() ) ) );
 
 			delete_option( 'astra-settings' );
 
@@ -667,7 +650,7 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 		 * @since 1.3.0
 		 * @return void
 		 */
-		function reset_site_options() {
+		public function reset_site_options() {
 
 			if ( ! defined( 'WP_CLI' ) ) {
 				// Verify Nonce.
@@ -680,7 +663,7 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 
 			$options = get_option( '_astra_sites_old_site_options', array() );
 
-			Astra_Sites_Importer_Log::add( 'Deleted - Site Options ' . json_encode( $options ) );
+			Astra_Sites_Importer_Log::add( 'Deleted - Site Options ' . wp_json_encode( $options ) );
 
 			if ( $options ) {
 				foreach ( $options as $option_key => $option_value ) {
@@ -701,7 +684,7 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 		 * @since 1.3.0
 		 * @return void
 		 */
-		function reset_widgets_data() {
+		public function reset_widgets_data() {
 
 			if ( ! defined( 'WP_CLI' ) ) {
 				// Verify Nonce.
@@ -716,7 +699,7 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 
 			if ( ! empty( $old_widgets ) ) {
 
-				Astra_Sites_Importer_Log::add( 'DELETED - WIDGETS ' . json_encode( $old_widgets ) );
+				Astra_Sites_Importer_Log::add( 'DELETED - WIDGETS ' . wp_json_encode( $old_widgets ) );
 
 				$sidebars_widgets = get_option( 'sidebars_widgets', array() );
 
@@ -753,7 +736,7 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 		 * @param  integer $post_id Post ID.
 		 * @return void
 		 */
-		function delete_imported_posts( $post_id = 0 ) {
+		public function delete_imported_posts( $post_id = 0 ) {
 
 			if ( ! defined( 'WP_CLI' ) ) {
 				// Verify Nonce.
@@ -792,7 +775,7 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 		 * @param  integer $post_id Post ID.
 		 * @return void
 		 */
-		function delete_imported_wp_forms( $post_id = 0 ) {
+		public function delete_imported_wp_forms( $post_id = 0 ) {
 
 			if ( ! defined( 'WP_CLI' ) ) {
 				// Verify Nonce.
@@ -828,7 +811,7 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 		 * @param  integer $term_id Term ID.
 		 * @return void
 		 */
-		function delete_imported_terms( $term_id = 0 ) {
+		public function delete_imported_terms( $term_id = 0 ) {
 			if ( ! defined( 'WP_CLI' ) ) {
 				// Verify Nonce.
 				check_ajax_referer( 'astra-sites', '_ajax_nonce' );
@@ -863,7 +846,4 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) :
 	 * Kicking this off by calling 'get_instance()' method
 	 */
 	Astra_Sites_Importer::get_instance();
-
-endif;
-
-
+}
