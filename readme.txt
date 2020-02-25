@@ -83,9 +83,6 @@ Use this imported site as a base for your project and don’t waste time startin
 
 _<a href="https://wpastra.com/ready-websites/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme">See list of all available sites to import »</a>_
 
-#### Video Walkthrough by Adam from WPCrafter:
-[youtube https://www.youtube.com/watch?v=zYbz-jxE9_Q]
-
 == Installation ==
 
 1. Upload the plugin files to the `/wp-content/plugins/astra-sites` directory, or install the plugin through the WordPress plugins screen directly.
