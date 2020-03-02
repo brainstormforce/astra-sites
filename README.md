@@ -5,7 +5,7 @@
 **Requires at least:** 4.4  
 **Requires PHP:** 5.3  
 **Tested up to:** 5.3  
-**Stable tag:** 2.0.0  
+**Stable tag:** 2.0.1  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -83,9 +83,6 @@ Use this imported site as a base for your project and don’t waste time startin
 
 _<a href="https://wpastra.com/ready-websites/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme">See list of all available sites to import »</a>_
 
-#### Video Walkthrough by Adam from WPCrafter:
-[youtube https://www.youtube.com/watch?v=zYbz-jxE9_Q]
-
 ## Installation ##
 
 1. Upload the plugin files to the `/wp-content/plugins/astra-sites` directory, or install the plugin through the WordPress plugins screen directly.
@@ -140,6 +137,9 @@ We are open to suggestions and would love to work on topics that our users are l
 7. Free Images by Pixabay right inside the WordPress media popup.
 
 ## Changelog ##
+
+v2.0.1 - 02-March-2020
+- Hot Fix: Removed wp-editor dependency.
 
 v2.0.0 - 20-February-2020
 - New: Astra Sites is now **Starter Templates**
