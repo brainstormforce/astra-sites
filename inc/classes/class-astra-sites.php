@@ -1073,7 +1073,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			wp_enqueue_script(
 				'astra-sites-images-script',
 				ASTRA_SITES_URI . 'inc/assets/js/dist/index.js',
-				array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-components', 'wp-editor', 'wp-api-fetch', 'astra-sites-images-common' ), // Dependencies, defined above.
+				array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-components', 'wp-api-fetch', 'astra-sites-images-common' ), // Dependencies, defined above.
 				ASTRA_SITES_VER,
 				true
 			);
