@@ -138,6 +138,9 @@ We are open to suggestions and would love to work on topics that our users are l
 
 ## Changelog ##
 
+vx.x.x - x.x.x
+- Fix: Plugin not activated after installing plugin from WP CLI command.
+
 v2.0.1 - 02-March-2020
 - Hot Fix: Removed wp-editor dependency.
 

@@ -1497,11 +1497,13 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 
 			$plugin_init = ( isset( $_POST['init'] ) ) ? esc_attr( $_POST['init'] ) : $init;
 
+			wp_clean_plugins_cache();
+
 			$activate = activate_plugin( $plugin_init, '', false, true );
 
 			if ( is_wp_error( $activate ) ) {
 				if ( defined( 'WP_CLI' ) ) {
-					WP_CLI::line( 'Plugin Activation Error: ' . $activate->get_error_message() );
+					WP_CLI::error( 'Plugin Activation Error: ' . $activate->get_error_message() );
 				} else {
 					wp_send_json_error(
 						array(
