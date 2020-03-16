@@ -425,6 +425,11 @@
 	padding: 20px 35px 30px 35px;
 }
 
+#astra-sites-skip-and-import-notice-update-available ul {
+    list-style-type: disc;
+    margin-right: 15px;
+}
+
 .astra-sites-import-content .install-theme-info {
 	display: block;
 	padding: 0;

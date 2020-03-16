@@ -1,7 +1,7 @@
 .ast-sites-dark-mode #ast-sites-modal .astra-sites-library-template-inner,
 .ast-sites-dark-mode #ast-sites-modal .inner,
 .ast-sites-dark-mode #ast-sites-modal .astra-sites-library-template:not(.elementor-template-library-template-page) .elementor-template-library-template-footer,
-.ast-sites-dark-mode #ast-sites-modal .astra-blocks-filter {
+.ast-sites-dark-mode #ast-sites-modal .elementor-template-library-order-input {
     background-color: #404349;
 }
 
@@ -11,7 +11,8 @@
     color: #ffffff;
 }
 
-.ast-sites-dark-mode #ast-sites-modal .astra-blocks-filter {
+.ast-sites-dark-mode #ast-sites-modal .astra-blocks-filter,
+.ast-sites-dark-mode #ast-sites-modal .elementor-template-library-order-input {
 	border-color: #7d7e82;
 }
 
@@ -21,7 +22,8 @@
 
 
 .ast-sites-dark-mode #ast-sites-modal .astra-sites-content-wrap::-webkit-scrollbar,
-.ast-sites-dark-mode #ast-sites-modal .single-site-pages::-webkit-scrollbar {
+.ast-sites-dark-mode #ast-sites-modal .single-site-pages::-webkit-scrollbar,
+.ast-sites-dark-mode #ast-sites-modal .astra-blocks-filter {
     background-color: #34383C;
 }
 
@@ -44,9 +46,10 @@
 
 .ast-sites-dark-mode #ast-sites-modal .dialog-widget-content,
 .ast-sites-dark-mode #ast-sites-modal .elementor-template-library-menu-item,
-.ast-sites-dark-mode #ast-sites-modal .astra-sites-sync-library-button,
+.ast-sites-dark-mode #ast-sites-modal .astra-sites-sync-library-button span,
 .ast-sites-dark-mode #ast-sites-modal .ast-sites-modal__header__item > i:not(:hover),
 .ast-sites-dark-mode #ast-sites-modal .astra-blocks-filter,
+.ast-sites-dark-mode #ast-sites-modal .elementor-template-library-order-input,
 .ast-sites-dark-mode.astra-sites__elementor-open #ast-sites-modal .select2-container--default .select2-selection__rendered,
 .ast-sites-dark-mode #ast-sites-modal .astra-sites-no-sites h3,
 .ast-sites-dark-mode #ast-sites-modal .back-to-layout,
@@ -64,11 +67,7 @@
     box-shadow: 0 0 8px rgba(0, 0, 0, 0.3);
 }
 
-.ast-sites-dark-mode #ast-sites-modal.dialog-type-lightbox .dialog-header,
-.ast-sites-dark-mode #ast-sites-modal #wp-filter-search-input,
-.ast-sites-dark-mode #ast-sites-modal #wp-filter-search-input:hover,
-.ast-sites-dark-mode #ast-sites-modal #wp-filter-search-input:focus,
-.ast-sites-dark-mode #ast-sites-modal #wp-filter-search-input:active {
+.ast-sites-dark-mode #ast-sites-modal.dialog-type-lightbox .dialog-header {
     background-color: #26292C;
 }
 
@@ -85,7 +84,7 @@
 }
 
 .ast-sites-dark-mode #ast-sites-modal #wp-filter-search-input {
-	border-color: #7d7e82;
+	border-color: #d5dadf;
 }
 
 .ast-sites-dark-mode #ast-sites-modal .ast-sites-modal__header__logo,
@@ -94,7 +93,6 @@
 	border-left: 1px solid #32363A;
 }
 
-.ast-sites-dark-mode #ast-sites-modal .elementor-template-library-menu-item,
 .ast-sites-dark-mode #ast-sites-modal .astra-sites__sync-wrap,
 .ast-sites-dark-mode #ast-sites-modal .ast-sites-modal__header__close--normal,
 .ast-sites-dark-mode #ast-sites-modal .astra-sites-tooltip {

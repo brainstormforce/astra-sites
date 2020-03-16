@@ -352,16 +352,39 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) {
 
 				Astra_Sites_Importer_Log::add( 'Importing from XML ' . $wxr_url );
 
+				$overrides = array(
+					'wp_handle_sideload' => 'upload',
+				);
+
 				// Download XML file.
-				$xml_path = Astra_Sites_Helper::download_file( $wxr_url );
+				$xml_path = Astra_Sites_Helper::download_file( $wxr_url, $overrides );
 
 				if ( $xml_path['success'] ) {
-					if ( isset( $xml_path['data']['file'] ) ) {
-						$data        = Astra_WXR_Importer::instance()->get_xml_data( $xml_path['data']['file'] );
+
+					$post = array(
+						'post_title'     => basename( $wxr_url ),
+						'guid'           => $xml_path['data']['url'],
+						'post_mime_type' => $xml_path['data']['type'],
+					);
+
+					astra_sites_error_log( wp_json_encode( $post ) );
+					astra_sites_error_log( wp_json_encode( $xml_path ) );
+
+					// as per wp-admin/includes/upload.php.
+					$post_id = wp_insert_attachment( $post, $xml_path['data']['file'] );
+
+					astra_sites_error_log( wp_json_encode( $post_id ) );
+
+					if ( is_wp_error( $post_id ) ) {
+						wp_send_json_error( __( 'There was an error downloading the XML file.', 'astra-sites' ) );
+					} else {
+
+						update_option( 'astra_sites_imported_wxr_id', $post_id );
+						$attachment_metadata = wp_generate_attachment_metadata( $post_id, $xml_path['data']['file'] );
+						wp_update_attachment_metadata( $post_id, $attachment_metadata );
+						$data        = Astra_WXR_Importer::instance()->get_xml_data( $xml_path['data']['file'], $post_id );
 						$data['xml'] = $xml_path['data'];
 						wp_send_json_success( $data );
-					} else {
-						wp_send_json_error( __( 'There was an error downloading the XML file.', 'astra-sites' ) );
 					}
 				} else {
 					wp_send_json_error( $xml_path['data'] );
@@ -522,6 +545,7 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) {
 				'astra-site-taxonomy-mapping' => '',
 				'license-status'              => '',
 				'site-type'                   => '',
+				'astra-site-url'              => '',
 			);
 
 			$api_args = apply_filters(
@@ -575,6 +599,7 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) {
 				$remote_args['astra-site-taxonomy-mapping'] = $data['astra-site-taxonomy-mapping'];
 				$remote_args['license-status']              = $data['license-status'];
 				$remote_args['site-type']                   = $data['astra-site-type'];
+				$remote_args['astra-site-url']              = $data['astra-site-url'];
 			}
 
 			// Merge remote demo and defaults.
@@ -599,6 +624,9 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) {
 			}
 
 			$this->update_latest_checksums();
+
+			// Flush permalinks.
+			flush_rewrite_rules();
 
 			Astra_Sites_Importer_Log::add( 'Complete ' );
 		}

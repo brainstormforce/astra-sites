@@ -752,51 +752,70 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 		 */
 		public function start_process() {
 
-			Astra_Sites_Importer_Log::add( 'Batch Process Started!' );
+			$wxr_id = get_option( 'astra_sites_imported_wxr_id', 0 );
+			if ( $wxr_id ) {
+				wp_delete_attachment( $wxr_id, true );
+				astra_sites_error_log( 'Deleted Temporary WXR file ' . $wxr_id );
+				delete_option( 'astra_sites_imported_wxr_id' );
+				astra_sites_error_log( 'Option `astra_sites_imported_wxr_id` Deleted.' );
+			}
+
+			$classes = array();
+
+			Astra_Sites_Importer_Log::add( 'Batch Process Started..' );
 			Astra_Sites_Importer_Log::add( Astra_Sites_White_Label::get_instance()->get_white_label_name( ASTRA_SITES_NAME ) . ' - Importing Images for Blog name \'' . get_bloginfo( 'name' ) . '\' (' . get_current_blog_id() . ')' );
 
 			// Add "widget" in import [queue].
-			if ( class_exists( 'Astra_Sites_Batch_Processing_Widgets' ) ) {
-				self::$process_all->push_to_queue( Astra_Sites_Batch_Processing_Widgets::get_instance() );
-			}
+			$classes[] = Astra_Sites_Batch_Processing_Widgets::get_instance();
 
 			// Add "gutenberg" in import [queue].
-			self::$process_all->push_to_queue( Astra_Sites_Batch_Processing_Gutenberg::get_instance() );
+			$classes[] = Astra_Sites_Batch_Processing_Gutenberg::get_instance();
 
 			// Add "brizy" in import [queue].
 			if ( is_plugin_active( 'brizy/brizy.php' ) ) {
-				self::$process_all->push_to_queue( Astra_Sites_Batch_Processing_Brizy::get_instance() );
+				$classes[] = Astra_Sites_Batch_Processing_Brizy::get_instance();
 			}
 
 			// Add "bb-plugin" in import [queue].
 			// Add "beaver-builder-lite-version" in import [queue].
 			if ( is_plugin_active( 'beaver-builder-lite-version/fl-builder.php' ) || is_plugin_active( 'bb-plugin/fl-builder.php' ) ) {
-				self::$process_all->push_to_queue( Astra_Sites_Batch_Processing_Beaver_Builder::get_instance() );
+				$classes[] = Astra_Sites_Batch_Processing_Beaver_Builder::get_instance();
 			}
 
 			// Add "elementor" in import [queue].
 			// @todo Remove required `allow_url_fopen` support.
-			if ( ini_get( 'allow_url_fopen' ) ) {
-				if ( is_plugin_active( 'elementor/elementor.php' ) ) {
-					$import = new \Elementor\TemplateLibrary\Astra_Sites_Batch_Processing_Elementor();
-					self::$process_all->push_to_queue( $import );
-				}
-			} else {
-				Astra_Sites_Importer_Log::add( 'Couldn\'t not import image due to allow_url_fopen() is disabled!' );
+			if ( ini_get( 'allow_url_fopen' ) && is_plugin_active( 'elementor/elementor.php' ) ) {
+				$import    = new \Elementor\TemplateLibrary\Astra_Sites_Batch_Processing_Elementor();
+				$classes[] = $import;
 			}
 
 			// Add "astra-addon" in import [queue].
 			if ( is_plugin_active( 'astra-addon/astra-addon.php' ) ) {
-				if ( class_exists( 'Astra_Sites_Compatibility_Astra_Pro' ) ) {
-					self::$process_all->push_to_queue( Astra_Sites_Compatibility_Astra_Pro::get_instance() );
-				}
+				$classes[] = Astra_Sites_Compatibility_Astra_Pro::get_instance();
 			}
 
 			// Add "misc" in import [queue].
-			self::$process_all->push_to_queue( Astra_Sites_Batch_Processing_Misc::get_instance() );
+			$classes[] = Astra_Sites_Batch_Processing_Misc::get_instance();
 
-			// Dispatch Queue.
-			self::$process_all->save()->dispatch();
+			if ( defined( 'WP_CLI' ) ) {
+				WP_CLI::line( 'Batch Process Started..' );
+				// Process all classes.
+				foreach ( $classes as $key => $class ) {
+					if ( method_exists( $class, 'import' ) ) {
+						$class->import();
+					}
+				}
+				WP_CLI::line( 'Batch Process Complete!' );
+			} else {
+				// Add all classes to batch queue.
+				foreach ( $classes as $key => $class ) {
+					self::$process_all->push_to_queue( $class );
+				}
+
+				// Dispatch Queue.
+				self::$process_all->save()->dispatch();
+			}
+
 		}
 
 		/**

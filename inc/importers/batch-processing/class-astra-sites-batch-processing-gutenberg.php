@@ -85,9 +85,16 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Gutenberg' ) ) :
 			// Allow the SVG tags in batch update process.
 			add_filter( 'wp_kses_allowed_html', array( $this, 'allowed_tags_and_attributes' ), 10, 2 );
 
+			if ( defined( 'WP_CLI' ) ) {
+				WP_CLI::line( 'Processing "Gutenberg" Batch Import' );
+			}
+
 			Astra_Sites_Importer_Log::add( '---- Processing WordPress Posts / Pages - for "Gutenberg" ----' );
 
 			$post_types = apply_filters( 'astra_sites_gutenberg_batch_process_post_types', array( 'page' ) );
+			if ( defined( 'WP_CLI' ) ) {
+				WP_CLI::line( 'For post types: ' . implode( ', ', $post_types ) );
+			}
 
 			$post_ids = Astra_Sites_Batch_Processing::get_pages( $post_types );
 			if ( empty( $post_ids ) && ! is_array( $post_ids ) ) {
@@ -106,6 +113,10 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Gutenberg' ) ) :
 		 * @return void
 		 */
 		public function import_single_post( $post_id = 0 ) {
+
+			if ( defined( 'WP_CLI' ) ) {
+				WP_CLI::line( 'Gutenberg - Processing page: ' . $post_id );
+			}
 
 			$is_elementor_page      = get_post_meta( $post_id, '_elementor_version', true );
 			$is_beaver_builder_page = get_post_meta( $post_id, '_fl_builder_enabled', true );
@@ -147,7 +158,9 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Gutenberg' ) ) :
 						foreach ( $catogory_mapping as $key => $value ) {
 
 							$this_site_term = get_term_by( 'slug', $value['slug'], 'category' );
-							$content        = str_replace( '"categories":"' . $value['id'], '"categories":"' . $this_site_term->term_id, $content );
+							if ( ! is_wp_error( $this_site_term ) && $this_site_term ) {
+								$content = str_replace( '"categories":"' . $value['id'], '"categories":"' . $this_site_term->term_id, $content );
+							}
 						}
 					}
 				}
@@ -180,39 +193,75 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Gutenberg' ) ) :
 		 */
 		public function get_content( $content = '' ) {
 
-			$all_links   = wp_extract_urls( $content );
-			$image_links = array();
-			$image_map   = array();
+			$content = stripslashes( $content );
+
+			// Extract all links.
+			preg_match_all( '#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#', $content, $match );
+
+			$all_links = array_unique( $match[0] );
 
 			// Not have any link.
 			if ( empty( $all_links ) ) {
 				return $content;
 			}
 
-			foreach ( $all_links as $key => $link ) {
+			$link_mapping = array();
+			$image_links  = array();
+			$other_links  = array();
 
+			// Extract normal and image links.
+			foreach ( $all_links as $key => $link ) {
 				if ( preg_match( '/^((https?:\/\/)|(www\.))([a-z0-9-].?)+(:[0-9]+)?\/[\w\-]+\.(jpg|png|gif|jpeg)\/?$/i', $link ) ) {
-					$image_links[] = $link;
+
+					// Get all image links.
+					// Avoid *-150x, *-300x and *-1024x images.
+					if (
+						false === strpos( $link, '-150x' ) &&
+						false === strpos( $link, '-300x' ) &&
+						false === strpos( $link, '-1024x' )
+					) {
+						$image_links[] = $link;
+					}
+				} else {
+
+					// Collect other links.
+					$other_links[] = $link;
 				}
 			}
-			// Not have any image link.
-			if ( empty( $image_links ) ) {
-				return $content;
+
+			// Step 1: Download images.
+			if ( ! empty( $image_links ) ) {
+				foreach ( $image_links as $key => $image_url ) {
+					// Download remote image.
+					$image            = array(
+						'url' => $image_url,
+						'id'  => 0,
+					);
+					$downloaded_image = Astra_Sites_Image_Importer::get_instance()->import( $image );
+
+					// Old and New image mapping links.
+					$link_mapping[ $image_url ] = $downloaded_image['url'];
+				}
 			}
 
-			foreach ( $image_links as $key => $image_url ) {
-				// Download remote image.
-				$image            = array(
-					'url' => $image_url,
-					'id'  => wp_rand( 000, 999 ),
-				);
-				$downloaded_image = Astra_Sites_Image_Importer::get_instance()->import( $image );
-				// Old and New image mapping links.
-				$image_map[ $image_url ] = $downloaded_image['url'];
+			// Step 2: Replace the demo site URL with live site URL.
+			if ( ! empty( $other_links ) ) {
+				$demo_data = get_option( 'astra_sites_import_data', array() );
+				if ( isset( $demo_data['astra-site-url'] ) ) {
+					$site_url = get_site_url();
+					foreach ( $other_links as $key => $link ) {
+						$link_mapping[ $link ] = str_replace( 'https:' . $demo_data['astra-site-url'], $site_url, $link );
+					}
+				}
 			}
 
-			// Replace old image links with new image links.
-			foreach ( $image_map as $old_url => $new_url ) {
+			// Step 3: Replace mapping links.
+			foreach ( $link_mapping as $old_url => $new_url ) {
+				$content = str_replace( $old_url, $new_url, $content );
+
+				// Replace the slashed URLs if any exist.
+				$old_url = str_replace( '/', '/\\', $old_url );
+				$new_url = str_replace( '/', '/\\', $new_url );
 				$content = str_replace( $old_url, $new_url, $content );
 			}
 

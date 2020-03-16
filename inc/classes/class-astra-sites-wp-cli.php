@@ -26,6 +26,27 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 		protected $current_site_data;
 
 		/**
+		 * Process Batch
+		 *
+		 * ## EXAMPLES
+		 *
+		 *     $ wp astra-sites batch
+		 *      Processing Site: http://example.com/
+		 *      Batch Process Started..
+		 *      ..
+		 *
+		 * @since 2.1.0
+		 * @param  array $args        Arguments.
+		 * @param  array $assoc_args Associated Arguments.
+		 */
+		public function batch( $args, $assoc_args ) {
+
+			WP_CLI::line( 'Processing Site: ' . site_url() );
+
+			Astra_Sites_Batch_Processing::get_instance()->start_process();
+		}
+
+		/**
 		 * Generates the list of all Astra Sites.
 		 *
 		 * ## OPTIONS
@@ -476,7 +497,9 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 		 */
 		private function get_site_data( $id ) {
 			if ( empty( $this->current_site_data ) ) {
+				// @todo Use Astra_Sites::get_instance()->api_request() instead of below function.
 				$this->current_site_data = Astra_Sites_Importer::get_instance()->get_single_demo( $id );
+				update_option( 'astra_sites_import_data', $this->current_site_data );
 			}
 
 			return $this->current_site_data;
@@ -710,6 +733,7 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 	/**
 	 * Add Command
 	 */
+	WP_CLI::add_command( 'starter-templates', 'Astra_Sites_WP_CLI' );
 	WP_CLI::add_command( 'astra-sites', 'Astra_Sites_WP_CLI' );
 
 endif;

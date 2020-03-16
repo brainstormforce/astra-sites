@@ -945,7 +945,7 @@ var AstraSitesAjaxQueue = (function() {
 			})
 			.fail(function( jqXHR ){
 				AstraSitesAdmin._log( jqXHR, 'error' );
-				AstraSitesAdmin._importFailMessage( jqXHR.status + jqXHR.statusText, 'Site Count Request Failed!' );
+				AstraSitesAdmin._importFailMessage( jqXHR.status + jqXHR.statusText, 'Site Count Request Failed!', jqXHR );
 				console.groupEnd('Sync Library');
 		    })
 			.done(function ( response ) {
@@ -1034,7 +1034,7 @@ var AstraSitesAjaxQueue = (function() {
 			})
 			.fail(function( jqXHR ){
 				AstraSitesAdmin._log( jqXHR );
-				AstraSitesAdmin._importFailMessage( jqXHR.status + jqXHR.statusText, 'Category Import Failed!' );
+				AstraSitesAdmin._importFailMessage( jqXHR.status + jqXHR.statusText, 'Category Import Failed!', jqXHR );
 				console.groupEnd( 'Importing Categories' );
 			}).done(function ( response ) {
 				AstraSitesAdmin._log( response );
@@ -1055,7 +1055,7 @@ var AstraSitesAjaxQueue = (function() {
 			})
 			.fail(function( jqXHR ){
 				AstraSitesAdmin._log( jqXHR );
-				AstraSitesAdmin._importFailMessage( jqXHR.status + jqXHR.statusText, 'Category Import Failed!' );
+				AstraSitesAdmin._importFailMessage( jqXHR.status + jqXHR.statusText, 'Category Import Failed!', jqXHR );
 				console.groupCollapsed( 'Importing Site Categories' );
 			}).done(function ( response ) {
 				AstraSitesAdmin._log( response );
@@ -1076,7 +1076,7 @@ var AstraSitesAjaxQueue = (function() {
 			})
 			.fail(function( jqXHR ){
 				AstraSitesAdmin._log( jqXHR );
-				AstraSitesAdmin._importFailMessage( jqXHR.status + ' ' + jqXHR.statusText, 'Page Builder Import Failed!' );
+				AstraSitesAdmin._importFailMessage( jqXHR.status + ' ' + jqXHR.statusText, 'Page Builder Import Failed!', jqXHR );
 				console.groupEnd( 'Importing Page Builders' );
 			}).done(function ( response ) {
 				AstraSitesAdmin._log( response );
@@ -1097,7 +1097,7 @@ var AstraSitesAjaxQueue = (function() {
 			})
 			.fail(function( jqXHR ){
 				AstraSitesAdmin._log( jqXHR );
-				AstraSitesAdmin._importFailMessage( jqXHR.status + ' ' + jqXHR.statusText, 'Block Import Failed!' );
+				AstraSitesAdmin._importFailMessage( jqXHR.status + ' ' + jqXHR.statusText, 'Block Import Failed!', jqXHR );
 				console.groupEnd( 'Importing Blocks' );
 			}).done(function ( response ) {
 				AstraSitesAdmin._log( response );
@@ -1118,7 +1118,7 @@ var AstraSitesAjaxQueue = (function() {
 			})
 			.fail(function( jqXHR ){
 				AstraSitesAdmin._log( jqXHR );
-				AstraSitesAdmin._importFailMessage( jqXHR.status + ' ' + jqXHR.statusText, 'Category Import Failed!' );
+				AstraSitesAdmin._importFailMessage( jqXHR.status + ' ' + jqXHR.statusText, 'Category Import Failed!', jqXHR );
 				console.groupEnd( 'Importing Block Categories' );
 			}).done(function ( response ) {
 				AstraSitesAdmin._log( response );
@@ -1142,7 +1142,7 @@ var AstraSitesAjaxQueue = (function() {
 		
 			var noticeContent = wp.updates.adminNotice( {
 				className: 'astra-sites-sync-library-message astra-sites-notice notice notice-info',
-				message:   '<span class="message">Syncing template library in the background. The process can take anywhere between 2 to 3 minutes. We will notify you once done.</span> <button type="button" class="notice-dismiss"><span class="screen-reader-text">'+commonL10n.dismiss+'</span></button>',
+				message:  astraSitesVars.syncLibraryStart + '<button type="button" class="notice-dismiss"><span class="screen-reader-text">'+commonL10n.dismiss+'</span></button>',
 			} );
 			$('#screen-meta').after( noticeContent );
 
@@ -1161,7 +1161,7 @@ var AstraSitesAjaxQueue = (function() {
 			})
 			.fail(function( jqXHR ){
 				AstraSitesAdmin._log( jqXHR );
-				AstraSitesAdmin._importFailMessage( jqXHR.status + ' ' + jqXHR.statusText, 'Sync Library Failed!' );
+				AstraSitesAdmin._importFailMessage( jqXHR.status + ' ' + jqXHR.statusText, 'Sync Library Failed!', jqXHR );
 				console.groupEnd( 'Update Library Request' );
 		    })
 			.done(function ( response ) {
@@ -1405,7 +1405,7 @@ var AstraSitesAjaxQueue = (function() {
 			})
 			.fail(function( jqXHR ){
 				AstraSitesAdmin._log( jqXHR );
-				AstraSitesAdmin._importFailMessage( jqXHR.status + ' ' + jqXHR.statusText, 'Favorite/Unfavorite Failed!' );
+				AstraSitesAdmin._importFailMessage( jqXHR.status + ' ' + jqXHR.statusText, 'Favorite/Unfavorite Failed!', jqXHR );
 				console.groupEnd();
 		    })
 			.done(function ( response ) {
@@ -1894,7 +1894,7 @@ var AstraSitesAjaxQueue = (function() {
 			})
 			.fail(function( jqXHR ){
 				AstraSitesAdmin._log( jqXHR );
-				AstraSitesAdmin._importFailMessage( jqXHR.status + ' ' + jqXHR.statusText, 'Reset Customizer Settings Failed!' );
+				AstraSitesAdmin._importFailMessage( jqXHR.status + ' ' + jqXHR.statusText, 'Reset Customizer Settings Failed!', jqXHR );
 				console.groupEnd();
 		    })
 			.done(function ( data ) {
@@ -1923,7 +1923,7 @@ var AstraSitesAjaxQueue = (function() {
 			})
 			.fail(function( jqXHR ){
 				AstraSitesAdmin._log( jqXHR );
-				AstraSitesAdmin._importFailMessage( jqXHR.status + ' ' + jqXHR.statusText, 'Reset Site Options Failed!' );
+				AstraSitesAdmin._importFailMessage( jqXHR.status + ' ' + jqXHR.statusText, 'Reset Site Options Failed!', jqXHR );
 				console.groupEnd();
 		    })
 			.done(function ( data ) {
@@ -1951,7 +1951,7 @@ var AstraSitesAjaxQueue = (function() {
 			})
 			.fail(function( jqXHR ){
 				AstraSitesAdmin._log( jqXHR );
-				AstraSitesAdmin._importFailMessage( jqXHR.status + ' ' + jqXHR.statusText, 'Reset Widgets Data Failed!' );
+				AstraSitesAdmin._importFailMessage( jqXHR.status + ' ' + jqXHR.statusText, 'Reset Widgets Data Failed!', jqXHR );
 				console.groupEnd();
 		    })
 			.done(function ( data ) {
@@ -2164,7 +2164,7 @@ var AstraSitesAjaxQueue = (function() {
 				})
 				.fail(function( jqXHR ){
 					AstraSitesAdmin._log( jqXHR );
-					AstraSitesAdmin._importFailMessage( jqXHR.status + ' ' + jqXHR.statusText, 'Backup Customizer Settings Failed!' );
+					AstraSitesAdmin._importFailMessage( jqXHR.status + ' ' + jqXHR.statusText, 'Backup Customizer Settings Failed!', jqXHR );
 					console.groupEnd();
 			    })
 				.done(function ( data ) {
@@ -2202,7 +2202,7 @@ var AstraSitesAjaxQueue = (function() {
 			})
 			.fail(function( jqXHR ){
 				AstraSitesAdmin._log( jqXHR );
-				AstraSitesAdmin._importFailMessage( jqXHR.status + ' ' + jqXHR.statusText, 'Import Complete Failed!' );
+				AstraSitesAdmin._importFailMessage( jqXHR.status + ' ' + jqXHR.statusText, 'Import Complete Failed!', jqXHR );
 				console.groupEnd();
 		    })
 			.done(function ( response ) {
@@ -2249,7 +2249,7 @@ var AstraSitesAjaxQueue = (function() {
 				})
 				.fail(function( jqXHR ){
 					AstraSitesAdmin._log( jqXHR );
-					AstraSitesAdmin._importFailMessage( jqXHR.status + ' ' + jqXHR.statusText, 'Import Widgets Failed!' );
+					AstraSitesAdmin._importFailMessage( jqXHR.status + ' ' + jqXHR.statusText, 'Import Widgets Failed!', jqXHR );
 					console.groupEnd();
 			    })
 				.done(function ( response ) {
@@ -2294,7 +2294,7 @@ var AstraSitesAjaxQueue = (function() {
 				})
 				.fail(function( jqXHR ){
 					AstraSitesAdmin._log( jqXHR );
-					AstraSitesAdmin._importFailMessage( jqXHR.status + ' ' + jqXHR.statusText, 'Import Site Options Failed!' );
+					AstraSitesAdmin._importFailMessage( jqXHR.status + ' ' + jqXHR.statusText, 'Import Site Options Failed!', jqXHR );
 					console.groupEnd();
 			    })
 				.done(function ( response ) {
@@ -2339,20 +2339,18 @@ var AstraSitesAjaxQueue = (function() {
 				})
 				.fail(function( jqXHR ){
 					AstraSitesAdmin._log( jqXHR );
-					AstraSitesAdmin._importFailMessage( jqXHR.status + ' ' + jqXHR.statusText, 'Prepare Import XML Failed!' );
+					AstraSitesAdmin._importFailMessage( jqXHR.status + ' ' + jqXHR.statusText, 'Prepare Import XML Failed!', jqXHR );
 					console.groupEnd();
 			    })
 				.done(function ( response ) {
 
 					AstraSitesAdmin._log( response );
 
-					response.data.url = wp.url.addQueryArgs( response.data.url, { _ajax_nonce: astraSitesVars._ajax_nonce } )
-
 					// 2. Fail - Prepare XML Data.
 					if( false === response.success ) {
 						var error_msg = response.data.error || response.data;
 
-						AstraSitesAdmin._importFailMessage( 'Some of the files required during the import process are missing.<br/><br/>Please try again after some time.' );
+						AstraSitesAdmin._importFailMessage( astraSitesVars.xmlRequiredFilesMissing );
 
 						console.groupEnd();
 					} else {
@@ -2472,7 +2470,7 @@ var AstraSitesAjaxQueue = (function() {
 				})
 				.fail(function( jqXHR ){
 					AstraSitesAdmin._log( jqXHR );
-					AstraSitesAdmin._importFailMessage( jqXHR.status + ' ' + jqXHR.statusText, 'Import Cartflows Flow Failed!' );
+					AstraSitesAdmin._importFailMessage( jqXHR.status + ' ' + jqXHR.statusText, 'Import Cartflows Flow Failed!', jqXHR );
 					console.groupEnd();
 			    })
 				.done(function ( response ) {
@@ -2516,7 +2514,7 @@ var AstraSitesAjaxQueue = (function() {
 				})
 				.fail(function( jqXHR ){
 					AstraSitesAdmin._log( jqXHR );
-					AstraSitesAdmin._importFailMessage( jqXHR.status + ' ' + jqXHR.statusText, 'Import WP Forms Failed!' );
+					AstraSitesAdmin._importFailMessage( jqXHR.status + ' ' + jqXHR.statusText, 'Import WP Forms Failed!', jqXHR );
 					console.groupEnd();
 			    })
 				.done(function ( response ) {
@@ -2561,7 +2559,7 @@ var AstraSitesAjaxQueue = (function() {
 				})
 				.fail(function( jqXHR ){
 					AstraSitesAdmin._log( jqXHR );
-					AstraSitesAdmin._importFailMessage( jqXHR.status + ' ' + jqXHR.statusText, 'Import Customizer Settings Failed!' );
+					AstraSitesAdmin._importFailMessage( jqXHR.status + ' ' + jqXHR.statusText, 'Import Customizer Settings Failed!', jqXHR );
 					console.groupEnd();
 			    })
 				.done(function ( response ) {
@@ -2605,15 +2603,21 @@ var AstraSitesAjaxQueue = (function() {
 		 *
 		 * @param  {string} data Error message.
 		 */
-		_importFailMessage: function( message, heading ) {
-
-			var output  = '<p>Your website is facing a temporary issue in connecting the template server.</p>';
-				output += '<p>Read <a href="https://wpastra.com/docs/import-process-interrupted/" target="_blank">article</a> to resolve the issue and continue importing template.</p>';
+		_importFailMessage: function( message, heading, jqXHR ) {
 
 			heading = heading || 'The import process interrupted';
 
-			if( message ) {
-				output += '<p class="current-importing-status">Error: ' + message +'</p>';
+			var status_code = jqXHR.status ? parseInt( jqXHR.status ) : parseInt( jqXHR.status ) || '';
+
+			if( 200 == status_code && astraSitesVars.debug ) {
+				var output = astraSitesVars.importFailedMessageDueToDebug;
+
+			} else {
+				var output  = astraSitesVars.importFailedMessage;
+
+				if( message ) {
+					output += '<p class="current-importing-status">Error: ' + message +'</p>';
+				}
 			}
 			
 			$('.astra-sites-import-content').html( output );
@@ -2976,7 +2980,7 @@ var AstraSitesAjaxQueue = (function() {
 				})
 				.fail(function( jqXHR ){
 					AstraSitesAdmin._log( jqXHR );
-					AstraSitesAdmin._importFailMessage( jqXHR.status + ' ' + jqXHR.statusText );
+					AstraSitesAdmin._importFailMessage( jqXHR.status + ' ' + jqXHR.statusText, '', jqXHR );
 					console.groupEnd();
 				})
 				.done(function ( response ) {
@@ -3081,7 +3085,7 @@ var AstraSitesAjaxQueue = (function() {
 				})
 				.fail(function( jqXHR ){
 					AstraSitesAdmin._log( jqXHR );
-					AstraSitesAdmin._importFailMessage( jqXHR.status + ' ' + jqXHR.statusText, 'Page Import API Request Failed!' );
+					AstraSitesAdmin._importFailMessage( jqXHR.status + ' ' + jqXHR.statusText, 'Page Import API Request Failed!', jqXHR );
 					console.groupEnd();
 				})
 				.done(function ( response ) {
@@ -3192,7 +3196,7 @@ var AstraSitesAjaxQueue = (function() {
 
 				// Remove loader.
 				$('.required-plugins').removeClass('loading').html('');
-				AstraSitesAdmin._importFailMessage( jqXHR.status + jqXHR.statusText, 'Required Plugins Failed!' );
+				AstraSitesAdmin._importFailMessage( jqXHR.status + jqXHR.statusText, 'Required Plugins Failed!', jqXHR );
 				console.groupEnd();
 			})
 			.done(function ( response ) {
@@ -3214,6 +3218,13 @@ var AstraSitesAjaxQueue = (function() {
 
 					if( response.data['update_avilable_plugins'].length ) {
 						compatibilities.warnings['update-available'] = astraSitesVars.compatibilities_data['update-available'];
+						let list_html = '<ul>';
+						for (let index = 0; index < response.data['update_avilable_plugins'].length; index++) {
+							let element = response.data['update_avilable_plugins'][index];
+							list_html += '<li>' + element.name + '</li>';
+						}
+						list_html += '</ul>';
+						compatibilities.warnings['update-available']['tooltip'] = compatibilities.warnings['update-available']['tooltip'].replace( '##LIST##', list_html );
 					} else {
 						delete compatibilities.warnings['update-available'];
 					}
@@ -3522,7 +3533,7 @@ var AstraSitesAjaxQueue = (function() {
 			})
 			.fail(function( jqXHR ){
 				AstraSitesAdmin._log( jqXHR );
-				AstraSitesAdmin._importFailMessage( jqXHR.status + jqXHR.statusText, 'Import WP Forms Failed!' );
+				AstraSitesAdmin._importFailMessage( jqXHR.status + jqXHR.statusText, 'Import WP Forms Failed!', jqXHR );
 				console.groupEnd();
 		    })
 			.done(function ( response ) {

@@ -57,6 +57,9 @@ if ( ! class_exists( 'Astra_Sites_Compatibility_Astra_Pro' ) ) :
 		 * @return void
 		 */
 		public function import() {
+			if ( defined( 'WP_CLI' ) ) {
+				WP_CLI::line( 'Processing "Astra Pro" Batch Import' );
+			}
 			Astra_Sites_Importer_Log::add( '---- Processing Mapping - for Astra Pro ----' );
 			self::start_post_mapping();
 		}
@@ -142,6 +145,9 @@ if ( ! class_exists( 'Astra_Sites_Compatibility_Astra_Pro' ) ) :
 				foreach ( $posts as $key => $post ) {
 					$page = get_page_by_title( $post['post_title'], OBJECT, $post_type );
 					if ( is_object( $page ) ) {
+						if ( defined( 'WP_CLI' ) ) {
+							WP_CLI::line( 'Setting Location Rules for ' . $post['post_title'] );
+						}
 						self::update_location_rules( $page->ID, 'ast-advanced-hook-location', $post['mapping']['ast-advanced-hook-location'] );
 					}
 				}
@@ -153,6 +159,9 @@ if ( ! class_exists( 'Astra_Sites_Compatibility_Astra_Pro' ) ) :
 				foreach ( $posts as $key => $post ) {
 					$page = get_page_by_title( $post['post_title'], OBJECT, $post_type );
 					if ( is_object( $page ) ) {
+						if ( defined( 'WP_CLI' ) ) {
+							WP_CLI::line( 'Setting Location Rules for ' . $post['post_title'] );
+						}
 
 						self::update_location_rules( $page->ID, 'ast-advanced-headers-location', $post['mapping']['ast-advanced-headers-location'] );
 						self::update_location_rules( $page->ID, 'ast-advanced-headers-exclusion', $post['mapping']['ast-advanced-headers-exclusion'] );

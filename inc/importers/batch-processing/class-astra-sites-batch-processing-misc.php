@@ -53,6 +53,10 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Misc' ) ) :
 		 */
 		public function import() {
 
+			if ( defined( 'WP_CLI' ) ) {
+				WP_CLI::line( 'Processing "MISC" Batch Import' );
+			}
+
 			Astra_Sites_Importer_Log::add( '---- Processing MISC ----' );
 			self::fix_nav_menus();
 		}
@@ -63,6 +67,11 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Misc' ) ) :
 		 * @return object
 		 */
 		public static function fix_nav_menus() {
+
+			if ( defined( 'WP_CLI' ) ) {
+				WP_CLI::line( 'Setting Nav Menus' );
+			}
+
 			// Not found site data, then return.
 			$demo_data = get_option( 'astra_sites_import_data', array() );
 			if ( ! isset( $demo_data['astra-post-data-mapping'] ) ) {
@@ -87,6 +96,9 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Misc' ) ) :
 			$post_ids = self::get_menu_post_ids();
 			if ( is_array( $post_ids ) ) {
 				foreach ( $post_ids as $post_id ) {
+					if ( defined( 'WP_CLI' ) ) {
+						WP_CLI::line( 'Post ID: ' . $post_id );
+					}
 					Astra_Sites_Importer_Log::add( 'Post ID: ' . $post_id );
 					$menu_url = get_post_meta( $post_id, '_menu_item_url', true );
 

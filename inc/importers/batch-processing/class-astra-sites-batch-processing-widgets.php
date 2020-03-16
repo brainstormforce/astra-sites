@@ -52,6 +52,10 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Widgets' ) ) :
 		 * @return void
 		 */
 		public function import() {
+			if ( defined( 'WP_CLI' ) ) {
+				WP_CLI::line( 'Importing Widgets Data' );
+			}
+
 			$this->widget_media_image();
 		}
 
@@ -82,6 +86,10 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Widgets' ) ) :
 
 					$data[ $key ]['url']           = $downloaded_image['url'];
 					$data[ $key ]['attachment_id'] = $downloaded_image['id'];
+
+					if ( defined( 'WP_CLI' ) ) {
+						WP_CLI::line( 'Importing Widgets Image: ' . $value['url'] . ' | New Image ' . $downloaded_image['url'] );
+					}
 				}
 			}
 
