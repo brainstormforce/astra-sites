@@ -299,7 +299,14 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 		/**
 		 * Import form XML.
 		 *
-		 * Use: `wp astra-sites import_wxr`
+		 * ## OPTIONS
+		 *
+		 * <url>
+		 * : XML/WXR file URL.
+		 *
+		 * ## EXAMPLES
+		 *
+		 *      $ wp astra-sites import_wxr <url>
 		 *
 		 * @since 1.4.3
 		 * @param  array $args       Arguments.
@@ -333,7 +340,14 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 		 *
 		 * Delete all pages, post, custom post type, customizer settings and site options.
 		 *
-		 * Use: `wp astra-sites reset`
+		 * ## OPTIONS
+		 *
+		 * [--yes]
+		 * : Reset previously imported site data without asking the prompt message.
+		 *
+		 * ## EXAMPLES
+		 *
+		 *      $ wp astra-sites reset
 		 *
 		 * @since 1.4.0
 		 * @param  array $args       Arguments.
@@ -385,9 +399,16 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 		/**
 		 * Import Customizer Settings
 		 *
-		 * @since 1.4.0
+		 * ## OPTIONS
 		 *
-		 * Example: `wp astra-sites import_customizer_settings <id>`
+		 * <id>
+		 * : Site ID.
+		 *
+		 * ## EXAMPLES
+		 *
+		 *      $ wp astra-sites import_customizer_settings <id>
+		 *
+		 * @since 1.4.0
 		 *
 		 * @param  array $args        Arguments.
 		 * @param  array $assoc_args Associated Arguments.
@@ -409,6 +430,19 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 
 		/**
 		 * Page Builders
+		 *
+		 * ### OPTIONS
+		 *
+		 * [<list>]
+		 * : List all page builders.
+		 *
+		 * OR
+		 *
+		 * [<set>]
+		 * : Set the current page builder with given page builder slug.
+		 *
+		 * [<slug>]
+		 * : Page builder slug.
 		 *
 		 * ### EXAMPLES
 		 *
