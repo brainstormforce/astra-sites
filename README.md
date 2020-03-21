@@ -147,6 +147,7 @@ v.2.1.0 - 17-March-2020
 - Improvement: Now one can filter Free/Agency pages in Elementor Popup.
 - Improvement: Showing the inconsistent file permissions message.
 - Fix: Fixed issue regarding images not getting imported for Gutenberg sites.
+- Fix: Starter Template Blocks manual sync for more than 100 blocks not getting synced.
 
 v2.0.2 - 07-March-2020
 - Fix: Plugin not activated after importing from WP CLI command.

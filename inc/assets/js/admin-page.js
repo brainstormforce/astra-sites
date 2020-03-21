@@ -1088,20 +1088,49 @@ var AstraSitesAjaxQueue = (function() {
 				url  : astraSitesVars.ajaxurl,
 				type : 'POST',
 				data : {
-					action : 'astra-sites-import-blocks',
+					action : 'astra-sites-get-blocks-request-count',
 				},
 				beforeSend: function() {
-					console.groupCollapsed( 'Importing Blocks' );
-					AstraSitesAdmin._log( 'Importing Blocks..' );
+					console.groupCollapsed( 'Updating Blocks' );
+					AstraSitesAdmin._log( 'Updating Blocks' );
 				},
 			})
 			.fail(function( jqXHR ){
-				AstraSitesAdmin._log( jqXHR );
-				AstraSitesAdmin._importFailMessage( jqXHR.status + ' ' + jqXHR.statusText, 'Block Import Failed!', jqXHR );
-				console.groupEnd( 'Importing Blocks' );
-			}).done(function ( response ) {
+				AstraSitesAdmin._log( jqXHR, 'error' );
+				AstraSitesAdmin._importFailMessage( jqXHR.status + jqXHR.statusText, 'Blocks Count Request Failed!', jqXHR );
+				console.groupEnd('Updating Blocks');
+		    })
+			.done(function ( response ) {
 				AstraSitesAdmin._log( response );
-				console.groupEnd( 'Importing Blocks' );
+				if( response.success ) {
+					var total = response.data.pages;
+
+					AstraSitesAdmin._log( total );
+
+					for( let i = 1; i <= total; i++ ) {
+						AstraSitesAjaxQueue.add({
+							url: astraSitesVars.ajaxurl,
+							type: 'POST',
+							data: {
+								action  : 'astra-sites-import-blocks',
+								page_no : i,
+							},
+							beforeSend: function() {
+								console.groupCollapsed( 'Importing Blocks - Page ' + i );
+								AstraSitesAdmin._log( 'Importing Blocks - Page ' + i );
+							},
+							success: function( response ){								
+								AstraSitesAdmin._log( response );
+								console.groupEnd( 'Importing Blocks - Page ' + i );
+							}
+						});
+					}
+
+					// Run the AJAX queue.
+					AstraSitesAjaxQueue.run();
+				} else {
+					AstraSitesAdmin._importFailMessage( response.data, 'Blocks Count Request Failed!' );
+				}
 			});
 
 			// Import Block Categories.

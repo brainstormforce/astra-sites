@@ -127,6 +127,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 			add_action( 'wp_ajax_astra-sites-import-page-builders', array( $this, 'import_page_builders' ) );
 			add_action( 'wp_ajax_astra-sites-import-blocks', array( $this, 'import_blocks' ) );
 			add_action( 'wp_ajax_astra-sites-get-sites-request-count', array( $this, 'sites_requests_count' ) );
+			add_action( 'wp_ajax_astra-sites-get-blocks-request-count', array( $this, 'blocks_requests_count' ) );
 			add_action( 'wp_ajax_astra-sites-import-sites', array( $this, 'import_sites' ) );
 		}
 
@@ -181,8 +182,13 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 		 * @return void
 		 */
 		public function import_blocks() {
-			Astra_Sites_Batch_Processing_Importer::get_instance()->import_blocks();
-			wp_send_json_success();
+			$page_no = isset( $_POST['page_no'] ) ? absint( $_POST['page_no'] ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing
+			if ( $page_no ) {
+				$sites_and_pages = Astra_Sites_Batch_Processing_Importer::get_instance()->import_blocks( $page_no );
+				wp_send_json_success();
+			}
+
+			wp_send_json_error();
 		}
 
 		/**
@@ -222,6 +228,23 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 
 			// Get count.
 			$total_requests = $this->get_total_requests();
+			if ( $total_requests ) {
+				wp_send_json_success( $total_requests );
+			}
+
+			wp_send_json_error();
+		}
+
+		/**
+		 * Blocks Requests Count
+		 *
+		 * @since 2.1.0
+		 * @return void
+		 */
+		public function blocks_requests_count() {
+
+			// Get count.
+			$total_requests = $this->get_total_blocks_requests();
 			if ( $total_requests ) {
 				wp_send_json_success( $total_requests );
 			}
@@ -620,16 +643,18 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 				'timeout' => 60,
 			);
 
-			$response = wp_remote_get( trailingslashit( Astra_Sites::get_instance()->get_api_domain() ) . '/wp-json/astra-blocks/v1/get-total-blocks', $api_args );
+			$response = wp_remote_get( trailingslashit( Astra_Sites::get_instance()->get_api_domain() ) . '/wp-json/astra-blocks/v1/get-blocks-count', $api_args );
 			if ( ! is_wp_error( $response ) || wp_remote_retrieve_response_code( $response ) === 200 ) {
 				$total_requests = json_decode( wp_remote_retrieve_body( $response ), true );
 
-				astra_sites_error_log( 'BLOCK: Updated requests ' . $total_requests );
-				update_option( 'astra-blocks-batch-status-string', 'Updated requests ' . $total_requests );
+				if ( isset( $total_requests['pages'] ) ) {
+					astra_sites_error_log( 'BLOCK: Updated requests ' . $total_requests['pages'] );
+					update_option( 'astra-blocks-batch-status-string', 'Updated requests ' . $total_requests['pages'] );
 
-				update_option( 'astra-blocks-requests', $total_requests );
+					update_option( 'astra-blocks-requests', $total_requests['pages'] );
 
-				return $total_requests;
+					return $total_requests['pages'];
+				}
 			}
 
 			astra_sites_error_log( 'BLOCK: Request Failed! Still Calling..' );

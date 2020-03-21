@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Starter Templates 2.1.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/astra-sites\n"
-"POT-Creation-Date: 2020-03-16 07:33:25+00:00\n"
+"POT-Creation-Date: 2020-03-21 04:42:44+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -281,7 +281,7 @@ msgid "Are you sure you want to import the site?"
 msgstr ""
 
 #: inc/classes/class-astra-sites-wp-cli.php:161
-#: inc/classes/class-astra-sites-wp-cli.php:401
+#: inc/classes/class-astra-sites-wp-cli.php:422
 msgid "Invalid Site ID,"
 msgstr ""
 
@@ -330,81 +330,81 @@ msgid ""
 "Visit: %s"
 msgstr ""
 
-#: inc/classes/class-astra-sites-wp-cli.php:314
+#: inc/classes/class-astra-sites-wp-cli.php:321
 msgid "Invalid XML URL."
 msgstr ""
 
-#: inc/classes/class-astra-sites-wp-cli.php:319
+#: inc/classes/class-astra-sites-wp-cli.php:326
 #. translators: %s is the XML file URL.
 msgid "Downloading %s"
 msgstr ""
 
-#: inc/classes/class-astra-sites-wp-cli.php:323
+#: inc/classes/class-astra-sites-wp-cli.php:330
 msgid "Importing WXR.."
 msgstr ""
 
-#: inc/classes/class-astra-sites-wp-cli.php:327
+#: inc/classes/class-astra-sites-wp-cli.php:334
 #. translators: %s is error message.
 msgid "WXR file Download Failed. Error %s"
 msgstr ""
 
-#: inc/classes/class-astra-sites-wp-cli.php:347
+#: inc/classes/class-astra-sites-wp-cli.php:361
 msgid "Are you sure you want to delete imported site data?"
 msgstr ""
 
-#: inc/classes/class-astra-sites-wp-cli.php:355
+#: inc/classes/class-astra-sites-wp-cli.php:369
 msgid "Reseting Posts.."
 msgstr ""
 
-#: inc/classes/class-astra-sites-wp-cli.php:362
+#: inc/classes/class-astra-sites-wp-cli.php:376
 msgid "Reseting Terms.."
 msgstr ""
 
-#: inc/classes/class-astra-sites-wp-cli.php:369
+#: inc/classes/class-astra-sites-wp-cli.php:383
 msgid "Resting WP Forms..."
 msgstr ""
 
-#: inc/classes/class-astra-sites-wp-cli.php:406
+#: inc/classes/class-astra-sites-wp-cli.php:427
 msgid "Importing customizer settings.."
 msgstr ""
 
-#: inc/classes/class-astra-sites-wp-cli.php:442
+#: inc/classes/class-astra-sites-wp-cli.php:476
 msgid "Please add valid parameter."
 msgstr ""
 
-#: inc/classes/class-astra-sites-wp-cli.php:459
+#: inc/classes/class-astra-sites-wp-cli.php:493
 #. translators: %s is the current page builder name.
 msgid "Default page builder is \"%s\"."
 msgstr ""
 
-#: inc/classes/class-astra-sites-wp-cli.php:467
+#: inc/classes/class-astra-sites-wp-cli.php:501
 #. translators: %s is the page builder name.
 msgid "\"%s\" is set as default page builder."
 msgstr ""
 
-#: inc/classes/class-astra-sites-wp-cli.php:470
+#: inc/classes/class-astra-sites-wp-cli.php:504
 msgid ""
 "Invalid page builder slug. \n"
 "Check all page builder slugs with command `wp astra-sites page_builder list`"
 msgstr ""
 
-#: inc/classes/class-astra-sites-wp-cli.php:473
+#: inc/classes/class-astra-sites-wp-cli.php:507
 msgid ""
 "Invalid parameter! \n"
 "Please use `list` or `set` parameter."
 msgstr ""
 
-#: inc/classes/class-astra-sites-wp-cli.php:527
+#: inc/classes/class-astra-sites-wp-cli.php:561
 msgid ""
 "This page builder plugin is not installed. Please try a different page "
 "builder."
 msgstr ""
 
-#: inc/classes/class-astra-sites-wp-cli.php:536
+#: inc/classes/class-astra-sites-wp-cli.php:570
 msgid "This site type does not exist. Please try a different site type."
 msgstr ""
 
-#: inc/classes/class-astra-sites-wp-cli.php:545
+#: inc/classes/class-astra-sites-wp-cli.php:579
 msgid "This site category does not exist. Please try a different site category."
 msgstr ""
 

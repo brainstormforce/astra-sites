@@ -287,7 +287,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Importer' ) ) :
 			$all_blocks = array();
 			astra_sites_error_log( 'BLOCK: Requesting ' . $page );
 			update_option( 'astra-blocks-batch-status-string', 'Requesting for blocks page - ' . $page );
-			$response = wp_remote_get( trailingslashit( Astra_Sites::get_instance()->get_api_domain() ) . '/wp-json/astra-blocks/v1/blocks?per_page=500&page=' . $page, $api_args );
+			$response = wp_remote_get( trailingslashit( Astra_Sites::get_instance()->get_api_domain() ) . '/wp-json/astra-blocks/v1/blocks?per_page=100&page=' . $page, $api_args );
 			if ( ! is_wp_error( $response ) || wp_remote_retrieve_response_code( $response ) === 200 ) {
 				$astra_blocks = json_decode( wp_remote_retrieve_body( $response ), true );
 
