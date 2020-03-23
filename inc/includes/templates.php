@@ -20,7 +20,38 @@ if ( ! defined( 'ABSPATH' ) ) {
 <script type="text/template" id="tmpl-ast-template-base-skeleton">
 	<div class="dialog-widget dialog-lightbox-widget dialog-type-buttons dialog-type-lightbox" id="ast-sites-modal">
 		<div class="dialog-widget-content dialog-lightbox-widget-content">
-			<div class="astra-sites-content-wrap">
+			<div class="astra-sites-content-wrap" data-page="1">
+				<div class="ast-template-library-toolbar">
+					<div class="elementor-template-library-filter-toolbar">
+						<div class="elementor-template-library-order">
+							<select class="elementor-template-library-order-input elementor-template-library-filter-select elementor-select2">
+								<option value=""><?php esc_html_e( 'All', 'astra-sites' ); ?></option>
+								<option value="free"><?php esc_html_e( 'Free', 'astra-sites' ); ?></option>
+								<option value="agency"><?php esc_html_e( 'Agency', 'astra-sites' ); ?></option>
+							</select>
+						</div>
+						<div class="astra-blocks-category-inner-wrap">
+							<select id="elementor-template-library-filter" class="astra-blocks-category elementor-template-library-filter-select elementor-select2">
+								<option value=""><?php esc_html_e( 'All', 'astra-sites' ); ?></option>
+								<# for ( key in astraElementorSites.astra_block_categories ) { #>
+								<option value="{{astraElementorSites.astra_block_categories[key].id}}">{{astraElementorSites.astra_block_categories[key].name}}</option>
+								<# } #>
+							</select>
+						</div>
+						<div class="astra-blocks-filter-inner-wrap">
+							<select id="elementor-template-library-filter" class="astra-blocks-filter elementor-template-library-filter-select elementor-select2">
+								<option value=""><?php esc_html_e( 'Filter by Color', 'astra-sites' ); ?></option>
+								<option value="light"><?php esc_html_e( 'Light', 'astra-sites' ); ?></option>
+								<option value="dark"><?php esc_html_e( 'Dark', 'astra-sites' ); ?></option>
+							</select>
+						</div>
+					</div>
+					<div class="ast-sites-template-library-filter-text-wrapper">
+						<label for="elementor-template-library-filter-text" class="elementor-screen-only"><?php esc_html_e( 'Search...', 'astra-sites' ); ?></label>
+						<input id="wp-filter-search-input" placeholder="<?php esc_html_e( 'SEARCH', 'astra-sites' ); ?>" class="">
+						<i class="eicon-search"></i>
+					</div>
+				</div>
 				<div id="ast-sites-floating-notice-wrap-id" class="ast-sites-floating-notice-wrap"><div class="ast-sites-floating-notice"></div></div>
 				<?php
 				$manual_sync = get_option( 'astra-sites-manual-sync-complete', 'no' );
@@ -44,26 +75,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<div class="theme-preview"></div>
 				</div>
 				<div class="dialog-message dialog-lightbox-message-block" data-type="blocks">
-					<div class="astra-blocks-category-wrap">
-						<div class="astra-blocks-category-inner-wrap">
-							<select id="elementor-template-library-filter" class="astra-blocks-category elementor-template-library-filter-select elementor-select2">
-								<option value=""><?php esc_html_e( 'All', 'astra-sites' ); ?></option>
-								<# for ( key in astraElementorSites.astra_block_categories ) { #>
-								<option value="{{astraElementorSites.astra_block_categories[key].id}}">{{astraElementorSites.astra_block_categories[key].name}}</option>
-								<# } #>
-							</select>
-						</div>
-						<div class="astra-blocks-filter-inner-wrap">
-							<select id="elementor-template-library-filter" class="astra-blocks-filter elementor-template-library-filter-select elementor-select2">
-								<option value=""><?php esc_html_e( 'Filter by Color', 'astra-sites' ); ?></option>
-								<option value="light"><?php esc_html_e( 'Light', 'astra-sites' ); ?></option>
-								<option value="dark"><?php esc_html_e( 'Dark', 'astra-sites' ); ?></option>
-							</select>
-						</div>
-					</div>
-					<div class="dialog-content dialog-lightbox-content-block theme-browser"></div>
+					<div class="dialog-content dialog-lightbox-content-block theme-browser" data-block-page="1"></div>
 					<div class="theme-preview-block"></div>
 				</div>
+				<div class="astra-loading-wrap"><div class="astra-loading-icon"></div></div>
 			</div>
 			<div class="dialog-buttons-wrapper dialog-lightbox-buttons-wrapper"></div>
 		</div>
@@ -78,7 +93,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 <script type="text/template" id="tmpl-ast-template-modal__header">
 	<div class="dialog-header dialog-lightbox-header">
 		<div class="ast-sites-modal__header">
-			<div class="ast-sites-modal__header__logo-area position-left-last">
+			<div class="ast-sites-modal__header__logo-area">
 				<?php
 				if ( ! Astra_Sites_White_Label::get_instance()->is_white_labeled() ) {
 					?>
@@ -96,30 +111,21 @@ if ( ! defined( 'ABSPATH' ) ) {
 				?>
 				<div class="back-to-layout" title="<?php esc_html_e( 'Back to Layout', 'astra-sites' ); ?>" data-step="1"><i class="icon-chevron-left"></i></div>
 			</div>
-			<div class="ast-sites-modal__header__menu-area astra-sites-step-1-wrap">
-				<div class="elementor-template-library-header-menu">
-					<div class="search-form">
-						<input autocomplete="off" placeholder="<?php esc_html_e( 'Search...', 'astra-sites' ); ?>" type="search" aria-describedby="live-search-desc" id="wp-filter-search-input" class="wp-filter-search">
-						<span class="icon-search search-icon"></span>
-						<div class="astra-sites-autocomplete-result"></div>
-					</div>
-				</div>
-			</div>
 			<div class="elementor-templates-modal__header__menu-area astra-sites-step-1-wrap ast-sites-modal__options">
 				<div class="elementor-template-library-header-menu">
 					<div class="elementor-template-library-menu-item elementor-active" data-template-source="remote" data-template-type="pages"><span class="icon-file"></span><?php esc_html_e( 'Pages', 'astra-sites' ); ?></div>		
 					<div class="elementor-template-library-menu-item" data-template-source="remote" data-template-type="blocks"><span class="icon-layers"></span><?php esc_html_e( 'Blocks', 'astra-sites' ); ?></div>
-					<div class="astra-sites__sync-wrap">
-						<div class="astra-sites-sync-library-button">
-							<span class="icon-refresh" aria-hidden="true" title="<?php esc_html_e( 'Sync Library', 'astra-sites' ); ?>"></span>
-						</div>
-					</div>
 				</div>
 			</div>
 			<div class="elementor-templates-modal__header__items-area">
 				<div class="ast-sites-modal__header__close ast-sites-modal__header__close--normal ast-sites-modal__header__item">
 					<i class="dashicons close dashicons-no-alt" aria-hidden="true" title="<?php esc_html_e( 'Close', 'astra-sites' ); ?>"></i>
 					<span class="elementor-screen-only"><?php esc_html_e( 'Close', 'astra-sites' ); ?></span>
+				</div>
+				<div class="astra-sites__sync-wrap">
+					<div class="astra-sites-sync-library-button">
+						<span class="icon-refresh" aria-hidden="true" title="<?php esc_html_e( 'Sync Library', 'astra-sites' ); ?>"></span>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -138,6 +144,15 @@ if ( ! defined( 'ABSPATH' ) ) {
 			}
 			if ( undefined == site_type ) {
 				continue;
+			}
+			if ( '' !== AstraElementorSitesAdmin.siteType ) {
+				if ( 'free' == AstraElementorSitesAdmin.siteType && site_type != 'free' ) {
+					continue;
+				}
+
+				if ( 'free' != AstraElementorSitesAdmin.siteType && site_type == 'free' ) {
+					continue;
+				}
 			}
 			var type_class = ' site-type-' + data[ key ]['astra-sites-type'];
 			var site_title = data[ key ]['title'].slice( 0, 25 );
@@ -173,8 +188,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 	<#
 		var count = 0;
+		let upper_window = ( AstraElementorSitesAdmin.per_page * ( AstraElementorSitesAdmin.page - 1 ) );
+		let lower_window = ( upper_window + AstraElementorSitesAdmin.per_page );
+
 		for ( key in data ) {
+
 			var site_title = ( undefined == data[ key ]['category'] || 0 == data[ key ]['category'].length ) ? data[ key ]['title'] : astraElementorSites.astra_block_categories[data[ key ]['category']].name;
+
 			if ( '' !== AstraElementorSitesAdmin.blockCategory ) {
 				if ( AstraElementorSitesAdmin.blockCategory != data[ key ]['category'] ) {
 					continue;
@@ -189,8 +209,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 			count++;
 	#>
 		<div class="astra-sites-library-template astra-theme" data-block-id={{key}}>
-			<div class="astra-sites-library-template-inner theme-screenshot" data-step="1">
-				<div class="elementor-template-library-template-body">
+			<div class="astra-sites-library-template-inner" >
+				<div class="elementor-template-library-template-body theme-screenshot" data-step="1">
 					<img src="{{data[ key ]['featured-image-url']}}">
 					<div class="elementor-template-library-template-preview">
 						<i class="eicon-zoom-in" aria-hidden="true"></i>
@@ -198,9 +218,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</div>
 				<div class="elementor-template-library-template-footer">
 					<div class="elementor-template-library-template-name theme-id-container">{{{site_title}}}</div>
-					<a class="elementor-template-library-template-action elementor-template-library-template-insert" style="display:none;">
+					<a class="elementor-template-library-template-action elementor-template-library-template-insert ast-block-insert">
 						<i class="eicon-file-download" aria-hidden="true"></i>
-						<span class="elementor-button-title">Insert</span>
+						<span class="elementor-button-title"><?php esc_html_e( 'INSERT', 'astra-sites' ); ?></span>
 					</a>
 				</div>
 			</div>
@@ -263,6 +283,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</span>
 				<div class="theme-id-container">
 					<h3 class="theme-name">{{{site_title}}}</h3>
+					<#
+					var is_free = true;
+					if ( 'pages' == AstraElementorSitesAdmin.type ) {
+						if( 'free' !== data[ ind ]['site-pages-type'] && ! astraElementorSites.license_status ) {
+							is_free = false;
+						}
+					}
+					if( is_free ) { #>
+						<a class="elementor-template-library-template-action elementor-template-library-template-insert ast-block-insert">
+							<i class="eicon-file-download" aria-hidden="true"></i>
+							<span class="elementor-button-title"><?php esc_html_e( 'INSERT', 'astra-sites' ); ?></span>
+						</a>
+					<# } else { #>
+						<a class="elementor-template-library-template-action elementor-template-library-template-go-pro" href="{{astraElementorSites.getProURL}}" target="_blank">
+							<i class="eicon-external-link-square" aria-hidden="true"></i>
+							<span class="elementor-button-title"><?php esc_html_e( 'Get Access!', 'astra-sites' ); ?></span>
+						</a>
+					<# } #>
 				</div>
 				<# if ( site_type && 'free' !== site_type ) { #>
 					<?php /* translators: %s are white label strings. */ ?>

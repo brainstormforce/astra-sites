@@ -108,13 +108,10 @@ if ( ! class_exists( 'Astra_Sites_Image_Importer' ) ) :
 
 			if ( apply_filters( 'astra_sites_image_importer_skip_image', false, $attachment ) ) {
 				Astra_Sites_Importer_Log::add( 'BATCH - SKIP Image - {from filter} - ' . $attachment['url'] . ' - Filter name `astra_sites_image_importer_skip_image`.' );
-				return true;
-			}
-
-			// Already imported? Then return!
-			if ( isset( $this->already_imported_ids[ $attachment['id'] ] ) ) {
-				Astra_Sites_Importer_Log::add( 'BATCH - SKIP Image {already imported from batch process} - ' . $attachment['url'] . ' - already imported.' );
-				return true;
+				return array(
+					'status'     => true,
+					'attachment' => $attachment,
+				);
 			}
 
 			global $wpdb;
@@ -150,16 +147,22 @@ if ( ! class_exists( 'Astra_Sites_Image_Importer' ) ) :
 			}
 
 			if ( $post_id ) {
-				$new_attachment                                  = array(
+				$new_attachment               = array(
 					'id'  => $post_id,
 					'url' => wp_get_attachment_url( $post_id ),
 				);
-				$this->already_imported_ids[ $attachment['id'] ] = $post_id;
+				$this->already_imported_ids[] = $post_id;
 
-				return true;
+				return array(
+					'status'     => true,
+					'attachment' => $new_attachment,
+				);
 			}
 
-			return false;
+			return array(
+				'status'     => false,
+				'attachment' => $attachment,
+			);
 		}
 
 		/**
@@ -173,8 +176,10 @@ if ( ! class_exists( 'Astra_Sites_Image_Importer' ) ) :
 
 			Astra_Sites_Importer_Log::add( 'Source - ' . $attachment['url'] );
 			$saved_image = $this->get_saved_image( $attachment );
-			if ( $saved_image ) {
-				return $attachment;
+			Astra_Sites_Importer_Log::add( 'Log - ' . wp_json_encode( $saved_image['attachment'] ) );
+
+			if ( $saved_image['status'] ) {
+				return $saved_image['attachment'];
 			}
 
 			$file_content = wp_remote_retrieve_body(
@@ -205,10 +210,14 @@ if ( ! class_exists( 'Astra_Sites_Image_Importer' ) ) :
 			);
 			// @codingStandardsIgnoreEnd
 
+			astra_sites_error_log( $filename );
+			astra_sites_error_log( wp_json_encode( $upload ) );
+
 			$post = array(
 				'post_title' => $filename,
 				'guid'       => $upload['url'],
 			);
+			astra_sites_error_log( wp_json_encode( $post ) );
 
 			$info = wp_check_filetype( $upload['file'] );
 			if ( $info ) {
@@ -234,7 +243,7 @@ if ( ! class_exists( 'Astra_Sites_Image_Importer' ) ) :
 
 			Astra_Sites_Importer_Log::add( 'BATCH - SUCCESS Image {Imported} - ' . $new_attachment['url'] );
 
-			$this->already_imported_ids[ $attachment['id'] ] = $post_id;
+			$this->already_imported_ids[] = $post_id;
 
 			return $new_attachment;
 		}

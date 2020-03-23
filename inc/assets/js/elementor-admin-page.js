@@ -118,6 +118,10 @@ var AstraSitesAjaxQueue = (function() {
 		index : 0,
 		blockCategory : '',
 		blockColor : '',
+		processing: false,
+		siteType: '',
+		page: 1,
+		per_page: 20,
 
 		init: function() {
 			this._bind();
@@ -183,10 +187,12 @@ var AstraSitesAjaxQueue = (function() {
 						$( document ).on( 'click', '#ast-sites-modal .astra-sites__sync-wrap', AstraElementorSitesAdmin._sync );
 						$( document ).on( 'click', '#ast-sites-modal .ast-sites-modal__header__logo, #ast-sites-modal .back-to-layout-button', AstraElementorSitesAdmin._home );
 						$( document ).on( 'click', '#ast-sites-modal .notice-dismiss', AstraElementorSitesAdmin._dismiss );
+						$( document ).on( 'click', '#ast-sites-modal .elementor-template-library-template-insert.ast-block-insert', AstraElementorSitesAdmin._insert_from_link );
 
 						// Other events.
 						$elscope.find( '.astra-sites-content-wrap' ).scroll( AstraElementorSitesAdmin._loadLargeImages );
 						$( document ).on( 'keyup input' , '#ast-sites-modal #wp-filter-search-input', AstraElementorSitesAdmin._search );
+						$( document ).on( 'change', '#ast-sites-modal .elementor-template-library-order-input', AstraElementorSitesAdmin._changeType );
 
 						// Triggers.
 						$( document ).on( "astra-sites__elementor-open-after", AstraElementorSitesAdmin._initSites );
@@ -209,6 +215,23 @@ var AstraSitesAjaxQueue = (function() {
 				}
 			}
 
+		},
+
+		_paginateBlocks: function() {
+			if ( AstraElementorSitesAdmin.type == 'blocks' ) {
+				if ( undefined != $elscope.find( '.astra-sites-library-template:last' ).offset() ) {
+					if( ( $( '.dialog-widget-content' ).scrollTop() + 600 ) >= ( $elscope.find( '.astra-sites-library-template:last' ).offset().top ) ) {
+						AstraElementorSitesAdmin.page = ( AstraElementorSitesAdmin.page + 1 );
+						// Set listing HTML.
+						AstraElementorSitesAdmin._appendPaginationBlocks( astraElementorSites.astra_blocks );
+					}
+				}
+			}
+		},
+
+		_changeType: function() {
+			AstraElementorSitesAdmin.siteType = $( this ).val();
+			$elscope.find( '#wp-filter-search-input' ).trigger( 'keyup' );
 		},
 
 		_categoryChange: function( event ) {
@@ -245,7 +268,7 @@ var AstraSitesAjaxQueue = (function() {
 
 			console.groupEnd( 'Process Done.' );
 
-			var str = ( AstraElementorSitesAdmin.type == 'pages' ) ? 'Template' : 'Block';
+			var str = ( AstraElementorSitesAdmin.type == 'pages' ) ? astraElementorSites.template : astraElementorSites.block;
 			$elscope.find( '.ast-import-elementor-template' ).removeClass( 'installing' );
 			$elscope.find( '.ast-import-elementor-template' ).attr( 'data-demo-link', data.data.link );
 			setTimeout( function() {
@@ -295,7 +318,7 @@ var AstraSitesAjaxQueue = (function() {
 			}
 
 			button.addClass( 'updating-message');
-			$elscope.find( '#ast-sites-floating-notice-wrap-id .ast-sites-floating-notice' ).html( '<span class="message">Syncing template library in the background. The process can take anywhere between 2 to 3 minutes. We will notify you once done.<span><button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss</span></button>' );
+			$elscope.find( '#ast-sites-floating-notice-wrap-id .ast-sites-floating-notice' ).html( '<span class="message">Syncing template library in the background. The process can take anywhere between 2 to 3 minutes. We will notify you once done.<span><button type="button" class="notice-dismiss"><span class="screen-reader-text">' + astraElementorSites.dismiss_text + '</span></button>' );
 			$elscope.find( '#ast-sites-floating-notice-wrap-id' ).addClass( 'slide-in' ).removeClass( 'refreshed-notice' );
 
 			$.ajax({
@@ -312,7 +335,7 @@ var AstraSitesAjaxQueue = (function() {
 
 				if( response.success ) {
 					if( 'updated' === response.data ) {
-						$elscope.find( '#ast-sites-floating-notice-wrap-id').addClass('refreshed-notice').find('.ast-sites-floating-notice' ).html( '<span class="message">'+astraElementorSites.syncCompleteMessage+'</span><button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss</span></button>' );
+						$elscope.find( '#ast-sites-floating-notice-wrap-id').addClass('refreshed-notice').find('.ast-sites-floating-notice' ).html( '<span class="message">'+astraElementorSites.syncCompleteMessage+'</span><button type="button" class="notice-dismiss"><span class="screen-reader-text">' + astraElementorSites.dismiss_text + '</span></button>' );
 						button.removeClass( 'updating-message');
 						console.log( 'Already sync all the sites.' );
 					} else {
@@ -341,16 +364,53 @@ var AstraSitesAjaxQueue = (function() {
 							console.log( jqXHR );
 						});
 
+						
 						// Import Blocks.
 						$.ajax({
 							url  : astraElementorSites.ajaxurl,
 							type : 'POST',
 							data : {
-								action : 'astra-sites-import-blocks',
+								action : 'astra-sites-get-blocks-request-count',
+							},
+							beforeSend: function() {
+								console.groupCollapsed( 'Updating Blocks' );
+								console.log( 'Updating Blocks' );
 							},
 						})
 						.fail(function( jqXHR ){
-							console.log( jqXHR );
+							console.log( jqXHR, 'error' );
+							console.error( jqXHR.status + jqXHR.statusText, 'Blocks Count Request Failed!', jqXHR );
+							console.groupEnd('Updating Blocks');
+						})
+						.done(function ( response ) {
+							console.log( response );
+							if( response.success ) {
+								var total = response.data.pages;
+
+								for( let i = 1; i <= total; i++ ) {
+									AstraSitesAjaxQueue.add({
+										url: astraElementorSites.ajaxurl,
+										type: 'POST',
+										data: {
+											action  : 'astra-sites-import-blocks',
+											page_no : i,
+										},
+										beforeSend: function() {
+											console.groupCollapsed( 'Importing Blocks - Page ' + i );
+											console.log( 'Importing Blocks - Page ' + i );
+										},
+										success: function( response ){								
+											console.log( response );
+											console.groupEnd( 'Importing Blocks - Page ' + i );
+										}
+									});
+								}
+
+								// Run the AJAX queue.
+								AstraSitesAjaxQueue.run();
+							} else {
+								console.error( response.data, 'Blocks Count Request Failed!' );
+							}
 						});
 
 						// Import Block Categories.
@@ -391,7 +451,7 @@ var AstraSitesAjaxQueue = (function() {
 
 											if( i === total && astraElementorSites.syncCompleteMessage ) {
 												button.removeClass( 'updating-message');
-												$elscope.find( '#ast-sites-floating-notice-wrap-id').addClass('refreshed-notice').find('.ast-sites-floating-notice' ).html( '<span class="message">'+astraElementorSites.syncCompleteMessage+'</span><button type="button" class="notice-dismiss"><span class="screen-reader-text">Dismiss</span></button>' );
+												$elscope.find( '#ast-sites-floating-notice-wrap-id').addClass('refreshed-notice').find('.ast-sites-floating-notice' ).html( '<span class="message">'+astraElementorSites.syncCompleteMessage+'</span><button type="button" class="notice-dismiss"><span class="screen-reader-text">' + astraElementorSites.dismiss_text + '</span></button>' );
 											}
 										}
 									});
@@ -427,7 +487,7 @@ var AstraSitesAjaxQueue = (function() {
 			$elscope.find( '.theme-preview' ).html( '' );
 			$elscope.find( '.theme-preview-block' ).hide();
 			$elscope.find( '.theme-preview-block' ).html( '' );
-			$elscope.find( '.astra-blocks-category-wrap' ).show();
+			$elscope.find( '.ast-template-library-toolbar' ).show();
 
 			$elscope.find( '.dialog-lightbox-content' ).hide();
 			$elscope.find( '.dialog-lightbox-content-block' ).hide();
@@ -440,6 +500,9 @@ var AstraSitesAjaxQueue = (function() {
 		},
 
 		_home: function() {
+			if ( AstraElementorSitesAdmin.processing ) {
+				return;
+			}
 			$elscope.find( '#wp-filter-search-input' ).val( '' );
 			// Hide Back button.
 			$elscope.find( '.back-to-layout' ).css( 'visibility', 'hidden' );
@@ -451,16 +514,22 @@ var AstraSitesAjaxQueue = (function() {
 			if ( 'pages' == type ) {
 				AstraElementorSitesAdmin._initSites();
 				$elscope.find( '.dialog-lightbox-content' ).show();
+				$elscope.find( '.astra-blocks-category-inner-wrap' ).hide();
+				$elscope.find( '.astra-blocks-filter-inner-wrap' ).hide();
+				$elscope.find( '.elementor-template-library-order' ).show();
 			} else {
 				AstraElementorSitesAdmin._initBlocks();
 				$elscope.find( '.dialog-lightbox-content-block' ).show();
+				$elscope.find( '.astra-blocks-category-inner-wrap' ).show();
+				$elscope.find( '.astra-blocks-filter-inner-wrap' ).show();
+				$elscope.find( '.elementor-template-library-order' ).hide();
 			}
 			$elscope.find( '.astra-sites-content-wrap' ).trigger( 'scroll' );
 		},
 
 		_importWPForm: function( wpforms_url, callback ) {
 
-			if ( '' == wpforms_url ) {
+			if ( '' == wpforms_url || 0 == wpforms_url ) {
 				if( callback && typeof callback == "function"){
 					callback( '' );
 			    }
@@ -609,10 +678,6 @@ var AstraSitesAjaxQueue = (function() {
 
 		_bulkPluginInstallActivate: function() {
 
-			if( 0 === AstraElementorSitesAdmin.requiredPlugins.length ) {
-				return;
-			}
-
 			console.groupCollapsed( 'Bulk Plugin Install Process Started' );
 
 			// If has class the skip-plugins then,
@@ -648,7 +713,7 @@ var AstraSitesAjaxQueue = (function() {
 
 			AstraElementorSitesAdmin.canImport = false;
 
-			var str = ( AstraElementorSitesAdmin.type == 'pages' ) ? 'Template' : 'Block';
+			var str = ( AstraElementorSitesAdmin.type == 'pages' ) ? astraElementorSites.template : astraElementorSites.block;
 
 			$( this ).addClass( 'installing' );
 			$( this ).text( 'Saving ' + str + '...' );
@@ -872,6 +937,16 @@ var AstraSitesAjaxQueue = (function() {
 			AstraElementorSitesAdmin._masonry();
 		},
 
+		_appendPaginationBlocks: function( data ) {
+
+			let single_template = wp.template( 'astra-blocks-list' );
+			let blocks_list = single_template( data );
+			$elscope.find( '.dialog-lightbox-message' ).hide();
+			$elscope.find( '.dialog-lightbox-message-block' ).show();
+			$elscope.find( '.dialog-lightbox-content-block' ).append( blocks_list );
+			AstraElementorSitesAdmin._masonry();
+		},
+
 		_masonry: function() {
 
 			//create empty var masonryObj
@@ -911,7 +986,9 @@ var AstraSitesAjaxQueue = (function() {
 
 			} else {
 
-				AstraElementorSitesAdmin._importWPForm( AstraElementorSitesAdmin.templateData['post-meta']['astra-site-wpforms-path'], function( form_response ) {
+				let url = ( undefined != AstraElementorSitesAdmin.templateData['post-meta'] ) ? AstraElementorSitesAdmin.templateData['post-meta']['astra-blocks-wpform'] : '';
+
+				AstraElementorSitesAdmin._importWPForm( url, function( form_response ) {
 					AstraElementorSitesAdmin.insertData = AstraElementorSitesAdmin.templateData;
 					if ( 'insert' == AstraElementorSitesAdmin.action ) {
 						AstraElementorSitesAdmin._insertDemo( AstraElementorSitesAdmin.templateData );
@@ -924,6 +1001,118 @@ var AstraSitesAjaxQueue = (function() {
 			}
 		},
 
+		_insert_from_link: function( e ) {
+
+			if ( AstraElementorSitesAdmin.processing ) {
+				return;
+			}
+
+			AstraElementorSitesAdmin.processing = true;
+
+			$elscope.find( '.astra-sites-content-wrap' ).addClass( 'processing' );
+
+			console.groupCollapsed( 'Inserting Demo.' );
+
+			$( this ).find( '.elementor-button-title' ).text( 'Processing..' );
+
+			AstraElementorSitesAdmin.page_id = $( this ).closest( '.astra-theme' ).data( 'template-id' );
+			AstraElementorSitesAdmin.block_id = $( this ).closest( '.astra-theme' ).data( 'block-id' );
+
+			let actual_id = 0;
+			AstraElementorSitesAdmin.canInsert = true;
+
+			if ( AstraElementorSitesAdmin.type == 'pages' ) {
+				actual_id = AstraElementorSitesAdmin.page_id.replace( 'id-', '' );
+			} else {
+				actual_id = AstraElementorSitesAdmin.block_id.replace( 'id-', '' );
+			}
+
+			if ( 0 != actual_id ) {
+
+				console.log( 'Checking Required Plugin status.' );
+
+				var api_post = {
+					slug: 'site-pages' + '/' + actual_id
+				};
+
+				if ( 'blocks' == AstraElementorSitesAdmin.type ) {
+					api_post = {
+						slug: 'astra-blocks' + '/' + actual_id
+					};
+				}
+
+				var params = {
+					method: 'GET',
+					cache: 'default',
+				};
+
+				fetch( astraElementorSites.ApiURL + api_post.slug, params ).then( response => {
+					if ( response.status === 200 ) {
+						return response.json().then(items => ({
+							items 		: items,
+							items_count	: response.headers.get( 'x-wp-total' ),
+							item_pages	: response.headers.get( 'x-wp-totalpages' ),
+						}))
+					} else {
+						return response.json();
+					}
+				})
+				.then(data => {
+					if( 'object' === typeof data ) {
+						if ( undefined !== data && undefined !== data['items'] ) {
+							AstraElementorSitesAdmin.templateData = data['items'];
+							let requiredPlugins = [];
+							if ( AstraElementorSitesAdmin.type == 'pages' ) {
+
+								if ( undefined !== AstraElementorSitesAdmin.templateData['site-pages-required-plugins'] ) {
+									requiredPlugins = AstraElementorSitesAdmin.templateData['site-pages-required-plugins'];
+								}
+							} else {
+								if ( undefined !== AstraElementorSitesAdmin.templateData['post-meta']['astra-blocks-required-plugins'] ) {
+									requiredPlugins = AstraElementorSitesAdmin.templateData['post-meta']['astra-blocks-required-plugins'];
+								}
+							}
+							if ( undefined != requiredPlugins && null != requiredPlugins && requiredPlugins.length > 0 ) {
+
+								$.ajax({
+									url  : astraElementorSites.ajaxurl,
+									type : 'POST',
+									data : {
+										action           : 'astra-required-plugins',
+										_ajax_nonce      : astraElementorSites._ajax_nonce,
+										required_plugins : requiredPlugins
+									},
+								})
+								.fail(function( jqXHR ){
+									console.log( jqXHR );
+									console.groupEnd();
+								})
+								.done(function ( response ) {
+									AstraElementorSitesAdmin.requiredPlugins = response.data['required_plugins'];
+									AstraElementorSitesAdmin.canImport = true;
+									AstraElementorSitesAdmin.canInsert = true;
+								});
+							}
+						}
+				   	}
+
+					console.log( 'Insert Process for Demo "' + actual_id + '" has started.' );
+
+					AstraElementorSitesAdmin.canInsert = false;
+					AstraElementorSitesAdmin.action = 'insert';
+					AstraElementorSitesAdmin._bulkPluginInstallActivate();
+				});
+
+			} else {
+				AstraElementorSitesAdmin.canInsert = true;
+				AstraElementorSitesAdmin.processing = false;
+				$elscope.find( '.astra-sites-content-wrap' ).removeClass( 'processing' );
+				console.log( 'Import Failed. Error: Incorrect Import ID' );
+				$( this ).find( '.elementor-button-title' ).text( 'Insert' );
+			}
+
+		},
+
 		_insert: function( e ) {
 
 			if ( ! AstraElementorSitesAdmin.canInsert ) {
@@ -931,7 +1120,7 @@ var AstraSitesAjaxQueue = (function() {
 			}
 
 			AstraElementorSitesAdmin.canInsert = false;
-			var str = ( AstraElementorSitesAdmin.type == 'pages' ) ? 'Template' : 'Block';
+			var str = ( AstraElementorSitesAdmin.type == 'pages' ) ? astraElementorSites.template : astraElementorSites.block;
 
 			$( this ).addClass( 'installing' );
 			$( this ).text( 'Importing ' + str + '...' );
@@ -979,18 +1168,24 @@ var AstraSitesAjaxQueue = (function() {
 				})
 				.done(function ( response ) {
 
+					AstraElementorSitesAdmin.processing = false;
+					$elscope.find( '.astra-sites-content-wrap' ).removeClass( 'processing' );
+
 					page_content = response.data;
 
 					console.log( page_content );
 					console.groupEnd();
 
 					if ( undefined !== page_content && '' !== page_content ) {
-						elementor.channels.data.trigger('template:before:insert', templateModel);
-						elementor.getPreviewView().addChildModel( page_content, { at : AstraElementorSitesAdmin.index } || {} );
-						elementor.channels.data.trigger('template:after:insert', {});
 						if ( undefined != $e && 'undefined' != typeof $e.internal ) {
+							elementor.channels.data.trigger('template:before:insert', templateModel);
+							elementor.getPreviewView().addChildModel( page_content, { at : AstraElementorSitesAdmin.index } || {} );
+							elementor.channels.data.trigger('template:after:insert', {});
 							$e.internal( 'document/save/set-is-modified', { status: true } )
 						} else {
+							elementor.channels.data.trigger('template:before:insert', templateModel);
+							elementor.getPreviewView().addChildModel( page_content, { at : AstraElementorSitesAdmin.index } || {} );
+							elementor.channels.data.trigger('template:after:insert', {});
 							elementor.saver.setFlagEditorChange(true);
 						}
 					}
@@ -1002,10 +1197,17 @@ var AstraSitesAjaxQueue = (function() {
 
 		_goBack: function( e ) {
 
+			if ( AstraElementorSitesAdmin.processing ) {
+				return;
+			}
+
 			let step = $( this ).attr( 'data-step' );
 
 			$elscope.find( '.astra-sites-step-1-wrap' ).show();
 			$elscope.find( '.astra-preview-actions-wrap' ).remove();
+
+			$elscope.find( '.ast-template-library-toolbar' ).show();
+			$elscope.find( '.ast-sites-modal__header' ).removeClass( 'ast-preview-mode' );
 
 			if ( 'pages' == AstraElementorSitesAdmin.type ) {
 
@@ -1045,7 +1247,7 @@ var AstraSitesAjaxQueue = (function() {
 			$elscope.find( '.theme-preview' ).html( '' );
 			$elscope.find( '.theme-preview-block' ).hide();
 			$elscope.find( '.theme-preview-block' ).html( '' );
-			$elscope.find( '.astra-blocks-category-wrap' ).show();
+			$elscope.find( '.ast-template-library-toolbar' ).show();
 
 			// Show listing page.
 			if( AstraElementorSitesAdmin.type == 'pages' ) {
@@ -1089,7 +1291,7 @@ var AstraSitesAjaxQueue = (function() {
 			// Hide Preview page.
 			$elscope.find( '.theme-preview' ).hide();
 			$elscope.find( '.theme-preview' ).html( '' );
-			$elscope.find( '.astra-blocks-category-wrap' ).show();
+			$elscope.find( '.ast-template-library-toolbar' ).show();
 			$elscope.find( '.theme-preview-block' ).hide();
 			$elscope.find( '.theme-preview-block' ).html( '' );
 
@@ -1149,7 +1351,7 @@ var AstraSitesAjaxQueue = (function() {
 				$elscope.find( '.astra-preview-actions-wrap' ).remove();
 				$elscope.find( '.theme-preview' ).hide();
 				$elscope.find( '.theme-preview' ).html( '' );
-				$elscope.find( '.astra-blocks-category-wrap' ).show();
+				$elscope.find( '.ast-template-library-toolbar' ).show();
 				$elscope.find( '.theme-preview-block' ).hide();
 				$elscope.find( '.theme-preview-block' ).html( '' );
 				$elscope.find( '.dialog-lightbox-content' ).show();
@@ -1163,7 +1365,8 @@ var AstraSitesAjaxQueue = (function() {
 				$elscope.find( '.dialog-lightbox-content-block' ).hide();
 				$elscope.find( '.dialog-lightbox-message' ).animate({ scrollTop: 0 }, 50 );
 				$elscope.find( '.theme-preview-block' ).show();
-				$elscope.find( '.astra-blocks-category-wrap' ).hide();
+				$elscope.find( '.ast-template-library-toolbar' ).hide();
+				$elscope.find( '.ast-sites-modal__header' ).addClass( 'ast-preview-mode' );
 
 				// Hide.
 				$elscope.find( '.theme-preview' ).hide();
@@ -1181,7 +1384,7 @@ var AstraSitesAjaxQueue = (function() {
 				$elscope.find( '.astra-sites-step-1-wrap' ).hide();
 
 				preview_action_html = import_template_header( template_object );
-				$elscope.find( '.elementor-templates-modal__header__items-area' ).before( preview_action_html );
+				$elscope.find( '.elementor-templates-modal__header__items-area' ).append( preview_action_html );
 				AstraElementorSitesAdmin._masonry();
 
 				let actual_id = AstraElementorSitesAdmin.block_id.replace( 'id-', '' );
@@ -1194,6 +1397,8 @@ var AstraSitesAjaxQueue = (function() {
 			$elscope.find( '.dialog-lightbox-content' ).hide();
 			$elscope.find( '.dialog-lightbox-message' ).animate({ scrollTop: 0 }, 50 );
 			$elscope.find( '.theme-preview' ).show();
+
+			$elscope.find( '.ast-sites-modal__header' ).addClass( 'ast-preview-mode' );
 
 			if ( undefined === AstraElementorSitesAdmin.site_id ) {
 				return;
@@ -1215,13 +1420,17 @@ var AstraSitesAjaxQueue = (function() {
 			$elscope.find( '.astra-sites-step-1-wrap' ).hide();
 
 			preview_action_html = import_template_header( template_object );
-				$elscope.find( '.elementor-templates-modal__header__items-area' ).before( preview_action_html );
+				$elscope.find( '.elementor-templates-modal__header__items-area' ).append( preview_action_html );
 
 			let actual_id = AstraElementorSitesAdmin.page_id.replace( 'id-', '' );
 			$( document ).trigger( 'astra-sites__elementor-plugin-check', { 'id': actual_id } );
 		},
 
 		_preview : function( e ) {
+
+			if ( AstraElementorSitesAdmin.processing ) {
+				return;
+			}
 
 			let step = $( this ).attr( 'data-step' );
 
@@ -1231,6 +1440,9 @@ var AstraSitesAjaxQueue = (function() {
 
 			$elscope.find( '.back-to-layout' ).css( 'visibility', 'visible' );
 			$elscope.find( '.back-to-layout' ).css( 'opacity', '1' );
+
+			$elscope.find( '.ast-template-library-toolbar' ).hide();
+			$elscope.find( '.ast-sites-modal__header' ).removeClass( 'ast-preview-mode' );
 
 			if ( 1 == step ) {
 
@@ -1286,7 +1498,7 @@ var AstraSitesAjaxQueue = (function() {
 							}
 						} else {
 							if ( undefined !== AstraElementorSitesAdmin.templateData['post-meta']['astra-blocks-required-plugins'] ) {
-								AstraElementorSitesAdmin._requiredPluginsMarkup( AstraElementorSitesAdmin.templateData['post-meta']['astra-blocks-required-plugins'] );
+								AstraElementorSitesAdmin._requiredPluginsMarkup( PHP.parse( AstraElementorSitesAdmin.templateData['post-meta']['astra-blocks-required-plugins'] ) );
 							}
 						}
 					}
@@ -1410,7 +1622,7 @@ var AstraSitesAjaxQueue = (function() {
 				}
 
 				if ( '' != output ) {
-					output = '<li class="plugin-card-head"><strong>Install Required Plugins</strong></li>' + output;
+					output = '<li class="plugin-card-head"><strong>' + astraElementorSites.install_plugin_text + '</strong></li>' + output;
 					$elscope.find('.required-plugins-list').html( output );
 					$elscope.find('.ast-tooltip-wrap').css( 'opacity', 1 );
 					$elscope.find('.astra-sites-tooltip').css( 'opacity', 1 );

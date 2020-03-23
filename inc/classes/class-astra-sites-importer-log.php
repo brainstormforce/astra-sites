@@ -72,9 +72,9 @@ if ( ! class_exists( 'Astra_Sites_Importer_Log' ) ) :
 			$upload_path = trailingslashit( $upload_dir['url'] );
 
 			// Get user credentials for WP file-system API.
-			$astra_sites_import = wp_nonce_url( admin_url( 'themes.php?page=starter-templates' ), 'astra-import' );
-			$creds              = request_filesystem_credentials( $astra_sites_import, '', false, $upload_dir['path'], null );
-			$file_created       = Astra_Sites::get_instance()->get_filesystem()->put_contents( $upload_dir['path'] . 'index.html', '' );
+			$source_url   = wp_nonce_url( admin_url( 'themes.php?page=starter-templates' ), 'astra-import' );
+			$creds        = request_filesystem_credentials( $source_url, '', false, $upload_dir['path'], null );
+			$file_created = Astra_Sites::get_instance()->get_filesystem()->put_contents( $upload_dir['path'] . 'index.html', '' );
 			if ( false === $creds || ( ! $file_created ) ) {
 				add_action( 'admin_notices', array( $this, 'file_permission_notice' ) );
 				return;
@@ -94,11 +94,17 @@ if ( ! class_exists( 'Astra_Sites_Importer_Log' ) ) :
 		 * @return void
 		 */
 		public function file_permission_notice() {
+			$upload_dir = self::log_dir();
 			?>
 			<div class="notice notice-error astra-sites-must-notices astra-sites-file-permission-issue">
 				<p><?php esc_html_e( 'Required File Permissions to import the templates are missing.', 'astra-sites' ); ?></p>
-				<p><?php esc_html_e( 'You can easily update permissions by adding the following code into the wp-config.php file.', 'astra-sites' ); ?></p>
-				<p><code>define( 'FS_METHOD', 'direct' );</code></p>
+				<?php if ( defined( 'FS_METHOD' ) ) { ?>
+					<p><?php esc_html_e( 'This is usually due to inconsistent file permissions.', 'astra-sites' ); ?></p>
+					<p><code><?php echo esc_html( $upload_dir['path'] ); ?></code></p>
+				<?php } else { ?>
+					<p><?php esc_html_e( 'You can easily update permissions by adding the following code into the wp-config.php file.', 'astra-sites' ); ?></p>
+					<p><code>define( 'FS_METHOD', 'direct' );</code></p>
+				<?php } ?>
 			</div>
 			<?php
 		}

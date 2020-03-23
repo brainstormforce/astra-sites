@@ -5,7 +5,7 @@ Tags: Elementor,Beaver Builder,Templates,Gutenberg,Astra Starter Sites
 Requires at least: 4.4
 Requires PHP: 5.3
 Tested up to: 5.3
-Stable tag: 2.0.2
+Stable tag: 2.1.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -137,6 +137,17 @@ We are open to suggestions and would love to work on topics that our users are l
 7. Free Images by Pixabay right inside the WordPress media popup.
 
 == Changelog ==
+
+v.2.1.0 - 23-March-2020
+- New: Added `starter-templates` WP CLI command which is a new alias for WP CLI command  `astra-sites`. We can use either `starter-templates` or `astra-sites`.
+- Improvement: WordFence firewall setting breaks the site content import AJAX request.
+- Improvement: Added WordPress version 4.9 compatibility.
+- Improvement: Update needed for plugin notice now shows the list of plugins that needs to be updated.
+- Improvement: Elementor Popup for Page/Block import has a revamped UI.
+- Improvement: Now one can filter Free/Agency pages in Elementor Popup.
+- Improvement: Showing the inconsistent file permissions message.
+- Fix: Fixed issue regarding images not getting imported for Gutenberg sites.
+- Fix: Starter Template Blocks manual sync for more than 100 blocks not getting synced.
 
 v2.0.2 - 07-March-2020
 - Fix: Plugin not activated after importing from WP CLI command.

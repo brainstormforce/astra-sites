@@ -158,11 +158,14 @@ if ( ! class_exists( 'Astra_Sites_Helper' ) ) :
 		/**
 		 * Download File Into Uploads Directory
 		 *
+		 * @since 2.1.0 Added $overrides argument to override the uploaded file actions.
+		 *
 		 * @param  string $file Download File URL.
+		 * @param  array  $overrides Upload file arguments.
 		 * @param  int    $timeout_seconds Timeout in downloading the XML file in seconds.
 		 * @return array        Downloaded file data.
 		 */
-		public static function download_file( $file = '', $timeout_seconds = 300 ) {
+		public static function download_file( $file = '', $overrides = array(), $timeout_seconds = 300 ) {
 
 			// Gives us access to the download_url() and wp_handle_sideload() functions.
 			require_once ABSPATH . 'wp-admin/includes/file.php';
@@ -186,7 +189,7 @@ if ( ! class_exists( 'Astra_Sites_Helper' ) ) :
 				'size'     => filesize( $temp_file ),
 			);
 
-			$overrides = array(
+			$defaults = array(
 
 				// Tells WordPress to not look for the POST form
 				// fields that would normally be present as
@@ -208,8 +211,12 @@ if ( ! class_exists( 'Astra_Sites_Helper' ) ) :
 				),
 			);
 
+			$overrides = wp_parse_args( $overrides, $defaults );
+
 			// Move the temporary file into the uploads directory.
 			$results = wp_handle_sideload( $file_args, $overrides );
+
+			astra_sites_error_log( wp_json_encode( $results ) );
 
 			if ( isset( $results['error'] ) ) {
 				return array(

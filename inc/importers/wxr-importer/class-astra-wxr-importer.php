@@ -55,7 +55,8 @@ class Astra_WXR_Importer {
 		add_filter( 'upload_mimes', array( $this, 'custom_upload_mimes' ) );
 		add_action( 'wp_ajax_astra-wxr-import', array( $this, 'sse_import' ) );
 		add_filter( 'wxr_importer.pre_process.user', '__return_null' );
-		add_filter( 'wxr_importer.pre_process.post', array( $this, 'gutenberg_content_fix' ), 10, 4 );
+		add_filter( 'wp_import_post_data_processed', array( $this, 'pre_post_data' ), 10, 2 );
+		add_filter( 'wxr_importer.pre_process.post', array( $this, 'pre_process_post' ), 10, 4 );
 		if ( version_compare( get_bloginfo( 'version' ), '5.1.0', '>=' ) ) {
 			add_filter( 'wp_check_filetype_and_ext', array( $this, 'real_mime_types_5_1_0' ), 10, 5 );
 		} else {
@@ -109,13 +110,24 @@ class Astra_WXR_Importer {
 	}
 
 	/**
-	 * Gutenberg Content Data Fix
+	 * Pre Post Data
 	 *
-	 * Gutenberg encode the page content. In import process the encoded characterless e.g. <, > are
-	 * decoded into HTML tag and it break the Gutenberg render markup.
+	 * @since 2.1.0
 	 *
-	 * Note: We have not check the post is created with Gutenberg or not. We have imported other sites
-	 * and confirm that this works for every other page builders too.
+	 * @param  array $postdata Post data.
+	 * @param  array $data     Post data.
+	 * @return array           Post data.
+	 */
+	public function pre_post_data( $postdata, $data ) {
+
+		// Skip GUID field which point to the https://websitedemos.net.
+		$postdata['guid'] = '';
+
+		return $postdata;
+	}
+
+	/**
+	 * Pre Process Post
 	 *
 	 * @since 1.2.12
 	 *
@@ -124,10 +136,35 @@ class Astra_WXR_Importer {
 	 * @param array $comments Comments on the post.
 	 * @param array $terms Terms on the post.
 	 */
-	public function gutenberg_content_fix( $data, $meta, $comments, $terms ) {
+	public function pre_process_post( $data, $meta, $comments, $terms ) {
+
 		if ( isset( $data['post_content'] ) ) {
-			$data['post_content'] = wp_slash( $data['post_content'] );
+
+			$meta_data = wp_list_pluck( $meta, 'key' );
+
+			$is_attachment          = ( 'attachment' === $data['post_type'] ) ? true : false;
+			$is_elementor_page      = in_array( '_elementor_version', $meta_data, true );
+			$is_beaver_builder_page = in_array( '_fl_builder_enabled', $meta_data, true );
+			$is_brizy_page          = in_array( 'brizy_post_uid', $meta_data, true );
+
+			// If post type is `attachment OR
+			// If page contain Elementor, Brizy or Beaver Builder meta then skip this page.
+			if ( $is_attachment || $is_elementor_page || $is_beaver_builder_page || $is_brizy_page ) {
+				$data['post_content'] = '';
+			} else {
+				/**
+				 * Gutenberg Content Data Fix
+				 *
+				 * Gutenberg encode the page content. In import process the encoded characterless e.g. <, > are
+				 * decoded into HTML tag and it break the Gutenberg render markup.
+				 *
+				 * Note: We have not check the post is created with Gutenberg or not. We have imported other sites
+				 * and confirm that this works for every other page builders too.
+				 */
+				$data['post_content'] = wp_slash( $data['post_content'] );
+			}
 		}
+
 		return $data;
 	}
 
@@ -247,7 +284,11 @@ class Astra_WXR_Importer {
 			echo esc_html( ':' . str_repeat( ' ', 2048 ) . "\n\n" );
 		}
 
-		$xml_url = isset( $_REQUEST['xml_url'] ) ? urldecode( $_REQUEST['xml_url'] ) : urldecode( $xml_url );
+		$xml_id = isset( $_REQUEST['xml_id'] ) ? absint( $_REQUEST['xml_id'] ) : '';
+		if ( ! empty( $xml_id ) ) {
+			$xml_url = get_attached_file( $xml_id );
+		}
+
 		if ( empty( $xml_url ) ) {
 			exit;
 		}
@@ -333,15 +374,18 @@ class Astra_WXR_Importer {
 	 * Start the xml import.
 	 *
 	 * @since  1.0.0
+	 * @since  2.1.0 Added $post_id argument which is the downloaded XML file attachment ID.
 	 *
-	 * @param  (String) $path Absolute path to the XML file.
+	 * @param  string $path Absolute path to the XML file.
+	 * @param  int    $post_id Uploaded XML file ID.
 	 */
-	public function get_xml_data( $path ) {
+	public function get_xml_data( $path, $post_id ) {
 
 		$args = array(
-			'action'  => 'astra-wxr-import',
-			'id'      => '1',
-			'xml_url' => $path,
+			'action'      => 'astra-wxr-import',
+			'id'          => '1',
+			'_ajax_nonce' => wp_create_nonce( 'astra-sites' ),
+			'xml_id'      => $post_id,
 		);
 		$url  = add_query_arg( urlencode_deep( $args ), admin_url( 'admin-ajax.php' ) );
 
@@ -388,8 +432,9 @@ class Astra_WXR_Importer {
 		$options = apply_filters(
 			'astra_sites_xml_import_options',
 			array(
-				'fetch_attachments' => true,
-				'default_author'    => get_current_user_id(),
+				'update_attachment_guids' => true,
+				'fetch_attachments'       => true,
+				'default_author'          => get_current_user_id(),
 			)
 		);
 

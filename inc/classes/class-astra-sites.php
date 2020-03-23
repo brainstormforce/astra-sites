@@ -275,10 +275,14 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				wp_send_json_error( __( 'Provided API URL is empty! Please try again!', 'astra-sites' ) );
 			}
 
-			$api_args = array(
-				'timeout' => 30,
+			$api_args = apply_filters(
+				'astra_sites_api_args',
+				array(
+					'timeout' => 30,
+				)
 			);
-			$request  = wp_remote_get( trailingslashit( self::get_instance()->get_api_domain() ) . '/wp-json/wp/v2/' . $url, $api_args );
+
+			$request = wp_remote_get( trailingslashit( self::get_instance()->get_api_domain() ) . '/wp-json/wp/v2/' . $url, $api_args );
 			if ( ! is_wp_error( $request ) && 200 === (int) wp_remote_retrieve_response_code( $request ) ) {
 
 				$demo_data = json_decode( wp_remote_retrieve_body( $request ), true );
@@ -880,27 +884,6 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		}
 
 		/**
-		 * Add Admin Notice.
-		 */
-		public function add_notice() {
-
-			$theme_status = 'astra-sites-theme-' . $this->get_theme_status();
-
-			Astra_Notices::add_notice(
-				array(
-					'id'               => 'astra-theme-activation-nag',
-					'type'             => 'error',
-					'class'            => 'astra-sites-notice',
-					'show_if'          => ( ! defined( 'ASTRA_THEME_SETTINGS' ) ) ? true : false,
-					/* translators: 1: theme.php file*/
-					'message'          => sprintf( __( '<p>%4$s Theme needs to be active for you to use currently installed "%1$s" plugin. <a href="#" class="%3$s" data-theme-slug="astra">Install & Activate Now</a></p>', 'astra-sites' ), ASTRA_SITES_NAME, esc_url( admin_url( 'themes.php?theme=astra' ), Astra_Sites_White_Label::get_instance()->get_white_label_name() ), $theme_status ),
-					'dismissible'      => true,
-					'dismissible-time' => WEEK_IN_SECONDS,
-				)
-			);
-		}
-
-		/**
 		 * Get theme install, active or inactive status.
 		 *
 		 * @since 1.3.2
@@ -1146,7 +1129,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			// Admin Page.
 			wp_enqueue_style( 'astra-sites-admin', ASTRA_SITES_URI . 'inc/assets/css/admin.css', ASTRA_SITES_VER, true );
 			wp_style_add_data( 'astra-sites-admin', 'rtl', 'replace' );
-			wp_enqueue_script( 'astra-sites-admin-page', ASTRA_SITES_URI . 'inc/assets/js/admin-page.js', array( 'jquery', 'wp-util', 'updates', 'jquery-ui-autocomplete', 'astra-sites-api', 'astra-sites-history', 'wp-url' ), ASTRA_SITES_VER, true );
+			wp_enqueue_script( 'astra-sites-admin-page', ASTRA_SITES_URI . 'inc/assets/js/admin-page.js', array( 'jquery', 'wp-util', 'updates', 'jquery-ui-autocomplete', 'astra-sites-api', 'astra-sites-history' ), ASTRA_SITES_VER, true );
 
 			$data = $this->get_local_vars();
 
@@ -1193,46 +1176,53 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			$data = apply_filters(
 				'astra_sites_localize_vars',
 				array(
-					'isPro'                      => defined( 'ASTRA_PRO_SITES_NAME' ) ? true : false,
-					'isWhiteLabeled'             => Astra_Sites_White_Label::get_instance()->is_white_labeled(),
-					'whiteLabelName'             => Astra_Sites_White_Label::get_instance()->get_white_label_name(),
-					'ajaxurl'                    => esc_url( admin_url( 'admin-ajax.php' ) ),
-					'siteURL'                    => site_url(),
-					'getProText'                 => __( 'Get Agency Bundle', 'astra-sites' ),
-					'getProURL'                  => esc_url( 'https://wpastra.com/pricing/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=wp-dashboard' ),
-					'getUpgradeText'             => __( 'Upgrade', 'astra-sites' ),
-					'getUpgradeURL'              => esc_url( 'https://wpastra.com/pricing/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=wp-dashboard' ),
-					'_ajax_nonce'                => wp_create_nonce( 'astra-sites' ),
-					'requiredPlugins'            => array(),
-					'strings'                    => array(
+					'debug'                         => defined( 'WP_DEBUG' ) ? true : false,
+					'isPro'                         => defined( 'ASTRA_PRO_SITES_NAME' ) ? true : false,
+					'isWhiteLabeled'                => Astra_Sites_White_Label::get_instance()->is_white_labeled(),
+					'whiteLabelName'                => Astra_Sites_White_Label::get_instance()->get_white_label_name(),
+					'ajaxurl'                       => esc_url( admin_url( 'admin-ajax.php' ) ),
+					'siteURL'                       => site_url(),
+					'getProText'                    => __( 'Get Agency Bundle', 'astra-sites' ),
+					'getProURL'                     => esc_url( 'https://wpastra.com/pricing/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=wp-dashboard' ),
+					'getUpgradeText'                => __( 'Upgrade', 'astra-sites' ),
+					'getUpgradeURL'                 => esc_url( 'https://wpastra.com/pricing/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=wp-dashboard' ),
+					'_ajax_nonce'                   => wp_create_nonce( 'astra-sites' ),
+					'requiredPlugins'               => array(),
+					'syncLibraryStart'              => '<span class="message">' . esc_html__( 'Syncing template library in the background. The process can take anywhere between 2 to 3 minutes. We will notify you once done.', 'astra-sites' ) . '</span>',
+					'xmlRequiredFilesMissing'       => __( 'Some of the files required during the import process are missing.<br/><br/>Please try again after some time.', 'astra-sites' ),
+					'importFailedMessageDueToDebug' => __( '<p>WordPress debug mode is currently enabled on your website. This has interrupted the import process..</p><p>Kindly disable debug mode and try importing Starter Template again.</p><p>You can add the following code into the wp-config.php file to disable debug mode.</p><p><code>define(\'WP_DEBUG\', false);</code></p>', 'astra-sites' ),
+					/* translators: %s is a documentation link. */
+					'importFailedMessage'           => sprintf( __( '<p>Your website is facing a temporary issue in connecting the template server.</p><p>Read <a href="%s" target="_blank">article</a> to resolve the issue and continue importing template.</p>', 'astra-sites' ), esc_url( 'https://wpastra.com/docs/import-process-interrupted/' ) ),
+
+					'strings'                       => array(
 						/* translators: %s are white label strings. */
 						'warningBeforeCloseWindow' => sprintf( __( 'Warning! %1$s Import process is not complete. Don\'t close the window until import process complete. Do you still want to leave the window?', 'astra-sites' ), Astra_Sites_White_Label::get_instance()->get_white_label_name() ),
 						'viewSite'                 => __( 'Done! View Site', 'astra-sites' ),
 						'syncCompleteMessage'      => self::get_instance()->get_sync_complete_message(),
 					),
-					'log'                        => array(
+					'log'                           => array(
 						'bulkInstall'  => __( 'Installing Required Plugins..', 'astra-sites' ),
 						/* translators: %s are white label strings. */
-						'themeInstall' => sprintf( __( 'Installing %1$s Theme..', 'astra-sites' ), Astra_Sites_White_Label::get_instance()->get_white_label_name() ),
+						'themeInstall' => sprintf( __( 'Installing %1$s Theme..', 'astra-sites' ), Astra_Sites_White_Label::get_instance()->get_option( 'astra', 'name', 'Astra' ) ),
 					),
-					'default_page_builder'       => $default_page_builder,
-					'default_page_builder_sites' => Astra_Sites_Page::get_instance()->get_sites_by_page_builder( $default_page_builder ),
-					'sites'                      => $request_params,
-					'categories'                 => array(),
-					'page-builders'              => array(),
-					'api_sites_and_pages_tags'   => get_option( 'astra-sites-tags', array() ),
-					'license_status'             => $license_status,
-					'license_page_builder'       => get_option( 'astra-sites-license-page-builder', '' ),
+					'default_page_builder'          => $default_page_builder,
+					'default_page_builder_sites'    => Astra_Sites_Page::get_instance()->get_sites_by_page_builder( $default_page_builder ),
+					'sites'                         => $request_params,
+					'categories'                    => array(),
+					'page-builders'                 => array(),
+					'api_sites_and_pages_tags'      => get_option( 'astra-sites-tags', array() ),
+					'license_status'                => $license_status,
+					'license_page_builder'          => get_option( 'astra-sites-license-page-builder', '' ),
 
-					'ApiURL'                     => $this->api_url,
-					'stored_data'                => $stored_data,
-					'favorite_data'              => $favorite_data,
-					'category_slug'              => 'astra-site-category',
-					'page_builder'               => 'astra-site-page-builder',
-					'cpt_slug'                   => 'astra-sites',
-					'parent_category'            => '',
-					'compatibilities'            => $this->get_compatibilities(),
-					'compatibilities_data'       => $this->get_compatibilities_data(),
+					'ApiURL'                        => $this->api_url,
+					'stored_data'                   => $stored_data,
+					'favorite_data'                 => $favorite_data,
+					'category_slug'                 => 'astra-site-category',
+					'page_builder'                  => 'astra-site-page-builder',
+					'cpt_slug'                      => 'astra-sites',
+					'parent_category'               => '',
+					'compatibilities'               => $this->get_compatibilities(),
+					'compatibilities_data'          => $this->get_compatibilities_data(),
 
 				)
 			);
@@ -1262,7 +1252,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				),
 				'update-available'     => array(
 					'title'   => esc_html__( 'Update Plugin', 'astra-sites' ),
-					'tooltip' => '<p>' . esc_html__( 'Updates are available for plugins used in this starter template.', 'astra-sites' ) . '</p><p>' . esc_html__( 'Kindly update them for a successful import. Skipping this step might break the template design/feature.', 'astra-sites' ) . '</p>',
+					'tooltip' => '<p>' . esc_html__( 'Updates are available for plugins used in this starter template.', 'astra-sites' ) . '</p>##LIST##<p>' . esc_html__( 'Kindly update them for a successful import. Skipping this step might break the template design/feature.', 'astra-sites' ) . '</p>',
 				),
 				'third-party-required' => array(
 					'title'   => esc_html__( 'Required Plugins Missing', 'astra-sites' ),
@@ -1327,6 +1317,8 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				return;
 			}
 
+			wp_enqueue_script( 'astra-sites-helper', ASTRA_SITES_URI . 'inc/assets/js/helper.js', array( 'jquery' ), ASTRA_SITES_VER, true );
+
 			wp_enqueue_script( 'masonry' );
 			wp_enqueue_script( 'imagesloaded' );
 
@@ -1384,6 +1376,10 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 					'getProURL'                  => esc_url( 'https://wpastra.com/pricing/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=wp-dashboard' ),
 					'astra_block_categories'     => get_option( 'astra-blocks-categories', array() ),
 					'siteURL'                    => site_url(),
+					'template'                   => esc_html__( 'Template', 'astra-sites' ),
+					'block'                      => esc_html__( 'Block', 'astra-sites' ),
+					'dismiss_text'               => esc_html__( 'Dismiss', 'astra-sites' ),
+					'install_plugin_text'        => esc_html__( 'Install Required Plugins', 'astra-sites' ),
 					'syncCompleteMessage'        => self::get_instance()->get_sync_complete_message(),
 					/* translators: %s are link. */
 					'page_settings'              => array(
@@ -1439,8 +1435,11 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		 * @return array All Elementor Blocks.
 		 */
 		public function get_all_blocks() {
-			$blocks = array();
-			for ( $page = 1; $page <= 2; $page++ ) {
+
+			$blocks         = array();
+			$total_requests = (int) get_option( 'astra-blocks-requests', 0 );
+
+			for ( $page = 1; $page <= $total_requests; $page++ ) {
 				$current_page_data = get_option( 'astra-blocks-' . $page, array() );
 				if ( ! empty( $current_page_data ) ) {
 					foreach ( $current_page_data as $page_id => $page_data ) {
@@ -1558,7 +1557,8 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				wp_send_json_error( $response );
 			}
 
-			$required_plugins             = ( isset( $_POST['required_plugins'] ) ) ? $_POST['required_plugins'] : $required_plugins;
+			$required_plugins = ( isset( $_POST['required_plugins'] ) ) ? $_POST['required_plugins'] : $required_plugins;
+
 			$third_party_required_plugins = array();
 			$third_party_plugins          = array(
 				'learndash-course-grid' => array(

@@ -53,6 +53,10 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Brizy' ) ) :
 		 */
 		public function import() {
 
+			if ( defined( 'WP_CLI' ) ) {
+				WP_CLI::line( 'Processing "Brizy" Batch Import' );
+			}
+
 			Astra_Sites_Importer_Log::add( '---- Processing WordPress Posts / Pages - for "Brizy" ----' );
 
 			if ( ! is_callable( 'Brizy_Editor_Storage_Common::instance' ) ) {
@@ -60,6 +64,11 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Brizy' ) ) :
 			}
 
 			$post_types = Brizy_Editor_Storage_Common::instance()->get( 'post-types' );
+
+			if ( defined( 'WP_CLI' ) ) {
+				WP_CLI::line( 'For post types: ' . implode( ', ', $post_types ) );
+			}
+
 			if ( empty( $post_types ) && ! is_array( $post_types ) ) {
 				return;
 			}
@@ -84,6 +93,10 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Brizy' ) ) :
 		 * @return void
 		 */
 		public function import_single_post( $post_id = 0 ) {
+
+			if ( defined( 'WP_CLI' ) ) {
+				WP_CLI::line( 'Brizy - Processing page: ' . $post_id );
+			}
 
 			astra_sites_error_log( '---- Processing WordPress Page - for "Brizy" ---- "' . $post_id . '"' );
 

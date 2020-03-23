@@ -44,9 +44,15 @@ class Astra_Sites_Batch_Processing_Elementor extends Source_Local {
 	 */
 	public function import() {
 
+		if ( defined( 'WP_CLI' ) ) {
+			\WP_CLI::line( 'Processing "Elementor" Batch Import' );
+		}
 		\Astra_Sites_Importer_Log::add( '---- Processing WordPress Posts / Pages - for Elementor ----' );
 		$post_types = \Astra_Sites_Batch_Processing::get_post_types_supporting( 'elementor' );
 
+		if ( defined( 'WP_CLI' ) ) {
+			\WP_CLI::line( 'For post types: ' . implode( ', ', $post_types ) );
+		}
 		if ( empty( $post_types ) && ! is_array( $post_types ) ) {
 			return;
 		}
@@ -71,6 +77,10 @@ class Astra_Sites_Batch_Processing_Elementor extends Source_Local {
 	 * @return void
 	 */
 	public function import_single_post( $post_id = 0 ) {
+
+		if ( defined( 'WP_CLI' ) ) {
+			\WP_CLI::line( 'Elementor - Processing page: ' . $post_id );
+		}
 
 		\Astra_Sites_Importer_Log::add( '---- Processing WordPress Page - for Elementor ---- "' . $post_id . '"' );
 

@@ -603,6 +603,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<p><b><?php esc_html_e( 'Hurray! The Website Imported Successfully! 🎉', 'astra-sites' ); ?></b></p>
 		<p><?php esc_html_e( 'Go ahead, customize the text, images and design to make it yours!', 'astra-sites' ); ?></p>
 		<p><?php esc_html_e( 'Have fun!', 'astra-sites' ); ?></p>
+		<p><?php esc_html_e( 'PS: We try our best to use images that are free from legal perspectives. However, we do not take any responsibility. We strongly advise website owners to replace the images and any copyrighted media before publishing them online.', 'astra-sites' ); ?></p>
 	</div>
 	<div class="ast-actioms-wrap">
 		<a class="button button-primary button-hero" href="<?php echo esc_url( site_url() ); ?>" target="_blank"><?php esc_html_e( 'View Site', 'astra-sites' ); ?> <i class="dashicons dashicons-external"></i></a>
@@ -618,6 +619,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<p><b><?php esc_html_e( 'Hurray! The Template Imported Successfully! 🎉', 'astra-sites' ); ?></b></p>
 		<p><?php esc_html_e( 'Go ahead, customize the text, images and design to make it yours!', 'astra-sites' ); ?></p>
 		<p><?php esc_html_e( 'Have fun!', 'astra-sites' ); ?></p>
+		<p><?php esc_html_e( 'PS: We try our best to use images that are free from legal perspectives. However, we do not take any responsibility. We strongly advise website owners to replace the images and any copyrighted media before publishing them online.', 'astra-sites' ); ?></p>
 	</div>
 	<div class="ast-actioms-wrap">
 		<a class="button button-primary button-hero" href="{{data['link']}}" target="_blank"><?php esc_html_e( 'View Template', 'astra-sites' ); ?> <i class="dashicons dashicons-external"></i></a>
@@ -689,7 +691,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 										<label>
 											<input type="checkbox" name="reset" class="checkbox">
 											<strong><?php esc_html_e( 'Delete Previously Imported Site', 'astra-sites' ); ?></strong>
-											<div class="astra-sites-tooltip-message" id="astra-sites-tooltip-reset-data" style="display: none;"><p><?php esc_html_e( 'WARNING: Selecting this option will delete all data from the previous import. Choose this option only if this is intended.', 'astra-sites' ); ?></p></div>
+											<div class="astra-sites-tooltip-message" id="astra-sites-tooltip-reset-data" style="display: none;"><p><?php esc_html_e( 'WARNING: Selecting this option will delete all data from the previous import. Choose this option only if this is intended.', 'astra-sites' ); ?></p><p><?php esc_html_e( 'You can find the backup to the current customizer settings at ', 'astra-sites' ); ?><code><?php esc_html_e( '/wp-content/uploads/astra-sites/', 'astra-sites' ); ?></code></p></div>
 										</label>
 									</li>
 

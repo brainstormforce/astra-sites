@@ -54,6 +54,10 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Beaver_Builder' ) ) :
 		 */
 		public function import() {
 
+			if ( defined( 'WP_CLI' ) ) {
+				WP_CLI::line( 'Processing "Beaver Builder" Batch Import' );
+			}
+
 			Astra_Sites_Importer_Log::add( '---- Processing WordPress Posts / Pages - for Beaver Builder ----' );
 
 			if ( ! is_callable( 'FLBuilderModel::get_post_types' ) ) {
@@ -61,6 +65,9 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Beaver_Builder' ) ) :
 			}
 
 			$post_types = FLBuilderModel::get_post_types( 'post-types' );
+			if ( defined( 'WP_CLI' ) ) {
+				WP_CLI::line( 'For post types: ' . implode( ', ', $post_types ) );
+			}
 			if ( empty( $post_types ) && ! is_array( $post_types ) ) {
 				return;
 			}
@@ -86,6 +93,9 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Beaver_Builder' ) ) :
 		 */
 		public function import_single_post( $post_id = 0 ) {
 
+			if ( defined( 'WP_CLI' ) ) {
+				WP_CLI::line( 'Beaver Builder - Processing page: ' . $post_id );
+			}
 			Astra_Sites_Importer_Log::add( '---- Processing WordPress Page - for Beaver Builder ---- "' . $post_id . '"' );
 
 			if ( ! empty( $post_id ) ) {
