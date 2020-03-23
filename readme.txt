@@ -138,7 +138,7 @@ We are open to suggestions and would love to work on topics that our users are l
 
 == Changelog ==
 
-v.2.1.0 - 17-March-2020
+v.2.1.0 - 23-March-2020
 - New: Added `starter-templates` WP CLI command which is a new alias for WP CLI command  `astra-sites`. We can use either `starter-templates` or `astra-sites`.
 - Improvement: WordFence firewall setting breaks the site content import AJAX request.
 - Improvement: Added WordPress version 4.9 compatibility.

@@ -1435,8 +1435,11 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		 * @return array All Elementor Blocks.
 		 */
 		public function get_all_blocks() {
-			$blocks = array();
-			for ( $page = 1; $page <= 2; $page++ ) {
+
+			$blocks         = array();
+			$total_requests = (int) get_option( 'astra-blocks-requests', 0 );
+
+			for ( $page = 1; $page <= $total_requests; $page++ ) {
 				$current_page_data = get_option( 'astra-blocks-' . $page, array() );
 				if ( ! empty( $current_page_data ) ) {
 					foreach ( $current_page_data as $page_id => $page_data ) {
