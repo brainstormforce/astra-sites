@@ -1203,7 +1203,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 					'log'                           => array(
 						'bulkInstall'  => __( 'Installing Required Plugins..', 'astra-sites' ),
 						/* translators: %s are white label strings. */
-						'themeInstall' => sprintf( __( 'Installing %1$s Theme..', 'astra-sites' ), Astra_Sites_White_Label::get_instance()::get_option( 'astra', 'name', 'Astra' ) ),
+						'themeInstall' => sprintf( __( 'Installing %1$s Theme..', 'astra-sites' ), Astra_Sites_White_Label::get_instance()->get_option( 'astra', 'name', 'Astra' ) ),
 					),
 					'default_page_builder'          => $default_page_builder,
 					'default_page_builder_sites'    => Astra_Sites_Page::get_instance()->get_sites_by_page_builder( $default_page_builder ),
