@@ -5,7 +5,7 @@ Tags: Elementor,Beaver Builder,Templates,Gutenberg,Astra Starter Sites
 Requires at least: 4.4
 Requires PHP: 5.3
 Tested up to: 5.4
-Stable tag: 2.1.0
+Stable tag: 2.2.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -138,7 +138,14 @@ We are open to suggestions and would love to work on topics that our users are l
 
 == Changelog ==
 
-v.2.1.0 - 23-March-2020
+v2.2.0 - 6-April-2020
+- Improvement: Added an Update Button for un-updated plugin list popup.
+- Improvement: Used text-domain `astra-sites` to make translation ready strings.
+- Improvement: Imported all the hotlink images from Astra theme customizer settings.
+- Improvement: Removed extra padding from the starter templates page. It is added to WordPress version 5.4.
+- Fix: The category not visible in the dropdown list from the Elementor Popup.
+
+v2.1.0 - 23-March-2020
 - New: Added `starter-templates` WP CLI command which is a new alias for WP CLI command  `astra-sites`. We can use either `starter-templates` or `astra-sites`.
 - Improvement: WordFence firewall setting breaks the site content import AJAX request.
 - Improvement: Added WordPress version 4.9 compatibility.

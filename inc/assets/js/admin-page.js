@@ -1524,7 +1524,8 @@ var AstraSitesAjaxQueue = (function() {
 
 			$( '.site-import-layout-button' ).removeClass( 'disabled' );
 			if( page_name ) {
-				$( '.site-import-layout-button' ).text('Import "'+page_name.trim()+'" Template');
+				var title = astraSitesVars.strings.importSingleTemplate.replace( '%s', page_name.trim() );
+				$( '.site-import-layout-button' ).text( title );
 			}
 
 			if( url ) {

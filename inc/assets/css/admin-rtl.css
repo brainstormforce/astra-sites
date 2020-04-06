@@ -2143,6 +2143,10 @@ body.loading-content .select-page-builder {
 	width: calc( 100% - 140px ) !important;
 }
 
+.appearance_page_starter-templates #wpcontent {
+	padding-right: 0;
+}
+
 .appearance_page_starter-templates #wpbody-content {
     padding-top: 80px;
 }

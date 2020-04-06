@@ -72,17 +72,22 @@ class Astra_Customizer_Import {
 	 * @return void
 	 */
 	public static function import_settings( $options = array() ) {
-		foreach ( $options as $key => $val ) {
 
-			if ( Astra_Sites_Helper::is_image_url( $val ) ) {
+		array_walk_recursive(
+			$options,
+			function ( &$value ) {
+				if ( ! is_array( $value ) ) {
 
-				$data = Astra_Sites_Helper::sideload_image( $val );
+					if ( Astra_Sites_Helper::is_image_url( $value ) ) {
+						$data = Astra_Sites_Helper::sideload_image( $value );
 
-				if ( ! is_wp_error( $data ) ) {
-					$options[ $key ] = $data->url;
+						if ( ! is_wp_error( $data ) ) {
+							$value = $data->url;
+						}
+					}
 				}
 			}
-		}
+		);
 
 		// Updated settings.
 		update_option( 'astra-settings', $options );

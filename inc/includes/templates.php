@@ -434,33 +434,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <?php
 /**
- * TMPL - Update Available Plugins
- */
-?>
-<script type="text/template" id="tmpl-astra-sites-update-available-required-plugins">
-	<div class="skip-and-import">
-		<div class="heading">
-			<h3><?php esc_html_e( 'Update Plugin', 'astra-sites' ); ?></h3>
-			<span class="dashicons close dashicons-no-alt"></span>
-		</div>
-		<div class="astra-sites-import-content">
-			<p><?php esc_html_e( 'Updates are available for plugins used in this starter template.', 'astra-sites' ); ?></p>
-			<p><?php esc_html_e( 'Kindly update them for a successful import. Skipping this step might break the template design/feature.', 'astra-sites' ); ?></p>
-			<ul class="astra-sites-third-party-required-plugins">
-				<# for ( key in data ) { #>
-					<li class="plugin-card plugin-card-{{data[ key ].slug}}'" data-slug="{{data[ key ].slug }}" data-init="{{data[ key ].init}}" data-name="{{data[ key ].name}}">{{data[ key ].name}}</li>
-				<# } #>
-			</ul>
-		</div>
-		<div class="ast-actioms-wrap">
-			<a href="#" class="button button-hero button-primary astra-sites-skip-and-import-step"><?php esc_html_e( 'Skip & Import', 'astra-sites' ); ?></a>
-			<div class="button button-hero site-import-cancel"><?php esc_html_e( 'Cancel', 'astra-sites' ); ?></div>
-		</div>
-	</div>
-</script>
-
-<?php
-/**
  * TMPL - Third Party Required Plugins
  */
 ?>
