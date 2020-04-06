@@ -1199,6 +1199,8 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 						'warningBeforeCloseWindow' => sprintf( __( 'Warning! %1$s Import process is not complete. Don\'t close the window until import process complete. Do you still want to leave the window?', 'astra-sites' ), Astra_Sites_White_Label::get_instance()->get_white_label_name() ),
 						'viewSite'                 => __( 'Done! View Site', 'astra-sites' ),
 						'syncCompleteMessage'      => self::get_instance()->get_sync_complete_message(),
+						/* translators: %s is a template name */
+						'importSingleTemplate'     => __( 'Import "%s" Template', 'astra-sites' ),
 					),
 					'log'                           => array(
 						'bulkInstall'  => __( 'Installing Required Plugins..', 'astra-sites' ),
@@ -1252,7 +1254,8 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				),
 				'update-available'     => array(
 					'title'   => esc_html__( 'Update Plugin', 'astra-sites' ),
-					'tooltip' => '<p>' . esc_html__( 'Updates are available for plugins used in this starter template.', 'astra-sites' ) . '</p>##LIST##<p>' . esc_html__( 'Kindly update them for a successful import. Skipping this step might break the template design/feature.', 'astra-sites' ) . '</p>',
+					/* translators: %s update page link. */
+					'tooltip' => '<p>' . esc_html__( 'Updates are available for plugins used in this starter template.', 'astra-sites' ) . '</p>##LIST##<p>' . sprintf( __( 'Kindly <a href="%s" target="_blank">update</a> them for a successful import. Skipping this step might break the template design/feature.', 'astra-sites' ), esc_url( network_admin_url( 'update-core.php' ) ) ) . '</p>',
 				),
 				'third-party-required' => array(
 					'title'   => esc_html__( 'Required Plugins Missing', 'astra-sites' ),

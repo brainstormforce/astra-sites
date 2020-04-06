@@ -94,10 +94,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<div class="ast-actioms-wrap">
 			<# if( Object.keys( data['errors'] ).length ) { #>
 				<a href="#" class="button button-hero button-primary astra-demo-import disabled site-install-site-button"><?php esc_html_e( 'Skip & Import', 'astra-sites' ); ?></a>
-			<# } else { #>
-				<a href="#" class="button button-hero button-primary astra-sites-skip-and-import-step"><?php esc_html_e( 'Skip & Import', 'astra-sites' ); ?></a>
+				<div class="button button-hero site-import-cancel"><?php esc_html_e( 'Cancel', 'astra-sites' ); ?></div>
+			<# } else {
+				var plugin_update = data['warnings']['update-available'] || 0;
+				if( plugin_update ) { #>
+					<a href="<?php echo esc_url( network_admin_url( 'update-core.php' ) ); ?>" class="button button-hero button-primary" target="_blank"><?php esc_html_e( 'Update', 'astra-sites' ); ?></a>
+					<a href="#" class="button button-hero button-primary astra-sites-skip-and-import-step"><?php esc_html_e( 'Skip & Import', 'astra-sites' ); ?></a>
+				<# } else { #>
+					<a href="#" class="button button-hero button-primary astra-sites-skip-and-import-step"><?php esc_html_e( 'Skip & Import', 'astra-sites' ); ?></a>
+					<div class="button button-hero site-import-cancel"><?php esc_html_e( 'Cancel', 'astra-sites' ); ?></div>
+				<# } #>
 			<# } #>
-			<div class="button button-hero site-import-cancel"><?php esc_html_e( 'Cancel', 'astra-sites' ); ?></div>
 		</div>
 	</div>
 
@@ -459,33 +466,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 			printf( __( 'Learn how you can <a href="%1$s" target="_blank">activate the license</a> of the %2$s plugin.', 'astra-sites' ), esc_url( 'https://wpastra.com/docs/activate-license-for-astra-premium-sites-plugin/' ), Astra_Sites_White_Label::get_instance()->get_white_label_name() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		?>
 	</p>
-</script>
-
-<?php
-/**
- * TMPL - Update Available Plugins
- */
-?>
-<script type="text/template" id="tmpl-astra-sites-update-available-required-plugins">
-	<div class="skip-and-import">
-		<div class="heading">
-			<h3><?php esc_html_e( 'Update Plugin', 'astra-sites' ); ?></h3>
-			<span class="dashicons close dashicons-no-alt"></span>
-		</div>
-		<div class="astra-sites-import-content">
-			<p><?php esc_html_e( 'Updates are available for plugins used in this starter template.', 'astra-sites' ); ?></p>
-			<p><?php esc_html_e( 'Kindly update them for a successful import. Skipping this step might break the template design/feature.', 'astra-sites' ); ?></p>
-			<ul class="astra-sites-third-party-required-plugins">
-				<# for ( key in data ) { #>
-					<li class="plugin-card plugin-card-{{data[ key ].slug}}'" data-slug="{{data[ key ].slug }}" data-init="{{data[ key ].init}}" data-name="{{data[ key ].name}}">{{data[ key ].name}}</li>
-				<# } #>
-			</ul>
-		</div>
-		<div class="ast-actioms-wrap">
-			<a href="#" class="button button-hero button-primary astra-sites-skip-and-import-step"><?php esc_html_e( 'Skip & Import', 'astra-sites' ); ?></a>
-			<div class="button button-hero site-import-cancel"><?php esc_html_e( 'Cancel', 'astra-sites' ); ?></div>
-		</div>
-	</div>
 </script>
 
 <?php
