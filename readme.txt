@@ -142,7 +142,7 @@ v2.2.0 - 6-April-2020
 - Improvement: Added an Update Button for un-updated plugin list popup.
 - Improvement: Used text-domain `astra-sites` to make translation ready strings.
 - Improvement: Imported all the hotlink images from Astra theme customizer settings.
-- Improvement: Removed extra padding from the starter templates page. It is added to WordPress version 5.4.
+- Improvement: WP 5.4 compatibility issue.
 - Fix: The category not visible in the dropdown list from the Elementor Popup.
 
 v2.1.0 - 23-March-2020
