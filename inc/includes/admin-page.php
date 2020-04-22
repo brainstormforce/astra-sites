@@ -551,7 +551,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 			<div class="single-site-footer">
 				<div class="site-action-buttons-wrap">
 					<?php $white_label_class = ( Astra_Sites_White_Label::get_instance()->get_white_label_name() !== ASTRA_SITES_NAME ) ? 'ast-white-label-flag' : ''; ?>
-					<a href="{{data['astra-site-url']}}" class="button button-hero site-preview-button <?php echo esc_html( $white_label_class ); ?>" target="_blank">Preview "{{{data['title']}}}" Site <i class="dashicons dashicons-external"></i></a>
+					<a href="{{data['astra-site-url']}}/" class="button button-hero site-preview-button <?php echo esc_html( $white_label_class ); ?>" target="_blank">Preview "{{{data['title']}}}" Site <i class="dashicons dashicons-external"></i></a>
 					<div class="site-action-buttons-right">
 						<# if( 'free' !== data['astra-sites-type'] && '' !== astraSitesVars.license_page_builder && data['astra-site-page-builder'] !== astraSitesVars.license_page_builder && ( 'brizy' !== data['astra-site-page-builder'] && 'gutenberg' !== data['astra-site-page-builder']  ) ) { #>
 							<a class="button button-hero button-primary disabled astra-sites-invalid-mini-agency-license-button"><?php esc_html_e( 'Not Valid License', 'astra-sites' ); ?></a>
