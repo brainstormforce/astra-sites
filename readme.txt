@@ -143,7 +143,7 @@ v2.2.3 - 29-April-2020
 
 v2.2.2 - 22-April-2020
 - Improvement: Added missing slash to the website preview URL.
-- Improvement: Improvement: Added Elementor Theme Kit Compatibility.
+- Improvement: Added Elementor Theme Kit Compatibility.
 
 v2.2.1 - 15-April-2020
 - Improvement: Improved the file permissions check functionality.
