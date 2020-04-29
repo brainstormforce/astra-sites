@@ -68,14 +68,10 @@ if ( ! class_exists( 'Astra_Sites_Importer_Log' ) ) :
 		 */
 		public function has_file_read_write() {
 
-			$upload_dir  = self::log_dir();
-			$upload_path = trailingslashit( $upload_dir['url'] );
+			$upload_dir = self::log_dir();
 
-			// Get user credentials for WP file-system API.
-			$source_url   = wp_nonce_url( admin_url( 'themes.php?page=starter-templates' ), 'astra-import' );
-			$creds        = request_filesystem_credentials( $source_url, '', false, $upload_dir['path'], null );
 			$file_created = Astra_Sites::get_instance()->get_filesystem()->put_contents( $upload_dir['path'] . 'index.html', '' );
-			if ( false === $creds || ( ! $file_created ) ) {
+			if ( ! $file_created ) {
 				add_action( 'admin_notices', array( $this, 'file_permission_notice' ) );
 				return;
 			}

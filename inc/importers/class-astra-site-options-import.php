@@ -71,6 +71,7 @@ class Astra_Site_Options_Import {
 			'elementor_space_between_widgets',
 			'elementor_stretched_section_container',
 			'elementor_load_fa4_shim',
+			'elementor_active_kit',
 
 			// Plugin: Beaver Builder.
 			'_fl_builder_enabled_icons',
@@ -170,12 +171,48 @@ class Astra_Site_Options_Import {
 								$this->insert_logo( $option_value );
 							break;
 
+						case 'elementor_active_kit':
+								$this->set_elementor_kit();
+							break;
+
 						default:
-									update_option( $option_name, $option_value );
+							update_option( $option_name, $option_value );
 							break;
 					}
 				}
 			}
+		}
+	}
+
+	/**
+	 * Update post option
+	 *
+	 * @since 2.2.2
+	 *
+	 * @return void
+	 */
+	private function set_elementor_kit() {
+
+		// Update Elementor Theme Kit Option.
+		$args = array(
+			'post_type'   => 'elementor_library',
+			'post_status' => 'publish',
+			'numberposts' => 1,
+			'meta_query'  => array(
+				array(
+					'key'   => '_astra_sites_imported_post',
+					'value' => '1',
+				),
+				array(
+					'key'   => '_elementor_template_type',
+					'value' => 'kit',
+				),
+			),
+		);
+
+		$query = get_posts( $args );
+		if ( ! empty( $query ) && isset( $query[0] ) && isset( $query[0]->ID ) ) {
+			update_option( 'elementor_active_kit', $query[0]->ID );
 		}
 	}
 
