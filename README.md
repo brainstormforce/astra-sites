@@ -5,7 +5,7 @@
 **Requires at least:** 4.4  
 **Requires PHP:** 5.3  
 **Tested up to:** 5.4  
-**Stable tag:** 2.2.2  
+**Stable tag:** 2.2.3  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -138,9 +138,12 @@ We are open to suggestions and would love to work on topics that our users are l
 
 ## Changelog ##
 
+v2.2.3 - 29-April-2020
+- Fix: Handled duplicate data being imported due to Imagick image editor.
+
 v2.2.2 - 22-April-2020
 - Improvement: Added missing slash to the website preview URL.
-- Improvement: Improvement: Added Elementor Theme Kit Compatibility.
+- Improvement: Added Elementor Theme Kit Compatibility.
 
 v2.2.1 - 15-April-2020
 - Improvement: Improved the file permissions check functionality.
