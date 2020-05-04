@@ -140,9 +140,9 @@ We are open to suggestions and would love to work on topics that our users are l
 
 v2.2.4 - 05-May-2020
 - Improvement: Demo data is stored Network Wide for Multisite instance.
-- Improvement: User can opt out from Elementor Theme Kit if needed while importing site.
+- Improvement: Users can opt-out from Elementor Theme Kit if needed while importing the site.
 - Fix: Double slash for REST endpoint removed.
-- Fix: Changed user permissions for few actions.
+- Fix: Changed user permissions for a few actions.
 
 v2.2.3 - 29-April-2020
 - Fix: Page duplicate due to the WP_Image_Editor_Imagick library. Now used default library WP_Image_Editor_GD while importing the site.
