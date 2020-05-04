@@ -138,18 +138,18 @@ We are open to suggestions and would love to work on topics that our users are l
 
 == Changelog ==
 
-v2.2.4 - 05-May-2020
+v2.2.4 - 04-May-2020
 - Improvement: Demo data is stored Network Wide for Multisite instance.
 - Improvement: Users can opt-out from Elementor Theme Kit if needed while importing the site.
 - Fix: Double slash for REST endpoint removed.
 - Fix: Changed user permissions for a few actions.
 
 v2.2.3 - 29-April-2020
-- Fix: Page duplicate due to the WP_Image_Editor_Imagick library. Now used default library WP_Image_Editor_GD while importing the site.
+- Fix: Handled duplicate data being imported due to Imagick image editor.
 
 v2.2.2 - 22-April-2020
 - Improvement: Added missing slash to the website preview URL.
-- Improvement: Improvement: Added Elementor Theme Kit Compatibility.
+- Improvement: Added Elementor Theme Kit Compatibility.
 
 v2.2.1 - 15-April-2020
 - Improvement: Improved the file permissions check functionality.
