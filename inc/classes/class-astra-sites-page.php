@@ -98,9 +98,9 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 			}
 
 			if ( 'appearance_page_starter-templates' === $current_screen->base ) {
-				$manual_sync = get_option( 'astra-sites-manual-sync-complete', 'no' );
+				$manual_sync = get_site_option( 'astra-sites-manual-sync-complete', 'no' );
 				if ( 'yes' === $manual_sync ) {
-					$status = get_option( 'astra-sites-batch-is-complete', 'no' );
+					$status = get_site_option( 'astra-sites-batch-is-complete', 'no' );
 					if ( 'yes' === $status ) {
 						?>
 						<div class="astra-sites-sync-library-message success astra-sites-notice notice notice-success is-dismissible">
@@ -588,7 +588,7 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 				<div class="section-left">
 					<div class="search-form">
 						<?php
-						$categories = get_option( 'astra-sites-categories', array() );
+						$categories = Astra_Sites::get_instance()->get_api_option( 'astra-sites-categories' );
 						if ( ! empty( $categories ) ) {
 							?>
 						<div id="astra-sites__category-filter" class="dropdown-check-list" tabindex="100">

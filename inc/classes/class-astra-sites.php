@@ -282,7 +282,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				)
 			);
 
-			$request = wp_remote_get( trailingslashit( self::get_instance()->get_api_domain() ) . '/wp-json/wp/v2/' . $url, $api_args );
+			$request = wp_remote_get( trailingslashit( self::get_instance()->get_api_domain() ) . 'wp-json/wp/v2/' . $url, $api_args );
 			if ( ! is_wp_error( $request ) && 200 === (int) wp_remote_retrieve_response_code( $request ) ) {
 
 				$demo_data = json_decode( wp_remote_retrieve_body( $request ), true );
@@ -968,9 +968,9 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		 * @since  1.0.0
 		 */
 		public function set_api_url() {
-			$this->api_url = apply_filters( 'astra_sites_api_url', trailingslashit( self::get_api_domain() ) . '/wp-json/wp/v2/' );
+			$this->api_url = apply_filters( 'astra_sites_api_url', trailingslashit( self::get_api_domain() ) . 'wp-json/wp/v2/' );
 
-			$this->search_url = apply_filters( 'astra_sites_search_api_url', trailingslashit( self::get_api_domain() ) . '/wp-json/analytics/v2/search/' );
+			$this->search_url = apply_filters( 'astra_sites_search_api_url', trailingslashit( self::get_api_domain() ) . 'wp-json/analytics/v2/search/' );
 
 			$this->pixabay_url     = 'https://pixabay.com/api/';
 			$this->pixabay_api_key = '2727911-c4d7c1031949c7e0411d7e81e';
@@ -1212,7 +1212,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 					'sites'                         => $request_params,
 					'categories'                    => array(),
 					'page-builders'                 => array(),
-					'api_sites_and_pages_tags'      => get_option( 'astra-sites-tags', array() ),
+					'api_sites_and_pages_tags'      => $this->get_api_option( 'astra-sites-tags' ),
 					'license_status'                => $license_status,
 					'license_page_builder'          => get_option( 'astra-sites-license-page-builder', '' ),
 
@@ -1368,7 +1368,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 					'astra_blocks'               => $this->get_all_blocks(),
 					'license_status'             => $license_status,
 					'ajaxurl'                    => esc_url( admin_url( 'admin-ajax.php' ) ),
-					'api_sites_and_pages_tags'   => get_option( 'astra-sites-tags', array() ),
+					'api_sites_and_pages_tags'   => $this->get_api_option( 'astra-sites-tags' ),
 					'default_page_builder_sites' => Astra_Sites_Page::get_instance()->get_sites_by_page_builder( 'elementor' ),
 					'ApiURL'                     => $this->api_url,
 					'_ajax_nonce'                => wp_create_nonce( 'astra-sites' ),
@@ -1377,7 +1377,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 					'isWhiteLabeled'             => Astra_Sites_White_Label::get_instance()->is_white_labeled(),
 					'getProText'                 => __( 'Get Agency Bundle', 'astra-sites' ),
 					'getProURL'                  => esc_url( 'https://wpastra.com/pricing/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=wp-dashboard' ),
-					'astra_block_categories'     => get_option( 'astra-blocks-categories', array() ),
+					'astra_block_categories'     => $this->get_api_option( 'astra-blocks-categories' ),
 					'siteURL'                    => site_url(),
 					'template'                   => esc_html__( 'Template', 'astra-sites' ),
 					'block'                      => esc_html__( 'Block', 'astra-sites' ),
@@ -1417,10 +1417,10 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		 */
 		public function get_all_sites() {
 			$sites_and_pages = array();
-			$total_requests  = (int) get_option( 'astra-sites-requests', 0 );
+			$total_requests  = (int) get_site_option( 'astra-sites-requests', 0 );
 
 			for ( $page = 1; $page <= $total_requests; $page++ ) {
-				$current_page_data = get_option( 'astra-sites-and-pages-page-' . $page, array() );
+				$current_page_data = get_site_option( 'astra-sites-and-pages-page-' . $page, array() );
 				if ( ! empty( $current_page_data ) ) {
 					foreach ( $current_page_data as $page_id => $page_data ) {
 						$sites_and_pages[ $page_id ] = $page_data;
@@ -1432,6 +1432,17 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		}
 
 		/**
+		 * Get all sites
+		 *
+		 * @since 2.2.4
+		 * @param  array $option Site options name.
+		 * @return array Site Option value.
+		 */
+		public function get_api_option( $option ) {
+			return get_site_option( $option, array() );
+		}
+
+		/**
 		 * Get all blocks
 		 *
 		 * @since 2.0.0
@@ -1440,10 +1451,10 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		public function get_all_blocks() {
 
 			$blocks         = array();
-			$total_requests = (int) get_option( 'astra-blocks-requests', 0 );
+			$total_requests = (int) get_site_option( 'astra-blocks-requests', 0 );
 
 			for ( $page = 1; $page <= $total_requests; $page++ ) {
-				$current_page_data = get_option( 'astra-blocks-' . $page, array() );
+				$current_page_data = get_site_option( 'astra-blocks-' . $page, array() );
 				if ( ! empty( $current_page_data ) ) {
 					foreach ( $current_page_data as $page_id => $page_data ) {
 						$blocks[ $page_id ] = $page_data;
@@ -1556,7 +1567,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				'notinstalled' => array(),
 			);
 
-			if ( ! defined( 'WP_CLI' ) && ! current_user_can( 'customize' ) ) {
+			if ( ! defined( 'WP_CLI' ) && ! current_user_can( 'install_plugins' ) ) {
 				wp_send_json_error( $response );
 			}
 

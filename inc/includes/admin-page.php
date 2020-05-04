@@ -702,6 +702,19 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 								<# } #>
 
+								<# if( 'astra-sites' === data && 'elementor' == astraSitesVars.default_page_builder ) { #>
+									<li class="astra-sites-import-elementor-kit">
+										<label>
+											<input type="checkbox" name="elmentor-kit" checked="checked" class="checkbox">
+											<strong><?php esc_html_e( 'Import Elementor Style Kit', 'astra-sites' ); ?></strong>
+										</label>
+										<span class="astra-sites-tooltip-icon" data-tip-id="astra-sites-tooltip-elementor-kit"><span class="dashicons dashicons-editor-help"></span></span>
+										<div class="astra-sites-tooltip-message" id="astra-sites-tooltip-elementor-kit" style="display: none;">
+											<p><?php esc_html_e( 'This demo is built using Elementor Style Kit. By unchecking this the styles won\'t appear exactly like shown in the preview.', 'astra-sites' ); ?></p>
+									</div>
+									</li>
+								<# } #>
+
 								<# if( 'astra-sites' === data ) { #>
 									<li class="astra-sites-import-widgets">
 										<label>

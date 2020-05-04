@@ -5,7 +5,7 @@
 **Requires at least:** 4.4  
 **Requires PHP:** 5.3  
 **Tested up to:** 5.4  
-**Stable tag:** 2.2.3  
+**Stable tag:** 2.2.4  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -137,6 +137,12 @@ We are open to suggestions and would love to work on topics that our users are l
 7. Free Images by Pixabay right inside the WordPress media popup.
 
 ## Changelog ##
+
+v2.2.4 - 05-May-2020
+- Improvement: Demo data is stored Network Wide for Multisite instance.
+- Improvement: User can opt out from Elementor Theme Kit if needed while importing site.
+- Fix: Double slash for REST endpoint removed.
+- Fix: Changed user permissions for few actions.
 
 v2.2.3 - 29-April-2020
 - Fix: Page duplicate due to the WP_Image_Editor_Imagick library. Now used default library WP_Image_Editor_GD while importing the site.
