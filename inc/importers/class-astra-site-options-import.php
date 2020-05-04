@@ -172,7 +172,9 @@ class Astra_Site_Options_Import {
 							break;
 
 						case 'elementor_active_kit':
+							if ( '' !== $option_value ) {
 								$this->set_elementor_kit();
+							}
 							break;
 
 						default:

@@ -457,7 +457,7 @@ if ( ! class_exists( 'Astra_Sites_Importer_Log' ) ) :
 			} else {
 				$transient_status = 'Transient: Starting.. Process for each 5 minutes.';
 			}
-			$temp  = get_option( 'astra-sites-batch-status-string', '' );
+			$temp  = get_site_option( 'astra-sites-batch-status-string', '' );
 			$temp .= isset( $events['wp_astra_site_importer_cron'] ) ? '<br/>Batch: Recheck batch in ' . human_time_diff( time(), $events['wp_astra_site_importer_cron'] ) : '<br/>Batch: Not Started! Until the Transient expire.';
 
 			$upload_dir   = self::get_instance()->log_dir();

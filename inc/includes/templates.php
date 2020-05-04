@@ -54,9 +54,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</div>
 				<div id="ast-sites-floating-notice-wrap-id" class="ast-sites-floating-notice-wrap"><div class="ast-sites-floating-notice"></div></div>
 				<?php
-				$manual_sync = get_option( 'astra-sites-manual-sync-complete', 'no' );
+				$manual_sync = get_site_option( 'astra-sites-manual-sync-complete', 'no' );
 				if ( 'yes' === $manual_sync ) {
-					$batch_status = get_option( 'astra-sites-batch-is-complete', 'no' );
+					$batch_status = get_site_option( 'astra-sites-batch-is-complete', 'no' );
 					if ( 'yes' === $batch_status ) {
 						?>
 						<div class="ast-sites-floating-notice-wrap refreshed-notice slide-in">
