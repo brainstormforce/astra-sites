@@ -53,7 +53,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Importer' ) ) :
 		 */
 		public function import_categories() {
 			astra_sites_error_log( 'Requesting Tags' );
-			update_site_option( 'astra-sites-batch-status-string', 'Requesting Tags' );
+			update_site_option( 'astra-sites-batch-status-string', 'Requesting Tags', 'no' );
 
 			$api_args     = array(
 				'timeout' => 30,
@@ -70,7 +70,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Importer' ) ) :
 						astra_sites_error_log( 'HTTP Request Error!' );
 					}
 				} else {
-					update_site_option( 'astra-sites-tags', $tags );
+					update_site_option( 'astra-sites-tags', $tags, 'no' );
 
 					if ( defined( 'WP_CLI' ) ) {
 						$this->generate_file( 'astra-sites-tags', $tags );
@@ -79,7 +79,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Importer' ) ) :
 			}
 
 			astra_sites_error_log( 'Tags Imported Successfully!' );
-			update_site_option( 'astra-sites-batch-status-string', 'Tags Imported Successfully!' );
+			update_site_option( 'astra-sites-batch-status-string', 'Tags Imported Successfully!', 'no' );
 		}
 
 		/**
@@ -105,7 +105,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Importer' ) ) :
 		 */
 		public function import_site_categories() {
 			astra_sites_error_log( 'Requesting Site Categories' );
-			update_site_option( 'astra-sites-batch-status-string', 'Requesting Site Categories' );
+			update_site_option( 'astra-sites-batch-status-string', 'Requesting Site Categories', 'no' );
 
 			$api_args           = array(
 				'timeout' => 30,
@@ -122,7 +122,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Importer' ) ) :
 						astra_sites_error_log( 'HTTP Request Error!' );
 					}
 				} else {
-					update_site_option( 'astra-sites-categories', $categories );
+					update_site_option( 'astra-sites-categories', $categories, 'no' );
 
 					if ( defined( 'WP_CLI' ) ) {
 						$this->generate_file( 'astra-sites-categories', $categories );
@@ -131,7 +131,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Importer' ) ) :
 			}
 
 			astra_sites_error_log( 'Site Categories Imported Successfully!' );
-			update_site_option( 'astra-sites-batch-status-string', 'Site Categories Imported Successfully!' );
+			update_site_option( 'astra-sites-batch-status-string', 'Site Categories Imported Successfully!', 'no' );
 		}
 
 		/**
@@ -142,7 +142,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Importer' ) ) :
 		 */
 		public function import_block_categories() {
 			astra_sites_error_log( 'Requesting Block Categories' );
-			update_site_option( 'astra-sites-batch-status-string', 'Requesting Block Categories' );
+			update_site_option( 'astra-sites-batch-status-string', 'Requesting Block Categories', 'no' );
 
 			$api_args     = array(
 				'timeout' => 30,
@@ -164,7 +164,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Importer' ) ) :
 						$categories[ $value['id'] ] = $value;
 					}
 
-					update_site_option( 'astra-blocks-categories', $categories );
+					update_site_option( 'astra-blocks-categories', $categories, 'no' );
 
 					if ( defined( 'WP_CLI' ) ) {
 						$this->generate_file( 'astra-blocks-categories', $categories );
@@ -173,7 +173,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Importer' ) ) :
 			}
 
 			astra_sites_error_log( 'Block Categories Imported Successfully!' );
-			update_site_option( 'astra-sites-batch-status-string', 'Categories Imported Successfully!' );
+			update_site_option( 'astra-sites-batch-status-string', 'Categories Imported Successfully!', 'no' );
 		}
 
 
@@ -238,7 +238,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Importer' ) ) :
 		 */
 		public function import_page_builders() {
 			astra_sites_error_log( 'Requesting Page Builders' );
-			update_site_option( 'astra-sites-batch-status-string', 'Requesting Page Builders' );
+			update_site_option( 'astra-sites-batch-status-string', 'Requesting Page Builders', 'no' );
 
 			$purchase_key = Astra_Sites::get_instance()->get_license_key();
 			$site_url     = get_site_url();
@@ -259,7 +259,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Importer' ) ) :
 						astra_sites_error_log( 'HTTP Request Error!' );
 					}
 				} else {
-					update_site_option( 'astra-sites-page-builders', $page_builders );
+					update_site_option( 'astra-sites-page-builders', $page_builders, 'no' );
 
 					if ( defined( 'WP_CLI' ) ) {
 						$this->generate_file( 'astra-sites-page-builders', $page_builders );
@@ -268,7 +268,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Importer' ) ) :
 			}
 
 			astra_sites_error_log( 'Page Builders Imported Successfully!' );
-			update_site_option( 'astra-sites-batch-status-string', 'Page Builders Imported Successfully!' );
+			update_site_option( 'astra-sites-batch-status-string', 'Page Builders Imported Successfully!', 'no' );
 		}
 
 		/**
@@ -286,7 +286,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Importer' ) ) :
 			);
 			$all_blocks = array();
 			astra_sites_error_log( 'BLOCK: Requesting ' . $page );
-			update_site_option( 'astra-blocks-batch-status-string', 'Requesting for blocks page - ' . $page );
+			update_site_option( 'astra-blocks-batch-status-string', 'Requesting for blocks page - ' . $page, 'no' );
 			$response = wp_remote_get( trailingslashit( Astra_Sites::get_instance()->get_api_domain() ) . '/wp-json/astra-blocks/v1/blocks?per_page=100&page=' . $page, $api_args );
 			if ( ! is_wp_error( $response ) || wp_remote_retrieve_response_code( $response ) === 200 ) {
 				$astra_blocks = json_decode( wp_remote_retrieve_body( $response ), true );
@@ -300,9 +300,9 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Importer' ) ) :
 					}
 				} else {
 					astra_sites_error_log( 'BLOCK: Storing data for page ' . $page . ' in option astra-blocks-' . $page );
-					update_site_option( 'astra-blocks-batch-status-string', 'Storing data for page ' . $page . ' in option astra-blocks-' . $page );
+					update_site_option( 'astra-blocks-batch-status-string', 'Storing data for page ' . $page . ' in option astra-blocks-' . $page, 'no' );
 
-					update_site_option( 'astra-blocks-' . $page, $astra_blocks );
+					update_site_option( 'astra-blocks-' . $page, $astra_blocks, 'no' );
 
 					if ( defined( 'WP_CLI' ) ) {
 						$this->generate_file( 'astra-blocks-' . $page, $astra_blocks );
@@ -313,7 +313,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Importer' ) ) :
 			}
 
 			astra_sites_error_log( 'BLOCK: Complete storing data for blocks ' . $page );
-			update_site_option( 'astra-blocks-batch-status-string', 'Complete storing data for page ' . $page );
+			update_site_option( 'astra-blocks-batch-status-string', 'Complete storing data for page ' . $page, 'no' );
 		}
 
 		/**
@@ -331,7 +331,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Importer' ) ) :
 			);
 			$sites_and_pages = array();
 			astra_sites_error_log( 'Requesting ' . $page );
-			update_site_option( 'astra-sites-batch-status-string', 'Requesting ' . $page );
+			update_site_option( 'astra-sites-batch-status-string', 'Requesting ' . $page, 'no' );
 
 			$query_args = apply_filters(
 				'astra_sites_import_sites_query_args',
@@ -356,9 +356,9 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Importer' ) ) :
 					}
 				} else {
 					astra_sites_error_log( 'Storing data for page ' . $page . ' in option astra-sites-and-pages-page-' . $page );
-					update_site_option( 'astra-sites-batch-status-string', 'Storing data for page ' . $page . ' in option astra-sites-and-pages-page-' . $page );
+					update_site_option( 'astra-sites-batch-status-string', 'Storing data for page ' . $page . ' in option astra-sites-and-pages-page-' . $page, 'no' );
 
-					update_site_option( 'astra-sites-and-pages-page-' . $page, $sites_and_pages );
+					update_site_option( 'astra-sites-and-pages-page-' . $page, $sites_and_pages, 'no' );
 
 					if ( defined( 'WP_CLI' ) ) {
 						$this->generate_file( 'astra-sites-and-pages-page-' . $page, $sites_and_pages );
@@ -369,7 +369,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Importer' ) ) :
 			}
 
 			astra_sites_error_log( 'Complete storing data for page ' . $page );
-			update_site_option( 'astra-sites-batch-status-string', 'Complete storing data for page ' . $page );
+			update_site_option( 'astra-sites-batch-status-string', 'Complete storing data for page ' . $page, 'no' );
 
 			return $sites_and_pages;
 		}

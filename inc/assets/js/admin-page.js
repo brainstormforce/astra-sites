@@ -1104,7 +1104,7 @@ var AstraSitesAjaxQueue = (function() {
 			.done(function ( response ) {
 				AstraSitesAdmin._log( response );
 				if( response.success ) {
-					var total = response.data.pages;
+					var total = response.data;
 
 					AstraSitesAdmin._log( total );
 
@@ -2433,6 +2433,8 @@ var AstraSitesAjaxQueue = (function() {
 							}
 						};
 						evtSource.onerror = function( error ) {
+							evtSource.close();
+							console.log( error );
 							AstraSitesAdmin._importFailMessage('', 'Import Process Interrupted');
 						};
 						evtSource.addEventListener( 'log', function ( message ) {
@@ -2644,20 +2646,23 @@ var AstraSitesAjaxQueue = (function() {
 		 *
 		 * @param  {string} data Error message.
 		 */
-		_importFailMessage: function( message, heading, jqXHR ) {
+		_importFailMessage: function( message, heading, jqXHR, topContent ) {
 
 			heading = heading || 'The import process interrupted';
 
-			var status_code = jqXHR.status ? parseInt( jqXHR.status ) : parseInt( jqXHR.status ) || '';
+			var status_code = '';
+			if( jqXHR ) {
+				status_code = jqXHR.status ? parseInt( jqXHR.status ) : '';
+			}
+			var output = '';
 
 			if( 200 == status_code && astraSitesVars.debug ) {
-				var output = astraSitesVars.importFailedMessageDueToDebug;
-
+				output = astraSitesVars.importFailedMessageDueToDebug;
 			} else {
-				var output  = astraSitesVars.importFailedMessage;
+				output  = topContent || astraSitesVars.importFailedMessage;
 
 				if( message ) {
-					output += '<p class="current-importing-status">Error: ' + message +'</p>';
+					output += '<div class="current-importing-status">Error: ' + message +'</div>';
 				}
 			}
 			
@@ -3035,11 +3040,7 @@ var AstraSitesAjaxQueue = (function() {
 
 						AstraSitesAdmin.process_site_data( AstraSitesAdmin.templateData );
 					} else {
-						$('.astra-sites-result-preview .inner > h3').text('Import Process Interrupted');
-						$('.astra-sites-import-content').find( '.astra-loading-wrap' ).remove();
-						$('.astra-sites-result-preview').removeClass('preparing');
-						$('.astra-sites-import-content').html( wp.template( 'astra-sites-request-failed' ) );
-						$('.astra-demo-import').removeClass('updating-message installing button-primary').addClass('disabled').text('Import Failed!');
+						AstraSitesAdmin._importFailMessage( response.data );
 					}
 				});
 			}
@@ -3140,11 +3141,7 @@ var AstraSitesAjaxQueue = (function() {
 
 						AstraSitesAdmin.required_plugins_list_markup( AstraSitesAdmin.templateData['site-pages-required-plugins'] );
 					} else {
-						$('.astra-sites-result-preview .inner > h3').text('Import Process Interrupted');
-						$('.astra-sites-import-content').find( '.astra-loading-wrap' ).remove();
-						$('.astra-sites-result-preview').removeClass('preparing');
-						$('.astra-sites-import-content').html( wp.template( 'astra-sites-request-failed' ) );
-						$('.astra-demo-import').removeClass('updating-message installing button-primary').addClass('disabled').text('Import Failed!');
+						AstraSitesAdmin._importFailMessage( response.data );
 					}
 				});
 			}
@@ -3246,7 +3243,7 @@ var AstraSitesAjaxQueue = (function() {
 				console.groupEnd();
 
 				if( false === response.success ) {
-					AstraSitesAdmin._importFailMessage( response.data, 'Required Plugins Failed!' );
+					AstraSitesAdmin._importFailMessage( response.data, 'Required Plugins Failed!', '', astraSitesVars.importFailedRequiredPluginsMessage );
 				} else {
 					required_plugins = response.data['required_plugins'];
 

@@ -79,10 +79,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Brizy' ) ) :
 			}
 
 			foreach ( $post_ids as $post_id ) {
-				$is_brizy_post = get_post_meta( $post_id, 'brizy_post_uid', true );
-				if ( $is_brizy_post ) {
-					$this->import_single_post( $post_id );
-				}
+				$this->import_single_post( $post_id );
 			}
 		}
 
@@ -94,6 +91,18 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Brizy' ) ) :
 		 */
 		public function import_single_post( $post_id = 0 ) {
 
+			$is_brizy_post = get_post_meta( $post_id, 'brizy_post_uid', true );
+			if ( ! $is_brizy_post ) {
+				return;
+			}
+
+			// Is page imported with Starter Sites?
+			// If not then skip batch process.
+			$imported_from_demo_site = get_post_meta( $post_id, '_astra_sites_imported_post', true );
+			if ( ! $imported_from_demo_site ) {
+				return;
+			}
+
 			if ( defined( 'WP_CLI' ) ) {
 				WP_CLI::line( 'Brizy - Processing page: ' . $post_id );
 			}
@@ -104,13 +113,8 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Brizy' ) ) :
 
 			$json_value = null;
 
-			$post = Brizy_Editor_Post::get( (int) $post_id );
-			$data = $post->storage()->get( Brizy_Editor_Post::BRIZY_POST, false );
-
-			// @codingStandardsIgnoreStart
-			// Decode current data.
-			$json_value = base64_decode( $data['editor_data'] );
-			// @codingStandardsIgnoreEnd
+			$post        = Brizy_Editor_Post::get( (int) $post_id );
+			$editor_data = $post->get_editor_data();
 
 			// Empty mapping? Then return.
 			if ( ! empty( $ids_mapping ) ) {
@@ -120,19 +124,14 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Brizy' ) ) :
 				astra_sites_error_log( $ids_mapping );
 
 				foreach ( $ids_mapping as $old_id => $new_id ) {
-					$json_value = str_replace( '[wpforms id=\"' . $old_id, '[wpforms id=\"' . $new_id, $json_value );
+					$editor_data = str_replace( '[wpforms id=\"' . $old_id, '[wpforms id=\"' . $new_id, $editor_data );
 				}
 			}
 
-			// @codingStandardsIgnoreStart
-			// Encode modified data.
-			$data['editor_data'] = base64_encode( $json_value );
-			// @codingStandardsIgnoreEnd
-
-			$post->set_editor_data( $json_value );
-			$post->storage()->set( Brizy_Editor_Post::BRIZY_POST, $data );
-			$post->compile_page();
-			$post->save();
+			$post->set_editor_data( $editor_data );
+			$post->set_editor_version( BRIZY_EDITOR_VERSION );
+			$post->set_needs_compile( true );
+			$post->saveStorage();
 		}
 
 	}

@@ -645,7 +645,7 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) {
 		 */
 		public function update_latest_checksums() {
 			$latest_checksums = get_site_option( 'astra-sites-last-export-checksums-latest', '' );
-			update_site_option( 'astra-sites-last-export-checksums', $latest_checksums );
+			update_site_option( 'astra-sites-last-export-checksums', $latest_checksums, 'no' );
 		}
 
 		/**
@@ -858,7 +858,7 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) {
 			$message = '';
 			if ( $term_id ) {
 				$term = get_term( $term_id );
-				if ( $term ) {
+				if ( ! is_wp_error( $term ) ) {
 					$message = 'Deleted - Term ' . $term_id . ' - ' . $term->name . ' ' . $term->taxonomy;
 					Astra_Sites_Importer_Log::add( $message );
 					wp_delete_term( $term_id, $term->taxonomy );

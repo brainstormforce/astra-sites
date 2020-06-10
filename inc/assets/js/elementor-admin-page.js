@@ -318,6 +318,7 @@ var AstraSitesAjaxQueue = (function() {
 			}
 
 			button.addClass( 'updating-message');
+			$elscope.find( '#ast-sites-floating-notice-wrap-id' ).show().removeClass('error');
 			$elscope.find( '#ast-sites-floating-notice-wrap-id .ast-sites-floating-notice' ).html( '<span class="message">Syncing template library in the background. The process can take anywhere between 2 to 3 minutes. We will notify you once done.<span><button type="button" class="notice-dismiss"><span class="screen-reader-text">' + astraElementorSites.dismiss_text + '</span></button>' );
 			$elscope.find( '#ast-sites-floating-notice-wrap-id' ).addClass( 'slide-in' ).removeClass( 'refreshed-notice' );
 
@@ -385,7 +386,7 @@ var AstraSitesAjaxQueue = (function() {
 						.done(function ( response ) {
 							console.log( response );
 							if( response.success ) {
-								var total = response.data.pages;
+								var total = response.data;
 
 								for( let i = 1; i <= total; i++ ) {
 									AstraSitesAjaxQueue.add({
@@ -1203,6 +1204,8 @@ var AstraSitesAjaxQueue = (function() {
 
 			let step = $( this ).attr( 'data-step' );
 
+			$elscope.find( '#ast-sites-floating-notice-wrap-id.error' ).hide();
+
 			$elscope.find( '.astra-sites-step-1-wrap' ).show();
 			$elscope.find( '.astra-preview-actions-wrap' ).remove();
 
@@ -1554,89 +1557,97 @@ var AstraSitesAjaxQueue = (function() {
 				console.groupEnd();
 			})
 			.done(function ( response ) {
+				if( false === response.success ) {
 
-				var output = '';
+					$elscope = $( '#ast-sites-modal' );
+					$elscope.find( '#ast-sites-floating-notice-wrap-id' ).show().removeClass('error');
+					$elscope.find( '#ast-sites-floating-notice-wrap-id .ast-sites-floating-notice' ).show().html( '<span class="message">Insufficient Permission. Please contact your Super Admin to allow the install required plugin permissions.<span>' );
+					$elscope.find( '#ast-sites-floating-notice-wrap-id' ).addClass( 'error slide-in' ).removeClass( 'refreshed-notice' );
 
-				/**
-				 * Count remaining plugins.
-				 * @type number
-				 */
-				var remaining_plugins = 0;
-				var required_plugins_markup = '';
+				} else {
+					var output = '';
 
-				required_plugins = response.data['required_plugins'];				
+					/**
+					 * Count remaining plugins.
+					 * @type number
+					 */
+					var remaining_plugins = 0;
+					var required_plugins_markup = '';
 
-				if( response.data['third_party_required_plugins'].length ) {
-					output += '<li class="plugin-card plugin-card-'+plugin.slug+'" data-slug="'+plugin.slug+'" data-init="'+plugin.init+'" data-name="'+plugin.name+'">'+plugin.name+'</li>';
-				}
+					required_plugins = response.data['required_plugins'];				
 
-				/**
-				 * Not Installed
-				 *
-				 * List of not installed required plugins.
-				 */
-				if ( typeof required_plugins.notinstalled !== 'undefined' ) {
-
-					// Add not have installed plugins count.
-					remaining_plugins += parseInt( required_plugins.notinstalled.length );
-
-					$( required_plugins.notinstalled ).each(function( index, plugin ) {
-						if ( 'elementor' == plugin.slug ) {
-							return;
-						}
+					if( response.data['third_party_required_plugins'].length ) {
 						output += '<li class="plugin-card plugin-card-'+plugin.slug+'" data-slug="'+plugin.slug+'" data-init="'+plugin.init+'" data-name="'+plugin.name+'">'+plugin.name+'</li>';
-					});
+					}
+
+					/**
+					 * Not Installed
+					 *
+					 * List of not installed required plugins.
+					 */
+					if ( typeof required_plugins.notinstalled !== 'undefined' ) {
+
+						// Add not have installed plugins count.
+						remaining_plugins += parseInt( required_plugins.notinstalled.length );
+
+						$( required_plugins.notinstalled ).each(function( index, plugin ) {
+							if ( 'elementor' == plugin.slug ) {
+								return;
+							}
+							output += '<li class="plugin-card plugin-card-'+plugin.slug+'" data-slug="'+plugin.slug+'" data-init="'+plugin.init+'" data-name="'+plugin.name+'">'+plugin.name+'</li>';
+						});
+					}
+
+					/**
+					 * Inactive
+					 *
+					 * List of not inactive required plugins.
+					 */
+					if ( typeof required_plugins.inactive !== 'undefined' ) {
+
+						// Add inactive plugins count.
+						remaining_plugins += parseInt( required_plugins.inactive.length );
+
+						$( required_plugins.inactive ).each(function( index, plugin ) {
+							if ( 'elementor' == plugin.slug ) {
+								return;
+							}
+							output += '<li class="plugin-card plugin-card-'+plugin.slug+'" data-slug="'+plugin.slug+'" data-init="'+plugin.init+'" data-name="'+plugin.name+'">'+plugin.name+'</li>';
+						});
+					}
+
+					/**
+					 * Active
+					 *
+					 * List of not active required plugins.
+					 */
+					if ( typeof required_plugins.active !== 'undefined' ) {
+
+						$( required_plugins.active ).each(function( index, plugin ) {
+							if ( 'elementor' == plugin.slug ) {
+								return;
+							}
+							output += '<li class="plugin-card plugin-card-'+plugin.slug+'" data-slug="'+plugin.slug+'" data-init="'+plugin.init+'" data-name="'+plugin.name+'">'+plugin.name+'</li>';
+						});
+					}
+
+					if ( '' != output ) {
+						output = '<li class="plugin-card-head"><strong>' + astraElementorSites.install_plugin_text + '</strong></li>' + output;
+						$elscope.find('.required-plugins-list').html( output );
+						$elscope.find('.ast-tooltip-wrap').css( 'opacity', 1 );
+						$elscope.find('.astra-sites-tooltip').css( 'opacity', 1 );
+					}
+
+
+					/**
+					 * Enable Demo Import Button
+					 * @type number
+					 */
+					AstraElementorSitesAdmin.requiredPlugins = response.data['required_plugins'];
+					AstraElementorSitesAdmin.canImport = true;
+					AstraElementorSitesAdmin.canInsert = true;
+					$elscope.find( '.astra-sites-import-template-action > div' ).removeClass( 'disabled' );
 				}
-
-				/**
-				 * Inactive
-				 *
-				 * List of not inactive required plugins.
-				 */
-				if ( typeof required_plugins.inactive !== 'undefined' ) {
-
-					// Add inactive plugins count.
-					remaining_plugins += parseInt( required_plugins.inactive.length );
-
-					$( required_plugins.inactive ).each(function( index, plugin ) {
-						if ( 'elementor' == plugin.slug ) {
-							return;
-						}
-						output += '<li class="plugin-card plugin-card-'+plugin.slug+'" data-slug="'+plugin.slug+'" data-init="'+plugin.init+'" data-name="'+plugin.name+'">'+plugin.name+'</li>';
-					});
-				}
-
-				/**
-				 * Active
-				 *
-				 * List of not active required plugins.
-				 */
-				if ( typeof required_plugins.active !== 'undefined' ) {
-
-					$( required_plugins.active ).each(function( index, plugin ) {
-						if ( 'elementor' == plugin.slug ) {
-							return;
-						}
-						output += '<li class="plugin-card plugin-card-'+plugin.slug+'" data-slug="'+plugin.slug+'" data-init="'+plugin.init+'" data-name="'+plugin.name+'">'+plugin.name+'</li>';
-					});
-				}
-
-				if ( '' != output ) {
-					output = '<li class="plugin-card-head"><strong>' + astraElementorSites.install_plugin_text + '</strong></li>' + output;
-					$elscope.find('.required-plugins-list').html( output );
-					$elscope.find('.ast-tooltip-wrap').css( 'opacity', 1 );
-					$elscope.find('.astra-sites-tooltip').css( 'opacity', 1 );
-				}
-
-
-				/**
-				 * Enable Demo Import Button
-				 * @type number
-				 */
-				AstraElementorSitesAdmin.requiredPlugins = response.data['required_plugins'];
-				AstraElementorSitesAdmin.canImport = true;
-				AstraElementorSitesAdmin.canInsert = true;
-				$elscope.find( '.astra-sites-import-template-action > div' ).removeClass( 'disabled' );
 			});
 		},
 

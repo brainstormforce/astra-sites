@@ -74,65 +74,58 @@
 
 (function ($) {
 
-    AstraImages = {
+    var AstraImages = {
 
         init: function init() {
 
             if (undefined != wp && wp.media) {
 
-                var View = wp.media.View,
-                    mediaTrash = wp.media.view.settings.mediaTrash,
-                    l10n = wp.media.view.l10n,
-                    Frame = wp.media.view.Frame,
-                    $ = jQuery,
-                    newVar = {},
-                    Select = wp.media.view.MediaFrame.Select;
+                var $ = jQuery,
+                    oldMediaFrameSelect = wp.media.view.MediaFrame.Select;
 
                 wp.media.view.AstraAttachmentsBrowser = __webpack_require__(/*! ./frame.js */ 1);
 
-                Select.prototype.bindHandlers = function () {
+                wp.media.view.MediaFrame.Select = oldMediaFrameSelect.extend({
 
-                    this.on("router:create:browse", this.createRouter, this);
-                    this.on("router:render:browse", this.browseRouter, this);
-                    this.on("content:create:browse", this.browseContent, this);
-                    this.on("content:create:astraimages", this.astraimages, this);
-                    this.on("content:render:upload", this.uploadContent, this);
-                    this.on("toolbar:create:select", this.createSelectToolbar, this);
-                };
+                    // Tab / Router
+                    browseRouter: function browseRouter(routerView) {
+                        oldMediaFrameSelect.prototype.browseRouter.apply(this, arguments);
+                        routerView.set({
+                            astraimages: {
+                                text: astraImages.title,
+                                priority: 70
+                            }
+                        });
+                    },
 
-                Select.prototype.browseRouter = function (routerView) {
 
-                    routerView.set({
-                        upload: {
-                            text: l10n.uploadFilesTitle,
-                            priority: 20
-                        },
-                        browse: {
-                            text: l10n.mediaLibraryTitle,
-                            priority: 40
-                        },
-                        astraimages: {
-                            text: astraImages.title,
-                            priority: 70
-                        }
-                    });
-                };
+                    // Handlers
+                    bindHandlers: function bindHandlers() {
+                        oldMediaFrameSelect.prototype.bindHandlers.apply(this, arguments);
+                        this.on('content:create:astraimages', this.astraimages, this);
+                    },
 
-                Select.prototype.astraimages = function (contentRegion) {
-                    var state = this.state();
 
-                    // Browse our library of attachments.
-                    var thisView = new wp.media.view.AstraAttachmentsBrowser({
-                        controller: this,
-                        model: state,
-                        AttachmentView: state.get('AttachmentView')
-                    });
-                    contentRegion.view = thisView;
-                    wp.media.view.AstraAttachmentsBrowser.object = thisView;
-                    setTimeout(function () {
-                        $(document).trigger('ast-image__set-scope');
-                    }, 100);
-                };
+                    /**
+                     * Render callback for the content region in the `browse` mode.
+                     *
+                     * @param {wp.media.controller.Region} contentRegion
+                     */
+                    astraimages: function astraimages(contentRegion) {
+                        var state = this.state();
+                        // Browse our library of attachments.
+                        var thisView = new wp.media.view.AstraAttachmentsBrowser({
+                            controller: this,
+                            model: state,
+                            AttachmentView: state.get('AttachmentView')
+                        });
+                        contentRegion.view = thisView;
+                        wp.media.view.AstraAttachmentsBrowser.object = thisView;
+                        setTimeout(function () {
+                            $(document).trigger('ast-image__set-scope');
+                        }, 100);
+                    }
+                });
             }
         }
 
@@ -166,10 +159,7 @@
 /*! all exports used */
 /***/ (function(module, exports, __webpack_require__) {
 
-var View = wp.media.View,
-    Frame = wp.media.view.Frame,
-    $ = jQuery,
-    Select = wp.media.view.MediaFrame.Select,
+var Frame = wp.media.view.Frame,
     AstraAttachmentsBrowser;
 
 wp.media.view.AstraContent = __webpack_require__(/*! ./content.js */ 2);
@@ -260,10 +250,9 @@ module.exports = AstraContent;
 /*! all exports used */
 /***/ (function(module, exports) {
 
-var l10n = wp.media.view.l10n;
 $ = jQuery;
 // Search input view controller.
-AstraSearch = wp.Backbone.View.extend({
+var AstraSearch = wp.Backbone.View.extend({
 
     tagName: 'input',
     className: 'ast-image__search',
@@ -323,7 +312,6 @@ AstraSearch = wp.Backbone.View.extend({
             return;
         }
 
-        var options = {};
         var thisObject = this;
         thisObject.searching = true;
         AstraImageCommon.config.q = event.target.value;

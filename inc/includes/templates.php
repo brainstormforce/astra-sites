@@ -211,7 +211,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<div class="astra-sites-library-template astra-theme" data-block-id={{key}}>
 			<div class="astra-sites-library-template-inner" >
 				<div class="elementor-template-library-template-body theme-screenshot" data-step="1">
-					<img src="{{data[ key ]['featured-image-url']}}">
+					<img src="{{data[ key ]['thumbnail-image-url']}}">
 					<div class="elementor-template-library-template-preview">
 						<i class="eicon-zoom-in" aria-hidden="true"></i>
 					</div>

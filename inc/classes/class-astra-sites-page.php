@@ -174,7 +174,7 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 				$data = wp_parse_args( $new_data, $stored_data );
 
 				// Update settings.
-				update_option( 'astra_sites_settings', $data );
+				update_option( 'astra_sites_settings', $data, 'no' );
 			}
 
 			if ( ! defined( 'WP_CLI' ) ) {
@@ -207,7 +207,7 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 			$data = wp_parse_args( $new_data, $stored_data );
 
 			// Update settings.
-			update_option( 'astra_sites_settings', $data );
+			update_option( 'astra_sites_settings', $data, 'no' );
 
 			$sites = $this->get_sites_by_page_builder( $new_data['page_builder'] );
 
@@ -286,7 +286,7 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 
 			$new_data = wp_parse_args( $args, $stored_data );
 
-			update_option( 'astra_sites_settings', $new_data );
+			update_option( 'astra_sites_settings', $new_data, 'no' );
 		}
 
 		/**

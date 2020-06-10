@@ -5,7 +5,7 @@ Tags: Elementor,Beaver Builder,Templates,Gutenberg,Astra Starter Sites
 Requires at least: 4.4
 Requires PHP: 5.3
 Tested up to: 5.4
-Stable tag: 2.2.4
+Stable tag: 2.2.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -137,6 +137,15 @@ We are open to suggestions and would love to work on topics that our users are l
 7. Free Images by Pixabay right inside the WordPress media popup.
 
 == Changelog ==
+
+v2.2.5 - 10-June-2020
+- Improvement: Performance enhancements in order to improve the TTFB (time to first byte).
+- Improvement: Now users can see better error messages (if any) while import.
+- Improvement: Handled the multisite plugin install/activate capability issue for standard administrator user.
+- Fix: Resolved a conflict with Groundhogg plugin.
+- Fix: Resolved a conflict between 3rd party plugins and Pixabay Images.
+- Fix: Fixed latest Brizy page builder related issues.
+- Fix: Fixed the repeated content import issues.
 
 v2.2.4 - 04-May-2020
 - Improvement: Demo data is stored Network Wide for Multisite instance.

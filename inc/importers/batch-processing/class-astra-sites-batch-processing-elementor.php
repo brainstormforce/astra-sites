@@ -63,10 +63,7 @@ class Astra_Sites_Batch_Processing_Elementor extends Source_Local {
 		}
 
 		foreach ( $post_ids as $post_id ) {
-			$is_elementor_post = get_post_meta( $post_id, '_elementor_version', true );
-			if ( $is_elementor_post ) {
-				$this->import_single_post( $post_id );
-			}
+			$this->import_single_post( $post_id );
 		}
 	}
 	/**
@@ -77,6 +74,18 @@ class Astra_Sites_Batch_Processing_Elementor extends Source_Local {
 	 * @return void
 	 */
 	public function import_single_post( $post_id = 0 ) {
+
+		$is_elementor_post = get_post_meta( $post_id, '_elementor_version', true );
+		if ( ! $is_elementor_post ) {
+			return;
+		}
+
+		// Is page imported with Starter Sites?
+		// If not then skip batch process.
+		$imported_from_demo_site = get_post_meta( $post_id, '_astra_sites_imported_post', true );
+		if ( ! $imported_from_demo_site ) {
+			return;
+		}
 
 		if ( defined( 'WP_CLI' ) ) {
 			\WP_CLI::line( 'Elementor - Processing page: ' . $post_id );
