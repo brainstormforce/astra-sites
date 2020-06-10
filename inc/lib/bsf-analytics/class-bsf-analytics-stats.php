@@ -181,7 +181,7 @@ if ( ! class_exists( 'BSF_Analytics_Stats' ) ) {
 		private function get_curl_ssl_version() {
 			$curl = array();
 			if ( function_exists( 'curl_version' ) ) {
-				$curl = curl_version();
+				$curl = curl_version(); // phpcs:ignore WordPress.WP.AlternativeFunctions.curl_curl_version
 			}
 
 			return isset( $curl['ssl_version'] ) ? $curl['ssl_version'] : false;
@@ -196,7 +196,7 @@ if ( ! class_exists( 'BSF_Analytics_Stats' ) ) {
 		private function get_curl_version() {
 			$curl = array();
 			if ( function_exists( 'curl_version' ) ) {
-				$curl = curl_version();
+				$curl = curl_version(); // phpcs:ignore WordPress.WP.AlternativeFunctions.curl_curl_version
 			}
 
 			return isset( $curl['version'] ) ? $curl['version'] : false;
