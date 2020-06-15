@@ -52,3 +52,9 @@ if ( ! function_exists( 'astra_sites_setup' ) ) :
 	add_action( 'plugins_loaded', 'astra_sites_setup' );
 
 endif;
+
+// Astra Notices.
+require_once ASTRA_SITES_DIR . 'admin/astra-notices/class-astra-notices.php';
+
+// BSF Analytics Tracker.
+require_once ASTRA_SITES_DIR . 'admin/bsf-analytics/class-bsf-analytics.php';
