@@ -1,7 +1,4 @@
-var View = wp.media.View,
-    Frame = wp.media.view.Frame,
-    $ = jQuery,
-    Select = wp.media.view.MediaFrame.Select,
+var Frame = wp.media.view.Frame,
     AstraAttachmentsBrowser;
 
 wp.media.view.AstraContent = require( './content.js' );

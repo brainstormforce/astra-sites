@@ -78,10 +78,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Beaver_Builder' ) ) :
 			}
 
 			foreach ( $post_ids as $post_id ) {
-				$is_bb_post = get_post_meta( $post_id, '_fl_builder_enabled', true );
-				if ( $is_bb_post ) {
-					$this->import_single_post( $post_id );
-				}
+				$this->import_single_post( $post_id );
 			}
 		}
 
@@ -92,6 +89,18 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Beaver_Builder' ) ) :
 		 * @return void
 		 */
 		public function import_single_post( $post_id = 0 ) {
+
+			$is_bb_post = get_post_meta( $post_id, '_fl_builder_enabled', true );
+			if ( ! $is_bb_post ) {
+				return;
+			}
+
+			// Is page imported with Starter Sites?
+			// If not then skip batch process.
+			$imported_from_demo_site = get_post_meta( $post_id, '_astra_sites_imported_post', true );
+			if ( ! $imported_from_demo_site ) {
+				return;
+			}
 
 			if ( defined( 'WP_CLI' ) ) {
 				WP_CLI::line( 'Beaver Builder - Processing page: ' . $post_id );

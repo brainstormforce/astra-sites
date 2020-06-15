@@ -118,6 +118,13 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Gutenberg' ) ) :
 				WP_CLI::line( 'Gutenberg - Processing page: ' . $post_id );
 			}
 
+			// Is page imported with Starter Sites?
+			// If not then skip batch process.
+			$imported_from_demo_site = get_post_meta( $post_id, '_astra_sites_imported_post', true );
+			if ( ! $imported_from_demo_site ) {
+				return;
+			}
+
 			$is_elementor_page      = get_post_meta( $post_id, '_elementor_version', true );
 			$is_beaver_builder_page = get_post_meta( $post_id, '_fl_builder_enabled', true );
 			$is_brizy_page          = get_post_meta( $post_id, 'brizy_post_uid', true );
