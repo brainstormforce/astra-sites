@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the Starter Templates package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Starter Templates 2.2.5\n"
+"Project-Id-Version: Starter Templates 2.3.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/astra-sites\n"
-"POT-Creation-Date: 2020-06-10 09:48:43+00:00\n"
+"POT-Creation-Date: 2020-06-15 11:46:18+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -23,6 +23,54 @@ msgstr ""
 "X-Poedit-Bookmarks: \n"
 "X-Textdomain-Support: yes\n"
 "X-Generator: grunt-wp-i18n 1.0.3\n"
+
+#: admin/astra-notices/class-astra-notices.php:125
+msgid "WordPress Nonce not validated."
+msgstr ""
+
+#: admin/bsf-analytics/class-bsf-analytics.php:183
+#. translators: %s product name
+msgid ""
+"Want to help make <strong>%1s</strong> even more awesome? Allow us to "
+"collect non-sensitive diagnostic data and usage information. "
+msgstr ""
+
+#: admin/bsf-analytics/class-bsf-analytics.php:186
+msgid "This will be applicable for all sites from the network."
+msgstr ""
+
+#: admin/bsf-analytics/class-bsf-analytics.php:210
+#. translators: %s usage doc link
+msgid " Know More."
+msgstr ""
+
+#: admin/bsf-analytics/class-bsf-analytics.php:217
+msgid "Yes! Allow it"
+msgstr ""
+
+#: admin/bsf-analytics/class-bsf-analytics.php:225
+msgid "No Thanks"
+msgstr ""
+
+#: admin/bsf-analytics/class-bsf-analytics.php:294
+msgid "Every two days"
+msgstr ""
+
+#: admin/bsf-analytics/class-bsf-analytics.php:348
+msgid "Usage Tracking"
+msgstr ""
+
+#: admin/bsf-analytics/class-bsf-analytics.php:380
+msgid "Allow Brainstorm Force products to track non-sensitive usage tracking data."
+msgstr ""
+
+#: admin/bsf-analytics/class-bsf-analytics.php:383
+msgid " This will be applicable for all sites from the network."
+msgstr ""
+
+#: admin/bsf-analytics/class-bsf-analytics.php:388
+msgid "Learn More."
+msgstr ""
 
 #. Plugin Name of the plugin/theme
 msgid "Starter Templates"
@@ -777,21 +825,21 @@ msgstr ""
 msgid "Read More →"
 msgstr ""
 
-#: inc/classes/class-astra-sites.php:1490
+#: inc/classes/class-astra-sites.php:1488
 msgid "Error: You don't have the required permissions to install plugins."
 msgstr ""
 
-#: inc/classes/class-astra-sites.php:1526
+#: inc/classes/class-astra-sites.php:1524
 msgid "Plugin Activated"
 msgstr ""
 
-#: inc/classes/class-astra-sites.php:1642
+#: inc/classes/class-astra-sites.php:1640
 msgid ""
 "Insufficient Permission. Please contact your Super Admin to allow the "
 "install required plugin permissions."
 msgstr ""
 
-#: inc/classes/class-astra-sites.php:1840
+#: inc/classes/class-astra-sites.php:1838
 msgid "Template library refreshed!"
 msgstr ""
 
@@ -1392,54 +1440,6 @@ msgstr ""
 
 #: inc/includes/white-label.php:34
 msgid "Plugin Description:"
-msgstr ""
-
-#: inc/lib/astra-notices/class-astra-notices.php:125
-msgid "WordPress Nonce not validated."
-msgstr ""
-
-#: inc/lib/bsf-analytics/class-bsf-analytics.php:183
-#. translators: %s product name
-msgid ""
-"Want to help make <strong>%1s</strong> even more awesome? Allow us to "
-"collect non-sensitive diagnostic data and usage information. "
-msgstr ""
-
-#: inc/lib/bsf-analytics/class-bsf-analytics.php:186
-msgid "This will be applicable for all sites from the network."
-msgstr ""
-
-#: inc/lib/bsf-analytics/class-bsf-analytics.php:208
-#. translators: %s usage doc link
-msgid " Know More."
-msgstr ""
-
-#: inc/lib/bsf-analytics/class-bsf-analytics.php:215
-msgid "Yes! Allow it"
-msgstr ""
-
-#: inc/lib/bsf-analytics/class-bsf-analytics.php:223
-msgid "No Thanks"
-msgstr ""
-
-#: inc/lib/bsf-analytics/class-bsf-analytics.php:292
-msgid "Every two days"
-msgstr ""
-
-#: inc/lib/bsf-analytics/class-bsf-analytics.php:346
-msgid "Usage Tracking"
-msgstr ""
-
-#: inc/lib/bsf-analytics/class-bsf-analytics.php:377
-msgid "Allow Brainstorm Force products to track non-sensitive usage tracking data."
-msgstr ""
-
-#: inc/lib/bsf-analytics/class-bsf-analytics.php:380
-msgid " This will be applicable for all sites from the network."
-msgstr ""
-
-#: inc/lib/bsf-analytics/class-bsf-analytics.php:385
-msgid "Learn More."
 msgstr ""
 
 #. Plugin URI of the plugin/theme

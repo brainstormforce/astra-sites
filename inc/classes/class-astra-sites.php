@@ -1457,8 +1457,6 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		private function includes() {
 
 			require_once ASTRA_SITES_DIR . 'inc/classes/functions.php';
-			require_once ASTRA_SITES_DIR . 'inc/lib/astra-notices/class-astra-notices.php';
-			require_once ASTRA_SITES_DIR . 'inc/lib/bsf-analytics/class-bsf-analytics.php';
 			require_once ASTRA_SITES_DIR . 'inc/classes/class-astra-sites-white-label.php';
 			require_once ASTRA_SITES_DIR . 'inc/classes/class-astra-sites-page.php';
 			require_once ASTRA_SITES_DIR . 'inc/classes/class-astra-sites-elementor-pages.php';
