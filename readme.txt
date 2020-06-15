@@ -139,7 +139,7 @@ We are open to suggestions and would love to work on topics that our users are l
 == Changelog ==
 
 v2.3.0 - 15-June-2020
-- New: Users can now share non-personal usage data to help us test and develop better products. ( <a href="https://store.brainstormforce.com/usage-tracking/?utm_source=changelog&utm_medium=changelog&utm_campaign=usage_tracking" target="_blank" rel="noopener">Know More</a> )
+- New: Users can now share non-personal usage data to help us test and develop better products.
 
 v2.2.5 - 15-June-2020
 - Improvement: Performance enhancements in order to improve the TTFB (time to first byte).
