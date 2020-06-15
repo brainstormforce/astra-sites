@@ -340,8 +340,8 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		 * @return mixed URL.
 		 */
 		public static function _get_uri() { // phpcs:ignore PSR2.Methods.MethodDeclaration.Underscore
-			$path       = wp_normalize_path( dirname( __FILE__ ) );
-			$theme_dir  = wp_normalize_path( get_template_directory() );
+			$path      = wp_normalize_path( dirname( __FILE__ ) );
+			$theme_dir = wp_normalize_path( get_template_directory() );
 
 			if ( strpos( $path, $theme_dir ) !== false ) {
 				return trailingslashit( get_template_directory_uri() . str_replace( $theme_dir, '', $path ) );
