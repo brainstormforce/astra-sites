@@ -138,7 +138,7 @@ We are open to suggestions and would love to work on topics that our users are l
 
 == Changelog ==
 
-v2.2.5 - 10-June-2020
+v2.2.5 - 15-June-2020
 - Improvement: Performance enhancements in order to improve the TTFB (time to first byte).
 - Improvement: Now users can see better error messages (if any) while import.
 - Improvement: Handled the multisite plugin install/activate capability issue for standard administrator user.
