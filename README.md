@@ -139,7 +139,7 @@ We are open to suggestions and would love to work on topics that our users are l
 ## Changelog ##
 
 v2.3.1 - 17-June-2020
-- Fix: WP CLI site import fails due to the user role and capability check.
+- Fix: Fixed the user role and capability issue for WP CLI demo import.
 
 v2.3.0 - 15-June-2020
 - New: Users can now share non-personal usage data to help us test and develop better products.
