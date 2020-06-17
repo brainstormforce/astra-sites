@@ -207,7 +207,7 @@ if ( ! class_exists( 'BSF_Analytics' ) ) {
 								</div>
 							</div>',
 						/* translators: %s usage doc link */
-						sprintf( $notice_string . '<span dir="%2s"><a href="%3s" target="_blank" rel="noreferrer noopener">%4s</a><span>', esc_html( $this->get_product_name() ), $language_dir, esc_url( $this->usage_doc_link ), __( ' Know More.', 'astra-sites' ) ),
+						sprintf( $notice_string . '<span dir="%2s"><a href="%3s" target="_blank" rel="noreferrer noopener">%4s</a><span>', esc_html( $this->get_product_name() ), $language_dir, esc_url( $this->usage_doc_link ), __( ' Know More.', 'astra', 'astra-sites' ) ),
 						add_query_arg(
 							array(
 								'bsf_analytics_optin' => 'yes',
