@@ -516,6 +516,8 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) {
 			$demo_data = get_option( 'astra_sites_import_data', array() );
 
 			do_action( 'astra_sites_import_complete', $demo_data );
+
+			wp_send_json_success();
 		}
 
 		/**
