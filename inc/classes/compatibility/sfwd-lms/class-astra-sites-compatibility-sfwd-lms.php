@@ -46,6 +46,49 @@ if ( ! class_exists( 'Astra_Sites_Compatibility_SFWD_LMS' ) ) :
 		 */
 		public function __construct() {
 			add_filter( 'astra_sites_gutenberg_batch_process_post_types', array( $this, 'set_post_types' ) );
+			add_action( 'astra_sites_import_complete', array( $this, 'process_landing_pages_mapping' ) );
+		}
+
+		/**
+		 * Set LearnDash Landing pages with respect to Cartflows.
+		 *
+		 * @since 2.3.2
+		 */
+		public function process_landing_pages_mapping() {
+
+			$demo_data = get_option( 'astra_sites_import_data', array() );
+			if ( ! isset( $demo_data['astra-post-data-mapping'] ) || ! isset( $demo_data['astra-post-data-mapping']['ld_landing_pages'] ) ) {
+				return;
+			}
+
+			$index = 'ld_landing_pages';
+			$posts = ( isset( $demo_data['astra-post-data-mapping'][ $index ] ) ) ? $demo_data['astra-post-data-mapping'][ $index ] : array();
+
+			if ( ! empty( $posts ) ) {
+				foreach ( $posts as $key => $post ) {
+
+					if ( '' !== $post['landing_page'] ) {
+						// Get course by Title.
+						$course = get_page_by_title( $post['course'], OBJECT, 'sfwd-courses' );
+
+						// Get landing step by Title.
+						$landing_page = get_page_by_title( $post['landing_page'], OBJECT, 'cartflows_step' );
+
+						if ( is_object( $course ) && is_object( $landing_page ) ) {
+
+							if ( defined( 'WP_CLI' ) ) {
+								WP_CLI::line( 'Setting LearnDash - CartFlows Landing page - ' . $course->post_title . ' - ( ' . $course->ID . ' )' );
+							}
+
+							$ld_meta                                     = get_post_meta( $course->ID, '_sfwd-courses', true );
+							$ld_meta['sfwd-courses_wcf_course_template'] = $landing_page->ID;
+
+							// Update the imported landing step to the course.
+							update_post_meta( $course->ID, '_sfwd-courses', $ld_meta );
+						}
+					}
+				}
+			}
 		}
 
 		/**

@@ -3625,7 +3625,8 @@ var AstraSitesAjaxQueue = (function() {
 			}
 
 			var site_option = data['astra-site-options-data'];
-			if ( ! AstraSitesAdmin.isEmpty( site_option ) && ! AstraSitesAdmin.isEmpty( site_option['elementor_active_kit'] ) ) {
+			// 46177 ID is for the demo [https://websitedemos.net/mountain/].
+			if ( ! AstraSitesAdmin.isEmpty( site_option ) && ! AstraSitesAdmin.isEmpty( site_option['elementor_active_kit'] ) && 46177 === data['id'] ) {
 				$('.astra-sites-result-preview').find('.astra-sites-import-elementor-kit').show();
 			} else {
 				$('.astra-sites-result-preview').find('.astra-sites-import-elementor-kit').hide();
