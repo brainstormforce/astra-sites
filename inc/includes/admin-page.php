@@ -759,7 +759,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<p>
 					<?php
 					/* translators: %s is the dynamic string. */
-					printf( esc_html__( 'Import process can take anywhere between 2 to 10 minutes depending on the size of the %s and speed of the connection.', 'astra-sites' ), '{{string}}' );
+					printf( esc_html__( 'The import process can take a few minutes depending on the size of the %s and speed of the connection.', 'astra-sites' ), '{{string}}' );
 					?>
 					</p>
 					<p>
