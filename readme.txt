@@ -5,7 +5,7 @@ Tags: Elementor,Beaver Builder,Templates,Gutenberg,Astra Starter Sites
 Requires at least: 4.4
 Requires PHP: 5.3
 Tested up to: 5.4
-Stable tag: 2.2.5
+Stable tag: 2.3.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -137,6 +137,12 @@ We are open to suggestions and would love to work on topics that our users are l
 7. Free Images by Pixabay right inside the WordPress media popup.
 
 == Changelog ==
+
+v2.3.1 - 17-June-2020
+- Fix: Fixed the user role and capability issue for WP CLI demo import.
+
+v2.3.0 - 15-June-2020
+- New: Users can now share non-personal usage data to help us test and develop better products.
 
 v2.2.5 - 15-June-2020
 - Improvement: Performance enhancements in order to improve the TTFB (time to first byte).
