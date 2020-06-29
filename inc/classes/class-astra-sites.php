@@ -1457,8 +1457,6 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		private function includes() {
 
 			require_once ASTRA_SITES_DIR . 'inc/classes/functions.php';
-			require_once ASTRA_SITES_DIR . 'inc/lib/astra-notices/class-astra-notices.php';
-			require_once ASTRA_SITES_DIR . 'inc/lib/bsf-analytics/class-bsf-analytics.php';
 			require_once ASTRA_SITES_DIR . 'inc/classes/class-astra-sites-white-label.php';
 			require_once ASTRA_SITES_DIR . 'inc/classes/class-astra-sites-page.php';
 			require_once ASTRA_SITES_DIR . 'inc/classes/class-astra-sites-elementor-pages.php';
@@ -1637,22 +1635,18 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			// Checking the `install_plugins` and `activate_plugins` capability for the current user.
 			// To perform plugin installation process.
 			if (
-				( ! current_user_can( 'install_plugins' ) && ! empty( $response['notinstalled'] ) ) ||
-				( ! current_user_can( 'activate_plugins' ) && ! empty( $response['inactive'] ) ) ) {
-				$message = __( 'Insufficient Permission. Please contact your Super Admin to allow the install required plugin permissions.', 'astra-sites' );
-				if ( defined( 'WP_CLI' ) && WP_CLI ) {
-					WP_CLI::error( $message );
-				} else {
-					$required_plugins_list = array_merge( $response['notinstalled'], $response['inactive'] );
-					$markup                = $message;
-					$markup               .= '<ul>';
-					foreach ( $required_plugins_list as $key => $required_plugin ) {
-						$markup .= '<li>' . esc_html( $required_plugin['name'] ) . '</li>';
-					}
-					$markup .= '</ul>';
-
-					wp_send_json_error( $markup );
+				( ! defined( 'WP_CLI' ) ) &&
+				( ( ! current_user_can( 'install_plugins' ) && ! empty( $response['notinstalled'] ) ) || ( ! current_user_can( 'activate_plugins' ) && ! empty( $response['inactive'] ) ) ) ) {
+				$message               = __( 'Insufficient Permission. Please contact your Super Admin to allow the install required plugin permissions.', 'astra-sites' );
+				$required_plugins_list = array_merge( $response['notinstalled'], $response['inactive'] );
+				$markup                = $message;
+				$markup               .= '<ul>';
+				foreach ( $required_plugins_list as $key => $required_plugin ) {
+					$markup .= '<li>' . esc_html( $required_plugin['name'] ) . '</li>';
 				}
+				$markup .= '</ul>';
+
+				wp_send_json_error( $markup );
 			}
 
 			$data = array(
