@@ -57,4 +57,19 @@ endif;
 require_once ASTRA_SITES_DIR . 'admin/astra-notices/class-astra-notices.php';
 
 // BSF Analytics Tracker.
-require_once ASTRA_SITES_DIR . 'admin/bsf-analytics/class-bsf-analytics.php';
+if ( ! class_exists( 'BSF_Analytics_Loader' ) ) {
+	require_once ASTRA_SITES_DIR . 'admin/bsf-analytics/class-bsf-analytics.php';
+}
+
+$bsf_analytics = BSF_Analytics_Loader::get_instance();
+
+$bsf_analytics->set_entity(
+	array(
+		'bsf' => array(
+			'product_name'    => 'Starter Templates',
+			'path'            => ASTRA_SITES_DIR . 'admin/bsf-analytics',
+			'author'          => 'Brainstorm Force',
+			'time_to_display' => '+24 hours',
+		),
+	)
+);

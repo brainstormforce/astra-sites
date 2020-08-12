@@ -35,10 +35,12 @@ if ( ! class_exists( 'BSF_Analytics' ) ) {
 		/**
 		 * Setup actions, load files.
 		 *
-		 * @param array $args entity data for analytics.
+		 * @param array  $args entity data for analytics.
+		 * @param string $analytics_path directory path to analytics library.
+		 * @param float  $analytics_version analytics library version.
 		 * @since 1.0.0
 		 */
-		public function __construct( $args ) {
+		public function __construct( $args, $analytics_path, $analytics_version ) {
 
 			// Bail when no analytics entities are registered.
 			if ( empty( $args ) ) {
@@ -47,20 +49,14 @@ if ( ! class_exists( 'BSF_Analytics' ) ) {
 
 			$this->entities = $args;
 
-			define( 'BSF_ANALYTICS_FILE', __FILE__ );
-			define( 'BSF_ANALYTICS_VERSION', '1.0.3' );
-			define( 'BSF_ANALYTICS_URI', $this->bsf_analytics_url() );
+			define( 'BSF_ANALYTICS_VERSION', $analytics_version );
+			define( 'BSF_ANALYTICS_URI', $this->get_analytics_url( $analytics_path ) );
 
 			add_action( 'admin_init', array( $this, 'handle_optin_optout' ) );
-			add_action( 'cron_schedules', array( $this, 'every_two_days_schedule' ) );
 			add_action( 'admin_notices', array( $this, 'option_notice' ) );
-			add_action( 'init', array( $this, 'schedule_unschedule_event' ), 99 );
+			add_action( 'init', array( $this, 'maybe_track_analytics' ), 99 );
 
 			$this->set_actions();
-
-			if ( ! has_action( 'bsf_analytics_send', array( $this, 'send' ) ) ) {
-				add_action( 'bsf_analytics_send', array( $this, 'send' ) );
-			}
 
 			add_action( 'admin_init', array( $this, 'register_usage_tracking_setting' ) );
 
@@ -84,19 +80,12 @@ if ( ! class_exists( 'BSF_Analytics' ) ) {
 		/**
 		 * BSF Analytics URL
 		 *
+		 * @param string $analytics_path directory path to analytics library.
 		 * @return String URL of bsf-analytics directory.
 		 * @since 1.0.0
 		 */
-		public function bsf_analytics_url() {
-
-			$path      = wp_normalize_path( dirname( __FILE__ ) );
-			$theme_dir = wp_normalize_path( get_template_directory() );
-
-			if ( strpos( $path, $theme_dir ) !== false ) {
-				return rtrim( get_template_directory_uri() . '/admin/bsf-analytics/', '/' );
-			} else {
-				return rtrim( plugin_dir_url( BSF_ANALYTICS_FILE ), '/' );
-			}
+		public function get_analytics_url( $analytics_path ) {
+			return str_replace( WP_CONTENT_DIR, content_url(), $analytics_path );
 		}
 
 		/**
@@ -335,41 +324,6 @@ if ( ! class_exists( 'BSF_Analytics' ) ) {
 		}
 
 		/**
-		 * Add two days event schedule variables.
-		 *
-		 * @param array $schedules scheduled array data.
-		 * @since 1.0.0
-		 */
-		public function every_two_days_schedule( $schedules ) {
-			$schedules['every_two_days'] = array(
-				'interval' => 2 * DAY_IN_SECONDS,
-				'display'  => __( 'Every two days', 'astra-sites' ),
-			);
-
-			return $schedules;
-		}
-
-		/**
-		 * Schedule usage tracking event.
-		 *
-		 * @since 1.0.0
-		 */
-		private function schedule_event() {
-			if ( ! wp_next_scheduled( 'bsf_analytics_send' ) && $this->is_tracking_enabled() ) {
-				wp_schedule_event( time(), 'every_two_days', 'bsf_analytics_send' );
-			}
-		}
-
-		/**
-		 * Unschedule usage tracking event.
-		 *
-		 * @since 1.0.0
-		 */
-		private function unschedule_event() {
-			wp_clear_scheduled_hook( 'bsf_analytics_send' );
-		}
-
-		/**
 		 * Load analytics stat class.
 		 *
 		 * @since 1.0.0
@@ -507,26 +461,22 @@ if ( ! class_exists( 'BSF_Analytics' ) ) {
 		}
 
 		/**
-		 * Schedule or unschedule event based on analytics option value.
+		 * Send analaytics track event if tracking is enabled.
 		 *
 		 * @since 1.0.0
 		 */
-		public function schedule_unschedule_event() {
+		public function maybe_track_analytics() {
 
-			foreach ( $this->entities as $key => $source ) {
+			if ( ! $this->is_tracking_enabled() ) {
+				return;
+			}
 
-				if ( true === $this->is_white_label_enabled( $key ) ) {
-					$this->unschedule_event();
-					return;
-				}
+			$analytics_track = get_site_transient( 'bsf_analytics_track' );
 
-				$analytics_option = get_site_option( $key . '_analytics_optin' );
-
-				if ( 'yes' === $analytics_option ) {
-					$this->schedule_event();
-				} else {
-					$this->unschedule_event();
-				}
+			// If the last data sent is 2 days old i.e. transient is expired.
+			if ( ! $analytics_track ) {
+				$this->send();
+				set_site_transient( 'bsf_analytics_track', true, 2 * DAY_IN_SECONDS );
 			}
 		}
 

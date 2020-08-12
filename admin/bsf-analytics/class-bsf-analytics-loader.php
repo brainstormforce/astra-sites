@@ -92,7 +92,10 @@ class BSF_Analytics_Loader {
 
 					if ( isset( $data['path'] ) ) {
 						if ( file_exists( $data['path'] . '/version.json' ) ) {
-							$analytics_version = file_get_contents( $data['path'] . '/version.json' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+							$file_contents     = file_get_contents( $data['path'] . '/version.json' ); // phpcs:ignore WordPress.WP.AlternativeFunctions.file_get_contents_file_get_contents
+							$analytics_version = json_decode( $file_contents, 1 );
+							$analytics_version = $analytics_version['bsf-analytics-ver'];
+
 							if ( version_compare( $analytics_version, $this->analytics_version, '>' ) ) {
 								$this->analytics_version = $analytics_version;
 								$this->analytics_path    = $data['path'];
@@ -108,7 +111,7 @@ class BSF_Analytics_Loader {
 
 			if ( file_exists( $this->analytics_path ) && ! class_exists( 'BSF_Analytics' ) ) {
 				require_once $this->analytics_path . '/class-bsf-analytics.php';
-				new BSF_Analytics( $unique_entities );
+				new BSF_Analytics( $unique_entities, $this->analytics_path, $this->analytics_version );
 			}
 		}
 	}
