@@ -58,7 +58,7 @@ require_once ASTRA_SITES_DIR . 'admin/astra-notices/class-astra-notices.php';
 
 // BSF Analytics Tracker.
 if ( ! class_exists( 'BSF_Analytics_Loader' ) ) {
-	require_once ASTRA_SITES_DIR . 'admin/bsf-analytics/class-bsf-analytics.php';
+	require_once ASTRA_SITES_DIR . 'admin/bsf-analytics/class-bsf-analytics-loader.php';
 }
 
 $bsf_analytics = BSF_Analytics_Loader::get_instance();

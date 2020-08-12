@@ -1210,6 +1210,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 					'parent_category'                    => '',
 					'compatibilities'                    => $this->get_compatibilities(),
 					'compatibilities_data'               => $this->get_compatibilities_data(),
+					'dismiss'                            => __( 'Dismiss this notice.', 'astra-sites' ),
 
 				)
 			);

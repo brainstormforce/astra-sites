@@ -1003,7 +1003,7 @@ var AstraSitesAjaxQueue = (function() {
 									$('#wpbody-content').find('.astra-sites-sync-library-message').remove();
 									var noticeContent = wp.updates.adminNotice( {
 										className: 'notice astra-sites-notice notice-success is-dismissible astra-sites-sync-library-message',
-										message:   astraSitesVars.strings.syncCompleteMessage + ' <button type="button" class="notice-dismiss"><span class="screen-reader-text">'+commonL10n.dismiss+'</span></button>',
+										message:   astraSitesVars.strings.syncCompleteMessage + ' <button type="button" class="notice-dismiss"><span class="screen-reader-text">'+astraSitesVars.dismiss+'</span></button>',
 									} );
 									$('#screen-meta').after( noticeContent );
 									$(document).trigger( 'wp-updates-notice-added' );
@@ -1172,7 +1172,7 @@ var AstraSitesAjaxQueue = (function() {
 		
 			var noticeContent = wp.updates.adminNotice( {
 				className: 'astra-sites-sync-library-message astra-sites-notice notice notice-info',
-				message:  astraSitesVars.syncLibraryStart + '<button type="button" class="notice-dismiss"><span class="screen-reader-text">'+commonL10n.dismiss+'</span></button>',
+				message:  astraSitesVars.syncLibraryStart + '<button type="button" class="notice-dismiss"><span class="screen-reader-text">'+astraSitesVars.dismiss+'</span></button>',
 			} );
 			$('#screen-meta').after( noticeContent );
 
@@ -1203,7 +1203,7 @@ var AstraSitesAjaxQueue = (function() {
 						$('#wpbody-content').find('.astra-sites-sync-library-message').remove();
 						var noticeContent = wp.updates.adminNotice( {
 							className: 'notice astra-sites-notice notice-success is-dismissible astra-sites-sync-library-message',
-							message:   astraSitesVars.strings.syncCompleteMessage + ' <button type="button" class="notice-dismiss"><span class="screen-reader-text">'+commonL10n.dismiss+'</span></button>',
+							message:   astraSitesVars.strings.syncCompleteMessage + ' <button type="button" class="notice-dismiss"><span class="screen-reader-text">'+astraSitesVars.dismiss+'</span></button>',
 						} );
 						$('#screen-meta').after( noticeContent );
 						$(document).trigger( 'wp-updates-notice-added' );
