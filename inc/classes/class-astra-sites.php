@@ -1553,8 +1553,8 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 
 			$required_plugins = ( isset( $_POST['required_plugins'] ) ) ? $_POST['required_plugins'] : $required_plugins;
 
-			$learndash_course_grid = 'https://www.learndash.com/add-on/course-grid/';
-			$learndash_woocommerce = 'https://www.learndash.com/add-on/woocommerce/';
+			$learndash_course_grid = 'https://www.brainstormforce.com/go/learndash-course-grid/';
+			$learndash_woocommerce = 'https://www.brainstormforce.com/go/learndash-woocommerce/';
 			if ( is_plugin_active( 'sfwd-lms/sfwd_lms.php' ) ) {
 				$learndash_addons_url  = admin_url( 'admin.php?page=learndash_lms_addons' );
 				$learndash_course_grid = $learndash_addons_url;
@@ -1566,7 +1566,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				'sfwd-lms'              => array(
 					'init' => 'sfwd-lms/sfwd_lms.php',
 					'name' => 'LearnDash LMS',
-					'link' => 'https://www.learndash.com/',
+					'link' => 'https://brainstormforce.com/go/learndash/',
 				),
 				'learndash-course-grid' => array(
 					'init' => 'learndash-course-grid/learndash_course_grid.php',

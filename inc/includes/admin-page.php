@@ -653,9 +653,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<div class="default">
 			<div class="heading">
 				<# if( 'astra-sites' === data ) { #>
-					<h3><?php esc_html_e( 'Your Selected Website is Being Imported!', 'astra-sites' ); ?></h3>
+					<h3><?php esc_html_e( 'Your Selected Website is Being Imported.', 'astra-sites' ); ?></h3>
 				<# } else { #>
-					<h3><?php esc_html_e( 'Your Selected Template is Being Imported!', 'astra-sites' ); ?></h3>
+					<h3><?php esc_html_e( 'Your Selected Template is Being Imported.', 'astra-sites' ); ?></h3>
 				<# } #>
 				<span class="dashicons close dashicons-no-alt"></span>
 			</div>
