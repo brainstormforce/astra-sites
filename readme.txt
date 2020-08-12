@@ -5,7 +5,7 @@ Tags: Elementor,Beaver Builder,Templates,Gutenberg,Astra Starter Sites
 Requires at least: 4.4
 Requires PHP: 5.3
 Tested up to: 5.5
-Stable tag: 2.3.3
+Stable tag: 2.3.4
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -138,8 +138,11 @@ We are open to suggestions and would love to work on topics that our users are l
 
 == Changelog ==
 
-v2.3.3 - 11-August-2020
+v2.3.4 - 11-August-2020
 - Improvement - Compatibility to WordPress 5.5.
+
+v2.3.3 - 7-August-2020
+- Improvement: Minor code changes.
 
 v2.3.2 - 29-June-2020
 - Improvement: Added CartFlows Landing page compatibility to LeadDash courses.
