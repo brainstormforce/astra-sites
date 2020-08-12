@@ -140,7 +140,7 @@ We are open to suggestions and would love to work on topics that our users are l
 
 ## Changelog ##
 
-v2.3.4 - 12-August-2020
+v2.3.4 - 13-August-2020
 - Improvement - Compatibility to WordPress 5.5.
 
 v2.3.3 - 7-August-2020
