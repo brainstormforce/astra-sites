@@ -274,7 +274,7 @@ if ( ! class_exists( 'BSF_Analytics' ) ) {
 				return;
 			}
 
-			$source = isset( $_GET['bsf_analytics_source'] ) ? sanitize_text_field( wp_unslash( $_GET['bsf_analytics_source'] ) ) : '';
+			$source = isset( $_GET['bsf_analytics_source'] ) ? sanitize_text_field( wp_unslash( $_GET['bsf_analytics_source'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 
 			if ( ! isset( $_GET[ $source . '_analytics_nonce' ] ) ) {
 				return;
