@@ -219,7 +219,6 @@ var AstraSitesAjaxQueue = (function() {
 		options_data    : '',
 		widgets_data    : '',
 		enabled_extensions    : '',
-		elementor_kit_flag : true,
 		action_slug		: '',
 		import_start_time  : '',
 		import_end_time    : '',
@@ -1903,7 +1902,6 @@ var AstraSitesAjaxQueue = (function() {
 
 		_start_site_import: function() {
 
-			AstraSitesAdmin.elementor_kit_flag = AstraSitesAdmin._is_elementor_kit_flag();
 			if ( AstraSitesAdmin._is_reset_data() ) {
 				$(document).trigger( 'astra-sites-reset-data' );
 			} else {
@@ -2318,7 +2316,6 @@ var AstraSitesAjaxQueue = (function() {
 						action       : 'astra-sites-import-options',
 						options_data : AstraSitesAdmin.options_data,
 						_ajax_nonce      : astraSitesVars._ajax_nonce,
-						elementor_kit_flag : AstraSitesAdmin.elementor_kit_flag
 					},
 					beforeSend: function() {
 						console.groupCollapsed( 'Importing Options' );
@@ -2457,13 +2454,6 @@ var AstraSitesAjaxQueue = (function() {
 
 		_is_reset_data: function() {
 			if ( $( '.astra-sites-reset-data' ).find('.checkbox').is(':checked') ) {
-				return true;
-			}
-			return false;
-		},
-
-		_is_elementor_kit_flag: function() {
-			if ( $( '.astra-sites-import-elementor-kit' ).find('.checkbox').is(':checked') ) {
 				return true;
 			}
 			return false;
@@ -3622,14 +3612,6 @@ var AstraSitesAjaxQueue = (function() {
 		template_kit_markup: function( data ) {
 			if ( 'elementor' != astraSitesVars.default_page_builder ) {
 				return;
-			}
-
-			var site_option = data['astra-site-options-data'];
-			// 46177 ID is for the demo [https://websitedemos.net/mountain/].
-			if ( ! AstraSitesAdmin.isEmpty( site_option ) && ! AstraSitesAdmin.isEmpty( site_option['elementor_active_kit'] ) && 46177 === data['id'] ) {
-				$('.astra-sites-result-preview').find('.astra-sites-import-elementor-kit').show();
-			} else {
-				$('.astra-sites-result-preview').find('.astra-sites-import-elementor-kit').hide();
 			}
 		},
 

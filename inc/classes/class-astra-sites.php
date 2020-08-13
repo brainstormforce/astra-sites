@@ -1315,6 +1315,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			$this->image_search_assets();
 
 			wp_enqueue_script( 'astra-sites-elementor-admin-page', ASTRA_SITES_URI . 'inc/assets/js/elementor-admin-page.js', array( 'jquery', 'wp-util', 'updates', 'masonry', 'imagesloaded' ), ASTRA_SITES_VER, true );
+			wp_localize_script( 'astra-sites-elementor-admin-page', 'pagenow', ASTRA_SITES_NAME );
 
 			wp_enqueue_style( 'astra-sites-admin', ASTRA_SITES_URI . 'inc/assets/css/admin.css', ASTRA_SITES_VER, true );
 			wp_style_add_data( 'astra-sites-admin', 'rtl', 'replace' );

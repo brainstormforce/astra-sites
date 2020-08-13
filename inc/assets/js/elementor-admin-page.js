@@ -1806,7 +1806,8 @@ var AstraSitesAjaxQueue = (function() {
 		 * Plugin Installation Error.
 		 */
 		_installError: function( event, response ) {
-			console.log( 'Error Installing Plugin - ' + args.slug );
+			console.log( response );
+			console.log( 'Error Installing Plugin - ' + response.slug );
 			console.log( response.errorMessage );
 		},
 
