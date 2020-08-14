@@ -1,6 +1,6 @@
 {
   "name": "astra-sites",
-  "version": "2.3.3",
+  "version": "2.3.4",
   "main": "Gruntfile.js",
   "author": "Brainstorm Force",
   "scripts": {
@@ -26,7 +26,6 @@
     "concurrently": "^4.1.2",
     "extract-text-webpack-plugin": "^3.0.2",
     "filesize": "^3.5.11",
-    "grunt": "^1.0.4",
     "grunt-bumpup": "^0.6.3",
     "grunt-contrib-clean": "^1.1.0",
     "grunt-contrib-compress": "^1.4.3",
@@ -107,20 +106,20 @@
     "eslint-plugin-jsx-a11y": "^6.2.1",
     "eslint-plugin-react": "^7.12.4",
     "eslint-plugin-wordpress": "^0.1.0",
-    "grunt-wp-readme-to-markdown": "^2.0.1",
-    "memize": "^1.0.5",
-    "react-masonry-component": "^6.2.1",
-    "react-masonry-css": "^1.0.12",
-    "react-memoize": "^1.0.1",
-    "webfontloader": "^1.6.28",
-    "grunt": "^1.0.4",
+    "grunt": "^1.2.1",
     "grunt-bumpup": "^0.6.3",
     "grunt-contrib-clean": "^1.1.0",
     "grunt-contrib-compress": "^1.5.0",
     "grunt-contrib-copy": "^1.0.0",
     "grunt-text-replace": "^0.4.0",
     "grunt-wp-i18n": "^1.0.3",
+    "grunt-wp-readme-to-markdown": "^2.0.1",
     "load-grunt-tasks": "^4.0.0",
+    "memize": "^1.0.5",
+    "react-masonry-component": "^6.2.1",
+    "react-masonry-css": "^1.0.12",
+    "react-memoize": "^1.0.1",
+    "webfontloader": "^1.6.28",
     "webpack-config": "^7.5.0"
   }
 }

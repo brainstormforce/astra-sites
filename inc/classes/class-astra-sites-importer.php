@@ -417,10 +417,6 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) {
 
 			$options_data = ( isset( $_POST['options_data'] ) ) ? (array) json_decode( stripcslashes( $_POST['options_data'] ), 1 ) : $options_data;
 
-			if ( 'true' !== $_POST['elementor_kit_flag'] ) {
-				$options_data['elementor_active_kit'] = '';
-			}
-
 			if ( ! empty( $options_data ) ) {
 				// Set meta for tracking the post.
 				if ( is_array( $options_data ) ) {

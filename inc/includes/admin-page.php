@@ -581,7 +581,16 @@ if ( ! defined( 'ABSPATH' ) ) {
 	</div>
 	<div class="astra-sites-import-content">
 		<p><b><?php esc_html_e( 'Hurray! The Website Imported Successfully! 🎉', 'astra-sites' ); ?></b></p>
-		<p><?php esc_html_e( 'Go ahead, customize the text, images and design to make it yours!', 'astra-sites' ); ?></p>
+		<p>
+			<?php esc_html_e( 'Go ahead, customize the text, images and design to make it yours!', 'astra-sites' ); ?>&nbsp;
+			<# if ( '46177' == AstraSitesAdmin.templateData.id ) { #>
+			<?php
+				$kit_doc_url = 'https://wpastra.com/docs/mountain-template-elementor-theme-style/';
+				/* translators: %1$s External Link */
+				printf( __( '%1$sRead more%2$s about customizing this Elementor Style Kit site.', 'astra-sites' ), '<a href="' . esc_url( $kit_doc_url ) . '" target="_blank">', '</a>' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			?>
+			<# } #>
+		</p>
 		<p><?php esc_html_e( 'Have fun!', 'astra-sites' ); ?></p>
 		<p><?php esc_html_e( 'PS: We try our best to use images that are free from legal perspectives. However, we do not take any responsibility. We strongly advise website owners to replace the images and any copyrighted media before publishing them online.', 'astra-sites' ); ?></p>
 	</div>
@@ -653,9 +662,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 		<div class="default">
 			<div class="heading">
 				<# if( 'astra-sites' === data ) { #>
-					<h3><?php esc_html_e( 'Your Selected Website is Being Imported!', 'astra-sites' ); ?></h3>
+					<h3><?php esc_html_e( 'Your Selected Website is Being Imported.', 'astra-sites' ); ?></h3>
 				<# } else { #>
-					<h3><?php esc_html_e( 'Your Selected Template is Being Imported!', 'astra-sites' ); ?></h3>
+					<h3><?php esc_html_e( 'Your Selected Template is Being Imported.', 'astra-sites' ); ?></h3>
 				<# } #>
 				<span class="dashicons close dashicons-no-alt"></span>
 			</div>
@@ -700,19 +709,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 										</label>
 									</li>
 
-								<# } #>
-
-								<# if( 'astra-sites' === data && 'elementor' == astraSitesVars.default_page_builder ) { #>
-									<li class="astra-sites-import-elementor-kit">
-										<label>
-											<input type="checkbox" name="elmentor-kit" checked="checked" class="checkbox">
-											<strong><?php esc_html_e( 'Import Elementor Style Kit', 'astra-sites' ); ?></strong>
-										</label>
-										<span class="astra-sites-tooltip-icon" data-tip-id="astra-sites-tooltip-elementor-kit"><span class="dashicons dashicons-editor-help"></span></span>
-										<div class="astra-sites-tooltip-message" id="astra-sites-tooltip-elementor-kit" style="display: none;">
-											<p><?php esc_html_e( 'This demo is built using Elementor Style Kit. By unchecking this the styles won\'t appear exactly like shown in the preview.', 'astra-sites' ); ?></p>
-									</div>
-									</li>
 								<# } #>
 
 								<# if( 'astra-sites' === data ) { #>
