@@ -97,7 +97,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Beaver_Builder' ) ) :
 
 			// Is page imported with Starter Sites?
 			// If not then skip batch process.
-			$imported_from_demo_site = get_post_meta( $post_id, '_astra_sites_imported_post', true );
+			$imported_from_demo_site = get_post_meta( $post_id, '_astra_sites_enable_for_batch', true );
 			if ( ! $imported_from_demo_site ) {
 				return;
 			}

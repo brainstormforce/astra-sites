@@ -59,6 +59,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 <script type="text/template" id="tmpl-ast-image-filters">
 	<div class="ast-image__filter-wrap">
 		<ul class="ast-image__filter">
+			<li class="ast-image__filter-safesearch">
+				<label><input type="checkbox" checked value="1" /><?php esc_html_e( 'SafeSearch', 'astra-sites' ); ?></label>
+			</li>
 			<li class="ast-image__filter-category">
 				<select>
 					<# for ( key in astraImages.pixabay_category ) { #>
