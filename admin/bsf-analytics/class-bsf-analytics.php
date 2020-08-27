@@ -85,7 +85,12 @@ if ( ! class_exists( 'BSF_Analytics' ) ) {
 		 * @since 1.0.0
 		 */
 		public function get_analytics_url( $analytics_path ) {
-			return str_replace( WP_CONTENT_DIR, content_url(), $analytics_path );
+
+			$content_dir_path = wp_normalize_path( WP_CONTENT_DIR );
+
+			$analytics_path = wp_normalize_path( $analytics_path );
+
+			return str_replace( $content_dir_path, content_url(), $analytics_path );
 		}
 
 		/**
@@ -274,7 +279,7 @@ if ( ! class_exists( 'BSF_Analytics' ) ) {
 				return;
 			}
 
-			$source = isset( $_GET['bsf_analytics_source'] ) ? sanitize_text_field( wp_unslash( $_GET['bsf_analytics_source'] ) ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
+			$source = isset( $_GET['bsf_analytics_source'] ) ? sanitize_text_field( wp_unslash( $_GET['bsf_analytics_source'] ) ) : '';
 
 			if ( ! isset( $_GET[ $source . '_analytics_nonce' ] ) ) {
 				return;

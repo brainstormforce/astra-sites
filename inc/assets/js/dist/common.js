@@ -20,7 +20,7 @@
             min_height     : 0,
             colors         : '',
             editors_choice : false,
-            safesearch     : false,
+            safesearch     : true,
             order          : 'popular',
             page           : $( 'body' ).data( 'page' ),
             per_page       : 30,
@@ -56,6 +56,7 @@
             $( document ).on( "click", ".ast-image__list-img-overlay", AstraImageCommon._preview );
             $( document ).on( "click", ".ast-image__go-back-text", AstraImageCommon._goBack );
             $( document ).on( "click", ".ast-image__save", AstraImageCommon._save );
+            $( document ).on( "click", ".ast-image__filter-safesearch input", AstraImageCommon._filter );
             $( document ).on( "change", ".ast-image__filter select", AstraImageCommon._filter );
             $( document ).on( "click", ".ast-image__edit-api", AstraImageCommon._editAPI );
             $( document ).on( "click", ".ast-image__browse-images", AstraImageCommon._browse );
@@ -76,10 +77,12 @@
         },
 
         _filter: function() {
+            let safesearch = $scope.find( '.ast-image__filter-safesearch input:checked' ).length ? true : false;
             let category = $scope.find( '.ast-image__filter-category select' ).val();
             let orientation = $scope.find( '.ast-image__filter-orientation select' ).val();
             let order = $scope.find( '.ast-image__filter-order select' ).val();
 
+            AstraImageCommon.config.safesearch = safesearch;
             AstraImageCommon.config.orientation = orientation;
             AstraImageCommon.config.category = category;
             AstraImageCommon.config.order = order;

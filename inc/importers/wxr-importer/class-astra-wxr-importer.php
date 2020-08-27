@@ -76,6 +76,7 @@ class Astra_WXR_Importer {
 		Astra_Sites_Importer_Log::add( 'Inserted - Post ' . $post_id . ' - ' . get_post_type( $post_id ) . ' - ' . get_the_title( $post_id ) );
 
 		update_post_meta( $post_id, '_astra_sites_imported_post', true );
+		update_post_meta( $post_id, '_astra_sites_enable_for_batch', true );
 
 		// Set the full width template for the pages.
 		if ( isset( $data['post_type'] ) && 'page' === $data['post_type'] ) {

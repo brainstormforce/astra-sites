@@ -127,6 +127,7 @@
     padding: 0;
     margin: 0;
     list-style-type: none;
+    align-items: center;
 }
 
 .ast-attachments-browser .ast-image__filter li {

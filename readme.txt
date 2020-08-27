@@ -5,7 +5,7 @@ Tags: Elementor,Beaver Builder,Templates,Gutenberg,Astra Starter Sites
 Requires at least: 4.4
 Requires PHP: 5.3
 Tested up to: 5.5
-Stable tag: 2.3.4
+Stable tag: 2.3.5
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -139,6 +139,12 @@ We are open to suggestions and would love to work on topics that our users are l
 7. Free Images by Pixabay right inside the WordPress media popup.
 
 == Changelog ==
+
+v2.3.5 - 27-August-2020
+- Improvement: Added Safe Search checkbox for Pixabay Image Search.
+- Fix: Elementor 3.0.0 and above import compatibility.
+- Fix: Resolved hotlink issue with Single page import.
+- Fix: Resolved edit permission issue while importing on Elementor page.
 
 v2.3.4 - 13-August-2020
 - Improvement - Compatibility to WordPress 5.5.

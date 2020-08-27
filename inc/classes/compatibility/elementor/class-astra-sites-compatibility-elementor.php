@@ -55,7 +55,10 @@ if ( ! class_exists( 'Astra_Sites_Compatibility_Elementor' ) ) :
 			 *          After defining the constant `WP_LOAD_IMPORTERS` in WP CLI it was not works.
 			 *          Try to remove below duplicate code in future.
 			 */
-			if ( defined( 'WP_CLI' ) ) {
+			if ( defined( 'WP_CLI' ) || ( defined( 'ELEMENTOR_VERSION' ) && version_compare( ELEMENTOR_VERSION, '3.0.0', '>=' ) ) ) {
+				remove_filter( 'wp_import_post_meta', array( 'Elementor\Compatibility', 'on_wp_import_post_meta' ) );
+				remove_filter( 'wxr_importer.pre_process.post_meta', array( 'Elementor\Compatibility', 'on_wxr_importer_pre_process_post_meta' ) );
+
 				add_filter( 'wp_import_post_meta', array( $this, 'on_wp_import_post_meta' ) );
 				add_filter( 'wxr_importer.pre_process.post_meta', array( $this, 'on_wxr_importer_pre_process_post_meta' ) );
 			}
