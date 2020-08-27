@@ -55,10 +55,51 @@ if ( ! class_exists( 'Astra_Sites_Compatibility_Elementor' ) ) :
 			 *          After defining the constant `WP_LOAD_IMPORTERS` in WP CLI it was not works.
 			 *          Try to remove below duplicate code in future.
 			 */
-			if ( defined( 'WP_CLI' ) || ( defined( 'ELEMENTOR_VERSION' ) && ELEMENTOR_VERSION >= '3.0.0' ) ) {
+			if ( defined( 'WP_CLI' ) || $this->is_elementor_compatible() ) {
 				add_filter( 'wp_import_post_meta', array( $this, 'on_wp_import_post_meta' ) );
 				add_filter( 'wxr_importer.pre_process.post_meta', array( $this, 'on_wxr_importer_pre_process_post_meta' ) );
 			}
+		}
+
+		/**
+		 * Is Elementor Compatible version
+		 *
+		 * @since 2.3.5
+		 * @return boolean
+		 */
+		public function is_elementor_compatible() {
+
+			// If Elementor version is below 3.0.0 then don't do anything.
+			if ( defined( 'ELEMENTOR_VERSION' ) && ELEMENTOR_VERSION < '3.0.0' ) {
+				return false;
+			}
+
+			// If Elementor add the slashes then skip our filter.
+			if ( $this->is_wp_importer_before_0_7() ) {
+				return false;
+			}
+
+			return true;
+		}
+
+		/**
+		 * Is WordPress Importer Before 0.7
+		 *
+		 * @since 2.3.5
+		 * @return boolean
+		 */
+		public function is_wp_importer_before_0_7() {
+			include ABSPATH . '/wp-admin/includes/plugin.php';
+
+			$wp_importer = get_plugins( '/wordpress-importer' );
+
+			$wp_importer_version = isset( $wp_importer['wordpress-importer.php']['Version'] ) ? $wp_importer['wordpress-importer.php']['Version'] : '';
+
+			if ( version_compare( $wp_importer_version, '0.7', '<' ) ) {
+				return true;
+			}
+
+			return false;
 		}
 
 		/**

@@ -141,8 +141,10 @@ We are open to suggestions and would love to work on topics that our users are l
 == Changelog ==
 
 v2.3.5 - 27-August-2020
--
--
+- Improvement: Added Safe Search checkbox for Pixabay Image Search.
+- Fix: Elementor 3.0.0 and above import compatibility.
+- Fix: Resolved hotlink issue with Single page import.
+- Fix: Resolved edit permission issue while importing on Elementor page.
 
 v2.3.4 - 13-August-2020
 - Improvement - Compatibility to WordPress 5.5.
