@@ -933,8 +933,8 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 					'show_if' => ( false === Astra_Sites_White_Label::get_instance()->is_white_labeled() ),
 					/* translators: %1$s white label plugin name and %2$s deactivation link */
 					'message' => sprintf(
-						'<div class="notice-image">
-							<img src="%1$s" class="custom-logo" alt="Starter Templates" itemprop="logo"></div>
+						'<div class="notice-image" style="display: flex;">
+							<img src="%1$s" class="custom-logo" alt="Starter Templates" itemprop="logo" style="max-width: 90px;"></div>
 							<div class="notice-content">
 								<div class="notice-heading">
 									%2$s
