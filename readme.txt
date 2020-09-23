@@ -140,7 +140,7 @@ We are open to suggestions and would love to work on topics that our users are l
 
 == Changelog ==
 
-v2.3.6 - 17-September-2020
+v2.3.6 - 23-September-2020
 - Improvement: Added the Pixabay images support for new post, pages, and custom post type screen.
 - Improvement: Better handling of notices in the case of sync process.
 
