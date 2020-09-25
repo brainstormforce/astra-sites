@@ -489,7 +489,7 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 						</div>
 					</div>
 
-					<div class="back-to-layout" title="Back to Layout"><i class="icon-chevron-left"></i></div>
+					<div class="back-to-layout" title="Back to Layout"><i class="ast-icon-chevron-left"></i></div>
 					<div id="astra-sites-filters" class="hide-on-mobile">
 						<?php $this->site_filters(); ?>
 					</div>
@@ -499,12 +499,12 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 								<ul class="filter-links">
 									<li>
 										<a title="<?php esc_html_e( 'My Favorite', 'astra-sites' ); ?>" href="#" class="astra-sites-show-favorite-button">
-											<i class="icon-heart"></i>
+											<i class="ast-icon-heart"></i>
 										</a>
 									</li>
 									<li>
 										<a title="<?php esc_html_e( 'Sync Library', 'astra-sites' ); ?>" href="#" class="astra-sites-sync-library-button">
-											<i class="icon-refresh"></i>
+											<i class="ast-icon-refresh"></i>
 										</a>
 									</li>
 								</ul>
@@ -625,7 +625,7 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 						}
 						?>
 						<input autocomplete="off" placeholder="<?php esc_html_e( 'Search...', 'astra-sites' ); ?>" type="search" aria-describedby="live-search-desc" id="wp-filter-search-input" class="wp-filter-search">
-						<span class="icon-search search-icon"></span>
+						<span class="ast-icon-search search-icon"></span>
 						<div class="astra-sites-autocomplete-result"></div>
 					</div>
 				</div>
