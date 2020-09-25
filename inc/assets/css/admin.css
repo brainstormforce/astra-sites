@@ -9,7 +9,7 @@
   font-style: normal;
 }
 
-[class^="icon-"], [class*=" icon-"] {
+[class^="ast-icon-"], [class*=" ast-icon-"] {
   /* use !important to prevent issues with browser extensions that change fonts */
   font-family: 'icomoon' !important;
   speak: none;
@@ -24,22 +24,22 @@
   -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-search:before {
+.ast-icon-search:before {
   content: "\e900";
 }
-.icon-heart:before {
+.ast-icon-heart:before {
   content: "\e901";
 }
-.icon-refresh:before {
+.ast-icon-refresh:before {
   content: "\e902";
 }
-.icon-chevron-left:before {
+.ast-icon-chevron-left:before {
   content: "\e904";
 }
-.icon-file:before {
+.ast-icon-file:before {
   content: "\e903";
 }
-.icon-layers:before {
+.ast-icon-layers:before {
   content: "\e905";
 }
 
@@ -397,7 +397,7 @@
     transition-duration: .05s;
     transition-timing-function: ease-in-out;
 }
-.theme-id-container .icon-star {
+.theme-id-container .ast-icon-star {
     padding: 0 15px 0 0;
 }
 .wrap .status {
@@ -1093,14 +1093,14 @@ body.loading-content .select-page-builder {
 .astra-sites-show-favorite-button.active {
     color: transparent;
 }
-.filter-links li > .astra-sites-show-favorite-button.current:hover .icon-heart,
-.filter-links li > .astra-sites-show-favorite-button.current .icon-heart,
-.filter-links li > .astra-sites-show-favorite-button:hover .icon-heart,
-.astra-sites-show-favorite-button.active .icon-heart {
+.filter-links li > .astra-sites-show-favorite-button.current:hover .ast-icon-heart,
+.filter-links li > .astra-sites-show-favorite-button.current .ast-icon-heart,
+.filter-links li > .astra-sites-show-favorite-button:hover .ast-icon-heart,
+.astra-sites-show-favorite-button.active .ast-icon-heart {
     color: #c34444;
 }
 
-.icon-heart {
+.ast-icon-heart {
     color: #666;
 }
 .header-actions a:focus {
