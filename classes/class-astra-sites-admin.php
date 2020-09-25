@@ -98,7 +98,6 @@ if ( ! class_exists( 'Astra_Sites_Admin' ) ) :
 						__( 'Nope, maybe later', 'astra-sites' ),
 						__( 'I already did', 'astra-sites' )
 					),
-					'display-notice-after' => MONTH_IN_SECONDS,
 				)
 			);
 		}
