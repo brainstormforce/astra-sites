@@ -47,6 +47,9 @@ if ( ! function_exists( 'astra_sites_setup' ) ) :
 	 */
 	function astra_sites_setup() {
 		require_once ASTRA_SITES_DIR . 'inc/classes/class-astra-sites.php';
+
+		// Admin.
+		require_once ASTRA_SITES_DIR . 'classes/class-astra-sites-admin.php';
 	}
 
 	add_action( 'plugins_loaded', 'astra_sites_setup' );
