@@ -901,7 +901,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		public function load_textdomain() {
 			load_plugin_textdomain( 'astra-sites' );
 		}
-		
+
 		/**
 		 * Show action links on the plugin screen.
 		 *

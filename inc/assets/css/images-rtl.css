@@ -9,7 +9,7 @@
   font-style: normal;
 }
 
-[class^="icon-"], [class*=" icon-"] {
+[class^="ast-icon-"], [class*=" ast-icon-"] {
     font-family: 'icomoon' !important;
     speak: none;
     font-style: normal;
@@ -21,11 +21,11 @@
     -moz-osx-font-smoothing: grayscale;
 }
 
-.icon-chevron-left:before {
+.ast-icon-chevron-left:before {
   content: "\e904";
 }
 
-.icon-search:before {
+.ast-icon-search:before {
   content: "\e900";
 }
 

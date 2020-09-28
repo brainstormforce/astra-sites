@@ -32,7 +32,7 @@ AstraAttachmentsBrowser = Frame.extend({
         // this.views.add( this.attachmentsHeading );
         this.views.add( new wp.media.view.AstraContent );
         this.$el.find( '.ast-image__search' ).wrapAll( '<div class="ast-image__search-wrap">' ).parent().html();
-        this.$el.find( '.ast-image__search-wrap' ).append( '<span class="icon-search search-icon"></span>' );
+        this.$el.find( '.ast-image__search-wrap' ).append( '<span class="ast-icon-search search-icon"></span>' );
     },
 
     photoUploadComplete: function( savedImage ) {
