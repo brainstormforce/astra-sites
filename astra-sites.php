@@ -3,7 +3,7 @@
  * Plugin Name: Starter Templates
  * Plugin URI: https://wpastra.com/
  * Description: Starter Templates is all in one solution for complete starter sites, single page templates, blocks & images. This plugin offers the premium library of ready templates & provides quick access to beautiful Pixabay images that can be imported in your website easily.
- * Version: 2.3.6
+ * Version: 2.3.7
  * Author: Brainstorm Force
  * Author URI: https://www.brainstormforce.com
  * Text Domain: astra-sites
@@ -19,7 +19,7 @@ if ( ! defined( 'ASTRA_SITES_NAME' ) ) {
 }
 
 if ( ! defined( 'ASTRA_SITES_VER' ) ) {
-	define( 'ASTRA_SITES_VER', '2.3.6' );
+	define( 'ASTRA_SITES_VER', '2.3.7' );
 }
 
 if ( ! defined( 'ASTRA_SITES_FILE' ) ) {
@@ -47,6 +47,9 @@ if ( ! function_exists( 'astra_sites_setup' ) ) :
 	 */
 	function astra_sites_setup() {
 		require_once ASTRA_SITES_DIR . 'inc/classes/class-astra-sites.php';
+
+		// Admin.
+		require_once ASTRA_SITES_DIR . 'classes/class-astra-sites-admin.php';
 	}
 
 	add_action( 'plugins_loaded', 'astra_sites_setup' );

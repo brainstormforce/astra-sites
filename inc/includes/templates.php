@@ -109,12 +109,12 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<?php
 				}
 				?>
-				<div class="back-to-layout" title="<?php esc_html_e( 'Back to Layout', 'astra-sites' ); ?>" data-step="1"><i class="icon-chevron-left"></i></div>
+				<div class="back-to-layout" title="<?php esc_html_e( 'Back to Layout', 'astra-sites' ); ?>" data-step="1"><i class="ast-icon-chevron-left"></i></div>
 			</div>
 			<div class="elementor-templates-modal__header__menu-area astra-sites-step-1-wrap ast-sites-modal__options">
 				<div class="elementor-template-library-header-menu">
-					<div class="elementor-template-library-menu-item elementor-active" data-template-source="remote" data-template-type="pages"><span class="icon-file"></span><?php esc_html_e( 'Pages', 'astra-sites' ); ?></div>		
-					<div class="elementor-template-library-menu-item" data-template-source="remote" data-template-type="blocks"><span class="icon-layers"></span><?php esc_html_e( 'Blocks', 'astra-sites' ); ?></div>
+					<div class="elementor-template-library-menu-item elementor-active" data-template-source="remote" data-template-type="pages"><span class="ast-icon-file"></span><?php esc_html_e( 'Pages', 'astra-sites' ); ?></div>		
+					<div class="elementor-template-library-menu-item" data-template-source="remote" data-template-type="blocks"><span class="ast-icon-layers"></span><?php esc_html_e( 'Blocks', 'astra-sites' ); ?></div>
 				</div>
 			</div>
 			<div class="elementor-templates-modal__header__items-area">
@@ -124,7 +124,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</div>
 				<div class="astra-sites__sync-wrap">
 					<div class="astra-sites-sync-library-button">
-						<span class="icon-refresh" aria-hidden="true" title="<?php esc_html_e( 'Sync Library', 'astra-sites' ); ?>"></span>
+						<span class="ast-icon-refresh" aria-hidden="true" title="<?php esc_html_e( 'Sync Library', 'astra-sites' ); ?>"></span>
 					</div>
 				</div>
 			</div>

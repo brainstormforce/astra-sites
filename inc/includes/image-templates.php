@@ -116,7 +116,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 <script type="text/template" id="tmpl-ast-image-go-back">
 	<span class="ast-image__go-back">
-		<i class="icon-chevron-left"></i>
+		<i class="ast-icon-chevron-left"></i>
 		<span class="ast-image__go-back-text"><?php esc_html_e( 'Back to Images', 'astra-sites' ); ?></span>
 	</span>
 </script>

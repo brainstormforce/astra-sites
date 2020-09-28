@@ -222,7 +222,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				</div>
 				<# if ( '' === type || 'site' === type ) { #>
 					<div class="favorite-action-wrap" data-favorite="{{favorite_class}}" title="{{favorite_title}}">
-						<i class="icon-heart"></i>
+						<i class="ast-icon-heart"></i>
 					</div>
 				<# } #>
 			</div>
@@ -311,7 +311,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</div>
 						<# if ( '' === type || 'site' === type ) { #>
 							<div class="favorite-action-wrap" data-favorite="{{favorite_class}}" title="{{favorite_title}}">
-								<i class="icon-heart"></i>
+								<i class="ast-icon-heart"></i>
 							</div>
 						<# } #>
 					</div>
@@ -372,7 +372,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 						</div>
 						<# if ( '' === type || 'site' === type ) { #>
 							<div class="favorite-action-wrap" data-favorite="{{favorite_class}}" title="{{favorite_title}}">
-								<i class="icon-heart"></i>
+								<i class="ast-icon-heart"></i>
 							</div>
 						<# } #>
 					</div>
