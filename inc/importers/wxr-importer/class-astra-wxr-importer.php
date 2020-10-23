@@ -148,9 +148,11 @@ class Astra_WXR_Importer {
 			$is_beaver_builder_page = in_array( '_fl_builder_enabled', $meta_data, true );
 			$is_brizy_page          = in_array( 'brizy_post_uid', $meta_data, true );
 
+			$disable_post_content = apply_filters( 'astra_sites_pre_process_post_disable_content', ( $is_attachment || $is_elementor_page || $is_beaver_builder_page || $is_brizy_page ) );
+
 			// If post type is `attachment OR
 			// If page contain Elementor, Brizy or Beaver Builder meta then skip this page.
-			if ( $is_attachment || $is_elementor_page || $is_beaver_builder_page || $is_brizy_page ) {
+			if ( $disable_post_content ) {
 				$data['post_content'] = '';
 			} else {
 				/**
