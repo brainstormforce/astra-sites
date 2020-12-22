@@ -69,7 +69,7 @@ $bsf_analytics = BSF_Analytics_Loader::get_instance();
 $bsf_analytics->set_entity(
 	array(
 		'bsf' => array(
-			'product_name'    => __( 'Starter Templates', 'astra-sites'),
+			'product_name'    => __( 'Starter Templates', 'astra-sites' ),
 			'path'            => ASTRA_SITES_DIR . 'admin/bsf-analytics',
 			'author'          => 'Brainstorm Force',
 			'time_to_display' => '+24 hours',

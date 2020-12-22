@@ -85,6 +85,26 @@ Use this imported site as a base for your project and don’t waste time startin
 
 _<a href="https://wpastra.com/ready-websites/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme">See list of all available sites to import »</a>_
 
+**Credits**
+
+History.js https://github.com/browserstate/history.js,
+History.js is distributed under the terms of the BSD  License.
+
+WP Background Process https://github.com/A5hleyRich/wp-background-processing/,
+WP Background Process is distributed under the terms of the GNU General Public License v2.0.
+
+Widget Importer Exporter https://github.com/churchthemes/widget-importer-exporter/,
+Widget Importer Exporter is distributed under the terms of the GNU General Public License v2.0.
+
+WordPress Importer https://github.com/humanmade/WordPress-Importer/,
+WordPress Importer is distributed under the terms of the GNU General Public License v2.0.
+
+EventSource https://github.com/Yaffle/EventSource/,
+EventSource is distributed under the terms of the MIT License.
+
+Fetch https://github.com/github/fetch/,
+Fetch is distributed under the terms of the MIT License.
+
 ## Installation ##
 
 1. Upload the plugin files to the `/wp-content/plugins/astra-sites` directory, or install the plugin through the WordPress plugins screen directly.
