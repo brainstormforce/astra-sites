@@ -1,5 +1,11 @@
 <?php
 /**
+ * Widget Importer Exporter
+ * https://github.com/churchthemes/widget-importer-exporter
+ *
+ * Released under the GNU General Public License v2.0
+ * https://github.com/churchthemes/widget-importer-exporter/blob/master/license.txt
+ *
  * Widget Data exporter class.
  *
  * @since  2.0.0
