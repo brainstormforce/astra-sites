@@ -149,8 +149,8 @@ We are open to suggestions and would love to work on topics that our users are l
 
 == Changelog ==
 
-v2.4.0 - 29-December-2020
-- Improvement: Added credits for the 3rd party libraries used in the plugin.
+v2.4.0 - 30-December-2020
+- Improvement: Additional compatibility with WordPress 5.6.
 
 v2.3.9 - 9-December-2020
 - Improvement - Compatibility to WordPress 5.6.
