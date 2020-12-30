@@ -5,7 +5,7 @@ Tags: Elementor,Beaver Builder,Templates,Gutenberg,Astra Starter Sites
 Requires at least: 4.4
 Requires PHP: 5.3
 Tested up to: 5.6
-Stable tag: 2.3.9
+Stable tag: 2.4.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -85,6 +85,15 @@ Use this imported site as a base for your project and don’t waste time startin
 
 _<a href="https://wpastra.com/ready-websites/?utm_source=wp-repo&utm_medium=link&utm_campaign=readme">See list of all available sites to import »</a>_
 
+**Credits**
+
+- [History.js](https://github.com/browserstate/history.js) is distributed under the terms of the BSD  License.
+- [WP Background Process](https://github.com/A5hleyRich/wp-background-processing/) is distributed under the terms of the GNU General Public License v2.0.
+- [Widget Importer Exporter](https://github.com/churchthemes/widget-importer-exporter/) is distributed under the terms of the GNU General Public License v2.0.
+- [WordPress Importer](https://github.com/humanmade/WordPress-Importer/) is distributed under the terms of the GNU General Public License v2.0.
+- [EventSource](https://github.com/Yaffle/EventSource/) is distributed under the terms of the MIT License.
+- [Fetch](https://github.com/github/fetch/) is distributed under the terms of the MIT License.
+
 == Installation ==
 
 1. Upload the plugin files to the `/wp-content/plugins/astra-sites` directory, or install the plugin through the WordPress plugins screen directly.
@@ -139,6 +148,9 @@ We are open to suggestions and would love to work on topics that our users are l
 7. Free Images by Pixabay right inside the WordPress media popup.
 
 == Changelog ==
+
+v2.4.0 - 30-December-2020
+- Improvement: Additional compatibility with WordPress 5.6.
 
 v2.3.9 - 9-December-2020
 - Improvement - Compatibility to WordPress 5.6.

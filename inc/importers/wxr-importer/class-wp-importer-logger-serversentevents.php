@@ -1,5 +1,13 @@
 <?php
 /**
+ * WordPress Importer
+ * https://github.com/humanmade/WordPress-Importer
+ *
+ * Released under the GNU General Public License v2.0
+ * https://github.com/humanmade/WordPress-Importer/blob/master/LICENSE
+ */
+
+/**
  * Import Log ServerSendEvents
  *
  * @since 2.0.0
