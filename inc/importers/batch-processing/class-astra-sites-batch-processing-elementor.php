@@ -97,10 +97,13 @@ class Astra_Sites_Batch_Processing_Elementor extends Source_Local {
 
 			$data = get_post_meta( $post_id, '_elementor_data', true );
 
+			\Astra_Sites_Importer_Log::add( wp_json_encode( $data ) );
+
 			if ( ! empty( $data ) ) {
 
 				// Update WP form IDs.
 				$ids_mapping = get_option( 'astra_sites_wpforms_ids_mapping', array() );
+				\Astra_Sites_Importer_Log::add( wp_json_encode( $ids_mapping ) );
 				if ( $ids_mapping ) {
 					foreach ( $ids_mapping as $old_id => $new_id ) {
 						$data = str_replace( '[wpforms id=\"' . $old_id, '[wpforms id=\"' . $new_id, $data );
@@ -111,6 +114,8 @@ class Astra_Sites_Batch_Processing_Elementor extends Source_Local {
 				if ( ! is_array( $data ) ) {
 					$data = json_decode( $data, true );
 				}
+				\Astra_Sites_Importer_Log::add( wp_json_encode( $data ) );
+
 				$document = Plugin::$instance->documents->get( $post_id );
 				if ( $document ) {
 					$data = $document->get_elements_raw_data( $data, true );
@@ -121,6 +126,7 @@ class Astra_Sites_Batch_Processing_Elementor extends Source_Local {
 
 				// Replace the site urls.
 				$demo_data = get_option( 'astra_sites_import_data', array() );
+				\Astra_Sites_Importer_Log::add( wp_json_encode( $demo_data ) );
 				if ( isset( $demo_data['astra-site-url'] ) ) {
 					$data = wp_json_encode( $data, true );
 					if ( ! empty( $data ) ) {

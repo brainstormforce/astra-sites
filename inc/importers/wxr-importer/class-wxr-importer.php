@@ -5,13 +5,9 @@
  *
  * Released under the GNU General Public License v2.0
  * https://github.com/humanmade/WordPress-Importer/blob/master/LICENSE
+ *
+ * @package WXR Importer
  */
-
- /**
-  * WXR Importer
-  *
-  * @package WXR Importer
-  */
 
 if ( ! class_exists( 'WXR_Importer' ) && class_exists( 'WP_Importer' ) ) :
 
@@ -879,14 +875,14 @@ if ( ! class_exists( 'WXR_Importer' ) && class_exists( 'WP_Importer' ) ) :
 
 			$post_exists = $this->post_exists( $data );
 			if ( $post_exists ) {
-				$this->logger->info(
-					sprintf(
-						/* translators: %1$s single post type, %2$s is post title. */
-						__( '%1$s "%2$s" already exists.', 'wordpress-importer' ),
-						$post_type_object->labels->singular_name,
-						$data['post_title']
-					)
+				$message = sprintf(
+					/* translators: %1$s single post type, %2$s is post title. */
+					__( '%1$s "%2$s" already exists.', 'wordpress-importer' ),
+					$post_type_object->labels->singular_name,
+					$data['post_title']
 				);
+
+				$this->logger->info( $message );
 
 				/**
 				 * Post processing already imported.
@@ -2424,7 +2420,7 @@ if ( ! class_exists( 'WXR_Importer' ) && class_exists( 'WP_Importer' ) ) :
 			}
 
 			// Still nothing, try post_exists, and cache it.
-			$exists                              = post_exists( $data['post_title'], $data['post_content'], $data['post_date'] );
+			$exists                              = post_exists( $data['post_title'], $data['post_content'], $data['post_date'], $data['post_type'] );
 			$this->exists['post'][ $exists_key ] = $exists;
 
 			return $exists;
