@@ -2826,3 +2826,54 @@ body.loading-content .select-page-builder {
 .required-plugins-count-1.dont-use-astra-theme .astra-sites-import-plugins {
     display: none;
 }
+
+.subscription-popup {
+    display: none;
+}
+
+.subscription-form {
+    margin-top: 2em;
+    display: flex;
+}
+
+.subscription-actions {
+    text-align: center;
+}
+
+.subscription-field {
+    margin-bottom: 1em;
+}
+
+.subscription-field:last-child {
+    margin-left: 1em;
+    flex: 1;
+}
+
+.subscription-input .error {
+    border-color: red;
+}
+
+.subscription-input input[type="email"] {
+    width: 100%;
+}
+
+.subscription-field label {
+    margin-bottom: .3em;
+    display: block;
+}
+
+.subscription-popup .astra-sites-import-content {
+    height: 300px;
+}
+
+.subscription-popup {
+    height: 350px;
+}
+
+.wp-core-ui .astra-sites-result-preview .subscription-actions .button.button-hero {
+    margin: 0;
+    box-shadow: none;
+    font-size: 14px;
+    min-height: 46px;
+    padding: 0 36px;
+}

@@ -663,6 +663,52 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div class="overlay"></div>
 	<div class="inner">
 
+		<div class="subscription-popup">
+			<div class="heading">
+				<h3><?php esc_html_e( 'One Last Step..', 'astra-sites' ); ?></h3>
+				<span class="dashicons close dashicons-no-alt"></span>
+			</div>
+			<div class="astra-sites-import-content">
+				<h2><?php esc_html_e( 'Enter your details', 'astra-sites' ); ?></h2>
+				<p><?php esc_html_e( 'To get access to exclusive starter templates, themes and the latest news', 'astra-sites' ); ?></p>
+				<div class="subscription-form">
+				<div class="subscription-field">
+						<label>Your First Name</label>
+						<div class="subscription-input">
+							<input name="first_name" type="text" placeholder="John" />
+						</div>
+					</div>
+					<div class="subscription-field">
+						<label>Your Last Name</label>
+						<div class="subscription-input">
+							<input name="last_name" type="text" placeholder="Doe" />
+						</div>
+					</div>
+					<div class="subscription-field">
+						<label>Email Address</label>
+						<div class="subscription-input">
+							<input name="email" type="email" placeholder="john.doe@example.com" />
+						</div>
+					</div>
+					<div class="subscription-field">
+						<label>Type</label>
+						<div class="subscription-input">
+							<input name="user_type" type="radio" value="" />None<br/>
+							<input name="user_type" type="radio" value="1" />Agency<br/>
+							<input name="user_type" type="radio" value="2" />Freelancer<br/>
+							<input name="user_type" type="radio" value="3" />Web Hobbyist<br/>
+						</div>
+					</div>
+				</div>
+				<div class="subscription-actions">
+					<input name="page_builder" type="hidden" placeholder="john.doe@example.com" />
+					<p><button class="button button-hero button-primary button-subscription-submit">Submit and Start Importing</button></p>
+					<p>By submitting, you agree to our <a href="#" target="_blank">Terms and Privacy Policy</a>.</p>
+					<p><a href="#" class="button-subscription-skip">Skip</a></p>
+				</div>
+			</div>
+		</div>
+
 		<div class="default">
 			<div class="heading">
 				<# if( 'astra-sites' === data ) { #>
@@ -703,7 +749,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 									<li class="astra-sites-import-customizer <?php echo esc_attr( $theme_dependancy_class ); ?>">
 										<label>
-											<input type="checkbox" name="customizer" checked="checked" class="checkbox">
+											<input type="checkbox" name="customizer" class="checkbox" checked="checked" />
 											<strong><?php esc_html_e( 'Import Customizer Settings', 'astra-sites' ); ?></strong>
 											<span class="astra-sites-tooltip-icon" data-tip-id="astra-sites-tooltip-customizer-settings"><span class="dashicons dashicons-editor-help"></span></span>
 											<div class="astra-sites-tooltip-message" id="astra-sites-tooltip-customizer-settings" style="display: none;">
@@ -718,14 +764,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 								<# if( 'astra-sites' === data ) { #>
 									<li class="astra-sites-import-widgets">
 										<label>
-											<input type="checkbox" name="widgets" checked="checked" class="checkbox">
+											<input type="checkbox" name="widgets" class="checkbox" checked="checked" />
 											<strong><?php esc_html_e( 'Import Widgets', 'astra-sites' ); ?></strong>
 										</label>
 									</li>
 								<# } #>
 
 								<li class="astra-sites-import-plugins">
-									<input type="checkbox" name="plugins" checked="checked" class="disabled checkbox" readonly>
+									<input type="checkbox" name="plugins" class="disabled checkbox" readonly checked="checked" />
 									<strong><?php esc_html_e( 'Install Required Plugins', 'astra-sites' ); ?></strong>
 									<span class="astra-sites-tooltip-icon" data-tip-id="astra-sites-tooltip-plugins-settings"><span class="dashicons dashicons-editor-help"></span></span>
 									<div class="astra-sites-tooltip-message" id="astra-sites-tooltip-plugins-settings" style="display: none;">
@@ -737,7 +783,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 								<# if( 'astra-sites' === data ) { #>
 									<li class="astra-sites-import-xml">
 										<label>
-											<input type="checkbox" name="xml" checked="checked" class="checkbox">
+											<input type="checkbox" name="xml" class="checkbox" checked="checked" />
 											<strong><?php esc_html_e( 'Import Content', 'astra-sites' ); ?></strong>
 										</label>
 										<span class="astra-sites-tooltip-icon" data-tip-id="astra-sites-tooltip-site-content"><span class="dashicons dashicons-editor-help"></span></span>

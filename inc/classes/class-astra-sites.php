@@ -20,6 +20,13 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 	class Astra_Sites {
 
 		/**
+		 * API Domain name
+		 *
+		 * @var (String) URL
+		 */
+		public $api_domain;
+
+		/**
 		 * API URL which is used to get the response from.
 		 *
 		 * @since  1.0.0
@@ -942,9 +949,10 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		 * @since  1.0.0
 		 */
 		public function set_api_url() {
-			$this->api_url = apply_filters( 'astra_sites_api_url', trailingslashit( self::get_api_domain() ) . 'wp-json/wp/v2/' );
+			$this->api_domain = trailingslashit( self::get_api_domain() );
+			$this->api_url    = apply_filters( 'astra_sites_api_url', $this->api_domain . 'wp-json/wp/v2/' );
 
-			$this->search_url = apply_filters( 'astra_sites_search_api_url', trailingslashit( self::get_api_domain() ) . 'wp-json/analytics/v2/search/' );
+			$this->search_url = apply_filters( 'astra_sites_search_api_url', $this->api_domain . 'wp-json/analytics/v2/search/' );
 
 			$this->pixabay_url     = 'https://pixabay.com/api/';
 			$this->pixabay_api_key = '2727911-c4d7c1031949c7e0411d7e81e';
@@ -1186,6 +1194,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 						'themeInstall' => sprintf( __( 'Installing %1$s Theme..', 'astra-sites' ), Astra_Sites_White_Label::get_instance()->get_option( 'astra', 'name', 'Astra' ) ),
 					),
 					'default_page_builder'               => $default_page_builder,
+					'default_page_builder_data'          => Astra_Sites_Page::get_instance()->get_default_page_builder(),
 					'default_page_builder_sites'         => Astra_Sites_Page::get_instance()->get_sites_by_page_builder( $default_page_builder ),
 					'sites'                              => $request_params,
 					'categories'                         => array(),
@@ -1194,6 +1203,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 					'license_status'                     => $license_status,
 					'license_page_builder'               => get_option( 'astra-sites-license-page-builder', '' ),
 
+					'ApiDomain'                          => $this->api_domain,
 					'ApiURL'                             => $this->api_url,
 					'stored_data'                        => $stored_data,
 					'favorite_data'                      => $favorite_data,
