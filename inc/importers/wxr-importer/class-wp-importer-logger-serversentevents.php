@@ -8,7 +8,7 @@
  *
  * @since 2.0.0
  *
- * @package Astra Sites
+ * @package WordPress Importer
  */
 
 if ( ! class_exists( 'WP_Importer_Logger_ServerSentEvents' ) && class_exists( 'WP_Importer_Logger' ) ) {
