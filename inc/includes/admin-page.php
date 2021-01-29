@@ -681,7 +681,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 							<div class="subscription-input">
 								<select name="user_type">
 									<option value="">
-										<?php esc_html_e( 'I\'m building website for:', 'astra-sites' ); ?>
+										<?php esc_html_e( 'I build websites for:', 'astra-sites' ); ?>
 									</option>
 									<option value="1">
 										<?php esc_html_e( 'Myself', 'astra-sites' ); ?>

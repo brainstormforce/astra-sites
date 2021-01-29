@@ -152,7 +152,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			}
 
 			$arguments = isset( $_POST['data'] ) ? array_map( 'sanitize_text_field', json_decode( stripslashes( $_POST['data'] ), true ) ) : array();
-			
+
 			$url = add_query_arg( $arguments, $this->api_domain . 'wp-json/starter-templates/v1/subscribe/' );
 
 			$response = wp_remote_post( $url );
@@ -1186,7 +1186,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			$data = apply_filters(
 				'astra_sites_localize_vars',
 				array(
-					'subscribed' 						 => get_user_meta( get_current_user_ID(), 'astra-sites-subscribed', true ),
+					'subscribed'                         => get_user_meta( get_current_user_ID(), 'astra-sites-subscribed', true ),
 					'debug'                              => defined( 'WP_DEBUG' ) ? true : false,
 					'isPro'                              => defined( 'ASTRA_PRO_SITES_NAME' ) ? true : false,
 					'isWhiteLabeled'                     => Astra_Sites_White_Label::get_instance()->is_white_labeled(),

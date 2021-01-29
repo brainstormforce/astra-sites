@@ -2881,7 +2881,7 @@ body.loading-content .select-page-builder {
     margin-bottom: 2em;
 }
 
-.subscription-input input.error {
+.subscription-field .subscription-input .error {
     border-color: red;
 }
 

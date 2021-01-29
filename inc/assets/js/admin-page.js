@@ -493,15 +493,16 @@ var AstraSitesAjaxQueue = (function() {
 
 			$( document ).on('click', '.button-subscription-submit', AstraSitesAdmin._subscribe );
 			$( document ).on('click' , '.button-subscription-skip', AstraSitesAdmin._hide_subscription_popup );
-			$( document ).on('blur' , '.subscription-input input[type="email"], .subscription-input input[type="text"]', AstraSitesAdmin._validate_fields );
+			$( document ).on('blur' , '.subscription-input input[type="email"], .subscription-input input[type="text"], .subscription-input [name="user_type"]', AstraSitesAdmin._validate_fields );
 
 		},
 
 		_validate_fields: function( event ) {
 			var first_name_field = $( '.subscription-input input[name="first_name"]' ) || '';
+			var user_type = $( '.subscription-input [name="user_type"]' ) || '';
 			var email_field = $( '.subscription-input input[name="email"]' ) || '';
 
-			$( '.subscription-input input' ).removeClass('error');
+			$( '.subscription-input input, .subscription-input select' ).removeClass('error');
 
 			if( ! first_name_field.val() ) {
 				first_name_field.addClass('error');
@@ -509,6 +510,14 @@ var AstraSitesAjaxQueue = (function() {
 					return;
 				}
 			}
+
+			if( ! user_type.val() ) {
+				user_type.addClass('error');
+				if( event && $( event.target ).hasClass( 'subscription-input-user-type' )  ) {
+					return;
+				}
+			}
+			
 
 			if( ! email_field.val() || false === AstraSitesAdmin.isValidEmail( email_field.val() ) ) {
 				email_field.addClass('error');
@@ -558,7 +567,7 @@ var AstraSitesAjaxQueue = (function() {
 
 			AstraSitesAdmin._validate_fields();
 
-			if( ! subscription_first_name ) {
+			if( ! subscription_first_name || ! subscription_type  ) {
 				return;
 			}
 
