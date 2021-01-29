@@ -55,12 +55,33 @@ if ( ! class_exists( 'Astra_Sites_Compatibility_Elementor' ) ) :
 			 *          After defining the constant `WP_LOAD_IMPORTERS` in WP CLI it was not works.
 			 *          Try to remove below duplicate code in future.
 			 */
-			if ( defined( 'WP_CLI' ) || ( defined( 'ELEMENTOR_VERSION' ) && version_compare( ELEMENTOR_VERSION, '3.0.0', '>=' ) ) ) {
+			if ( ! wp_doing_ajax() || ( defined( 'ELEMENTOR_VERSION' ) && version_compare( ELEMENTOR_VERSION, '3.0.0', '>=' ) ) ) {
 				remove_filter( 'wp_import_post_meta', array( 'Elementor\Compatibility', 'on_wp_import_post_meta' ) );
 				remove_filter( 'wxr_importer.pre_process.post_meta', array( 'Elementor\Compatibility', 'on_wxr_importer_pre_process_post_meta' ) );
 
 				add_filter( 'wp_import_post_meta', array( $this, 'on_wp_import_post_meta' ) );
 				add_filter( 'wxr_importer.pre_process.post_meta', array( $this, 'on_wxr_importer_pre_process_post_meta' ) );
+			}
+
+			add_action( 'astra_sites_before_delete_imported_posts', array( $this, 'force_delete_kit' ), 10, 2 );
+		}
+
+		/**
+		 * Force Delete Elementor Kit
+		 *
+		 * Delete the previously imported Elementor kit.
+		 *
+		 * @param int    $post_id     Post name.
+		 * @param string $post_type   Post type.
+		 */
+		public function force_delete_kit( $post_id = 0, $post_type = '' ) {
+
+			if ( ! $post_id ) {
+				return;
+			}
+
+			if ( 'elementor_library' === $post_type ) {
+				$_GET['force_delete_kit'] = true;
 			}
 		}
 
