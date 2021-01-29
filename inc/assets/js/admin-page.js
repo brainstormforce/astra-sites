@@ -517,7 +517,8 @@ var AstraSitesAjaxQueue = (function() {
 					AstraSitesAdmin.page_import_complete();
 				}
 			}
-			
+
+			astraSitesVars.subscribed = 'yes';
 		},
 
 		_subscribe: function( event ) {
@@ -529,7 +530,7 @@ var AstraSitesAjaxQueue = (function() {
 			var subscription_first_name = $( '.subscription-input input[name="first_name"]' ).val() || '';
 			var subscription_last_name = $( '.subscription-input input[name="last_name"]' ).val() || '';
 			var subscription_email = $( '.subscription-input input[name="email"]' ).val() || '';
-			var subscription_type = $( '.subscription-input input[name="user_type"]:checked' ).val() || '';
+			var subscription_type = $( '.subscription-input [name="user_type"]' ).val() || '';
 
 			$( '.subscription-input input' ).removeClass('error');
 
@@ -553,16 +554,24 @@ var AstraSitesAjaxQueue = (function() {
 				type: subscription_type,
 			};
 
-			var subscription_url = astraSitesVars.ApiDomain + 'wp-json/starter-templates/v1/subscribe/?' + decodeURIComponent( $.param( subscription_fields ) );
+			$.ajax({
+				url  : astraSitesVars.ajaxurl,
+				type : 'POST',
+				data : {
+					action : 'astra-sites-update-subscription',
+					_ajax_nonce : astraSitesVars._ajax_nonce,
+					data: JSON.stringify( subscription_fields ),
+				},
+				beforeSend: function() {
+					console.groupCollapsed( 'Email Subscription' );
+				},
+			})
+			.done(function ( response ) {
+				AstraSitesAdmin._log( response );
+				AstraSitesAdmin._hide_subscription_popup();
+				console.groupEnd();
+			});
 
-			fetch( subscription_url, {
-				method: 'POST',
-			} )
-				.then( res => res.json() )
-				.then( result => {
-					console.log( 'result', result );
-					AstraSitesAdmin._hide_subscription_popup();
-				} );
 		},
 
 		isValidEmail: function(eMail) {
@@ -1929,9 +1938,15 @@ var AstraSitesAjaxQueue = (function() {
 
 		_resetData: function() {
 
-			$( '.subscription-popup' ).show();
 			$('.install-theme-info').hide();
-			$( '.astra-sites-result-preview .default').hide();
+
+			if( astraSitesVars.isPro || astraSitesVars.subscribed ) {
+				AstraSitesAdmin.subscribe_status = true;
+				$('.ast-importing-wrap').show();
+			} else {
+				$( '.subscription-popup' ).show();
+				$( '.astra-sites-result-preview .default').hide();
+			}
 
 			AstraSitesAdmin.import_start_time = new Date();
 
@@ -2357,7 +2372,7 @@ var AstraSitesAjaxQueue = (function() {
 			AstraSitesAdmin.page_import_status = false;
 			AstraSitesAdmin.subscribe_status = false;
 		},
-		
+
 		import_complete: function() {
 
 			if( false === AstraSitesAdmin.subscribe_status ) {
@@ -3493,8 +3508,12 @@ var AstraSitesAjaxQueue = (function() {
 				return;
 			}
 
-			$( '.subscription-popup' ).show();
-			$( '.astra-sites-result-preview .default').hide();
+			if( astraSitesVars.isPro || astraSitesVars.subscribed ) {
+				AstraSitesAdmin.subscribe_status = true;
+			} else {
+				$( '.subscription-popup' ).show();
+				$( '.astra-sites-result-preview .default').hide();
+			}
 
 			$( '.astra-sites-page-import-popup .site-install-site-button, .preview-page-from-search-result .site-install-site-button' ).addClass('updating-message installing').text( 'Importing..' );
 	

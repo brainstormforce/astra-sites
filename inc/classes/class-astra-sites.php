@@ -137,6 +137,32 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 
 			add_action( 'delete_attachment', array( $this, 'delete_astra_images' ) );
 			add_filter( 'heartbeat_received', array( $this, 'search_push' ), 10, 2 );
+			add_action( 'wp_ajax_astra-sites-update-subscription', array( $this, 'update_subscription' ) );
+		}
+
+		/**
+		 * Update Subscription
+		 */
+		public function update_subscription() {
+
+			check_ajax_referer( 'astra-sites', '_ajax_nonce' );
+
+			if ( ! current_user_can( 'manage_options' ) ) {
+				wp_send_json_error( 'You can\'t access this action.' );
+			}
+
+			$arguments = isset( $_POST['data'] ) ? array_map( 'sanitize_text_field', json_decode( stripslashes( $_POST['data'] ), true ) ) : array();
+			
+			$url = add_query_arg( $arguments, $this->api_domain . 'wp-json/starter-templates/v1/subscribe/' );
+
+			$response = wp_remote_post( $url );
+			if ( ! is_wp_error( $response ) || wp_remote_retrieve_response_code( $response ) === 200 ) {
+				$response = json_decode( wp_remote_retrieve_body( $response ), true );
+			}
+
+			update_user_meta( get_current_user_ID(), 'astra-sites-subscribed', 'yes' );
+
+			wp_send_json_success( $response );
 		}
 
 		/**
@@ -1160,6 +1186,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			$data = apply_filters(
 				'astra_sites_localize_vars',
 				array(
+					'subscribed' 						 => get_user_meta( get_current_user_ID(), 'astra-sites-subscribed', true ),
 					'debug'                              => defined( 'WP_DEBUG' ) ? true : false,
 					'isPro'                              => defined( 'ASTRA_PRO_SITES_NAME' ) ? true : false,
 					'isWhiteLabeled'                     => Astra_Sites_White_Label::get_instance()->is_white_labeled(),
