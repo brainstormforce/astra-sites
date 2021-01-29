@@ -148,9 +148,11 @@ class Astra_WXR_Importer {
 			$is_beaver_builder_page = in_array( '_fl_builder_enabled', $meta_data, true );
 			$is_brizy_page          = in_array( 'brizy_post_uid', $meta_data, true );
 
+			$disable_post_content = apply_filters( 'astra_sites_pre_process_post_disable_content', ( $is_attachment || $is_elementor_page || $is_beaver_builder_page || $is_brizy_page ) );
+
 			// If post type is `attachment OR
 			// If page contain Elementor, Brizy or Beaver Builder meta then skip this page.
-			if ( $is_attachment || $is_elementor_page || $is_beaver_builder_page || $is_brizy_page ) {
+			if ( $disable_post_content ) {
 				$data['post_content'] = '';
 			} else {
 				/**
@@ -273,7 +275,7 @@ class Astra_WXR_Importer {
 	 */
 	public function sse_import( $xml_url = '' ) {
 
-		if ( ! defined( 'WP_CLI' ) ) {
+		if ( wp_doing_ajax() ) {
 
 			// Verify Nonce.
 			check_ajax_referer( 'astra-sites', '_ajax_nonce' );
@@ -308,7 +310,7 @@ class Astra_WXR_Importer {
 			exit;
 		}
 
-		if ( ! defined( 'WP_CLI' ) ) {
+		if ( ! wp_doing_ajax() ) {
 			// Time to run the import!
 			set_time_limit( 0 );
 
@@ -359,7 +361,7 @@ class Astra_WXR_Importer {
 		}
 
 		$this->emit_sse_message( $complete );
-		if ( ! defined( 'WP_CLI' ) ) {
+		if ( wp_doing_ajax() ) {
 			exit;
 		}
 	}
@@ -549,7 +551,7 @@ class Astra_WXR_Importer {
 	 */
 	public function emit_sse_message( $data ) {
 
-		if ( ! defined( 'WP_CLI' ) ) {
+		if ( wp_doing_ajax() ) {
 			echo "event: message\n";
 			echo 'data: ' . wp_json_encode( $data ) . "\n\n";
 

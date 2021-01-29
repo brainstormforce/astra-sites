@@ -1,7 +1,9 @@
-/** @license
- * eventsource.js
- * Available under MIT License (MIT)
- * https://github.com/Yaffle/EventSource/
+/**
+ * EventSource
+ * https://github.com/Yaffle/EventSource
+ *
+ * Released under the MIT License (MIT)
+ * https://github.com/Yaffle/EventSource/blob/master/LICENSE.md
  */
 
 /*jslint indent: 2, vars: true, plusplus: true */
