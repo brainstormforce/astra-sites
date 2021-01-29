@@ -663,6 +663,59 @@ if ( ! defined( 'ABSPATH' ) ) {
 	<div class="overlay"></div>
 	<div class="inner">
 
+		<div class="subscription-popup">
+			<div class="heading">
+				<h3><?php esc_html_e( 'One Last Step..', 'astra-sites' ); ?></h3>
+				<span class="dashicons close dashicons-no-alt"></span>
+			</div>
+			<div class="astra-sites-import-content">
+				<p><?php esc_html_e( 'To get access to exclusive starter templates, themes and updates, enter your details below:', 'astra-sites' ); ?></p>
+				<div class="subscription-form">
+					<div class="subscription-fields">
+						<div class="subscription-field">
+							<div class="subscription-input">
+								<input name="first_name" class="subscription-input-user-name" type="text" placeholder="<?php esc_html_e( 'Your First Name', 'astra-sites' ); ?>" />
+							</div>
+						</div>
+						<div class="subscription-field subscription-user-type">
+							<div class="subscription-input">
+								<select name="user_type">
+									<option value="">
+										<?php esc_html_e( 'I build websites for:', 'astra-sites' ); ?>
+									</option>
+									<option value="1">
+										<?php esc_html_e( 'Myself', 'astra-sites' ); ?>
+									</option>
+									<option value="2">
+										<?php esc_html_e( 'Someone else as a profession', 'astra-sites' ); ?>
+									</option>
+									<option value="3">
+										<?php esc_html_e( 'Someone else as a hobby', 'astra-sites' ); ?>
+									</option>
+								</select>
+							</div>
+						</div>
+					</div>
+					<div class="subscription-field">
+						<div class="subscription-input">
+							<input name="email" class="subscription-input-user-email" type="email" placeholder="<?php esc_html_e( 'Your Work Email', 'astra-sites' ); ?>" />
+						</div>
+					</div>
+				</div>
+				<input name="page_builder" type="hidden" placeholder="john.doe@example.com" />
+				<div class="subscription-actions">
+					<button class="button button-hero button-primary button-subscription-submit">
+						<span class="button-title"><?php esc_html_e( 'Submit and Start Importing', 'astra-sites' ); ?></span>
+						<span class="dashicons dashicons-update"></span>
+					</button>
+				</div>
+				<div class="subscription-footer">
+					<p>By submitting, you agree to our <a href="https://store.brainstormforce.com/terms-and-conditions/" target="_blank">Terms</a> and <a href="https://store.brainstormforce.com/privacy-policy/" target="_blank">Privacy Policy</a>.</p>
+					<a href="#" class="button-subscription-skip">Skip</a>
+				</div>
+			</div>
+		</div>
+
 		<div class="default">
 			<div class="heading">
 				<# if( 'astra-sites' === data ) { #>
@@ -703,7 +756,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 									<li class="astra-sites-import-customizer <?php echo esc_attr( $theme_dependancy_class ); ?>">
 										<label>
-											<input type="checkbox" name="customizer" checked="checked" class="checkbox">
+											<input type="checkbox" name="customizer" class="checkbox" checked="checked" />
 											<strong><?php esc_html_e( 'Import Customizer Settings', 'astra-sites' ); ?></strong>
 											<span class="astra-sites-tooltip-icon" data-tip-id="astra-sites-tooltip-customizer-settings"><span class="dashicons dashicons-editor-help"></span></span>
 											<div class="astra-sites-tooltip-message" id="astra-sites-tooltip-customizer-settings" style="display: none;">
@@ -718,14 +771,14 @@ if ( ! defined( 'ABSPATH' ) ) {
 								<# if( 'astra-sites' === data ) { #>
 									<li class="astra-sites-import-widgets">
 										<label>
-											<input type="checkbox" name="widgets" checked="checked" class="checkbox">
+											<input type="checkbox" name="widgets" class="checkbox" checked="checked" />
 											<strong><?php esc_html_e( 'Import Widgets', 'astra-sites' ); ?></strong>
 										</label>
 									</li>
 								<# } #>
 
 								<li class="astra-sites-import-plugins">
-									<input type="checkbox" name="plugins" checked="checked" class="disabled checkbox" readonly>
+									<input type="checkbox" name="plugins" class="disabled checkbox" readonly checked="checked" />
 									<strong><?php esc_html_e( 'Install Required Plugins', 'astra-sites' ); ?></strong>
 									<span class="astra-sites-tooltip-icon" data-tip-id="astra-sites-tooltip-plugins-settings"><span class="dashicons dashicons-editor-help"></span></span>
 									<div class="astra-sites-tooltip-message" id="astra-sites-tooltip-plugins-settings" style="display: none;">
@@ -737,7 +790,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 								<# if( 'astra-sites' === data ) { #>
 									<li class="astra-sites-import-xml">
 										<label>
-											<input type="checkbox" name="xml" checked="checked" class="checkbox">
+											<input type="checkbox" name="xml" class="checkbox" checked="checked" />
 											<strong><?php esc_html_e( 'Import Content', 'astra-sites' ); ?></strong>
 										</label>
 										<span class="astra-sites-tooltip-icon" data-tip-id="astra-sites-tooltip-site-content"><span class="dashicons dashicons-editor-help"></span></span>
