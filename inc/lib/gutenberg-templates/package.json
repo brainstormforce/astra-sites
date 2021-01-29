@@ -9,7 +9,8 @@
     "build": "webpack --mode production",
     "test": "jest --config ./jest.config.json",
     "test:watch": "npm run test -- --watch",
-    "package": "bin\\build.sh"
+    "package": "bin\\build.sh",
+    "release": "npm run build && npm run package"
   },
   "keywords": [],
   "author": "",
