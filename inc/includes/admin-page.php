@@ -684,13 +684,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 										<?php esc_html_e( 'I build websites for:', 'astra-sites' ); ?>
 									</option>
 									<option value="1">
-										<?php esc_html_e( 'Myself', 'astra-sites' ); ?>
+										<?php esc_html_e( 'For myself', 'astra-sites' ); ?>
 									</option>
 									<option value="2">
-										<?php esc_html_e( 'Someone else as a profession', 'astra-sites' ); ?>
+										<?php esc_html_e( 'For my client', 'astra-sites' ); ?>
 									</option>
 									<option value="3">
-										<?php esc_html_e( 'Someone else as a hobby', 'astra-sites' ); ?>
+										<?php esc_html_e( 'For my friend/relative', 'astra-sites' ); ?>
 									</option>
 								</select>
 							</div>
@@ -710,8 +710,9 @@ if ( ! defined( 'ABSPATH' ) ) {
 					</button>
 				</div>
 				<div class="subscription-footer">
-					<p>By submitting, you agree to our <a href="https://store.brainstormforce.com/terms-and-conditions/" target="_blank">Terms</a> and <a href="https://store.brainstormforce.com/privacy-policy/" target="_blank">Privacy Policy</a>.</p>
-					<a href="#" class="button-subscription-skip">Skip</a>
+					<?php /* translators: %1$s and %3$s are opening anchor tags, and %2$s and %4$s is closing anchor tags. */ ?>
+					<p><?php printf( __( 'By submitting, you agree to our %1$sTerms%2$s and %3$sPrivacy Policy%4$s.', 'astra-sites' ), '<a href="https://store.brainstormforce.com/terms-and-conditions/" target="_blank">', '<a>', '<a href="https://store.brainstormforce.com/privacy-policy/" target="_blank">', '<a>' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?></p>
+					<a href="#" class="button-subscription-skip"><?php esc_html_e( 'Skip', 'astra-sites' ); ?></a>
 				</div>
 			</div>
 		</div>

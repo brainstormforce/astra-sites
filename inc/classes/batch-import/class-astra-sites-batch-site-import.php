@@ -3,7 +3,7 @@
  * Single Page Background Process
  *
  * @package Astra Sites
- * @since x.x.x
+ * @since 2.5.0
  */
 
 if ( ! class_exists( 'Astra_Sites_Batch_Site_Import' ) ) :
@@ -11,14 +11,14 @@ if ( ! class_exists( 'Astra_Sites_Batch_Site_Import' ) ) :
 	/**
 	 * Background Process
 	 *
-	 * @since x.x.x
+	 * @since 2.5.0
 	 */
 	class Astra_Sites_Batch_Site_Import {
 
 		/**
 		 * Instance
 		 *
-		 * @since x.x.x
+		 * @since 2.5.0
 		 *
 		 * @access private
 		 * @var object Class object.
@@ -28,7 +28,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Site_Import' ) ) :
 		/**
 		 * Current Site Data
 		 *
-		 * @since x.x.x
+		 * @since 2.5.0
 		 *
 		 * @access private
 		 * @var object Class object.
@@ -38,7 +38,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Site_Import' ) ) :
 		/**
 		 * Process All
 		 *
-		 * @since x.x.x
+		 * @since 2.5.0
 		 * @var object Class object.
 		 * @access public
 		 */
@@ -47,7 +47,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Site_Import' ) ) :
 		/**
 		 * Initiator
 		 *
-		 * @since x.x.x
+		 * @since 2.5.0
 		 *
 		 * @return object initialized object of class.
 		 */
@@ -61,7 +61,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Site_Import' ) ) :
 		/**
 		 * Constructor
 		 *
-		 * @since x.x.x
+		 * @since 2.5.0
 		 */
 		public function __construct() {
 
@@ -274,7 +274,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Site_Import' ) ) :
 		/**
 		 * Process Batch
 		 *
-		 * @since x.x.x
+		 * @since 2.5.0
 		 *
 		 * @param int $site_id  Site ID.
 		 * @return mixed
@@ -688,7 +688,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Site_Import' ) ) :
 		/**
 		 * Get Site Data by Site ID
 		 *
-		 * @since x.x.x
+		 * @since 2.5.0
 		 *
 		 * @param  int $id        Site ID.
 		 * @return array

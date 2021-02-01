@@ -3,7 +3,7 @@
  * Complete Site Import Batch Process
  *
  * @package Astra Sites
- * @since x.x.x
+ * @since 2.5.0
  */
 
 if ( ! class_exists( 'Astra_Sites_Batch_Site_Import_Batch' ) && class_exists( 'WP_Background_Process' ) ) :
@@ -11,7 +11,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Site_Import_Batch' ) && class_exists( 'W
 	/**
 	 * Site Import Batch
 	 *
-	 * @since x.x.x
+	 * @since 2.5.0
 	 */
 	class Astra_Sites_Batch_Site_Import_Batch extends WP_Background_Process {
 
@@ -30,7 +30,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Site_Import_Batch' ) && class_exists( 'W
 		 * in the next pass through. Or, return false to remove the
 		 * item from the queue.
 		 *
-		 * @since x.x.x
+		 * @since 2.5.0
 		 *
 		 * @param array $data Queue item object.
 		 * @return mixed

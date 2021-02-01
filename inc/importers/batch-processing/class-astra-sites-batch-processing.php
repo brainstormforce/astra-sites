@@ -102,7 +102,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 		/**
 		 * Include Files
 		 *
-		 * @since x.x.x
+		 * @since 2.5.0
 		 */
 		public function includes() {
 			// Core Helpers - Image.
