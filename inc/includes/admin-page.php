@@ -684,13 +684,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 										<?php esc_html_e( 'I build websites for:', 'astra-sites' ); ?>
 									</option>
 									<option value="1">
-										<?php esc_html_e( 'Myself', 'astra-sites' ); ?>
+										<?php esc_html_e( 'For myself', 'astra-sites' ); ?>
 									</option>
 									<option value="2">
-										<?php esc_html_e( 'Someone else as a profession', 'astra-sites' ); ?>
+										<?php esc_html_e( 'For my client', 'astra-sites' ); ?>
 									</option>
 									<option value="3">
-										<?php esc_html_e( 'Someone else as a hobby', 'astra-sites' ); ?>
+										<?php esc_html_e( 'For my friend/relative', 'astra-sites' ); ?>
 									</option>
 								</select>
 							</div>
