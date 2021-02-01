@@ -4,7 +4,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: Starter Templates 2.5.0\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/astra-sites\n"
-"POT-Creation-Date: 2021-01-29 16:22:00+00:00\n"
+"POT-Creation-Date: 2021-02-01 13:23:14+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -73,29 +73,29 @@ msgstr ""
 msgid "Starter Templates"
 msgstr ""
 
-#: classes/class-astra-sites-admin.php:93
+#: classes/class-astra-sites-admin.php:95
 #. translators: %1$s white label plugin name and %2$s deactivation link
 msgid ""
 "Hello! Seems like you have used Starter Templates to build this website "
 "&mdash; Thanks a ton!"
 msgstr ""
 
-#: classes/class-astra-sites-admin.php:94
+#: classes/class-astra-sites-admin.php:96
 msgid ""
 "Could you please do us a BIG favor and give it a 5-star rating on "
 "WordPress? This would boost our motivation and help other users make a "
 "comfortable decision while choosing the Starter Templates."
 msgstr ""
 
-#: classes/class-astra-sites-admin.php:96
+#: classes/class-astra-sites-admin.php:98
 msgid "Ok, you deserve it"
 msgstr ""
 
-#: classes/class-astra-sites-admin.php:98
+#: classes/class-astra-sites-admin.php:100
 msgid "Nope, maybe later"
 msgstr ""
 
-#: classes/class-astra-sites-admin.php:99
+#: classes/class-astra-sites-admin.php:101
 msgid "I already did"
 msgstr ""
 
@@ -215,12 +215,12 @@ msgstr ""
 #: inc/classes/class-astra-sites-importer.php:414
 #: inc/classes/class-astra-sites-importer.php:460
 #: inc/classes/class-astra-sites-importer.php:508
-#: inc/classes/class-astra-sites-importer.php:664
-#: inc/classes/class-astra-sites-importer.php:692
-#: inc/classes/class-astra-sites-importer.php:726
-#: inc/classes/class-astra-sites-importer.php:778
-#: inc/classes/class-astra-sites-importer.php:821
-#: inc/classes/class-astra-sites-importer.php:859
+#: inc/classes/class-astra-sites-importer.php:666
+#: inc/classes/class-astra-sites-importer.php:694
+#: inc/classes/class-astra-sites-importer.php:728
+#: inc/classes/class-astra-sites-importer.php:780
+#: inc/classes/class-astra-sites-importer.php:823
+#: inc/classes/class-astra-sites-importer.php:861
 #: inc/classes/class-astra-sites.php:264 inc/classes/class-astra-sites.php:438
 #: inc/classes/class-astra-sites.php:542 inc/classes/class-astra-sites.php:615
 #: inc/classes/class-astra-sites.php:806 inc/classes/class-astra-sites.php:825
@@ -1411,15 +1411,15 @@ msgid "I build websites for:"
 msgstr ""
 
 #: inc/includes/admin-page.php:687
-msgid "Myself"
+msgid "For myself"
 msgstr ""
 
 #: inc/includes/admin-page.php:690
-msgid "Someone else as a profession"
+msgid "For my client"
 msgstr ""
 
 #: inc/includes/admin-page.php:693
-msgid "Someone else as a hobby"
+msgid "For my friend/relative"
 msgstr ""
 
 #: inc/includes/admin-page.php:701
