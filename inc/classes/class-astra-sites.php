@@ -160,7 +160,9 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				$response = json_decode( wp_remote_retrieve_body( $response ), true );
 
 				// Successfully subscribed.
-				update_user_meta( get_current_user_ID(), 'astra-sites-subscribed', 'yes' );
+				if( isset( $response['success'] ) && $response['success'] ) {
+					update_user_meta( get_current_user_ID(), 'astra-sites-subscribed', 'yes' );
+				}
 			}
 
 			wp_send_json_success( $response );
