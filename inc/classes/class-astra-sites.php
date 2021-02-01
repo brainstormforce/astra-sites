@@ -158,9 +158,10 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			$response = wp_remote_post( $url );
 			if ( ! is_wp_error( $response ) || wp_remote_retrieve_response_code( $response ) === 200 ) {
 				$response = json_decode( wp_remote_retrieve_body( $response ), true );
-			}
 
-			update_user_meta( get_current_user_ID(), 'astra-sites-subscribed', 'yes' );
+				// Successfully subscribed.
+				update_user_meta( get_current_user_ID(), 'astra-sites-subscribed', 'yes' );
+			}
 
 			wp_send_json_success( $response );
 		}
