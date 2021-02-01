@@ -3,7 +3,7 @@
  * Batch Import
  *
  * @package Astra Sites
- * @since x.x.x
+ * @since 2.5.0
  */
 
 if ( ! class_exists( 'Astra_Sites_Batch_Import' ) ) :
@@ -11,14 +11,14 @@ if ( ! class_exists( 'Astra_Sites_Batch_Import' ) ) :
 	/**
 	 * Batch Import
 	 *
-	 * @since x.x.x
+	 * @since 2.5.0
 	 */
 	class Astra_Sites_Batch_Import {
 
 		/**
 		 * Instance
 		 *
-		 * @since x.x.x
+		 * @since 2.5.0
 		 * @var object Class object.
 		 * @access private
 		 */
@@ -27,7 +27,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Import' ) ) :
 		/**
 		 * Initiator
 		 *
-		 * @since x.x.x
+		 * @since 2.5.0
 		 * @return object initialized object of class.
 		 */
 		public static function get_instance() {
@@ -40,7 +40,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Import' ) ) :
 		/**
 		 * Constructor
 		 *
-		 * @since x.x.x
+		 * @since 2.5.0
 		 */
 		public function __construct() {
 
