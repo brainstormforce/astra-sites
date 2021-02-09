@@ -96,7 +96,7 @@ if ( ! class_exists( 'Gutenberg_Templates' ) ) :
 						$ext = strtolower( pathinfo( $file_path['data']['file'], PATHINFO_EXTENSION ) );
 
 						if ( 'json' === $ext ) {
-							$forms = json_decode( $this->get_filesystem()->get_contents( $file_path['data']['file'] ), true );
+							$forms = json_decode( gutenberg_templates_get_filesystem()->get_contents( $file_path['data']['file'] ), true );
 
 							if ( ! empty( $forms ) ) {
 
@@ -563,21 +563,6 @@ if ( ! class_exists( 'Gutenberg_Templates' ) ) :
 			);
 		}
 
-		/**
-		 * Get an instance of WP_Filesystem_Direct.
-		 *
-		 * @since 1.0.0
-		 * @return object A WP_Filesystem_Direct instance.
-		 */
-		public function get_filesystem() {
-			global $wp_filesystem;
-
-			require_once ABSPATH . '/wp-admin/includes/file.php';
-
-			WP_Filesystem();
-
-			return $wp_filesystem;
-		}
 	}
 
 	/**

@@ -33,3 +33,21 @@ if ( ! function_exists( 'gutenberg_templates_doing_wp_cli' ) ) :
 		return false;
 	}
 endif;
+
+if ( ! function_exists( 'gutenberg_templates_get_filesystem' ) ) :
+	/**
+	 * Get an instance of WP_Filesystem_Direct.
+	 *
+	 * @since 1.0.0
+	 * @return object A WP_Filesystem_Direct instance.
+	 */
+	function gutenberg_templates_get_filesystem() {
+		global $wp_filesystem;
+
+		require_once ABSPATH . '/wp-admin/includes/file.php';
+
+		WP_Filesystem();
+
+		return $wp_filesystem;
+	}
+endif;

@@ -1,18 +1,21 @@
 <?php
 /**
  * WordPress Importer
+ *
+ * @package WXR Importer
+ *
+ * WordPress Importer
  * https://github.com/humanmade/WordPress-Importer
  *
  * Released under the GNU General Public License v2.0
  * https://github.com/humanmade/WordPress-Importer/blob/master/LICENSE
  */
 
- /**
-  * WXR Importer
-  *
-  * @package WXR Importer
-  */
-
+/**
+ * WXR Importer
+ *
+ * @package WXR Importer
+ */
 if ( ! class_exists( 'WXR_Importer' ) && class_exists( 'WP_Importer' ) ) :
 
 	/**

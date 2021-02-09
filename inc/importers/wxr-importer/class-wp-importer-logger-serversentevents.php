@@ -1,6 +1,10 @@
 <?php
 /**
  * WordPress Importer
+ *
+ * @package Astra Sites
+ *
+ * WordPress Importer
  * https://github.com/humanmade/WordPress-Importer
  *
  * Released under the GNU General Public License v2.0

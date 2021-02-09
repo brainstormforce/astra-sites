@@ -45,7 +45,6 @@ if ( ! class_exists( 'Gutenberg_Templates_Sync_Library' ) ) :
 		public function __construct() {
 			add_action( 'wp_ajax_gutenberg-templates-get-sites-request-count', array( $this, 'ajax_sites_requests_count' ) );
 			add_action( 'wp_ajax_gutenberg-templates-import-sites', array( $this, 'ajax_import_sites' ) );
-
 			add_action( 'wp_ajax_gutenberg-templates-get-blocks-request-count', array( $this, 'ajax_blocks_requests_count' ) );
 			add_action( 'wp_ajax_gutenberg-templates-import-blocks', array( $this, 'ajax_import_blocks' ) );
 			add_action( 'wp_ajax_gutenberg-templates-check-sync-library-status', array( $this, 'check_sync_status' ) );
@@ -90,6 +89,10 @@ if ( ! class_exists( 'Gutenberg_Templates_Sync_Library' ) ) :
 		 * @return void
 		 */
 		public function update_library_complete() {
+
+			// Verify Nonce.
+			check_ajax_referer( 'gutenberg-templates-ajax-nonce', '_ajax_nonce' );
+
 			$this->update_latest_checksums();
 
 			update_site_option( 'gutenberg-templates-batch-is-complete', 'no', 'no' );
@@ -115,6 +118,9 @@ if ( ! class_exists( 'Gutenberg_Templates_Sync_Library' ) ) :
 		 * @return void
 		 */
 		public function check_sync_status() {
+
+			// Verify Nonce.
+			check_ajax_referer( 'gutenberg-templates-ajax-nonce', '_ajax_nonce' );
 
 			if ( 'no' === $this->get_last_export_checksums() ) {
 
@@ -288,6 +294,10 @@ if ( ! class_exists( 'Gutenberg_Templates_Sync_Library' ) ) :
 		 * @return void
 		 */
 		public function ajax_import_sites() {
+
+			// Verify Nonce.
+			check_ajax_referer( 'gutenberg-templates-ajax-nonce', '_ajax_nonce' );
+
 			$page_no = isset( $_POST['page_no'] ) ? absint( $_POST['page_no'] ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			if ( $page_no ) {
 				$sites_and_pages = $this->import_sites( $page_no );
@@ -316,6 +326,10 @@ if ( ! class_exists( 'Gutenberg_Templates_Sync_Library' ) ) :
 		 * @return void
 		 */
 		public function ajax_import_blocks() {
+
+			// Verify Nonce.
+			check_ajax_referer( 'gutenberg-templates-ajax-nonce', '_ajax_nonce' );
+
 			$page_no = isset( $_POST['page_no'] ) ? absint( $_POST['page_no'] ) : ''; // phpcs:ignore WordPress.Security.NonceVerification.Missing
 			if ( $page_no ) {
 				$sites_and_pages = $this->import_blocks( $page_no );
@@ -344,6 +358,10 @@ if ( ! class_exists( 'Gutenberg_Templates_Sync_Library' ) ) :
 		 * @return void
 		 */
 		public function ajax_sites_requests_count() {
+
+			// Verify Nonce.
+			check_ajax_referer( 'gutenberg-templates-ajax-nonce', '_ajax_nonce' );
+
 			// Get count.
 			$total_requests = $this->get_total_sites_count();
 			if ( $total_requests ) {
@@ -372,6 +390,10 @@ if ( ! class_exists( 'Gutenberg_Templates_Sync_Library' ) ) :
 		 * @return void
 		 */
 		public function ajax_blocks_requests_count() {
+
+			// Verify Nonce.
+			check_ajax_referer( 'gutenberg-templates-ajax-nonce', '_ajax_nonce' );
+
 			// Get count.
 			$total_requests = $this->get_total_blocks_requests();
 			if ( $total_requests ) {
@@ -606,24 +628,8 @@ if ( ! class_exists( 'Gutenberg_Templates_Sync_Library' ) ) :
 		 */
 		public function generate_file( $filename = '', $data = array() ) {
 			if ( gutenberg_templates_doing_wp_cli() ) {
-				$this->get_filesystem()->put_contents( GUTENBERG_TEMPLATES_DIR . 'dist/json/' . $filename . '.json', wp_json_encode( $data ) );
+				gutenberg_templates_get_filesystem()->put_contents( GUTENBERG_TEMPLATES_DIR . 'dist/json/' . $filename . '.json', wp_json_encode( $data ) );
 			}
-		}
-
-		/**
-		 * Get an instance of WP_Filesystem_Direct.
-		 *
-		 * @since 1.0.0
-		 * @return object A WP_Filesystem_Direct instance.
-		 */
-		public function get_filesystem() {
-			global $wp_filesystem;
-
-			require_once ABSPATH . '/wp-admin/includes/file.php';
-
-			WP_Filesystem();
-
-			return $wp_filesystem;
 		}
 
 	}
