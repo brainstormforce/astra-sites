@@ -9,14 +9,10 @@
  *
  * Released under the GNU General Public License v2.0
  * https://github.com/humanmade/WordPress-Importer/blob/master/LICENSE
- *
- * @package WXR Importer
  */
 
 /**
  * WXR Importer
- *
- * @package WXR Importer
  */
 if ( ! class_exists( 'WXR_Importer' ) && class_exists( 'WP_Importer' ) ) :
 

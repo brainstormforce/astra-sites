@@ -60,12 +60,14 @@ if ( ! class_exists( 'Astra_Sites_Admin' ) ) :
 
 			$image_path = esc_url( ASTRA_SITES_URI . 'inc/assets/images/logo.svg' );
 
+			$complete = get_option( 'astra_sites_import_complete', '' );
+
 			Astra_Notices::add_notice(
 				array(
 					'id'      => 'astra-sites-5-start-notice',
 					'type'    => 'info',
 					'class'   => 'astra-sites-5-star',
-					'show_if' => ( false === Astra_Sites_White_Label::get_instance()->is_white_labeled() ),
+					'show_if' => ( 'yes' === $complete && false === Astra_Sites_White_Label::get_instance()->is_white_labeled() ),
 					/* translators: %1$s white label plugin name and %2$s deactivation link */
 					'message' => sprintf(
 						'<div class="notice-image" style="display: flex;">

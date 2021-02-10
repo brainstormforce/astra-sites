@@ -291,12 +291,13 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Importer' ) ) :
 			$query_args = apply_filters(
 				'astra_sites_blocks_query_args',
 				array(
-					'per_page' => 100,
-					'page'     => $page,
+					'page_builder' => 'elementor',
+					'per_page'     => 100,
+					'page'         => $page,
 				)
 			);
 
-			$api_url = add_query_arg( $query_args, trailingslashit( Astra_Sites::get_instance()->get_api_domain() ) . 'wp-json/astra-blocks/v1/blocks/?page_builder=elementor' );
+			$api_url = add_query_arg( $query_args, trailingslashit( Astra_Sites::get_instance()->get_api_domain() ) . 'wp-json/astra-blocks/v1/blocks/' );
 
 			$response = wp_remote_get( $api_url, $api_args );
 

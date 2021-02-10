@@ -2,10 +2,7 @@
 /**
  * WP Background Process
  *
- * @package WP-Background-Processing
- *
- * WP Background Process
- * https://github.com/A5hleyRich/wp-background-processing
+ * See https://github.com/A5hleyRich/wp-background-processing
  *
  * Released under the GNU General Public License v2.0
  * https://github.com/deliciousbrains/wp-background-processing/blob/master/license.txt

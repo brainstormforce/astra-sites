@@ -5,7 +5,7 @@ Tags: Elementor,Beaver Builder,Templates,Gutenberg,Astra Starter Sites
 Requires at least: 4.4
 Requires PHP: 5.3
 Tested up to: 5.6
-Stable tag: 2.4.0
+Stable tag: 2.6.0
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -148,6 +148,17 @@ We are open to suggestions and would love to work on topics that our users are l
 7. Free Images by Pixabay right inside the WordPress media popup.
 
 == Changelog ==
+
+v2.6.0 - 10-February-2021
+- New: Added the single pages and blocks for the Gutenberg.
+
+v2.5.1 - 1-February-2021
+- Improvement: Improved the admin notice first view logic.
+- Improvement: Improved the experience while subscribing to Starter Templates' news.
+
+v2.5.0 - 29-January-2021
+- New: Added an ability to subscribe to Starter Templates' updates.
+- Improvement: Added new API to support asynchronous import for the Starter Templates.
 
 v2.4.0 - 30-December-2020
 - Improvement: Additional compatibility with WordPress 5.6.
