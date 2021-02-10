@@ -80,6 +80,31 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 		 */
 		public function __construct() {
 
+			$this->includes();
+
+			// Start image importing after site import complete.
+			add_filter( 'astra_sites_image_importer_skip_image', array( $this, 'skip_image' ), 10, 2 );
+			add_action( 'astra_sites_import_complete', array( $this, 'start_process' ) );
+			add_action( 'astra_sites_process_single', array( $this, 'start_process_single' ) );
+			add_action( 'admin_head', array( $this, 'start_importer' ) );
+			add_action( 'wp_ajax_astra-sites-update-library', array( $this, 'update_library' ) );
+			add_action( 'wp_ajax_astra-sites-update-library-complete', array( $this, 'update_library_complete' ) );
+			add_action( 'wp_ajax_astra-sites-import-categories', array( $this, 'import_categories' ) );
+			add_action( 'wp_ajax_astra-sites-import-site-categories', array( $this, 'import_site_categories' ) );
+			add_action( 'wp_ajax_astra-sites-import-block-categories', array( $this, 'import_block_categories' ) );
+			add_action( 'wp_ajax_astra-sites-import-page-builders', array( $this, 'import_page_builders' ) );
+			add_action( 'wp_ajax_astra-sites-import-blocks', array( $this, 'import_blocks' ) );
+			add_action( 'wp_ajax_astra-sites-get-sites-request-count', array( $this, 'sites_requests_count' ) );
+			add_action( 'wp_ajax_astra-sites-get-blocks-request-count', array( $this, 'blocks_requests_count' ) );
+			add_action( 'wp_ajax_astra-sites-import-sites', array( $this, 'import_sites' ) );
+		}
+
+		/**
+		 * Include Files
+		 *
+		 * @since 2.5.0
+		 */
+		public function includes() {
 			// Core Helpers - Image.
 			// @todo 	This file is required for Elementor.
 			// Once we implement our logic for updating elementor data then we'll delete this file.
@@ -113,22 +138,6 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 			self::$process_all           = new WP_Background_Process_Astra();
 			self::$process_single        = new WP_Background_Process_Astra_Single();
 			self::$process_site_importer = new WP_Background_Process_Astra_Site_Importer();
-
-			// Start image importing after site import complete.
-			add_filter( 'astra_sites_image_importer_skip_image', array( $this, 'skip_image' ), 10, 2 );
-			add_action( 'astra_sites_import_complete', array( $this, 'start_process' ) );
-			add_action( 'astra_sites_process_single', array( $this, 'start_process_single' ) );
-			add_action( 'admin_head', array( $this, 'start_importer' ) );
-			add_action( 'wp_ajax_astra-sites-update-library', array( $this, 'update_library' ) );
-			add_action( 'wp_ajax_astra-sites-update-library-complete', array( $this, 'update_library_complete' ) );
-			add_action( 'wp_ajax_astra-sites-import-categories', array( $this, 'import_categories' ) );
-			add_action( 'wp_ajax_astra-sites-import-site-categories', array( $this, 'import_site_categories' ) );
-			add_action( 'wp_ajax_astra-sites-import-block-categories', array( $this, 'import_block_categories' ) );
-			add_action( 'wp_ajax_astra-sites-import-page-builders', array( $this, 'import_page_builders' ) );
-			add_action( 'wp_ajax_astra-sites-import-blocks', array( $this, 'import_blocks' ) );
-			add_action( 'wp_ajax_astra-sites-get-sites-request-count', array( $this, 'sites_requests_count' ) );
-			add_action( 'wp_ajax_astra-sites-get-blocks-request-count', array( $this, 'blocks_requests_count' ) );
-			add_action( 'wp_ajax_astra-sites-import-sites', array( $this, 'import_sites' ) );
 		}
 
 		/**
@@ -354,6 +363,12 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 		 */
 		public function start_importer() {
 
+			$process_sync = apply_filters( 'astra_sites_initial_sync', true );
+
+			if ( ! $process_sync ) {
+				return;
+			}
+
 			$is_fresh_site = get_site_option( 'astra-sites-fresh-site', '' );
 
 			// Process initially for the fresh user.
@@ -410,6 +425,12 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 		 * @return mixed
 		 */
 		public function process_batch() {
+
+			$process_sync = apply_filters( 'astra_sites_process_sync_batch', true );
+
+			if ( ! $process_sync ) {
+				return;
+			}
 
 			if ( 'no' === $this->get_last_export_checksums() ) {
 				$this->log( 'Library is up to date!' );
@@ -572,6 +593,12 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 		 * @return mixed Null if process is already started.
 		 */
 		public function process_import() {
+
+			$process_sync = apply_filters( 'astra_sites_process_auto_sync_library', true );
+
+			if ( ! $process_sync ) {
+				return;
+			}
 
 			// Batch is already started? Then return.
 			$status = get_site_option( 'astra-sites-batch-status' );
@@ -775,6 +802,12 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 		 * @return void
 		 */
 		public function start_process() {
+
+			/** WordPress Plugin Administration API */
+			require_once ABSPATH . 'wp-admin/includes/plugin.php';
+			require_once ABSPATH . 'wp-admin/includes/update.php';
+
+			$this->includes();
 
 			$wxr_id = get_site_option( 'astra_sites_imported_wxr_id', 0 );
 			if ( $wxr_id ) {

@@ -70,7 +70,7 @@ if ( ! class_exists( 'Gutenberg_Templates_Sync_Library' ) ) :
 				if ( ! empty( $list_files ) ) {
 					$list_files = array_map( 'basename', $list_files );
 					foreach ( $list_files as $key => $file_name ) {
-						$data = Gutenberg_Templates::get_instance()->get_filesystem()->get_contents( $dir . '/' . $file_name );
+						$data = gutenberg_templates_get_filesystem()->get_contents( $dir . '/' . $file_name );
 						if ( ! empty( $data ) ) {
 							$option_name = str_replace( '.json', '', $file_name );
 							update_site_option( $option_name, json_decode( $data, true ) );
@@ -90,8 +90,10 @@ if ( ! class_exists( 'Gutenberg_Templates_Sync_Library' ) ) :
 		 */
 		public function update_library_complete() {
 
-			// Verify Nonce.
-			check_ajax_referer( 'gutenberg-templates-ajax-nonce', '_ajax_nonce' );
+			if ( ! gutenberg_templates_doing_wp_cli() ) {
+				// Verify Nonce.
+				check_ajax_referer( 'gutenberg-templates-ajax-nonce', '_ajax_nonce' );
+			}
 
 			$this->update_latest_checksums();
 
@@ -119,8 +121,10 @@ if ( ! class_exists( 'Gutenberg_Templates_Sync_Library' ) ) :
 		 */
 		public function check_sync_status() {
 
-			// Verify Nonce.
-			check_ajax_referer( 'gutenberg-templates-ajax-nonce', '_ajax_nonce' );
+			if ( ! gutenberg_templates_doing_wp_cli() ) {
+				// Verify Nonce.
+				check_ajax_referer( 'gutenberg-templates-ajax-nonce', '_ajax_nonce' );
+			}
 
 			if ( 'no' === $this->get_last_export_checksums() ) {
 
@@ -577,9 +581,9 @@ if ( ! class_exists( 'Gutenberg_Templates_Sync_Library' ) ) :
 			$query_args = apply_filters(
 				'gutenberg_templates_blocks_args',
 				array(
+					'page_builder' => 'gutenberg',
 					'per_page'     => 100,
 					'page'         => $page,
-					'page_builder' => 'gutenberg',
 				)
 			);
 

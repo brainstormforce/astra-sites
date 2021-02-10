@@ -9,10 +9,6 @@
  *
  * Released under the GNU General Public License v2.0
  * https://github.com/humanmade/WordPress-Importer/blob/master/LICENSE
- */
-
-/**
- * WordPress Importer
  *
  * @package WordPress Importer
  *

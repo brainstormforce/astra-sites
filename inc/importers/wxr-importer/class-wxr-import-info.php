@@ -6,15 +6,9 @@
  * Released under the GNU General Public License v2.0
  * https://github.com/humanmade/WordPress-Importer/blob/master/LICENSE
  *
- * @package Astra Sites
- */
-
-/**
- * WXR Import Info
- *
  * @since 2.0.0
  *
- * @package Astra Sites
+ * @package WordPress Importer
  */
 
 if ( ! class_exists( 'WXR_Import_Info' ) ) {
