@@ -83,7 +83,7 @@ if ( ! class_exists( 'Astra_Sites_White_Label' ) ) :
 		 * Add White Label data
 		 *
 		 * @param array $args White label.
-		 *  @since x.x.x
+		 *  @since 2.6.0
 		 */
 		public function add_white_label_name( $args = array() ) {
 			$args['white_label_name'] = $this->get_white_label();
@@ -280,7 +280,7 @@ if ( ! class_exists( 'Astra_Sites_White_Label' ) ) :
 		/**
 		 * Get white label name
 		 *
-		 * @since x.x.x
+		 * @since 2.6.0
 		 *
 		 * @return string
 		 */
