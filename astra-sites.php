@@ -19,7 +19,7 @@ if ( ! defined( 'ASTRA_SITES_NAME' ) ) {
 }
 
 if ( ! defined( 'ASTRA_SITES_VER' ) ) {
-	define( 'ASTRA_SITES_VER', '2.6.1' );
+	define( 'ASTRA_SITES_VER', '2.6.0' );
 }
 
 if ( ! defined( 'ASTRA_SITES_FILE' ) ) {
