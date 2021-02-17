@@ -6,8 +6,6 @@
  * Released under the GNU General Public License v2.0
  * https://github.com/humanmade/WordPress-Importer/blob/master/LICENSE
  *
- * @package WordPress Importer
- *
  * Describes a logger instance
  *
  * Based on PSR-3: http://www.php-fig.org/psr/psr-3/
@@ -23,6 +21,8 @@
  *
  * See https://github.com/php-fig/fig-standards/blob/master/accepted/PSR-3-logger-interface.md
  * for the full interface specification.
+ *
+ * @package WordPress Importer
  */
 
 if ( ! class_exists( 'WP_Importer_Logger' ) ) :
