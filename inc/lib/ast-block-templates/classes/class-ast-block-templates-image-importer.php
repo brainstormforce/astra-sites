@@ -202,13 +202,7 @@ if ( ! class_exists( 'Ast_Block_Templates_Image_Importer' ) ) :
 			// Extract the file name and extension from the URL.
 			$filename = basename( $attachment['url'] );
 
-			// @codingStandardsIgnoreStart
-			$upload = wp_upload_bits(
-				$filename,
-				null,
-				$file_content
-			);
-			// @codingStandardsIgnoreEnd
+			$upload = wp_upload_bits( $filename, null, $file_content );
 
 			ast_block_templates_log( $filename );
 			ast_block_templates_log( wp_json_encode( $upload ) );

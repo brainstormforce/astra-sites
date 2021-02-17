@@ -206,13 +206,7 @@ if ( ! class_exists( 'Astra_Sites_Image_Importer' ) ) :
 			// Extract the file name and extension from the URL.
 			$filename = basename( $attachment['url'] );
 
-			// @codingStandardsIgnoreStart
-			$upload = wp_upload_bits(
-				$filename,
-				null,
-				$file_content
-			);
-			// @codingStandardsIgnoreEnd
+			$upload = wp_upload_bits( $filename, null, $file_content );
 
 			astra_sites_error_log( $filename );
 			astra_sites_error_log( wp_json_encode( $upload ) );
