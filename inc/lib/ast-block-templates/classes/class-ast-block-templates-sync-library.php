@@ -49,7 +49,7 @@ if ( ! class_exists( 'Ast_Block_Templates_Sync_Library' ) ) :
 			add_action( 'wp_ajax_ast-block-templates-import-blocks', array( $this, 'ajax_import_blocks' ) );
 			add_action( 'wp_ajax_ast-block-templates-check-sync-library-status', array( $this, 'check_sync_status' ) );
 			add_action( 'wp_ajax_ast-block-templates-update-sync-library-status', array( $this, 'update_library_complete' ) );
-			add_action( 'admin_head', array( $this, 'start_importer' ) );
+			add_action( 'admin_head', array( $this, 'setup_templates' ) );
 		}
 
 		/**
@@ -58,7 +58,7 @@ if ( ! class_exists( 'Ast_Block_Templates_Sync_Library' ) ) :
 		 * @since 1.0.0
 		 * @return void
 		 */
-		public function start_importer() {
+		public function setup_templates() {
 
 			$is_fresh_site = get_site_option( 'ast-block-templates-fresh-site', '' );
 
