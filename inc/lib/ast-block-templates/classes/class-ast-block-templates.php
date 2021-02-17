@@ -377,17 +377,18 @@ if ( ! class_exists( 'Ast_Block_Templates' ) ) :
 				apply_filters(
 					'ast_block_templates_localize_vars',
 					array(
-						'ajax_url'            => admin_url( 'admin-ajax.php' ),
-						'uri'                 => AST_BLOCK_TEMPLATES_URI,
-						'white_label_name'    => '',
-						'allBlocks'           => $this->get_all_blocks(),
-						'allSites'            => $this->get_all_sites(),
-						'wpforms_status'      => $this->get_plugin_status( 'wpforms-lite/wpforms.php' ),
-						'gutenberg_status'    => $this->get_plugin_status( 'gutenberg/gutenberg.php' ),
-						'_ajax_nonce'         => wp_create_nonce( 'ast-block-templates-ajax-nonce' ),
-						'button_text'         => esc_html__( 'Starter Templates', 'ast-block-templates' ),
-						'display_button_logo' => true,
-						'popup_logo_uri'      => AST_BLOCK_TEMPLATES_URI . 'dist/logo.svg',
+						'popup_class'    		=> defined( 'UAGB_PLUGIN_SHORT_NAME' ) ? 'uag-block-templates-lightbox' : 'ast-block-templates-lightbox',
+						'ajax_url'         		=> admin_url( 'admin-ajax.php' ),
+						'uri'              		=> AST_BLOCK_TEMPLATES_URI,
+						'white_label_name' 		=> '',
+						'allBlocks'        		=> $this->get_all_blocks(),
+						'allSites'         		=> $this->get_all_sites(),
+						'wpforms_status'   		=> $this->get_plugin_status( 'wpforms-lite/wpforms.php' ),
+						'gutenberg_status' 		=> $this->get_plugin_status( 'gutenberg/gutenberg.php' ),
+						'_ajax_nonce'      		=> wp_create_nonce( 'ast-block-templates-ajax-nonce' ),
+						'button_text'      		=> esc_html__( 'Starter Templates', 'ast-block-templates' ),
+						'display_button_logo' 	=> true,
+						'popup_logo_uri'     	=> AST_BLOCK_TEMPLATES_URI . 'dist/logo.svg',
 					)
 				)
 			);
