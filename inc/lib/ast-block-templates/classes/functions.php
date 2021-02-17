@@ -56,6 +56,8 @@ if ( ! function_exists( 'ast_block_templates_is_valid_image' ) ) :
 	/**
 	 * Check for the valid image
 	 *
+	 * @param string $link  The Image link.
+	 *
 	 * @since 1.0.0
 	 * @return boolean
 	 */
