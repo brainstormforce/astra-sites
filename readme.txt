@@ -150,7 +150,7 @@ We are open to suggestions and would love to work on topics that our users are l
 == Changelog ==
 
 v2.6.0 - 17-February-2021
-- New: Added the single pages and blocks for the Gutenberg.
+- New: Added the single pages and blocks for the Gutenberg. Read more https://wpastra.com/docs/import-gb-pages-patterns/
 
 v2.5.1 - 1-February-2021
 - Improvement: Improved the admin notice first view logic.
