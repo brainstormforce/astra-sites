@@ -1,6 +1,8 @@
 <?php
 /**
  * Image Importer
+ * 
+ * https://github.com/elementor/elementor/blob/master/includes/template-library/classes/class-import-images.php
  *
  * => How to use?
  *
