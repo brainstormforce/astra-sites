@@ -208,7 +208,7 @@ if ( ! class_exists( 'Ast_Block_Templates' ) ) :
 
 			// Extract normal and image links.
 			foreach ( $all_links as $key => $link ) {
-				if ( preg_match( '/^((https?:\/\/)|(www\.))([a-z0-9-].?)+(:[0-9]+)?\/[\w\-]+\.(jpg|png|gif|jpeg)\/?$/i', $link ) ) {
+				if ( ast_block_templates_is_valid_image( $link ) ) {
 
 					// Get all image links.
 					// Avoid *-150x, *-300x and *-1024x images.

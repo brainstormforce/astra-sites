@@ -51,3 +51,15 @@ if ( ! function_exists( 'ast_block_templates_get_filesystem' ) ) :
 		return $wp_filesystem;
 	}
 endif;
+
+if ( ! function_exists( 'ast_block_templates_is_valid_image' ) ) :
+	/**
+	 * Check for the valid image
+	 *
+	 * @since 1.0.0
+	 * @return boolean
+	 */
+	function ast_block_templates_is_valid_image( $link = '' ) {
+		return preg_match( '/^((https?:\/\/)|(www\.))([a-z0-9-].?)+(:[0-9]+)?\/[\w\-]+\.(jpg|png|gif|jpeg)\/?$/i', $link );
+	}
+endif;
