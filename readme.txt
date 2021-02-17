@@ -5,7 +5,7 @@ Tags: Elementor,Beaver Builder,Templates,Gutenberg,Astra Starter Sites
 Requires at least: 4.4
 Requires PHP: 5.3
 Tested up to: 5.6
-Stable tag: 2.5.1
+Stable tag: 2.6.1
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -148,6 +148,12 @@ We are open to suggestions and would love to work on topics that our users are l
 7. Free Images by Pixabay right inside the WordPress media popup.
 
 == Changelog ==
+
+v2.6.1 - 17-February-2021
+- Fix: Version file was missing due to Auto-Release command.
+
+v2.6.0 - 17-February-2021
+- New: Added the single pages and blocks for the Gutenberg. Read more https://wpastra.com/docs/import-gb-pages-patterns/
 
 v2.5.1 - 1-February-2021
 - Improvement: Improved the admin notice first view logic.
