@@ -643,7 +643,6 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 
 					$this->log( 'Updated requests ' . $total_requests['pages'] );
 					update_site_option( 'astra-sites-requests', $total_requests['pages'], 'no' );
-					Astra_Sites_Batch_Processing_Importer::get_instance()->generate_file( 'astra-sites-requests', $total_requests['pages'] );
 
 					return $total_requests['pages'];
 				}

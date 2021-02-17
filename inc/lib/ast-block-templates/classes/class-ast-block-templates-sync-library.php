@@ -453,8 +453,6 @@ if ( ! class_exists( 'Ast_Block_Templates_Sync_Library' ) ) :
 
 					update_site_option( 'ast-block-templates-site-requests', $total_requests['pages'], 'no' );
 
-					$this->generate_file( 'ast-block-templates-site-requests', $total_requests['pages'] );
-
 					return $total_requests['pages'];
 				}
 			}
@@ -495,8 +493,6 @@ if ( ! class_exists( 'Ast_Block_Templates_Sync_Library' ) ) :
 					ast_block_templates_log( 'BLOCK: Requests count ' . $total_requests['pages'] );
 
 					update_site_option( 'ast-block-templates-block-requests', $total_requests['pages'], 'no' );
-
-					$this->generate_file( 'ast-block-templates-block-requests', $total_requests['pages'] );
 
 					return $total_requests['pages'];
 				}
@@ -553,7 +549,6 @@ if ( ! class_exists( 'Ast_Block_Templates_Sync_Library' ) ) :
 
 					if ( ast_block_templates_doing_wp_cli() ) {
 						ast_block_templates_log( 'SITE: Generating ' . $option_name . '.json file' );
-						$this->generate_file( $option_name, $all_blocks );
 					}
 				}
 			} else {
@@ -611,7 +606,6 @@ if ( ! class_exists( 'Ast_Block_Templates_Sync_Library' ) ) :
 
 					if ( ast_block_templates_doing_wp_cli() ) {
 						ast_block_templates_log( 'BLOCK: Genearting ' . $option_name . '.json file' );
-						$this->generate_file( $option_name, $all_blocks );
 					}
 				}
 			} else {
@@ -619,21 +613,6 @@ if ( ! class_exists( 'Ast_Block_Templates_Sync_Library' ) ) :
 			}
 
 			ast_block_templates_log( 'BLOCK: Completed request ' . $page );
-		}
-
-		/**
-		 * Generate JSON file.
-		 *
-		 * @since 1.0.0
-		 *
-		 * @param  string $filename File name.
-		 * @param  array  $data     JSON file data.
-		 * @return void.
-		 */
-		public function generate_file( $filename = '', $data = array() ) {
-			if ( ast_block_templates_doing_wp_cli() ) {
-				ast_block_templates_get_filesystem()->put_contents( AST_BLOCK_TEMPLATES_DIR . 'dist/json/' . $filename . '.json', wp_json_encode( $data ) );
-			}
 		}
 
 	}
