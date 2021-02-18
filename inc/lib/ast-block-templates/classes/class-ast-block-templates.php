@@ -389,6 +389,7 @@ if ( ! class_exists( 'Ast_Block_Templates' ) ) :
 						'button_text'         => esc_html__( 'Starter Templates', 'ast-block-templates' ),
 						'display_button_logo' => true,
 						'popup_logo_uri'      => AST_BLOCK_TEMPLATES_URI . 'dist/logo.svg',
+						'button_logo'         => AST_BLOCK_TEMPLATES_URI . 'dist/starter-template-logo.svg',
 					)
 				)
 			);
