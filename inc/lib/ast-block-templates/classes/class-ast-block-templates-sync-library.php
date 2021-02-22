@@ -65,8 +65,7 @@ if ( ! class_exists( 'Ast_Block_Templates_Sync_Library' ) ) :
 			// Process initially for the fresh user.
 			if ( empty( $is_fresh_site ) ) {
 
-				$dir        = AST_BLOCK_TEMPLATES_DIR . 'dist/json';
-				$list_files = list_files( $dir );
+				$list_files = $this->get_json_file_names();
 				if ( ! empty( $list_files ) ) {
 					$list_files = array_map( 'basename', $list_files );
 					foreach ( $list_files as $key => $file_name ) {
@@ -80,6 +79,34 @@ if ( ! class_exists( 'Ast_Block_Templates_Sync_Library' ) ) :
 
 				update_site_option( 'ast-block-templates-fresh-site', 'yes', 'no' );
 			}
+		}
+
+		/**
+		 * Json Files Names.
+		 *
+		 * @since x.x.x
+		 * @return mixed
+		 */
+		public function get_json_file_names() {
+			$dir            = AST_BLOCK_TEMPLATES_DIR . 'dist/json';
+			$json_file_list = array(
+				$dir . '/astra-sites-tags.json',
+				$dir . '/astra-blocks-1.json',
+				$dir . '/astra-sites-categories.json',
+				$dir . '/astra-blocks-4.json',
+				$dir . '/astra-sites-page-builders.json',
+				$dir . '/astra-blocks-3.json',
+				$dir . '/astra-blocks-2.json',
+				$dir . '/astra-blocks-categories.json',
+				$dir . '/astra-sites-requests.json',
+				$dir . '/astra-sites-tags.json',
+			);
+			// Push all page json using for loop.
+			for ( $i = 1; $i <= 24; $i++ ) {
+				array_push( $json_file_list, $dir . '/astra-sites-and-pages-page-' . $i . '.json' );
+			}
+
+			return $json_file_list;
 		}
 
 		/**
