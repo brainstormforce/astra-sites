@@ -60,10 +60,10 @@ if ( ! class_exists( 'Ast_Block_Templates_Sync_Library' ) ) :
 		 */
 		public function setup_templates() {
 
-			$is_fresh_site = get_site_option( 'ast-block-templates-fresh-site', '' );
+			$is_fresh_site = get_option( 'fresh_site' );
 
 			// Process initially for the fresh user.
-			if ( empty( $is_fresh_site ) ) {
+			if ( $is_fresh_site ) {
 
 				$list_files = $this->get_json_file_names();
 				if ( ! empty( $list_files ) ) {
@@ -76,8 +76,6 @@ if ( ! class_exists( 'Ast_Block_Templates_Sync_Library' ) ) :
 						}
 					}
 				}
-
-				update_site_option( 'ast-block-templates-fresh-site', 'yes', 'no' );
 			}
 		}
 
