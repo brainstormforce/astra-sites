@@ -734,6 +734,10 @@ if ( ! defined( 'ABSPATH' ) ) {
 							<ul class="astra-site-contents">
 
 								<# if( 'astra-sites' === data ) { #>
+									<?php
+									$first_import_complete = get_option( 'astra_sites_import_complete', '' );
+									if ( ! empty( $first_import_complete ) ) :
+										?>
 									<li class="astra-sites-reset-data">
 										<label>
 											<input type="checkbox" name="reset" class="checkbox">
@@ -741,6 +745,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 											<div class="astra-sites-tooltip-message" id="astra-sites-tooltip-reset-data" style="display: none;"><p><?php esc_html_e( 'WARNING: Selecting this option will delete all data from the previous import. Choose this option only if this is intended.', 'astra-sites' ); ?></p><p><?php esc_html_e( 'You can find the backup to the current customizer settings at ', 'astra-sites' ); ?><code><?php esc_html_e( '/wp-content/uploads/astra-sites/', 'astra-sites' ); ?></code></p></div>
 										</label>
 									</li>
+									<?php endif; ?>
 
 									<?php $theme_status = Astra_Sites::get_instance()->get_theme_status(); ?>
 									<?php $theme_dependancy_class = ''; ?>
