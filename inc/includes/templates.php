@@ -236,7 +236,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<div class="description">
 						<p>
 						<?php
-						$s_url = Astra_Sites_White_Label::get_option( 'astra-agency', 'licence' );
+						$s_url = astra_sites_get_suggestion_link();
 						/* translators: %1$s External Link */
 						printf( __( 'Don\'t see a template you would like to import?<br><a target="_blank" href="%1$s">Make a Template Suggestion!</a>', 'astra-sites' ), esc_url( $s_url ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						?>
@@ -320,7 +320,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<div class="description">
 						<p>
 						<?php
-						$s_url = Astra_Sites_White_Label::get_option( 'astra-agency', 'licence' );
+						$s_url = astra_sites_get_suggestion_link();
 						/* translators: %1$s External Link */
 						printf( __( 'Don\'t see a template you would like to import?<br><a target="_blank" href="%1$s">Make a Template Suggestion!</a>', 'astra-sites' ), esc_url( $s_url ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						?>
@@ -407,7 +407,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 					<div class="description">
 						<p>
 						<?php
-						$s_url = Astra_Sites_White_Label::get_option( 'astra-agency', 'licence' );
+						$s_url = astra_sites_get_suggestion_link();
 						/* translators: %1$s External Link */
 						printf( __( 'Don\'t see a template you would like to import?<br><a target="_blank" href="%1$s">Make a Template Suggestion!</a>', 'astra-sites' ), esc_url( $s_url ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 						?>
@@ -469,7 +469,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<div class="description">
 					<p>
 					<?php
-					$s_url = Astra_Sites_White_Label::get_option( 'astra-agency', 'licence' );
+					$s_url = astra_sites_get_suggestion_link();
 					/* translators: %1$s External Link */
 					printf( __( 'Don\'t see a template you would like to import?<br><a target="_blank" href="%1$s">Make a Template Suggestion!</a>', 'astra-sites' ), esc_url( $s_url ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					?>
