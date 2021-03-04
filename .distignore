@@ -13,7 +13,6 @@ circle.yml
 composer.json
 composer.lock
 Gruntfile.js
-package.json
 phpunit.xml
 phpunit.xml.dist
 multisite.xml
@@ -32,3 +31,4 @@ node_modules
 package-lock.json
 .github
 .wordpress-org
+

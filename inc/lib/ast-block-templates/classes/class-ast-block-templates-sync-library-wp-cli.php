@@ -2,24 +2,24 @@
 /**
  * WP CLI
  *
- * 1. Run `wp gutenberg-templates sync`       Info.
+ * 1. Run `wp ast-block-templates sync`       Info.
  *
  * @since 1.0.0
  *
- * @package gutenberg-templates
+ * @package ast-block-templates
  */
 
-if ( ! class_exists( 'Gutenberg_Templates_Sync_Library_WP_CLI' ) && class_exists( 'WP_CLI_Command' ) ) :
+if ( ! class_exists( 'Ast_Block_Templates_Sync_Library_WP_CLI' ) && class_exists( 'WP_CLI_Command' ) ) :
 
 	/**
-	 * Gutenberg Templates WP CLI
+	 * Ast_Block Templates WP CLI
 	 */
-	class Gutenberg_Templates_Sync_Library_WP_CLI extends WP_CLI_Command {
+	class Ast_Block_Templates_Sync_Library_WP_CLI extends WP_CLI_Command {
 
 		/**
 		 * Sync
 		 *
-		 *  Example: wp gutenberg-templates sync
+		 *  Example: wp ast-block-templates sync
 		 *
 		 * @since 1.0.0
 		 * @param  array $args       Arguments.
@@ -32,15 +32,15 @@ if ( ! class_exists( 'Gutenberg_Templates_Sync_Library_WP_CLI' ) && class_exists
 			WP_CLI::line( 'Sync Started' );
 
 			// Check sync status.
-			Gutenberg_Templates_Sync_Library::get_instance()->check_sync_status();
+			Ast_Block_Templates_Sync_Library::get_instance()->check_sync_status();
 
 			// Get Blocks Count.
-			$total_blocks_requests = Gutenberg_Templates_Sync_Library::get_instance()->get_total_blocks_requests();
+			$total_blocks_requests = Ast_Block_Templates_Sync_Library::get_instance()->get_total_blocks_requests();
 			if ( $total_blocks_requests ) {
 				for ( $page_no = 1; $page_no <= $total_blocks_requests; $page_no++ ) {
 
 					// Import Blocks.
-					Gutenberg_Templates_Sync_Library::get_instance()->import_blocks( $page_no );
+					Ast_Block_Templates_Sync_Library::get_instance()->import_blocks( $page_no );
 					WP_CLI::line( 'BLOCK: Importing blocks from page ' . $page_no );
 				}
 				WP_CLI::line( 'BLOCK: Importd blocks from ' . $total_blocks_requests . ' pages.' );
@@ -49,12 +49,12 @@ if ( ! class_exists( 'Gutenberg_Templates_Sync_Library_WP_CLI' ) && class_exists
 			}
 
 			// Get Sites Count.
-			$total_sites_requests = Gutenberg_Templates_Sync_Library::get_instance()->get_total_sites_count();
+			$total_sites_requests = Ast_Block_Templates_Sync_Library::get_instance()->get_total_sites_count();
 			if ( $total_sites_requests ) {
 				for ( $page_no = 1; $page_no <= $total_sites_requests; $page_no++ ) {
 
 					// Import Sites.
-					Gutenberg_Templates_Sync_Library::get_instance()->import_sites( $page_no );
+					Ast_Block_Templates_Sync_Library::get_instance()->import_sites( $page_no );
 					WP_CLI::line( 'SITE: Importing sites from page ' . $page_no );
 				}
 				WP_CLI::line( 'SITE: Importd sites from ' . $total_sites_requests . ' pages.' );
@@ -63,7 +63,7 @@ if ( ! class_exists( 'Gutenberg_Templates_Sync_Library_WP_CLI' ) && class_exists
 			}
 
 			// Sync Complete.
-			Gutenberg_Templates_Sync_Library::get_instance()->update_library_complete();
+			Ast_Block_Templates_Sync_Library::get_instance()->update_library_complete();
 
 			// Start Sync.
 			WP_CLI::line( 'Sync Completed' );
@@ -73,6 +73,6 @@ if ( ! class_exists( 'Gutenberg_Templates_Sync_Library_WP_CLI' ) && class_exists
 	/**
 	 * Add Command
 	 */
-	WP_CLI::add_command( 'gutenberg-templates', 'Gutenberg_Templates_Sync_Library_WP_CLI' );
+	WP_CLI::add_command( 'ast-block-templates', 'Ast_Block_Templates_Sync_Library_WP_CLI' );
 
 endif;

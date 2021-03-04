@@ -9,20 +9,20 @@
  *      'id'  => '<image-id>',
  *  );
  *
- *  $downloaded_image = Gutenberg_Templates_Image_Importer::get_instance()->import( $image );
+ *  $downloaded_image = Ast_Block_Templates_Image_Importer::get_instance()->import( $image );
  *
- * @package Gutenberg Templates
+ * @package Ast Block Templates
  * @since 1.0.0
  */
 
-if ( ! class_exists( 'Gutenberg_Templates_Image_Importer' ) ) :
+if ( ! class_exists( 'Ast_Block_Templates_Image_Importer' ) ) :
 
 	/**
-	 * Gutenberg Templates Image Importer
+	 * Ast_Block Templates Image Importer
 	 *
 	 * @since 1.0.0
 	 */
-	class Gutenberg_Templates_Image_Importer {
+	class Ast_Block_Templates_Image_Importer {
 
 		/**
 		 * Instance
@@ -106,8 +106,8 @@ if ( ! class_exists( 'Gutenberg_Templates_Image_Importer' ) ) :
 		 */
 		private function get_saved_image( $attachment ) {
 
-			if ( apply_filters( 'gutenberg_templates_image_importer_skip_image', false, $attachment ) ) {
-				gutenberg_templates_log( 'BATCH - SKIP Image - {from filter} - ' . $attachment['url'] . ' - Filter name `gutenberg_templates_image_importer_skip_image`.' );
+			if ( apply_filters( 'ast_block_templates_image_importer_skip_image', false, $attachment ) ) {
+				ast_block_templates_log( 'BATCH - SKIP Image - {from filter} - ' . $attachment['url'] . ' - Filter name `ast_block_templates_image_importer_skip_image`.' );
 				return array(
 					'status'     => true,
 					'attachment' => $attachment,
@@ -120,7 +120,7 @@ if ( ! class_exists( 'Gutenberg_Templates_Image_Importer' ) ) :
 			$post_id = $wpdb->get_var(
 				$wpdb->prepare(
 					'SELECT `post_id` FROM `' . $wpdb->postmeta . '`
-						WHERE `meta_key` = \'_gutenberg_templates_image_hash\'
+						WHERE `meta_key` = \'_ast_block_templates_image_hash\'
 							AND `meta_value` = %s
 					;',
 					$this->get_hash_image( $attachment['url'] )
@@ -143,7 +143,7 @@ if ( ! class_exists( 'Gutenberg_Templates_Image_Importer' ) ) :
 					)
 				);
 
-				gutenberg_templates_log( 'BATCH - SKIP Image {already imported from xml} - ' . $attachment['url'] );
+				ast_block_templates_log( 'BATCH - SKIP Image {already imported from xml} - ' . $attachment['url'] );
 			}
 
 			if ( $post_id ) {
@@ -174,9 +174,9 @@ if ( ! class_exists( 'Gutenberg_Templates_Image_Importer' ) ) :
 		 */
 		public function import( $attachment ) {
 
-			gutenberg_templates_log( 'Source - ' . $attachment['url'] );
+			ast_block_templates_log( 'Source - ' . $attachment['url'] );
 			$saved_image = $this->get_saved_image( $attachment );
-			gutenberg_templates_log( 'Log - ' . wp_json_encode( $saved_image['attachment'] ) );
+			ast_block_templates_log( 'Log - ' . wp_json_encode( $saved_image['attachment'] ) );
 
 			if ( $saved_image['status'] ) {
 				return $saved_image['attachment'];
@@ -195,29 +195,23 @@ if ( ! class_exists( 'Gutenberg_Templates_Image_Importer' ) ) :
 			// Empty file content?
 			if ( empty( $file_content ) ) {
 
-				gutenberg_templates_log( 'BATCH - FAIL Image {Error: Failed wp_remote_retrieve_body} - ' . $attachment['url'] );
+				ast_block_templates_log( 'BATCH - FAIL Image {Error: Failed wp_remote_retrieve_body} - ' . $attachment['url'] );
 				return $attachment;
 			}
 
 			// Extract the file name and extension from the URL.
 			$filename = basename( $attachment['url'] );
 
-			// @codingStandardsIgnoreStart
-			$upload = wp_upload_bits(
-				$filename,
-				null,
-				$file_content
-			);
-			// @codingStandardsIgnoreEnd
+			$upload = wp_upload_bits( $filename, null, $file_content );
 
-			gutenberg_templates_log( $filename );
-			gutenberg_templates_log( wp_json_encode( $upload ) );
+			ast_block_templates_log( $filename );
+			ast_block_templates_log( wp_json_encode( $upload ) );
 
 			$post = array(
 				'post_title' => $filename,
 				'guid'       => $upload['url'],
 			);
-			gutenberg_templates_log( wp_json_encode( $post ) );
+			ast_block_templates_log( wp_json_encode( $post ) );
 
 			$info = wp_check_filetype( $upload['file'] );
 			if ( $info ) {
@@ -232,14 +226,14 @@ if ( ! class_exists( 'Gutenberg_Templates_Image_Importer' ) ) :
 				$post_id,
 				wp_generate_attachment_metadata( $post_id, $upload['file'] )
 			);
-			update_post_meta( $post_id, '_gutenberg_templates_image_hash', $this->get_hash_image( $attachment['url'] ) );
+			update_post_meta( $post_id, '_ast_block_templates_image_hash', $this->get_hash_image( $attachment['url'] ) );
 
 			$new_attachment = array(
 				'id'  => $post_id,
 				'url' => $upload['url'],
 			);
 
-			gutenberg_templates_log( 'BATCH - SUCCESS Image {Imported} - ' . $new_attachment['url'] );
+			ast_block_templates_log( 'BATCH - SUCCESS Image {Imported} - ' . $new_attachment['url'] );
 
 			$this->already_imported_ids[] = $post_id;
 
@@ -271,6 +265,6 @@ if ( ! class_exists( 'Gutenberg_Templates_Image_Importer' ) ) :
 	/**
 	 * Kicking this off by calling 'get_instance()' method
 	 */
-	Gutenberg_Templates_Image_Importer::get_instance();
+	Ast_Block_Templates_Image_Importer::get_instance();
 
 endif;

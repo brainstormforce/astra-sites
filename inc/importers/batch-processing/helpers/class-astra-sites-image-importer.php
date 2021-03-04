@@ -2,6 +2,8 @@
 /**
  * Image Importer
  *
+ * @see https://github.com/elementor/elementor/blob/master/includes/template-library/classes/class-import-images.php
+ *
  * => How to use?
  *
  *  $image = array(
@@ -134,6 +136,8 @@ if ( ! class_exists( 'Astra_Sites_Image_Importer' ) ) :
 				// To check it exist in attachment.
 				$filename = basename( $attachment['url'] );
 
+				// Find the attachment by meta value.
+				// Code reused from Elementor plugin.
 				$post_id = $wpdb->get_var(
 					$wpdb->prepare(
 						"SELECT post_id FROM {$wpdb->postmeta}
@@ -202,13 +206,7 @@ if ( ! class_exists( 'Astra_Sites_Image_Importer' ) ) :
 			// Extract the file name and extension from the URL.
 			$filename = basename( $attachment['url'] );
 
-			// @codingStandardsIgnoreStart
-			$upload = wp_upload_bits(
-				$filename,
-				null,
-				$file_content
-			);
-			// @codingStandardsIgnoreEnd
+			$upload = wp_upload_bits( $filename, null, $file_content );
 
 			astra_sites_error_log( $filename );
 			astra_sites_error_log( wp_json_encode( $upload ) );
