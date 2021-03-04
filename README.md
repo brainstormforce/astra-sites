@@ -149,6 +149,9 @@ We are open to suggestions and would love to work on topics that our users are l
 
 ## Changelog ##
 
+vx.x.x - Draft
+- Fix: The icon not visible from the 'View Site' button.
+
 v2.5.1 - 1-February-2021
 - Improvement: Improved the admin notice first view logic.
 - Improvement: Improved the experience while subscribing to Starter Templates' news.

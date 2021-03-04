@@ -1354,10 +1354,6 @@ body.loading-content .select-page-builder {
 .astra-sites-result-preview .dashicons {
     vertical-align: middle;
     font-size: 1rem;
-    opacity: 0;
-    visibility: hidden;
-    height: auto;
-    vertical-align: middle;
 }
 
 .astra-site-import-process-wrap progress::-webkit-progress-value {
