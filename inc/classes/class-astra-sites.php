@@ -153,9 +153,24 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 
 			$arguments = isset( $_POST['data'] ) ? array_map( 'sanitize_text_field', json_decode( stripslashes( $_POST['data'] ), true ) ) : array();
 
-			$url = add_query_arg( $arguments, $this->api_domain . 'wp-json/starter-templates/v1/subscribe/' );
+			// Page Builder mapping.
+			$page_builder_mapping      = array(
+				'Elementor'      => 1,
+				'Beaver Builder' => 2,
+				'Brizy'          => 3,
+				'Gutenberg'      => 4,
+			);
+			$arguments['PAGE_BUILDER'] = $page_builder_mapping[ $arguments['PAGE_BUILDER'] ];
 
-			$response = wp_remote_post( $url );
+			$url = apply_filters( 'astra_sites_subscription_url', $this->api_domain . 'wp-json/starter-templates/v1/subscribe/' );
+
+			$args = array(
+				'timeout' => 30,
+				'body'    => $arguments,
+			);
+
+			$response = wp_remote_post( $url, $args );
+
 			if ( ! is_wp_error( $response ) || wp_remote_retrieve_response_code( $response ) === 200 ) {
 				$response = json_decode( wp_remote_retrieve_body( $response ), true );
 
@@ -164,8 +179,8 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 					update_user_meta( get_current_user_ID(), 'astra-sites-subscribed', 'yes' );
 				}
 			}
-
 			wp_send_json_success( $response );
+
 		}
 
 		/**
@@ -1243,11 +1258,49 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 					'compatibilities'                    => $this->get_compatibilities(),
 					'compatibilities_data'               => $this->get_compatibilities_data(),
 					'dismiss'                            => __( 'Dismiss this notice.', 'astra-sites' ),
-
+					'headings'                           => array(
+						'subscription' => esc_html__( 'One Last Step..', 'astra-sites' ),
+						'site_import'  => esc_html__( 'Your Selected Website is Being Imported.', 'astra-sites' ),
+						'page_import'  => esc_html__( 'Your Selected Template is Being Imported.', 'astra-sites' ),
+					),
+					'subscriptionSuccessMessage'         => esc_html__( 'We have sent you a surprise gift on your email address! Please check your inbox!', 'astra-sites' ),
 				)
 			);
 
 			return $data;
+		}
+
+		/**
+		 * Display subscription form
+		 *
+		 * @since x.x.x
+		 *
+		 * @return boolean
+		 */
+		public function should_display_subscription_form() {
+
+			$subscription = apply_filters( 'astra_sites_should_display_subscription_form', null );
+			if ( null !== $subscription ) {
+				return $subscription;
+			}
+
+			// Is WhiteLabel enabled?
+			if ( Astra_Sites_White_Label::get_instance()->is_white_labeled() ) {
+				return false;
+			}
+
+			// Is Premium Starter Templates pluign?
+			if ( defined( 'ASTRA_PRO_SITES_NAME' ) ) {
+				return false;
+			}
+
+			// User already subscribed?
+			$subscribed = get_user_meta( get_current_user_ID(), 'astra-sites-subscribed', true );
+			if ( $subscribed ) {
+				return false;
+			}
+
+			return true;
 		}
 
 		/**
@@ -1502,7 +1555,6 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			require_once ASTRA_SITES_DIR . 'inc/classes/compatibility/class-astra-sites-compatibility.php';
 			require_once ASTRA_SITES_DIR . 'inc/classes/class-astra-sites-importer.php';
 			require_once ASTRA_SITES_DIR . 'inc/classes/class-astra-sites-wp-cli.php';
-			require_once ASTRA_SITES_DIR . 'inc/lib/class-astra-sites-gutenberg-templates.php';
 
 			// Batch Import.
 			require_once ASTRA_SITES_DIR . 'inc/classes/batch-import/class-astra-sites-batch-import.php';

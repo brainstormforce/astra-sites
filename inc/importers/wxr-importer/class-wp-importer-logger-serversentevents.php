@@ -1,8 +1,7 @@
 <?php
 /**
  * WordPress Importer
- *
- * See https://github.com/humanmade/WordPress-Importer
+ * https://github.com/humanmade/WordPress-Importer
  *
  * Released under the GNU General Public License v2.0
  * https://github.com/humanmade/WordPress-Importer/blob/master/LICENSE

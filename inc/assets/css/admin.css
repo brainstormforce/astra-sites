@@ -1352,10 +1352,7 @@ body.loading-content .select-page-builder {
 }
 
 .astra-sites-result-preview .dashicons {
-    vertical-align: middle;
     font-size: 1rem;
-    opacity: 0;
-    visibility: hidden;
     height: auto;
     vertical-align: middle;
 }
@@ -2855,7 +2852,7 @@ body.loading-content .select-page-builder {
     margin-bottom: 1.4em;
 }
 
-.subscription-user-type .label {
+.subscription-wp-user-type .label {
     margin-right: 1em;
     margin-left: 2px;
 }
@@ -2875,7 +2872,7 @@ body.loading-content .select-page-builder {
     margin-top: 1.6em;
 }
 
-.subscription-user-type {
+.subscription-wp-user-type {
     display: flex;
     margin-bottom: 2em;
 }
@@ -2899,6 +2896,11 @@ body.loading-content .select-page-builder {
     visibility: visible;
 }
 
+.subscription-actions .dashicons {
+    opacity: 0;
+    visibility: hidden;
+}
+
 .subscription-actions .submitting .dashicons {
     animation: rotation 2s infinite linear;
 }
@@ -2916,10 +2918,10 @@ body.loading-content .select-page-builder {
     width: 100%;
 }
 
-.wp-core-ui .subscription-user-type select:focus,
+.wp-core-ui .subscription-wp-user-type select:focus,
 .subscription-field input[type="text"]:focus,
 .subscription-field input[type="email"]:focus,
-.wp-core-ui .subscription-user-type select:hover,
+.wp-core-ui .subscription-wp-user-type select:hover,
 .subscription-field input[type="text"]:hover,
 .subscription-field input[type="email"]:hover {
     border-color: #444C53;
@@ -2930,14 +2932,14 @@ body.loading-content .select-page-builder {
     color: #444;
 }
 
-.wp-core-ui .subscription-user-type select:focus,
+.wp-core-ui .subscription-wp-user-type select:focus,
 .subscription-field input[type="text"]:focus,
 .subscription-field input[type="email"]:focus {
     box-shadow: none;
 }
 
-.wp-core-ui .subscription-user-type select,
-.subscription-user-type .subscription-input {
+.wp-core-ui .subscription-wp-user-type select,
+.subscription-wp-user-type .subscription-input {
     width: 100%;
     color: #72777c;
 }
@@ -2954,7 +2956,149 @@ body.loading-content .select-page-builder {
 .subscription-footer p {
     margin: 0;
 }
+
+.subscription-fields .subscription-input:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.subscription-fields .subscription-input {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 3px;
+    border: 1px solid #8b959d;
+    font-size: 13px;
+    padding: 0 10px;
+    padding: 14px 14px;
+    box-shadow: none;
+    padding: 6px 12px;
+    min-height: 48px;
+    font-size: 15px;
+    font-weight: 400;
+    outline: none;
+}
+
+.subscription-label {
+    color: #9ea7b3;
+    margin: 15px 10px;
+    position: absolute;
+    top: 0;
+    font-weight: 400;
+    padding: 0 5px;
+    font-size: 14px;
+    left: 2px;
+    -webkit-transition: all 0.25s ease;
+    transition: all 0.25s ease;
+    pointer-events: none;
+}
+
+.subscription-field-wrap {
+    position: relative;
+}
+
+.subscription-anim .subscription-label {
+    background-color: #ffffff;
+    color: #3776ff;
+    font-size: 12px;
+    line-height: 12px;
+    margin-top: 0;
+    padding: 0 5px;
+    top: 0px;
+    transition: all 0.125s ease;
+    -webkit-transition: all 0.125s ease;
+}
+
+.subscription-error .subscription-input,
+.subscription-error .subscription-input:focus {
+    border-color: red;
+}
+
+.subscription-error .subscription-label {
+    color: red;
+}
+
+.subscription-error .subscription-desc {
+    color: red;
+}
+
+.subscription-success .subscription-label {
+    color: #66a700;
+}
+
+.subscription-field-wrap .subscription-desc {
+    padding-left: 2px;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.subscription-success .subscription-input,
+.subscription-success .subscription-input:focus {
+    border-color: #66a700;
+}
+
+.subscription-field-wrap {
+    margin-bottom: 1em;
+}
+
+.subscription-field-wrap.subscription-error .subscription-desc {
+    opacity: 1;
+    visibility: visible;
+}
+
+.subscription-fields {
+    display: flex;
+}
+
+.subscription-fields .subscription-field-wrap {
+    flex: 1;
+}
+
+.subscription-enabled .astra-sites-advanced-options {
+    display: none;
+}
+
+.astra-sites-advanced-options-heading {
+    display: none;
+}
+
+.subscription-enabled .astra-sites-advanced-options-heading {
+    display: inline-block;
+    margin: 1em 0 0 0;
+    cursor: pointer;
+}
+
+.subscription-enabled .astra-sites-subscription-form-one {
+    display: block;
+}
+
+.astra-sites-subscription-form-one {
+    display: none;
+}
+
+.astra-sites-advanced-options-heading .dashicons {
+    opacity: 1;
+    visibility: visible;
+}
+
+.astra-sites-subscription-form-one {
+    margin-top: 2em;
+}
+
 @media screen and (max-width: 768px) {
+    .subscription-fields {
+        flex-direction: column;
+    }
+}
+
+@media screen and (min-width: 768px) {
+    
+    .subscription-fields .subscription-field-wrap:first-child {
+        padding-right: 20px;
+    }
+
+}
+
+/* 
     .astra-sites-result-preview .inner {
         max-height: 100%;
     }
@@ -2963,7 +3107,6 @@ body.loading-content .select-page-builder {
     }
 }
 
-@media screen and (min-width: 768px) {
     .subscription-fields {
         display: flex;
     }
@@ -2974,4 +3117,4 @@ body.loading-content .select-page-builder {
         margin-bottom: 1.4em;
         width: 50%;
     }    
-}
+} */
