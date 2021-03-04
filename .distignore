@@ -28,6 +28,7 @@ node_modules
 *.sql
 *.tar.gz
 *.zip
+package.json
 package-lock.json
 .github
 .wordpress-org

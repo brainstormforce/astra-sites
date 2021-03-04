@@ -150,6 +150,7 @@ We are open to suggestions and would love to work on topics that our users are l
 ## Changelog ##
 
 vx.x.x - Draft
+- Improvement: Used version.json file to load the latest block library.
 - Fix: The icon not visible from the 'View Site' button.
 
 v2.6.1 - 17-February-2021
