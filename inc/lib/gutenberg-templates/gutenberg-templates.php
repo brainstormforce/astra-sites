@@ -15,6 +15,10 @@ if ( class_exists( 'Gutenberg_Templates' ) ) {
 	return;
 }
 
+if ( apply_filters( 'ast_block_templates_disable', false ) ) {
+	return;
+}
+
 // Set constants.
 define( 'GUTENBERG_TEMPLATES_LIBRARY_URL', 'https://websitedemos.net/' );
 define( 'GUTENBERG_TEMPLATES_VER', '1.0.0' );
