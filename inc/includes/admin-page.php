@@ -672,21 +672,21 @@ $site_import_options = apply_filters(
 	<div class="subscription-field-wrap">
 		<select class="subscription-input subscription-input-wp-user-type" name="wp_user_type">
 			<option value=""></option>
-			<option value="1">Beginner</option>
-			<option value="2">Intermediate</option>
-			<option value="3">Expert</option>
+			<option value="1"><?php esc_html_e( 'Beginner', 'astra-sites' ); ?></option>
+			<option value="2"><?php esc_html_e( 'Intermediate', 'astra-sites' ); ?></option>
+			<option value="3"><?php esc_html_e( 'Expert', 'astra-sites' ); ?></option>
 		</select>
-		<small class="subscription-desc">Field is required</small>
-		<label class="subscription-label">I'm a WordPress:</label>
+		<small class="subscription-desc"><?php esc_html_e( 'Field is required', 'astra-sites' ); ?></small>
+		<label class="subscription-label"><?php esc_html_e( 'I\'m a WordPress:', 'astra-sites' ); ?></label>
 	</div>
 	<div class="subscription-field-wrap">
 		<select class="subscription-input subscription-input-build-website-for" name="build_website_for">
 			<option value=""></option>
-			<option value="1">Myself/My company</option>
-			<option value="2">My client</option>
+			<option value="1"><?php esc_html_e( 'Myself/My company', 'astra-sites' ); ?></option>
+			<option value="2"><?php esc_html_e( 'My client', 'astra-sites' ); ?></option>
 		</select>
-		<small class="subscription-desc">Field is required</small>
-		<label class="subscription-label">I'm building website for:</label>
+		<small class="subscription-desc"><?php esc_html_e( 'Field is required', 'astra-sites' ); ?></small>
+		<label class="subscription-label"><?php esc_html_e( 'I\'m building website for:', 'astra-sites' ); ?></label>
 	</div>
 </div>
 </script>
@@ -753,7 +753,7 @@ $site_import_options = apply_filters(
 					<div class="astra-sites-advanced-options-wrap">
 
 						<?php if ( true === $subscription_status ) : ?>
-							<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+							<p><?php esc_html_e( 'Lorem Ipsum is simply dummy text of the printing and typesetting industry.', 'astra-sites' ); ?></p>
 						<?php endif; ?>
 
 						<div id="astra-sites-subscription-form-one" class="subscription-form astra-sites-subscription-form-one"></div>

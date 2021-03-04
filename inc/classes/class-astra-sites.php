@@ -160,7 +160,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				'Brizy'          => 3,
 				'Gutenberg'      => 4,
 			);
-			$arguments['PAGE_BUILDER'] = $page_builder_mapping[ $arguments['PAGE_BUILDER'] ];
+			$arguments['PAGE_BUILDER'] = isset( $page_builder_mapping[ $arguments['PAGE_BUILDER'] ] ) ? $page_builder_mapping[ $arguments['PAGE_BUILDER'] ] : '';
 
 			$url = apply_filters( 'astra_sites_subscription_url', $this->api_domain . 'wp-json/starter-templates/v1/subscribe/' );
 
