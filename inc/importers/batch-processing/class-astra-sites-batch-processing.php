@@ -644,6 +644,8 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 					$this->log( 'Updated requests ' . $total_requests['pages'] );
 					update_site_option( 'astra-sites-requests', $total_requests['pages'], 'no' );
 
+					do_action( 'astra_sites_sync_get_total_pages', $total_requests['pages'] );
+
 					return $total_requests['pages'];
 				}
 			}
@@ -677,6 +679,8 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 					update_site_option( 'astra-blocks-batch-status-string', 'Updated requests ' . $total_requests['pages'], 'no' );
 
 					update_site_option( 'astra-blocks-requests', $total_requests['pages'], 'no' );
+
+					do_action( 'astra_sites_sync_blocks_requests', $total_requests['pages'] );
 
 					return $total_requests['pages'];
 				}
