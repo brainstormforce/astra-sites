@@ -121,9 +121,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 				<div class="description">
 					<p>
 					<?php
-					$s_url = Astra_Sites_White_Label::get_option( 'astra-agency', 'licence' );
 					/* translators: %1$s External Link */
-					printf( __( 'Don\'t see a template you would like to import?<br><a target="_blank" href="%1$s">Make a Template Suggestion!</a>', 'astra-sites' ), esc_url( $s_url ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+					printf( __( 'Don\'t see a template you would like to import?<br><a target="_blank" href="%1$s">Make a Template Suggestion!</a>', 'astra-sites' ), esc_url( astra_sites_get_suggestion_link() ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 					?>
 					</p>
 					<div class="back-to-layout-button"><span class="button astra-sites-back"><?php esc_html_e( 'Back to Templates', 'astra-sites' ); ?></span></div>
