@@ -59,7 +59,7 @@ if ( ! class_exists( 'Ast_Block_Templates_Sync_Library' ) ) :
 		 * @return void
 		 */
 		public function setup_templates() {
-			$is_fresh_site = get_option( 'ast_block_templates_fresh_site', 'yes' );
+			$is_fresh_site = get_site_option( 'ast_block_templates_fresh_site', 'yes' );
 
 			if ( 'no' === $is_fresh_site ) {
 				return;
@@ -76,7 +76,7 @@ if ( ! class_exists( 'Ast_Block_Templates_Sync_Library' ) ) :
 				}
 			}
 
-			update_option( 'ast_block_templates_fresh_site', 'no' );
+			update_site_option( 'ast_block_templates_fresh_site', 'no' );
 		}
 
 		/**
