@@ -149,8 +149,9 @@ We are open to suggestions and would love to work on topics that our users are l
 
 == Changelog ==
 
-vx.x.x - Draft
-- Improvement: Used version.json file to load the latest block library.
+vx.x.x Draft
+- Improvement: Updated Block Templates with v1.0.1
+- Improvement: Used static option names list to store the default JSON file data into the options table.
 - Fix: The icon not visible from the 'View Site' button.
 
 v2.6.1 - 17-February-2021
