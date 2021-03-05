@@ -62,7 +62,7 @@ if ( ! class_exists( 'Ast_Block_Templates_Sync_Library' ) ) :
 			$is_fresh_site = get_option( 'fresh_site' );
 
 			// Process initially for the fresh user.
-			if ( empty( $is_fresh_site ) ) {
+			if ( $is_fresh_site ) {
 				$dir        = AST_BLOCK_TEMPLATES_DIR . 'dist/json';
 				$list_files = $this->get_default_assets();
 				foreach ( $list_files as $key => $file_name ) {
