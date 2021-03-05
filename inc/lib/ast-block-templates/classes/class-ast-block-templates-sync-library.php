@@ -59,21 +59,24 @@ if ( ! class_exists( 'Ast_Block_Templates_Sync_Library' ) ) :
 		 * @return void
 		 */
 		public function setup_templates() {
-			$is_fresh_site = get_option( 'fresh_site' );
+			$is_fresh_site = get_option( 'ast_block_templates_fresh_site', 'yes' );
 
-			// Process initially for the fresh user.
-			if ( empty( $is_fresh_site ) ) {
-				$dir        = AST_BLOCK_TEMPLATES_DIR . 'dist/json';
-				$list_files = $this->get_default_assets();
-				foreach ( $list_files as $key => $file_name ) {
-					if ( file_exists( $dir . '/' . $file_name . '.json' ) ) {
-						$data = ast_block_templates_get_filesystem()->get_contents( $dir . '/' . $file_name . '.json' );
-						if ( ! empty( $data ) ) {
-							update_site_option( $file_name, json_decode( $data, true ) );
-						}
+			if ( 'no' === $is_fresh_site ) {
+				return;
+			}
+
+			$dir = AST_BLOCK_TEMPLATES_DIR . 'dist/json';
+			$list_files = $this->get_default_assets();
+			foreach ( $list_files as $key => $file_name ) {
+				if ( file_exists( $dir . '/' . $file_name . '.json' ) ) {
+					$data = ast_block_templates_get_filesystem()->get_contents( $dir . '/' . $file_name . '.json' );
+					if ( ! empty( $data ) ) {
+						update_site_option( $file_name, json_decode( $data, true ) );
 					}
 				}
 			}
+
+			update_option( 'ast_block_templates_fresh_site', 'no' );
 		}
 
 		/**
