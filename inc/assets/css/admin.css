@@ -3013,7 +3013,6 @@ body.loading-content .select-page-builder {
     color: #2c3338;
 }
 
-
 .subscription-anim .subscription-label {
     background-color: #f1f3f5;
     font-size: 12px;
@@ -3114,6 +3113,9 @@ body.loading-content .select-page-builder {
 }
 
 @media screen and (max-width: 768px) {
+    #astra-sites-subscription-form-one .subscription-field-wrap {
+        margin-bottom: .8em;
+    }
     .subscription-fields {
         flex-direction: column;
     }
