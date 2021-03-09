@@ -59,27 +59,39 @@ if ( ! class_exists( 'Ast_Block_Templates_Sync_Library' ) ) :
 		 * @return void
 		 */
 		public function setup_templates() {
+			$is_fresh_site = get_site_option( 'ast_block_templates_fresh_site', 'yes' );
 
-			$is_fresh_site = get_site_option( 'ast-block-templates-fresh-site', '' );
+			if ( 'no' === $is_fresh_site ) {
+				return;
+			}
 
-			// Process initially for the fresh user.
-			if ( empty( $is_fresh_site ) ) {
-
-				$dir        = AST_BLOCK_TEMPLATES_DIR . 'dist/json';
-				$list_files = list_files( $dir );
-				if ( ! empty( $list_files ) ) {
-					$list_files = array_map( 'basename', $list_files );
-					foreach ( $list_files as $key => $file_name ) {
-						$data = ast_block_templates_get_filesystem()->get_contents( $dir . '/' . $file_name );
-						if ( ! empty( $data ) ) {
-							$option_name = str_replace( '.json', '', $file_name );
-							update_site_option( $option_name, json_decode( $data, true ) );
-						}
+			$dir        = AST_BLOCK_TEMPLATES_DIR . 'dist/json';
+			$list_files = $this->get_default_assets();
+			foreach ( $list_files as $key => $file_name ) {
+				if ( file_exists( $dir . '/' . $file_name . '.json' ) ) {
+					$data = ast_block_templates_get_filesystem()->get_contents( $dir . '/' . $file_name . '.json' );
+					if ( ! empty( $data ) ) {
+						update_site_option( $file_name, json_decode( $data, true ) );
 					}
 				}
-
-				update_site_option( 'ast-block-templates-fresh-site', 'yes', 'no' );
 			}
+
+			update_site_option( 'ast_block_templates_fresh_site', 'no' );
+		}
+
+		/**
+		 * Json Files Names.
+		 *
+		 * @since 1.0.1
+		 * @return array
+		 */
+		public function get_default_assets() {
+			return array(
+				'ast-block-templates-sites-1',
+				'ast-block-templates-site-requests',
+				'ast-block-templates-blocks-1',
+				'ast-block-templates-block-requests',
+			);
 		}
 
 		/**
@@ -388,6 +400,8 @@ if ( ! class_exists( 'Ast_Block_Templates_Sync_Library' ) ) :
 
 					update_site_option( 'ast-block-templates-site-requests', $total_requests['pages'], 'no' );
 
+					do_action( 'ast_block_templates_sync_get_total_pages', $total_requests['pages'] );
+
 					return $total_requests['pages'];
 				}
 			}
@@ -429,6 +443,7 @@ if ( ! class_exists( 'Ast_Block_Templates_Sync_Library' ) ) :
 
 					update_site_option( 'ast-block-templates-block-requests', $total_requests['pages'], 'no' );
 
+					do_action( 'ast_block_templates_sync_blocks_requests', $total_requests['pages'] );
 					return $total_requests['pages'];
 				}
 			}
@@ -481,6 +496,8 @@ if ( ! class_exists( 'Ast_Block_Templates_Sync_Library' ) ) :
 					ast_block_templates_log( 'SITE: Storing in option ' . $option_name );
 
 					update_site_option( $option_name, $all_blocks, 'no' );
+
+					do_action( 'ast_block_templates_sync_sites', $page, $all_blocks );
 
 					if ( ast_block_templates_doing_wp_cli() ) {
 						ast_block_templates_log( 'SITE: Generating ' . $option_name . '.json file' );
@@ -540,6 +557,7 @@ if ( ! class_exists( 'Ast_Block_Templates_Sync_Library' ) ) :
 					update_site_option( $option_name, $all_blocks, 'no' );
 
 					if ( ast_block_templates_doing_wp_cli() ) {
+						do_action( 'ast_block_templates_sync_blocks', $page, $all_blocks );
 						ast_block_templates_log( 'BLOCK: Genearting ' . $option_name . '.json file' );
 					}
 				}

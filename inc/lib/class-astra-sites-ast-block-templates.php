@@ -57,7 +57,7 @@ if ( ! class_exists( 'Astra_Sites_Ast_Block_Templates' ) ) :
 		 */
 		public function version_check() {
 
-			$file = realpath( dirname( __FILE__ ) . '/ast-block-templates/package.json' );
+			$file = realpath( dirname( __FILE__ ) . '/ast-block-templates/version.json' );
 
 			// Is file exist?
 			if ( is_file( $file ) ) {
@@ -66,7 +66,7 @@ if ( ! class_exists( 'Astra_Sites_Ast_Block_Templates' ) ) :
 				// @codingStandardsIgnoreEnd
 				global $ast_block_templates_version, $ast_block_templates_init;
 				$path    = realpath( dirname( __FILE__ ) . '/ast-block-templates/ast-block-templates.php' );
-				$version = isset( $file_data['version'] ) ? $file_data['version'] : 0;
+				$version = isset( $file_data['ast-block-templates'] ) ? $file_data['ast-block-templates'] : 0;
 
 				// Compare versions.
 				if ( version_compare( $version, $ast_block_templates_version, '>' ) ) {
