@@ -4,8 +4,8 @@
 **Tags:** Elementor,Beaver Builder,Templates,Gutenberg,Astra Starter Sites  
 **Requires at least:** 4.4  
 **Requires PHP:** 5.3  
-**Tested up to:** 5.6  
-**Stable tag:** 2.6.1  
+**Tested up to:** 5.7  
+**Stable tag:** 2.6.2  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -149,10 +149,15 @@ We are open to suggestions and would love to work on topics that our users are l
 
 ## Changelog ##
 
-vx.x.x Draft
-- Improvement: Used static option names list to store the default JSON file data into the options table.
+v2.6.2 - 10-March-2021
+
+- Improvement: Added two step subscribe support.
 - Fix: The icon not visible from the 'View Site' button.
 - Fix: Brizy pages initialy not showing any content.
+- Block Templates: Improvement: Added the suggestion link.
+- Block Templates: Improvement: Added filter to disable the Gutenberg Templates.
+- Block Templates: Fix: Block patter category filter keeps showing all categories.
+
 v2.6.1 - 17-February-2021
 - Fix: Version file was missing due to Auto-Release command.
 
