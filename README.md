@@ -151,12 +151,13 @@ We are open to suggestions and would love to work on topics that our users are l
 
 v2.6.2 - 10-March-2021
 
-- Improvement: Added two step subscribe support.
-- Fix: The icon not visible from the 'View Site' button.
-- Fix: Brizy pages initialy not showing any content.
-- Block Templates: Improvement: Added the suggestion link.
-- Block Templates: Improvement: Added filter to disable the Gutenberg Templates.
-- Block Templates: Fix: Block patter category filter keeps showing all categories.
+- Improvement: Used better and optimised way to show the initial sites and pages list on Starter Template dashboard.
+- Improvement: Block Templates - Used version.json instead of package.json to manage the dependency.
+- Improvement: Block Templates - Now users can suggest their required templates via suggestion link.
+- Improvement: Block Templates - Added filter to disable the Block Templates. - [Doc_link]
+- Fix: Block Templates - Retained the selected block pattern category filter after switching between Pages/Patterns tabs.
+- Fix: Rectified the invisible icon from the 'View Site' button.
+- Fix: Brizy pages initially not showing any content.
 
 v2.6.1 - 17-February-2021
 - Fix: Version file was missing due to Auto-Release command.
