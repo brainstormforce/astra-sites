@@ -154,7 +154,7 @@ v2.6.2 - 10-March-2021
 - Improvement: Used better and optimised way to show the initial sites and pages list on Starter Template dashboard.
 - Improvement: Block Templates - Used version.json instead of package.json to manage the dependency.
 - Improvement: Block Templates - Now users can suggest their required templates via suggestion link.
-- Improvement: Block Templates - Added filter to disable the Block Templates. - [Doc_link]
+- Improvement: Block Templates - Added filter to disable the Block Templates. - https://ultimategutenberg.com/docs/filter-to-remove-starter-templates-button/
 - Fix: Block Templates - Retained the selected block pattern category filter after switching between Pages/Patterns tabs.
 - Fix: Rectified the invisible icon from the 'View Site' button.
 - Fix: Brizy pages initially not showing any content.
