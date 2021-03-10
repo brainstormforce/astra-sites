@@ -29,3 +29,22 @@ if ( ! function_exists( 'astra_sites_error_log' ) ) :
 	}
 
 endif;
+
+if ( ! function_exists( 'astra_sites_get_suggestion_link' ) ) :
+	/**
+	 *
+	 * Get suggestion link.
+	 *
+	 * @since 2.6.2
+	 *
+	 * @return suggestion link.
+	 */
+	function astra_sites_get_suggestion_link() {
+		$white_label_link = Astra_Sites_White_Label::get_option( 'astra-agency', 'licence' );
+
+		if ( empty( $white_label_link ) ) {
+			$white_label_link = 'https://wpastra.com/sites-suggestions/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=suggestions';
+		}
+		return apply_filters( 'astra_sites_suggestion_link', $white_label_link );
+	}
+endif;

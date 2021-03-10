@@ -378,17 +378,15 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 				$this->process_batch();
 
 			} elseif ( empty( $is_fresh_site ) ) {
+				$dir = ASTRA_SITES_DIR . 'inc/json';
 
 				// First time user save the data of sites, pages, categories etc from the JSON file.
-				$dir        = ASTRA_SITES_DIR . 'inc/json';
-				$list_files = list_files( $dir );
-				if ( ! empty( $list_files ) ) {
-					$list_files = array_map( 'basename', $list_files );
-					foreach ( $list_files as $key => $file_name ) {
-						$data = Astra_Sites::get_instance()->get_filesystem()->get_contents( $dir . '/' . $file_name );
+				$list_files = $this->get_default_assets();
+				foreach ( $list_files as $key => $file_name ) {
+					if ( file_exists( $dir . '/' . $file_name . '.json' ) ) {
+						$data = Astra_Sites::get_instance()->get_filesystem()->get_contents( $dir . '/' . $file_name . '.json' );
 						if ( ! empty( $data ) ) {
-							$option_name = str_replace( '.json', '', $file_name );
-							update_site_option( $option_name, json_decode( $data, true ) );
+							update_site_option( $file_name, json_decode( $data, true ) );
 						}
 					}
 				}
@@ -416,6 +414,52 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 					$this->process_import();
 				}
 			}
+		}
+
+		/**
+		 * Json Files Names.
+		 *
+		 * @since 2.6.2
+		 * @return array
+		 */
+		public function get_default_assets() {
+
+			return array(
+				'astra-sites-tags',
+				'astra-blocks-1',
+				'astra-sites-categories',
+				'astra-blocks-4',
+				'astra-sites-page-builders',
+				'astra-blocks-3',
+				'astra-blocks-2',
+				'astra-blocks-categories',
+				'astra-sites-requests',
+				'astra-sites-tags',
+				'astra-sites-and-pages-page-1',
+				'astra-sites-and-pages-page-2',
+				'astra-sites-and-pages-page-3',
+				'astra-sites-and-pages-page-4',
+				'astra-sites-and-pages-page-5',
+				'astra-sites-and-pages-page-6',
+				'astra-sites-and-pages-page-7',
+				'astra-sites-and-pages-page-8',
+				'astra-sites-and-pages-page-9',
+				'astra-sites-and-pages-page-10',
+				'astra-sites-and-pages-page-11',
+				'astra-sites-and-pages-page-12',
+				'astra-sites-and-pages-page-13',
+				'astra-sites-and-pages-page-14',
+				'astra-sites-and-pages-page-15',
+				'astra-sites-and-pages-page-16',
+				'astra-sites-and-pages-page-17',
+				'astra-sites-and-pages-page-18',
+				'astra-sites-and-pages-page-19',
+				'astra-sites-and-pages-page-20',
+				'astra-sites-and-pages-page-21',
+				'astra-sites-and-pages-page-22',
+				'astra-sites-and-pages-page-23',
+				'astra-sites-and-pages-page-24',
+			);
 		}
 
 		/**
@@ -644,6 +688,8 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 					$this->log( 'Updated requests ' . $total_requests['pages'] );
 					update_site_option( 'astra-sites-requests', $total_requests['pages'], 'no' );
 
+					do_action( 'astra_sites_sync_get_total_pages', $total_requests['pages'] );
+
 					return $total_requests['pages'];
 				}
 			}
@@ -677,6 +723,8 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 					update_site_option( 'astra-blocks-batch-status-string', 'Updated requests ' . $total_requests['pages'], 'no' );
 
 					update_site_option( 'astra-blocks-requests', $total_requests['pages'], 'no' );
+
+					do_action( 'astra_sites_sync_blocks_requests', $total_requests['pages'] );
 
 					return $total_requests['pages'];
 				}

@@ -1352,10 +1352,7 @@ body.loading-content .select-page-builder {
 }
 
 .astra-sites-result-preview .dashicons {
-    vertical-align: middle;
     font-size: 1rem;
-    opacity: 0;
-    visibility: hidden;
     height: auto;
     vertical-align: middle;
 }
@@ -2579,7 +2576,7 @@ body.loading-content .select-page-builder {
  */
 
 .ast-actioms-wrap {
-    padding: 1em 1em 1em 2.9em;
+    padding: 13px 35px 13px 35px;
     z-index: 30;
     box-sizing: border-box;
     border-top: 1px solid #dcdcdc;
@@ -2855,7 +2852,7 @@ body.loading-content .select-page-builder {
     margin-bottom: 1.4em;
 }
 
-.subscription-user-type .label {
+.subscription-wp-user-type .label {
     margin-right: 1em;
     margin-left: 2px;
 }
@@ -2869,13 +2866,20 @@ body.loading-content .select-page-builder {
     display: inline-block;
 }
 
+.import-page #astra-sites-subscription-form-two .subscription-field-wrap {
+    margin-bottom: 5px;
+}
+
+#astra-sites-subscription-form-two .subscription-field-wrap {
+    margin-bottom: .8em;
+}
+
 .subscription-actions {
     display: flex;
     align-items: center;
-    margin-top: 1.6em;
 }
 
-.subscription-user-type {
+.subscription-wp-user-type {
     display: flex;
     margin-bottom: 2em;
 }
@@ -2889,7 +2893,7 @@ body.loading-content .select-page-builder {
 }
 
 .subscription-popup .astra-sites-import-content {
-    height: 260px;
+    height: 250px;
     padding: 20px 35px 20px 35px;
 }
 
@@ -2897,6 +2901,11 @@ body.loading-content .select-page-builder {
 .subscription-actions .submitted .dashicons {
     opacity: 1;
     visibility: visible;
+}
+
+.subscription-actions .dashicons {
+    opacity: 0;
+    visibility: hidden;
 }
 
 .subscription-actions .submitting .dashicons {
@@ -2910,16 +2919,16 @@ body.loading-content .select-page-builder {
 .wp-core-ui .astra-sites-result-preview .subscription-actions .button.button-hero {
     margin: 0;
     box-shadow: none;
-    font-size: 13px;
-    min-height: 38px;
+    font-size: 14px;
+    min-height: 44px;
     padding: 0 18px;
     width: 100%;
 }
 
-.wp-core-ui .subscription-user-type select:focus,
+.wp-core-ui .subscription-wp-user-type select:focus,
 .subscription-field input[type="text"]:focus,
 .subscription-field input[type="email"]:focus,
-.wp-core-ui .subscription-user-type select:hover,
+.wp-core-ui .subscription-wp-user-type select:hover,
 .subscription-field input[type="text"]:hover,
 .subscription-field input[type="email"]:hover {
     border-color: #444C53;
@@ -2930,14 +2939,14 @@ body.loading-content .select-page-builder {
     color: #444;
 }
 
-.wp-core-ui .subscription-user-type select:focus,
+.wp-core-ui .subscription-wp-user-type select:focus,
 .subscription-field input[type="text"]:focus,
 .subscription-field input[type="email"]:focus {
     box-shadow: none;
 }
 
-.wp-core-ui .subscription-user-type select,
-.subscription-user-type .subscription-input {
+.wp-core-ui .subscription-wp-user-type select,
+.subscription-wp-user-type .subscription-input {
     width: 100%;
     color: #72777c;
 }
@@ -2954,24 +2963,189 @@ body.loading-content .select-page-builder {
 .subscription-footer p {
     margin: 0;
 }
+
+.subscription-fields .subscription-input:focus {
+    outline: none;
+    box-shadow: none;
+}
+
+.subscription-fields .subscription-input {
+    width: 100%;
+    max-width: 100%;
+    border-radius: 3px;
+    border: 1px solid #585F66;
+    padding: 0 10px;
+    padding: 14px 14px;
+    box-shadow: none;
+    padding: 6px 12px;
+    min-height: 44px;
+    font-size: 14px;
+    font-weight: 400;
+    outline: none;
+    background-color: transparent;
+    background-position: right 10px top 55%;
+    margin: 0;
+}
+
+.subscription-label {
+    color: #585F66;
+    margin: 12px 10px;
+    position: absolute;
+    top: 0;
+    font-weight: 400;
+    padding: 0 5px;
+    font-size: 14px;
+    left: 0;
+    -webkit-transition: all 0.25s ease;
+    transition: all 0.25s ease;
+    pointer-events: none;
+}
+
+.subscription-field-wrap {
+    position: relative;
+}
+
+.subscription-fields .subscription-field-wrap:not(.subscription-success, .subscription-error) .subscription-input:hover {
+    border-color: #2271b1;
+}
+
+.subscription-fields .subscription-input:hover,
+.subscription-fields .subscription-input:focus {
+    color: #2c3338;
+}
+
+.subscription-anim .subscription-label {
+    background-color: #f1f3f5;
+    font-size: 12px;
+    line-height: 12px;
+    margin-top: 0;
+    padding: 0 4px;
+    top: -5px;
+    transition: all 0.125s ease;
+    -webkit-transition: all 0.125s ease;
+    color: #2271b1;
+}
+
+.subscription-error .subscription-input,
+.subscription-error .subscription-input:focus {
+    border-color: red;
+}
+
+.subscription-error .subscription-desc {
+    color: red;
+}
+
+.subscription-anim.subscription-error .subscription-label {
+    color: red;
+}
+
+
+.subscription-field-wrap .subscription-desc {
+    padding-left: 2px;
+    opacity: 0;
+    visibility: hidden;
+}
+
+.subscription-success .subscription-input,
+.subscription-success .subscription-input:focus {
+    border-color: #66a700;
+}
+
+.subscription-anim.subscription-success .subscription-label {
+    color: #66a700;
+}
+
+.subscription-field-wrap {
+    margin-bottom: 1em;
+}
+
+.subscription-field-wrap.subscription-error .subscription-desc {
+    opacity: 1;
+    visibility: visible;
+}
+
+.subscription-fields {
+    display: flex;
+}
+
+.subscription-fields .subscription-field-wrap {
+    flex: 1;
+}
+
+.subscription-enabled .astra-sites-advanced-options {
+    display: none;
+}
+
+.astra-sites-advanced-options-heading {
+    display: none;
+}
+
+.subscription-enabled .astra-sites-advanced-options-heading {
+    display: inline-block;
+    margin: 0;
+    cursor: pointer;
+    font-size: 15px;
+}
+
+.subscription-enabled .astra-sites-subscription-form-one {
+    display: block;
+}
+
+.astra-sites-subscription-form-one {
+    display: none;
+}
+
+.astra-sites-advanced-options-heading .dashicons {
+    opacity: 1;
+    visibility: visible;
+}
+
+.astra-sites-subscription-form-one {
+    margin-top: 1.8em;
+    max-width: 580px;
+}
+
+.import-page .subscription-field-wrap {
+    margin-bottom: .5em;
+}
+
+.import-page .subscription-popup .astra-sites-import-content {
+    height: 285px;
+}
+
 @media screen and (max-width: 768px) {
-    .astra-sites-result-preview .inner {
-        max-height: 100%;
+    .wp-core-ui .astra-sites-result-preview .subscription-actions .button.button-hero {
+        height: auto;
+        word-break: break-word;
+        white-space: initial;
+        line-height: 1.5;
+        padding: 5px 18px;
+    }
+    .astra-sites-result-preview input[type="checkbox"] {
+        height: 1rem;
+        width: 1rem;
+    }
+    .astra-sites-result-preview input[type="checkbox"]:checked:before {
+        height: 1.2rem;
+        width: 1.2rem;
+        margin: -0.1rem -0.2rem;
     }
     .subscription-popup .astra-sites-import-content {
-        height: 100%;
+        padding: 20px;
+    }
+    #astra-sites-subscription-form-one .subscription-field-wrap {
+        margin-bottom: .8em;
+    }
+    .subscription-fields {
+        flex-direction: column;
     }
 }
 
 @media screen and (min-width: 768px) {
-    .subscription-fields {
-        display: flex;
+    
+    .subscription-fields .subscription-field-wrap:first-child {
+        padding-right: 20px;
     }
-    .subscription-fields .subscription-field:first-child {
-        padding-right: 1.2em;
-    }
-    .subscription-fields .subscription-field {
-        margin-bottom: 1.4em;
-        width: 50%;
-    }    
+
 }
+

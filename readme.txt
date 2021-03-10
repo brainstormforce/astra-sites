@@ -4,8 +4,8 @@ Donate link: https://wpastra.com/pro/
 Tags: Elementor,Beaver Builder,Templates,Gutenberg,Astra Starter Sites
 Requires at least: 4.4
 Requires PHP: 5.3
-Tested up to: 5.6
-Stable tag: 2.6.1
+Tested up to: 5.7
+Stable tag: 2.6.2
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -148,6 +148,16 @@ We are open to suggestions and would love to work on topics that our users are l
 7. Free Images by Pixabay right inside the WordPress media popup.
 
 == Changelog ==
+
+v2.6.2 - 10-March-2021
+
+- Improvement: Used better and optimised way to show the initial sites and pages list on Starter Template dashboard.
+- Improvement: Block Templates - Used version.json instead of package.json to manage the dependency.
+- Improvement: Block Templates - Now users can suggest their required templates via suggestion link.
+- Improvement: Block Templates - Added filter to disable the Block Templates. - https://wpastra.com/docs/filter-to-remove-starter-templates-button/
+- Fix: Block Templates - Retained the selected block pattern category filter after switching between Pages/Patterns tabs.
+- Fix: Rectified the invisible icon from the 'View Site' button.
+- Fix: Brizy pages initially not showing any content.
 
 v2.6.1 - 17-February-2021
 - Fix: Version file was missing due to Auto-Release command.
