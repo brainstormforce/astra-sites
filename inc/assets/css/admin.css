@@ -3113,6 +3113,9 @@ body.loading-content .select-page-builder {
 }
 
 @media screen and (max-width: 768px) {
+    .subscription-popup .astra-sites-import-content {
+        padding: 20px;
+    }
     #astra-sites-subscription-form-one .subscription-field-wrap {
         margin-bottom: .8em;
     }

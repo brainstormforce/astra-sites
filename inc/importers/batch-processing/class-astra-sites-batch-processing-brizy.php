@@ -131,7 +131,6 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Brizy' ) ) :
 			$post->set_editor_data( $editor_data );
 			$post->set_needs_compile( $post->get_needs_compile() );
 			$post->set_editor_version( BRIZY_EDITOR_VERSION );
-			$post->loadInstanceData();
 			$post->set_compiler_version( BRIZY_EDITOR_VERSION );
 			$post->set_plugin_version( BRIZY_VERSION );
 			$post->saveStorage();
