@@ -419,7 +419,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 		/**
 		 * Json Files Names.
 		 *
-		 * @since x.x.x
+		 * @since 2.6.2
 		 * @return array
 		 */
 		public function get_default_assets() {

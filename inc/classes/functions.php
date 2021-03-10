@@ -35,7 +35,7 @@ if ( ! function_exists( 'astra_sites_get_suggestion_link' ) ) :
 	 *
 	 * Get suggestion link.
 	 *
-	 * @since x.x.x
+	 * @since 2.6.2
 	 *
 	 * @return suggestion link.
 	 */
