@@ -5,7 +5,7 @@
 **Requires at least:** 4.4  
 **Requires PHP:** 5.3  
 **Tested up to:** 5.7  
-**Stable tag:** 2.6.2  
+**Stable tag:** 2.6.3
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -148,6 +148,10 @@ We are open to suggestions and would love to work on topics that our users are l
 7. Free Images by Pixabay right inside the WordPress media popup.
 
 ## Changelog ##
+
+v2.6.3 - 12-March-2021
+
+- Fix: The Block Templates library not visible after plugin update.
 
 v2.6.2 - 10-March-2021
 

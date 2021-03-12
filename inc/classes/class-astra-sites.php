@@ -1547,6 +1547,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		 */
 		private function includes() {
 
+			require_once ASTRA_SITES_DIR . 'inc/classes/class-astra-sites-update.php';
 			require_once ASTRA_SITES_DIR . 'inc/classes/functions.php';
 			require_once ASTRA_SITES_DIR . 'inc/classes/class-astra-sites-white-label.php';
 			require_once ASTRA_SITES_DIR . 'inc/classes/class-astra-sites-page.php';
