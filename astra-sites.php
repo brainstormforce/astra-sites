@@ -59,6 +59,11 @@ endif;
 // Astra Notices.
 require_once ASTRA_SITES_DIR . 'admin/astra-notices/class-astra-notices.php';
 
+// BSF_Quick_Links.
+if ( ! class_exists( 'BSF_Quick_Links' ) ) {
+	require_once ASTRA_SITES_DIR . 'admin/bsf-quick-links/class-bsf-quick-links.php';
+}
+
 // BSF Analytics Tracker.
 if ( ! class_exists( 'BSF_Analytics_Loader' ) ) {
 	require_once ASTRA_SITES_DIR . 'admin/bsf-analytics/class-bsf-analytics-loader.php';
