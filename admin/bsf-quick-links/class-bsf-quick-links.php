@@ -13,7 +13,7 @@
  *  public function add_quick_links() {
  *      bsf_quick_links(
  *          'default_logo' => array(
- *               'title' => '',
+ *               'title' => '', //title on logo hover.
  *               'url'   => '',
  *           ),
  *           'links'        => array(
@@ -168,6 +168,6 @@ if ( ! function_exists( 'bsf_quick_links' ) ) {
 	 */
 	function bsf_quick_links( $args ) {
 		$bsf_quick_links = new BSF_Quick_Links();
-		$bsf_quick_links()->generate_quick_links_markup( $args );
+		$bsf_quick_links->generate_quick_links_markup( $args );
 	}
 }
