@@ -160,7 +160,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 							'label'   => 'Upgrade to Premium Starter Templates',
 							'icon'    => 'dashicons-star-filled',
 							'url'     => 'https://wpastra.com/pricing/',
-							'bgcolor' => 'orange',
+							'bgcolor' => '#ffa500',
 						),
 						array(
 							'label' => 'Support & Docs',
