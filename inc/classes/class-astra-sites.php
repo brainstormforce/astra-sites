@@ -116,7 +116,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			add_action( 'admin_footer', array( $this, 'insert_image_templates' ) );
 			add_action( 'customize_controls_print_footer_scripts', array( $this, 'insert_image_templates' ) );
 			add_action( 'wp_footer', array( $this, 'insert_image_templates_bb_and_brizy' ) );
-			add_action( 'elementor/editor/footer', array( $this, 'register_widget_scripts' ), 99 );
+			add_action( 'elementor/editor/before_enqueue_scripts', array( $this, 'register_widget_scripts' ), 99 );
 			add_action( 'elementor/editor/before_enqueue_scripts', array( $this, 'popup_styles' ) );
 			add_action( 'elementor/preview/enqueue_styles', array( $this, 'popup_styles' ) );
 
