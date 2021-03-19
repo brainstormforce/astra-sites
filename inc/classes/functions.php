@@ -48,3 +48,17 @@ if ( ! function_exists( 'astra_sites_get_suggestion_link' ) ) :
 		return apply_filters( 'astra_sites_suggestion_link', $white_label_link );
 	}
 endif;
+
+if ( ! function_exists( 'astra_sites_is_valid_image' ) ) :
+	/**
+	 * Check for the valid image
+	 *
+	 * @param string $link  The Image link.
+	 *
+	 * @since x.x.x
+	 * @return boolean
+	 */
+	function astra_sites_is_valid_image( $link = '' ) {
+		return preg_match( '/^((https?:\/\/)|(www\.))([a-z0-9-].?)+(:[0-9]+)?\/[\w\-]+\.(jpg|png|gif|jpeg|svg)\/?$/i', $link );
+	}
+endif;
