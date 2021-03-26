@@ -757,7 +757,7 @@ $site_import_options = apply_filters(
 
 						<div id="astra-sites-subscription-form-one" class="subscription-form astra-sites-subscription-form-one"></div>
 
-						<h2 class="astra-sites-advanced-options-heading">Advanced Options <span class="dashicons dashicons-arrow-down-alt2"></span></h2>
+						<h2 class="astra-sites-advanced-options-heading"><?php esc_html_e( 'Advanced Options', 'astra-sites' ); ?> <span class="dashicons dashicons-arrow-down-alt2"></span></h2>
 
 						<div class="astra-sites-advanced-options">
 							<ul class="astra-site-contents">

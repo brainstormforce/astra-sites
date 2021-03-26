@@ -65,6 +65,18 @@ if ( ! class_exists( 'Ast_Block_Templates_Sync_Library' ) ) :
 				return;
 			}
 
+			$this->set_default_assets();
+
+			update_site_option( 'ast_block_templates_fresh_site', 'no' );
+		}
+
+		/**
+		 * Set default assets
+		 *
+		 * @since 1.0.2
+		 */
+		public function set_default_assets() {
+
 			$dir        = AST_BLOCK_TEMPLATES_DIR . 'dist/json';
 			$list_files = $this->get_default_assets();
 			foreach ( $list_files as $key => $file_name ) {
@@ -76,7 +88,6 @@ if ( ! class_exists( 'Ast_Block_Templates_Sync_Library' ) ) :
 				}
 			}
 
-			update_site_option( 'ast_block_templates_fresh_site', 'no' );
 		}
 
 		/**
