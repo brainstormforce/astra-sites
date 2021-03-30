@@ -78,7 +78,7 @@ class Astra_Customizer_Import {
 			function ( &$value ) {
 				if ( ! is_array( $value ) ) {
 
-					if ( Astra_Sites_Helper::is_image_url( $value ) ) {
+					if ( astra_sites_is_valid_image( $value ) ) {
 						$data = Astra_Sites_Helper::sideload_image( $value );
 
 						if ( ! is_wp_error( $data ) ) {
