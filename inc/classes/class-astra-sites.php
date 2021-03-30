@@ -1273,7 +1273,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		/**
 		 * Display subscription form
 		 *
-		 * @since 2.6.2
+		 * @since 2.6.1
 		 *
 		 * @return boolean
 		 */
