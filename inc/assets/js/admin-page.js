@@ -174,10 +174,10 @@ var AstraSitesAjaxQueue = (function () {
 		site_import_status: false,
 		page_import_status: false,
 		imported_page_data: null,
-
+		first_import_complete: astraSitesVars.first_import_complete,
 		remaining_activate_plugins: [],
 		required_plugins_original_list: [],
-
+		
 		compatibilities: [],
 
 		skip_and_import_popups: [],
@@ -2450,6 +2450,9 @@ var AstraSitesAjaxQueue = (function () {
 
 			AstraSitesAdmin.site_import_status = false;
 			AstraSitesAdmin.subscribe_status = false;
+			if(!AstraSitesAdmin.first_import_complete){
+				AstraSitesAdmin.first_import_complete = 'yes';
+			}
 		},
 
 		/**
@@ -3506,7 +3509,9 @@ var AstraSitesAjaxQueue = (function () {
 							$('.astra-sites-result-preview').find('.astra-sites-import-plugins').show();
 							$('.astra-sites-result-preview').find('.required-plugins-list').html(output);
 						}
-
+						if( 'yes' === AstraSitesAdmin.first_import_complete ){
+							$('.astra-sites-advanced-options').find('.astra-site-contents').prepend(wp.template('astra-sites-delete-previous-site'));
+						}
 
 						/**
 						 * Enable Demo Import Button
