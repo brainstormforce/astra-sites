@@ -116,7 +116,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			add_action( 'admin_footer', array( $this, 'insert_image_templates' ) );
 			add_action( 'customize_controls_print_footer_scripts', array( $this, 'insert_image_templates' ) );
 			add_action( 'wp_footer', array( $this, 'insert_image_templates_bb_and_brizy' ) );
-			add_action( 'elementor/editor/before_enqueue_scripts', array( $this, 'register_widget_scripts' ), 99 );
+			add_action( 'elementor/editor/footer', array( $this, 'register_widget_scripts' ), 99 );
 			add_action( 'elementor/editor/before_enqueue_scripts', array( $this, 'popup_styles' ) );
 			add_action( 'elementor/preview/enqueue_styles', array( $this, 'popup_styles' ) );
 
@@ -1403,7 +1403,6 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			$this->image_search_assets();
 
 			wp_enqueue_script( 'astra-sites-elementor-admin-page', ASTRA_SITES_URI . 'inc/assets/js/elementor-admin-page.js', array( 'jquery', 'wp-util', 'updates', 'masonry', 'imagesloaded' ), ASTRA_SITES_VER, true );
-			wp_localize_script( 'astra-sites-elementor-admin-page', 'pagenow', ASTRA_SITES_NAME );
 
 			wp_enqueue_style( 'astra-sites-admin', ASTRA_SITES_URI . 'inc/assets/css/admin.css', ASTRA_SITES_VER, true );
 			wp_style_add_data( 'astra-sites-admin', 'rtl', 'replace' );
