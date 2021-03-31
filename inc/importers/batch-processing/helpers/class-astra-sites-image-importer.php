@@ -259,7 +259,7 @@ if ( ! class_exists( 'Astra_Sites_Image_Importer' ) ) :
 				return false;
 			}
 
-			if ( preg_match( '/^((https?:\/\/)|(www\.))([a-z0-9-].?)+(:[0-9]+)?\/[\w\-]+\.(jpg|png|svg|gif|jpeg)\/?$/i', $url ) ) {
+			if ( astra_sites_is_valid_image( $url ) ) {
 				return true;
 			}
 
