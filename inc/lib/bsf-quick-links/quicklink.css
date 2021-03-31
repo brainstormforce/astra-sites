@@ -52,15 +52,16 @@ label.bsf-quick-link-title {
     display: flex;
     justify-content: flex-end;
     margin-bottom: 20px;
-    position: relative;
 }
 .menu-item-logo {
     margin-left: 20px;
-    font-size: 22px;
+    font-size: 18px;
     color: white;
     background: #005e9b;
     padding: 12px;
     border-radius: 50%;
+    height: 18px;
+    width: 18px;
 }
 
 .bsf-quick-link-label {
@@ -95,14 +96,14 @@ label.bsf-quick-link-title {
 	
 	animation-name: fadeInOpacity;
 	animation-iteration-count: 1;
-	animation-timing-function: ease-in;
+	animation-timing-function: ease-in-out;
 }
 
 @keyframes fadeInOpacity {
 	0% {
 		opacity: 0;
 	}
-	100% {
+	50% {
 		opacity: 1;
 	}
 }
@@ -112,29 +113,4 @@ label.bsf-quick-link-title {
 }
 .bsf-quick-link-items-wrap.show-popup{
     display: block;
-}
-.bsf-quick-link-label:before {
-    content: '';
-    display: block;
-    position: absolute;
-    right: 49px;
-    top: 13px;
-    width: 0;
-    height: 0;
-    border: 8px solid transparent;
-    border-bottom-color: #fffefe;
-    transform: rotate(90deg);
-}
-
-.bsf-quick-link-label:after {
-    content: '';
-    display: block;
-    position: absolute;
-    width: 0;
-    height: 0;
-    border: 7px solid transparent;
-    border-bottom-color: #222222;
-    transform: rotate(90deg);
-    right: 51px;
-    top: 14px;
 }

@@ -169,12 +169,12 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 					),
 					array(
 						'label' => 'Support & Docs',
-						'icon'  => 'dashicons-media-document',
+						'icon'  => 'dashicons-book',
 						'url'   => 'https://wpastra.com/docs-category/starter-templates/',
 					),
 					array(
 						'label' => 'Join our community',
-						'icon'  => 'dashicons-admin-site-alt3',
+						'icon'  => 'dashicons-groups',
 						'url'   => 'https://www.facebook.com/groups/wpastra/',
 					),
 				),
