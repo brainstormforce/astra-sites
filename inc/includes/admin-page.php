@@ -757,24 +757,12 @@ $site_import_options = apply_filters(
 
 						<div id="astra-sites-subscription-form-one" class="subscription-form astra-sites-subscription-form-one"></div>
 
-						<h2 class="astra-sites-advanced-options-heading">Advanced Options <span class="dashicons dashicons-arrow-down-alt2"></span></h2>
+						<h2 class="astra-sites-advanced-options-heading"><?php esc_html_e( 'Advanced Options', 'astra-sites' ); ?> <span class="dashicons dashicons-arrow-right-alt2"></span></h2>
 
 						<div class="astra-sites-advanced-options">
 							<ul class="astra-site-contents">
 
 								<# if( 'astra-sites' === data ) { #>
-									<?php
-									$first_import_complete = get_option( 'astra_sites_import_complete', '' );
-									if ( ! empty( $first_import_complete ) ) :
-										?>
-									<li class="astra-sites-reset-data">
-										<label>
-											<input type="checkbox" name="reset" class="checkbox" <?php checked( 'reset', true ); ?>>
-											<strong><?php esc_html_e( 'Delete Previously Imported Site', 'astra-sites' ); ?></strong>
-											<div class="astra-sites-tooltip-message" id="astra-sites-tooltip-reset-data" style="display: none;"><p><?php esc_html_e( 'WARNING: Selecting this option will delete all data from the previous import. Choose this option only if this is intended.', 'astra-sites' ); ?></p><p><?php esc_html_e( 'You can find the backup to the current customizer settings at ', 'astra-sites' ); ?><code><?php esc_html_e( '/wp-content/uploads/astra-sites/', 'astra-sites' ); ?></code></p></div>
-										</label>
-									</li>
-									<?php endif; ?>
 
 									<?php $theme_status = Astra_Sites::get_instance()->get_theme_status(); ?>
 									<?php $theme_dependancy_class = ''; ?>
@@ -883,5 +871,15 @@ $site_import_options = apply_filters(
 	</div>
 </script>
 
+<script type="text/template" id="tmpl-astra-sites-delete-previous-site">
+	<li class="astra-sites-reset-data">
+		<label>
+			<input type="checkbox" name="reset" class="checkbox" <?php checked( 'reset', true ); ?>>
+			<strong><?php esc_html_e( 'Delete Previously Imported Site', 'astra-sites' ); ?></strong>
+			<div class="astra-sites-tooltip-message" id="astra-sites-tooltip-reset-data" style="display: none;"><p><?php esc_html_e( 'WARNING: Selecting this option will delete all data from the previous import. Choose this option only if this is intended.', 'astra-sites' ); ?></p><p><?php esc_html_e( 'You can find the backup to the current customizer settings at ', 'astra-sites' ); ?><code><?php esc_html_e( '/wp-content/uploads/astra-sites/', 'astra-sites' ); ?></code></p></div>
+		</label>
+	</li>
+
+</script>
 <?php
 wp_print_admin_notice_templates();

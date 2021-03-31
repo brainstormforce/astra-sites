@@ -1264,6 +1264,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 						'page_import'  => esc_html__( 'Your Selected Template is Being Imported.', 'astra-sites' ),
 					),
 					'subscriptionSuccessMessage'         => esc_html__( 'We have sent you a surprise gift on your email address! Please check your inbox!', 'astra-sites' ),
+					'first_import_complete'              => get_option( 'astra_sites_import_complete' ),
 				)
 			);
 

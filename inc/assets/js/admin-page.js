@@ -174,10 +174,10 @@ var AstraSitesAjaxQueue = (function () {
 		site_import_status: false,
 		page_import_status: false,
 		imported_page_data: null,
-
+		first_import_complete: astraSitesVars.first_import_complete,
 		remaining_activate_plugins: [],
 		required_plugins_original_list: [],
-
+		
 		compatibilities: [],
 
 		skip_and_import_popups: [],
@@ -493,10 +493,16 @@ var AstraSitesAjaxQueue = (function () {
 			$(document).on('click', '.button-subscription-skip', AstraSitesAdmin._hide_subscription_popup);
 			$(document).on('focusout change', '.subscription-input', AstraSitesAdmin.validate_single_field);
 			$(document).on('click input', '.subscription-input', AstraSitesAdmin._animate_fields);
-			$(document).on('click', '.astra-sites-advanced-options-heading', AstraSitesAdmin.toggle_advacned);
+			$(document).on('click', '.astra-sites-advanced-options-heading', AstraSitesAdmin.toggle_advanced);
 		},
 
-		toggle_advacned: function (event) {
+		toggle_advanced: function (event) {
+			const elScope = $('.astra-sites-advanced-options-heading span')
+			if(elScope.hasClass('dashicons-arrow-right-alt2')){
+				elScope.removeClass('dashicons-arrow-right-alt2').addClass('dashicons-arrow-down-alt2');
+			}else{
+				elScope.removeClass('dashicons-arrow-down-alt2').addClass('dashicons-arrow-right-alt2');
+			}
 			$('.astra-sites-advanced-options').toggle();
 		},
 
@@ -2450,6 +2456,9 @@ var AstraSitesAjaxQueue = (function () {
 
 			AstraSitesAdmin.site_import_status = false;
 			AstraSitesAdmin.subscribe_status = false;
+			if(!AstraSitesAdmin.first_import_complete){
+				AstraSitesAdmin.first_import_complete = 'yes';
+			}
 		},
 
 		/**
@@ -3506,7 +3515,9 @@ var AstraSitesAjaxQueue = (function () {
 							$('.astra-sites-result-preview').find('.astra-sites-import-plugins').show();
 							$('.astra-sites-result-preview').find('.required-plugins-list').html(output);
 						}
-
+						if( 'yes' === AstraSitesAdmin.first_import_complete ){
+							$('.astra-sites-advanced-options').find('.astra-site-contents').prepend(wp.template('astra-sites-delete-previous-site'));
+						}
 
 						/**
 						 * Enable Demo Import Button
