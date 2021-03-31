@@ -493,10 +493,16 @@ var AstraSitesAjaxQueue = (function () {
 			$(document).on('click', '.button-subscription-skip', AstraSitesAdmin._hide_subscription_popup);
 			$(document).on('focusout change', '.subscription-input', AstraSitesAdmin.validate_single_field);
 			$(document).on('click input', '.subscription-input', AstraSitesAdmin._animate_fields);
-			$(document).on('click', '.astra-sites-advanced-options-heading', AstraSitesAdmin.toggle_advacned);
+			$(document).on('click', '.astra-sites-advanced-options-heading', AstraSitesAdmin.toggle_advanced);
 		},
 
-		toggle_advacned: function (event) {
+		toggle_advanced: function (event) {
+			const elScope = $('.astra-sites-advanced-options-heading span')
+			if(elScope.hasClass('dashicons-arrow-right-alt2')){
+				elScope.removeClass('dashicons-arrow-right-alt2').addClass('dashicons-arrow-down-alt2');
+			}else{
+				elScope.removeClass('dashicons-arrow-down-alt2').addClass('dashicons-arrow-right-alt2');
+			}
 			$('.astra-sites-advanced-options').toggle();
 		},
 
