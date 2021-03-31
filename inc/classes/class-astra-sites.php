@@ -162,7 +162,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				),
 				'links'        => array(
 					array(
-						'label'   => 'Upgrade to Premium Starter Templates',
+						'label'   => 'Upgrade to Premium',
 						'icon'    => 'dashicons-star-filled',
 						'url'     => 'https://wpastra.com/pricing/',
 						'bgcolor' => '#ffa500',
