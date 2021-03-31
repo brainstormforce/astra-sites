@@ -29,9 +29,9 @@ label.bsf-quick-link-title {
     right: 8.5em;
     bottom: 4em;
     color: #fff;
-    background: #5F5E5E;
+    background: #222;
     white-space: nowrap;
-    padding: 5px 10px;
+    padding: 5px 15px;
     border-radius: 3px;
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
@@ -52,6 +52,7 @@ label.bsf-quick-link-title {
     display: flex;
     justify-content: flex-end;
     margin-bottom: 20px;
+    position: relative;
 }
 .menu-item-logo {
     margin-left: 20px;
@@ -64,14 +65,16 @@ label.bsf-quick-link-title {
 
 .bsf-quick-link-label {
     color: #fff;
-    background: #5F5E5E;
+    background: #222;
     white-space: nowrap;
-    padding: 5px 10px;
-    border-radius: 3px;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
+    padding: 5px 15px;
+    border-radius: 2px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
     height: 20px;
-    margin-top: 10px;
+    margin-top: 5px;
+    font-size: 12px;
+    border: 1px solid #f0f0f1;
 }
 
 .bsf-quick-link-item:hover {
@@ -79,17 +82,17 @@ label.bsf-quick-link-title {
 }
 
 .bsf-quick-link-item-0{  
-    animation-duration: 0.6s;
-}
-.bsf-quick-link-item-1{
     animation-duration: 0.3s;
 }
-.bsf-quick-link-item-2{
+.bsf-quick-link-item-1{
     animation-duration: 0.2s;
+}
+.bsf-quick-link-item-2{
+    animation-duration: 0.1s;
 
 }
 .bsf-quick-link-item-0,.bsf-quick-link-item-1,.bsf-quick-link-item-2 {
-	opacity: 0.9;
+	
 	animation-name: fadeInOpacity;
 	animation-iteration-count: 1;
 	animation-timing-function: ease-in;
@@ -100,7 +103,7 @@ label.bsf-quick-link-title {
 		opacity: 0;
 	}
 	100% {
-		opacity: 0.9;
+		opacity: 1;
 	}
 }
 
@@ -109,4 +112,29 @@ label.bsf-quick-link-title {
 }
 .bsf-quick-link-items-wrap.show-popup{
     display: block;
+}
+.bsf-quick-link-label:before {
+    content: '';
+    display: block;
+    position: absolute;
+    right: 49px;
+    top: 13px;
+    width: 0;
+    height: 0;
+    border: 8px solid transparent;
+    border-bottom-color: #fffefe;
+    transform: rotate(90deg);
+}
+
+.bsf-quick-link-label:after {
+    content: '';
+    display: block;
+    position: absolute;
+    width: 0;
+    height: 0;
+    border: 7px solid transparent;
+    border-bottom-color: #222222;
+    transform: rotate(90deg);
+    right: 51px;
+    top: 14px;
 }
