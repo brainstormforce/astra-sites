@@ -42,6 +42,11 @@
                 $(".bsf-quick-link-items-wrap").css("bottom", "8em");
                 $(".bsf-quick-link-title").css("bottom", "4.5em");        
             }
+            if( $('.astra-sites-get-agency-bundle').length  && !$('.astra-sites-get-agency-bundle').is(':empty') ) {
+                $(".bsf-quick-link").css("z-index", "-10");
+            } else {
+                $(".bsf-quick-link").css("z-index", "10");
+            }
         },
 
         _onClickOutside: function(e) {

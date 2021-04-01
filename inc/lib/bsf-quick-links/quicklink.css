@@ -1,6 +1,6 @@
 .bsf-quick-link-items-wrap,.bsf-quick-link{
     position: fixed;
-    z-index: 99999;
+    z-index: 10;
     transition: all 0.2s ease-in-out;   
     opacity: 1;
 }
