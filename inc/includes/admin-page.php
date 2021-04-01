@@ -876,7 +876,11 @@ $site_import_options = apply_filters(
 		<label>
 			<input type="checkbox" name="reset" class="checkbox" <?php checked( 'reset', true ); ?>>
 			<strong><?php esc_html_e( 'Delete Previously Imported Site', 'astra-sites' ); ?></strong>
-			<div class="astra-sites-tooltip-message" id="astra-sites-tooltip-reset-data" style="display: none;"><p><?php esc_html_e( 'WARNING: Selecting this option will delete all data from the previous import. Choose this option only if this is intended.', 'astra-sites' ); ?></p><p><?php esc_html_e( 'You can find the backup to the current customizer settings at ', 'astra-sites' ); ?><code><?php esc_html_e( '/wp-content/uploads/astra-sites/', 'astra-sites' ); ?></code></p></div>
+			<div class="astra-sites-tooltip-message" id="astra-sites-tooltip-reset-data" style="display: none;"><p><?php esc_html_e( 'WARNING: Selecting this option will delete all data from the previous import. Choose this option only if this is intended.', 'astra-sites' ); ?></p>
+			<?php if ( ! Astra_Sites_White_Label::get_instance()->is_white_labeled() ) { ?>
+			<p><?php esc_html_e( 'You can find the backup to the current customizer settings at ', 'astra-sites' ); ?><code><?php esc_html_e( '/wp-content/uploads/astra-sites/', 'astra-sites' ); ?></code></p>
+			<?php } ?>
+			</div>
 		</label>
 	</li>
 
