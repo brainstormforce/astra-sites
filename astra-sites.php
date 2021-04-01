@@ -64,6 +64,11 @@ if ( ! class_exists( 'BSF_Analytics_Loader' ) ) {
 	require_once ASTRA_SITES_DIR . 'admin/bsf-analytics/class-bsf-analytics-loader.php';
 }
 
+// BSF_Quick_Links.
+if ( ! class_exists( 'BSF_Quick_Links' ) ) {
+	require_once ASTRA_SITES_DIR . 'inc/lib/bsf-quick-links/class-bsf-quick-links.php';
+}
+
 $bsf_analytics = BSF_Analytics_Loader::get_instance();
 
 $bsf_analytics->set_entity(
