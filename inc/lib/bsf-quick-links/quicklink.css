@@ -22,7 +22,6 @@
     box-shadow: unset;
     outline: unset;
 }
-
 label.bsf-quick-link-title {
     text-decoration: none;
     position: fixed;
@@ -72,7 +71,6 @@ label.bsf-quick-link-title {
     height: 18px;
     width: 18px;
 }
-
 .bsf-quick-link-label {
     color: #fff;
     background: #5C5C5C;
@@ -89,48 +87,13 @@ label.bsf-quick-link-title {
     position: absolute;
     right: 55px;
 }
-
-
 .menu-item-logo:hover{
     filter:brightness(150%);
 }
 .dashicons-star-filled.menu-item-logo:hover{
     filter:brightness(120%);
 }
-/* .bsf-quick-link-item-0{  
-    animation-duration: 0.3s;
-}
-.bsf-quick-link-item-1{
-    animation-duration: 0.2s;
-}
-.bsf-quick-link-item-2{
-    animation-duration: 0.1s;
-
-}
-.bsf-quick-link-item-0,.bsf-quick-link-item-1,.bsf-quick-link-item-2 {
-	
-	animation-name: fadeInOpacity;
-	animation-iteration-count: 1;
-	animation-timing-function: ease-in-out;
-}
-
-@keyframes fadeInOpacity {
-	0% {
-		opacity: 0;
-	}
-	50% {
-		opacity: 1;
-	}
-} */
-
-/* .bsf-quick-link-items-wrap{
-    display: none;
-} */
-/* .bsf-quick-link-items-wrap.show-popup{
-    display: block;
-} */
 .bsf-quick-link-item {
-   
     -webkit-transform: scale(0);
     -ms-transform: scale(0);
     transform: scale(0);
@@ -144,4 +107,3 @@ label.bsf-quick-link-title {
     -ms-transform: scale(1);
     transform: scale(1);
 }
-
