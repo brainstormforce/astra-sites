@@ -1994,6 +1994,10 @@ var AstraSitesAjaxQueue = (function () {
 
 		_resetData: function () {
 
+			if ($(this).hasClass('updating-message')) {
+				return;
+			}
+
 			if ($('.subscription-enabled').length) {
 				AstraSitesAdmin._validate_field($('.subscription-input-wp-user-type'));
 				AstraSitesAdmin._validate_field($('.subscription-input-build-website-for'));
