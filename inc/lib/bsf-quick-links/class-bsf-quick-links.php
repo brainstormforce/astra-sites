@@ -79,7 +79,7 @@ if ( ! class_exists( 'BSF_Quick_Links' ) ) {
 			if ( strpos( $path, $theme_dir ) !== false ) {
 				return trailingslashit( get_template_directory_uri() . str_replace( $theme_dir, '', $path ) );
 			}
-			
+
 			return plugin_dir_url( __FILE__ );
 
 		}
@@ -98,7 +98,7 @@ if ( ! class_exists( 'BSF_Quick_Links' ) ) {
 			<div class="bsf-quick-link-wrap">
 				<label class="bsf-quick-link-title"><?php echo esc_html( $data['default_logo']['title'] ); ?></label>
 				<div class="bsf-quick-link-items-wrap">
-					<?php echo self::get_links_html( $data ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
+					<?php echo $this->get_links_html( $data ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				</div>
 				<a href="#" class="bsf-quick-link">					
 					<img src="<?php echo esc_url( $data['default_logo']['url'] ); ?>">
@@ -112,7 +112,7 @@ if ( ! class_exists( 'BSF_Quick_Links' ) ) {
 		 *
 		 * @param array $data links array.
 		 */
-		private static function get_links_html( $data ) {
+		private function get_links_html( $data ) {
 			$items_html = '';
 
 			foreach ( $data['links'] as $item_key => $item ) {

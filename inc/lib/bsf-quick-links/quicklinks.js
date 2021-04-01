@@ -1,7 +1,8 @@
 (function($) {
-    /*
-     * @since 1.0.0
-     * 
+    /**
+	 * BSFQuickLinks
+	 * 
+     * @since 1.0.0 
      */
     BSFQuickLinks = {
         /**
@@ -55,18 +56,18 @@
 
         _showTooltip: function(event) {
             if (!$('.bsf-quick-link-items-wrap').hasClass('show-popup')) {
-                $('label.bsf-quick-link-title').show();
+                $('.bsf-quick-link-title').show();
             }
         },
 
         _hideTooltip: function(event) {
-            $('label.bsf-quick-link-title').hide();
+            $('.bsf-quick-link-title').hide();
         },
 
         _toggle: function(event) {
             event.preventDefault();
             var wrap = $('.bsf-quick-link-items-wrap');
-            $('label.bsf-quick-link-title').hide();
+            $('.bsf-quick-link-title').hide();
             if (wrap.hasClass('show-popup')) {
                 $('.bsf-quick-link-items-wrap').removeClass('show-popup');
             } else {
