@@ -1,11 +1,9 @@
 (function($) {
-
     /*
      * @since 1.0.0
      * 
      */
     BSFQuickLinks = {
-
         /**
          * Initializes Events.
          *
@@ -80,12 +78,7 @@
             } else {
                 $('.bsf-quick-link').addClass('show');
             }
-
         }
-
-
-
-
     };
 
     $(function() {

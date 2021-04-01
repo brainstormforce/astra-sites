@@ -138,7 +138,6 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			add_action( 'delete_attachment', array( $this, 'delete_astra_images' ) );
 			add_filter( 'heartbeat_received', array( $this, 'search_push' ), 10, 2 );
 			add_action( 'wp_ajax_astra-sites-update-subscription', array( $this, 'update_subscription' ) );
-			// BSF Quick Links.
 			add_action( 'admin_footer', array( $this, 'add_quick_links' ) );
 		}
 
@@ -155,6 +154,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			if ( Astra_Sites_White_Label::get_instance()->is_white_labeled() ) {
 				return;
 			}
+
 			$data = array(
 				'default_logo' => array(
 					'title' => 'See Quick Links',
@@ -162,18 +162,18 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				),
 				'links'        => array(
 					array(
-						'label'   => 'Upgrade to Premium',
+						'label'   => __( 'Upgrade to Premium', 'astra-sites' ),
 						'icon'    => 'dashicons-star-filled',
 						'url'     => 'https://wpastra.com/pricing/',
 						'bgcolor' => '#ffa500',
 					),
 					array(
-						'label' => 'Support & Docs',
+						'label' => __( 'Support & Docs', 'astra-sites' ),
 						'icon'  => 'dashicons-book',
 						'url'   => 'https://wpastra.com/docs-category/starter-templates/',
 					),
 					array(
-						'label' => 'Join our community',
+						'label' => __( 'Join our community', 'astra-sites' ),
 						'icon'  => 'dashicons-groups',
 						'url'   => 'https://www.facebook.com/groups/wpastra/',
 					),

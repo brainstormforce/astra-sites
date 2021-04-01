@@ -32,7 +32,6 @@ if ( ! class_exists( 'BSF_Quick_Links' ) ) {
 		 * @var array BSF_Quick_Links.
 		 * @since x.x.x
 		 */
-
 		private static $instance;
 
 		/**
@@ -64,8 +63,8 @@ if ( ! class_exists( 'BSF_Quick_Links' ) ) {
 		 * @return void
 		 */
 		public function enqueue_scripts() {
-			wp_register_script( 'bsf-quick-links', self::_get_uri() . 'quicklinks.js', array( 'jquery' ), self::$version, true );
-			wp_register_style( 'bsf-quick-links-css', self::_get_uri() . 'quicklink.css', array(), self::$version, 'screen' );
+			wp_register_script( 'bsf-quick-links', self::get_uri() . 'quicklinks.js', array( 'jquery' ), self::$version, true );
+			wp_register_style( 'bsf-quick-links-css', self::get_uri() . 'quicklink.css', array(), self::$version, 'screen' );
 		}
 
 		/**
@@ -73,7 +72,7 @@ if ( ! class_exists( 'BSF_Quick_Links' ) ) {
 		 *
 		 * @return mixed URL.
 		 */
-		public static function _get_uri() { // phpcs:ignore PSR2.Methods.MethodDeclaration.Underscore
+		public static function get_uri() {
 			$path      = wp_normalize_path( dirname( __FILE__ ) );
 			$theme_dir = wp_normalize_path( get_template_directory() );
 
@@ -105,6 +104,7 @@ if ( ! class_exists( 'BSF_Quick_Links' ) ) {
 			</div>
 			<?php
 		}
+
 		/**
 		 * Generate links markup.
 		 *
@@ -144,7 +144,6 @@ if ( ! function_exists( 'bsf_quick_links' ) ) {
 	 * @param array $args links array.
 	 */
 	function bsf_quick_links( $args ) {
-		$bsf_quick_links = new BSF_Quick_Links();
-		$bsf_quick_links->generate_quick_links_markup( $args );
+		BSF_Quick_Links::get_instance()->generate_quick_links_markup( $args );
 	}
 }
