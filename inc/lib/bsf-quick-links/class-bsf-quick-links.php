@@ -1,6 +1,6 @@
 <?php
 /**
- * BSF_Quick_Links Setup.
+ * Quick_Links Setup.
  *
  * @since x.x.x
  * @package Astra Sites
@@ -13,23 +13,23 @@ if ( ! defined( 'ABSPATH' ) ) {
 if ( ! class_exists( 'BSF_Quick_Links' ) ) {
 
 	/**
-	 * BSF_Quick_Links.
+	 * Quick_Links.
 	 */
 	class BSF_Quick_Links {
 		/**
-		 * BSF_Quick_Links version.
+		 * Quick_Links version.
 		 *
 		 * @access private
-		 * @var array BSF_Quick_Links.
+		 * @var array Quick_Links.
 		 * @since x.x.x
 		 */
 		private static $version = '1.0.0';
 
 		/**
-		 * BSF_Quick_Links
+		 * Quick_Links
 		 *
 		 * @access private
-		 * @var array BSF_Quick_Links.
+		 * @var array Quick_Links.
 		 * @since x.x.x
 		 */
 		private static $instance;
@@ -63,8 +63,8 @@ if ( ! class_exists( 'BSF_Quick_Links' ) ) {
 		 * @return void
 		 */
 		public function enqueue_scripts() {
-			wp_register_script( 'bsf-quick-links', self::get_uri() . 'quicklinks.js', array( 'jquery' ), self::$version, true );
-			wp_register_style( 'bsf-quick-links-css', self::get_uri() . 'quicklink.css', array(), self::$version, 'screen' );
+			wp_register_script( 'bsf-quick-links', $this->get_uri() . 'quicklinks.js', array( 'jquery' ), self::$version, true );
+			wp_register_style( 'bsf-quick-links-css', $this->get_uri() . 'quicklink.css', array(), self::$version, 'screen' );
 		}
 
 		/**
@@ -72,16 +72,18 @@ if ( ! class_exists( 'BSF_Quick_Links' ) ) {
 		 *
 		 * @return mixed URL.
 		 */
-		public static function get_uri() {
+		public function get_uri() {
 			$path      = wp_normalize_path( dirname( __FILE__ ) );
 			$theme_dir = wp_normalize_path( get_template_directory() );
 
 			if ( strpos( $path, $theme_dir ) !== false ) {
 				return trailingslashit( get_template_directory_uri() . str_replace( $theme_dir, '', $path ) );
-			} else {
-				return plugin_dir_url( __FILE__ );
 			}
+			
+			return plugin_dir_url( __FILE__ );
+
 		}
+
 		/**
 		 * Generate Quick Links Markup.
 		 *
@@ -99,7 +101,7 @@ if ( ! class_exists( 'BSF_Quick_Links' ) ) {
 					<?php echo self::get_links_html( $data ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				</div>
 				<a href="#" class="bsf-quick-link">					
-					<img src="<?php echo esc_html( $data['default_logo']['url'] ); ?>">
+					<img src="<?php echo esc_url( $data['default_logo']['url'] ); ?>">
 				</a>
 			</div>
 			<?php
@@ -111,10 +113,9 @@ if ( ! class_exists( 'BSF_Quick_Links' ) ) {
 		 * @param array $data links array.
 		 */
 		private static function get_links_html( $data ) {
-			$menu_items = $data['links'];
 			$items_html = '';
 
-			foreach ( $menu_items as $item_key => $item ) {
+			foreach ( $data['links'] as $item_key => $item ) {
 				$items_html .= sprintf(
 					'<a href="%1$s" target="_blank" rel="noopener noreferrer" class="bsf-quick-link-item bsf-quick-link-item-%4$d">
 						<div class="bsf-quick-link-label">%2$s</div>
@@ -127,6 +128,7 @@ if ( ! class_exists( 'BSF_Quick_Links' ) ) {
 					! empty( $item['bgcolor'] ) ? ' style="background-color: ' . esc_attr( $item['bgcolor'] ) . '"' : ''
 				);
 			}
+
 			return $items_html;
 		}
 	}
