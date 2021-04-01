@@ -42,7 +42,7 @@
                 $(".bsf-quick-link-items-wrap").css("bottom", "8em");
                 $(".bsf-quick-link-title").css("bottom", "4.5em");        
             }
-            if( $('.astra-sites-get-agency-bundle').length  && !$('.astra-sites-get-agency-bundle').is(':empty') ) {
+            if( $('.astra-sites-result-preview').length  && !$('.astra-sites-result-preview').is(':empty') ) {
                 $(".bsf-quick-link").css("z-index", "-10");
             } else {
                 $(".bsf-quick-link").css("z-index", "10");
