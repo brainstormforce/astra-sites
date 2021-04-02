@@ -288,24 +288,6 @@ if ( ! class_exists( 'Astra_Sites_Helper' ) ) :
 			return $data;
 		}
 
-		/**
-		 * Checks to see whether a string is an image url or not.
-		 *
-		 * @since 1.0.10
-		 *
-		 * @param string $string The string to check.
-		 * @return bool Whether the string is an image url or not.
-		 */
-		public static function is_image_url( $string = '' ) {
-			if ( is_string( $string ) ) {
-
-				if ( preg_match( '/\.(jpg|jpeg|svg|png|gif)/i', $string ) ) {
-					return true;
-				}
-			}
-
-			return false;
-		}
 
 	}
 
