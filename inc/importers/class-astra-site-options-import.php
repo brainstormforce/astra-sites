@@ -285,25 +285,25 @@ class Astra_Site_Options_Import {
 	 */
 	private function set_woocommerce_product_cat( $cats = array() ) {
 
-		$menu_locations = array();
-
 		if ( isset( $cats ) ) {
 
 			foreach ( $cats as $key => $cat ) {
 
 				if ( ! empty( $cat['slug'] ) && ! empty( $cat['thumbnail_src'] ) ) {
 
-					$image = (object) Astra_Sites_Helper::sideload_image( $cat['thumbnail_src'] );
+					$downloaded_image = Astra_Sites_Image_Importer::get_instance()->import(
+						array(
+							'url' => $cat['thumbnail_src'],
+							'id'  => 0,
+						)
+					);
 
-					if ( ! is_wp_error( $image ) ) {
+					if ( $downloaded_image['id'] ) {
 
-						if ( isset( $image->attachment_id ) && ! empty( $image->attachment_id ) ) {
+						$term = get_term_by( 'slug', $cat['slug'], 'product_cat' );
 
-							$term = get_term_by( 'slug', $cat['slug'], 'product_cat' );
-
-							if ( is_object( $term ) ) {
-								update_term_meta( $term->term_id, 'thumbnail_id', $image->attachment_id );
-							}
+						if ( is_object( $term ) ) {
+							update_term_meta( $term->term_id, 'thumbnail_id', $downloaded_image['id'] );
 						}
 					}
 				}
@@ -319,31 +319,19 @@ class Astra_Site_Options_Import {
 	 * @return void
 	 */
 	private function insert_logo( $image_url = '' ) {
-		$attachment_id = $this->download_image( $image_url );
-		if ( $attachment_id ) {
-			Astra_WXR_Importer::instance()->track_post( $attachment_id );
-			set_theme_mod( 'custom_logo', $attachment_id );
-		}
-	}
 
-	/**
-	 * Download image by URL
-	 *
-	 * @since 1.3.13
-	 *
-	 * @param  string $image_url Logo URL.
-	 * @return mixed false|Attachment ID
-	 */
-	private function download_image( $image_url = '' ) {
-		$data = (object) Astra_Sites_Helper::sideload_image( $image_url );
+		$downloaded_image = Astra_Sites_Image_Importer::get_instance()->import(
+			array(
+				'url' => $image_url,
+				'id'  => 0,
+			)
+		);
 
-		if ( ! is_wp_error( $data ) ) {
-			if ( isset( $data->attachment_id ) && ! empty( $data->attachment_id ) ) {
-				return $data->attachment_id;
-			}
+		if ( $downloaded_image['id'] ) {
+			Astra_WXR_Importer::instance()->track_post( $downloaded_image['id'] );
+			set_theme_mod( 'custom_logo', $downloaded_image['id'] );
 		}
 
-		return false;
 	}
 
 }
