@@ -76,7 +76,7 @@ class Astra_Customizer_Import {
 		array_walk_recursive(
 			$options,
 			function ( &$value ) {
-				if ( ! is_array( $value ) && Astra_Sites_Helper::is_image_url( $value ) ) {
+				if ( ! is_array( $value ) && astra_sites_is_valid_image( $value ) ) {
 					$downloaded_image = Astra_Sites_Image_Importer::get_instance()->import(
 						array(
 							'url' => $value,
