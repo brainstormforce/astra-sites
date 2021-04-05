@@ -205,7 +205,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				'Elementor'      => 1,
 				'Beaver Builder' => 2,
 				'Brizy'          => 3,
-				'Gutenberg'      => 4,
+				'Block Editor'   => 4,
 			);
 			$arguments['PAGE_BUILDER'] = isset( $page_builder_mapping[ $arguments['PAGE_BUILDER'] ] ) ? $page_builder_mapping[ $arguments['PAGE_BUILDER'] ] : '';
 
@@ -1894,6 +1894,11 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		public function get_default_page_builders() {
 			return array(
 				array(
+					'id'   => 42,
+					'slug' => 'gutenberg',
+					'name' => 'Block Editor',
+				),
+				array(
 					'id'   => 33,
 					'slug' => 'elementor',
 					'name' => 'Elementor',
@@ -1902,11 +1907,6 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 					'id'   => 34,
 					'slug' => 'beaver-builder',
 					'name' => 'Beaver Builder',
-				),
-				array(
-					'id'   => 42,
-					'slug' => 'gutenberg',
-					'name' => 'Gutenberg',
 				),
 				array(
 					'id'   => 41,
