@@ -103,7 +103,7 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) {
 			}
 
 			// Check is image URL of type jpg|png|gif|jpeg.
-			if ( Astra_Sites_Image_Importer::get_instance()->is_image_url( $url ) ) {
+			if ( astra_sites_is_valid_image( $url ) ) {
 				$timeout_value = 300;
 			}
 
