@@ -516,7 +516,6 @@ var AstraSitesAjaxQueue = (function () {
 			$(document).on('focusout change', '.subscription-input', AstraSitesAdmin.validate_single_field);
 			$(document).on('click input', '.subscription-input', AstraSitesAdmin._animate_fields);
 			$(document).on('click', '.astra-sites-advanced-options-heading', AstraSitesAdmin.toggle_advanced);
-			$(document).on('click', '.astra-sites-advanced-options-heading', AstraSitesAdmin.toggle_advacned);
 
 			$(window).on('scroll', AstraSitesAdmin._stick_header);
 			$(document).on('wp-collapse-menu', AstraSitesAdmin._manage_wp_collapse_menu);
