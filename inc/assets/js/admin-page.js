@@ -258,6 +258,7 @@ var AstraSitesAjaxQueue = (function () {
 			AstraSitesAdmin.header_gutter = WPAdminbarOuterHeight;
 			AstraSitesAdmin.header_offset = WPAdminbarOuterHeight + HeaderOuterHeight;
 			AstraSitesAdmin.header_stick_after = WPAdminbarOuterHeight - HeaderOuterHeight;
+			AstraSitesAdmin._stick_header();
 		},
 
 		/**
@@ -502,7 +503,7 @@ var AstraSitesAjaxQueue = (function () {
 			$(document).on('click', '.astra-site-category a', AstraSitesAdmin._filterSites);
 
 			$(document).on('click', '.astra-sites-sync-library-button', AstraSitesAdmin._sync_library);
-			$(document).on('click', '.astra-sites-sync-library-message.success .notice-dismiss', AstraSitesAdmin._sync_library_complete);
+			$(document).on('click', '.astra-sites-sync-library-message .notice-dismiss', AstraSitesAdmin._sync_library_complete);
 			$(document).on('click', '.page-builder-icon', AstraSitesAdmin._toggle_page_builder_list);
 			$(document).on('click', '.showing-page-builders #wpbody-content', AstraSitesAdmin._close_page_builder_list);
 			$(document).on('keyup input', '#wp-filter-search-input', AstraSitesAdmin._search);
@@ -1153,6 +1154,7 @@ var AstraSitesAjaxQueue = (function () {
 			}).done(function (response) {
 				AstraSitesAdmin._log(response);
 				console.groupEnd('Update Library Request');
+				$('.astra-sites-sync-library-message').remove();
 			});
 		},
 
@@ -1230,7 +1232,7 @@ var AstraSitesAjaxQueue = (function () {
 											className: 'notice astra-sites-notice notice-success is-dismissible astra-sites-sync-library-message',
 											message: astraSitesVars.strings.syncCompleteMessage + ' <button type="button" class="notice-dismiss"><span class="screen-reader-text">' + astraSitesVars.dismiss + '</span></button>',
 										});
-										$('#screen-meta').after(noticeContent);
+										$('#astra-sites-admin').before(noticeContent);
 										$(document).trigger('wp-updates-notice-added');
 
 										$('.astra-sites-sync-library-button').removeClass('updating-message');
@@ -1399,7 +1401,7 @@ var AstraSitesAjaxQueue = (function () {
 				className: 'astra-sites-sync-library-message astra-sites-notice notice notice-info',
 				message: astraSitesVars.syncLibraryStart + '<button type="button" class="notice-dismiss"><span class="screen-reader-text">' + astraSitesVars.dismiss + '</span></button>',
 			});
-			$('#screen-meta').after(noticeContent);
+			$('#astra-sites-admin').before(noticeContent);
 
 			$(document).trigger('wp-updates-notice-added');
 
@@ -1430,7 +1432,7 @@ var AstraSitesAjaxQueue = (function () {
 								className: 'notice astra-sites-notice notice-success is-dismissible astra-sites-sync-library-message',
 								message: astraSitesVars.strings.syncCompleteMessage + ' <button type="button" class="notice-dismiss"><span class="screen-reader-text">' + astraSitesVars.dismiss + '</span></button>',
 							});
-							$('#screen-meta').after(noticeContent);
+							$('#astra-sites-admin').before(noticeContent);
 							$(document).trigger('wp-updates-notice-added');
 							button.removeClass('updating-message');
 							AstraSitesAdmin._log('Already sync all the sites.');
@@ -1444,7 +1446,7 @@ var AstraSitesAjaxQueue = (function () {
 							className: 'notice astra-sites-notice notice-error is-dismissible astra-sites-sync-library-message',
 							message: response.data + ' <button type="button" class="notice-dismiss"><span class="screen-reader-text">' + astraSitesVars.dismiss + '</span></button>',
 						});
-						$('#screen-meta').after(noticeContent);
+						$('#astra-sites-admin').before(noticeContent);
 						$(document).trigger('wp-updates-notice-added');
 						button.removeClass('updating-message');
 						AstraSitesAdmin._log('Already sync all the sites.');
