@@ -55,7 +55,7 @@ if ( ! function_exists( 'astra_sites_is_valid_image' ) ) :
 	 *
 	 * @param string $link  The Image link.
 	 *
-	 * @since x.x.x
+	 * @since 2.6.3
 	 * @return boolean
 	 */
 	function astra_sites_is_valid_image( $link = '' ) {
