@@ -110,6 +110,7 @@ module.exports = function( grunt ) {
                         '!package-lock.json',
                         '!phpcs.xml.dist',
                         '!inc/assets/js/src/**',
+                        '!inc/lib/bsf-quick-links/readme.md',
                     ],
                     dest: 'astra-sites/'
                 }
