@@ -2111,17 +2111,18 @@ body.loading-content .select-page-builder {
 
 .appearance_page_starter-templates .astra-sites-notice {
     display: block;
+    top: 20px;
+    position: relative;
 }
 
-.astra-previewing-single-pages #wpbody-content > .notice.astra-sites-sync-library-message.success,
-.astra-previewing-single-pages #wpbody-content > .notice.astra-sites-sync-library-message.notice-success {
+.astra-previewing-single-pages .astra-sites-menu-page-wrapper > .notice.astra-sites-sync-library-message.success,
+.astra-previewing-single-pages .astra-sites-menu-page-wrapper > .notice.astra-sites-sync-library-message.notice-success {
     display: none !important;
 }
 
-.astra-previewing-single-pages #wpbody-content > .notice.astra-sites-sync-library-message {
-    top: 85px;
-    display: block !important;
-    width: calc( 100% - 270px );
+.astra-previewing-single-pages .astra-sites-menu-page-wrapper > .notice.astra-sites-sync-library-message {
+   
+    width: calc( 100% - 250px );
 }
 
 .astra-previewing-single-pages.folded #wpbody-content > .notice.astra-sites-sync-library-message {
