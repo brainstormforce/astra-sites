@@ -149,6 +149,15 @@ We are open to suggestions and would love to work on topics that our users are l
 
 == Changelog ==
 
+v2.6.3 - 7-April-2021
+- Improvement: Advanced Options UI improvement.
+- Improvement: Admin UI improvements.
+- Improvement: Added SVG image support.
+- Fix: Image duplication after site import in few cases.
+- Fix: Upload directory hidden for the white-labeled website.
+- Fix: Prevented clicking on import buttons while import is already in progress.
+- Fix: Issue with localization of the script was not called correctly.
+
 v2.6.2 - 10-March-2021
 
 - Improvement: Used better and optimised way to show the initial sites and pages list on Starter Template dashboard.
