@@ -636,8 +636,11 @@ var AstraSitesAjaxQueue = (function () {
 					AstraSitesAdmin.page_import_complete();
 				}
 			}
-
-			astraSitesVars.subscribed = 'yes';
+			if(event && event.target.classList.value == 'button-subscription-skip') {
+				astraSitesVars.subscribed = '';
+			}else{
+				astraSitesVars.subscribed = 'yes';
+			}
 		},
 
 		_subscribe: function (event) {
@@ -3628,7 +3631,7 @@ var AstraSitesAjaxQueue = (function () {
 				return;
 			}
 
-			if ($('.subscription-enabled').length) {
+			if ($('.subscription-enabled').length && astraSitesVars.subscribed !== 'yes') {
 				$('.subscription-popup').show();
 				$('.astra-sites-result-preview .default').hide();
 			} else {
