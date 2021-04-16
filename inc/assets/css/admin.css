@@ -3101,7 +3101,7 @@ body.loading-content .select-page-builder {
 
 .astra-sites-cta-title {
     color: #FFFFFF;
-    font-size: 20px;
+    font-size: 18px;
     line-height: 1.4em;
     vertical-align: middle;
 }
@@ -3111,9 +3111,8 @@ body.loading-content .select-page-builder {
 }
 
 .astra-sites-cta-btn a {
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 600;
-    letter-spacing: 0.5px;
     color: #181723;
     background-color: #FFC300;
     border-radius: 50px;
@@ -3158,7 +3157,6 @@ body.loading-content .select-page-builder {
         margin-left: 0;
     }
     .astra-sites-cta-title {
-        font-size: 18px;
         display: block;
         margin-bottom: 10px;
     }
