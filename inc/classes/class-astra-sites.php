@@ -158,7 +158,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			$custom_cta_content_data = apply_filters(
 				'astra_sites_custom_cta_vars',
 				array(
-					'text'        => __( 'Get access to all 150+ starter templates with Agency or Mini Agency Bundle starting from just $169!', 'astra-sites' ),
+					'text'        => __( 'Get unlimited access to all 150+ starter templates for just $169 USD!', 'astra-sites' ),
 					'button_text' => __( 'Claim Offer', 'astra-sites' ),
 					'cta_link'    => __( 'https://wpastra.com/pricing/?utm_source=Ready%20Websites&amp;utm_campaign=Astra%20Sites', 'astra-sites' ),
 				)
