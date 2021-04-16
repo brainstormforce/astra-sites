@@ -522,9 +522,21 @@ var AstraSitesAjaxQueue = (function () {
 			$(document).on('wp-collapse-menu', AstraSitesAdmin._manage_wp_collapse_menu);
 			$(document).on('astra-sites-added-pages', AstraSitesAdmin._stick_header);
 			$(document).on('astra-sites-added-pages', AstraSitesAdmin._manage_wp_collapse_menu);
-
+			$(window).on('scroll', AstraSitesAdmin._addCustomCTAInfobar);
 		},
 
+		/**
+		 * Show Custom CTA on scroll.
+		 */
+		_addCustomCTAInfobar: function () {
+			var scroll = $(window).scrollTop();
+
+			if(scroll > 50) {
+				$(".astra-sites-custom-cta-wrap").addClass("show");
+			} else {
+				$(".astra-sites-custom-cta-wrap").removeClass("show");
+			}
+		},
 		/**
 		 * Stick Header
 		 */
