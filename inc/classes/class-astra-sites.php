@@ -167,7 +167,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			$html  = '<div class="astra-sites-custom-cta-wrap">';
 			$html .= '<span class="astra-sites-cta-title">' . esc_html( $custom_cta_content_data['text'] ) . '</span>';
 			$html .= '<span class="astra-sites-cta-btn">';
-			$html .= '<a href="' . esc_url( $custom_cta_content_data['cta_link'] ) . '">' . esc_html( $custom_cta_content_data['button_text'] ) . '</a>';
+			$html .= '<a href="' . esc_url( $custom_cta_content_data['cta_link'] ) . '"  target="_blank" >' . esc_html( $custom_cta_content_data['button_text'] ) . '</a>';
 			$html .= '</span>';
 			$html .= '</div>';
 			echo wp_kses_post( $html );

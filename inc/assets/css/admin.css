@@ -3099,14 +3099,14 @@ body.loading-content .select-page-builder {
     visibility: visible;
 }
 
-span.astra-sites-cta-title {
+.astra-sites-cta-title {
     color: #FFFFFF;
     font-size: 20px;
     line-height: 1.4em;
     vertical-align: middle;
 }
 
-span.astra-sites-cta-btn {
+.astra-sites-cta-btn {
     display: inline-block;
 }
 
@@ -3123,6 +3123,9 @@ span.astra-sites-cta-btn {
     display: inline-block;
     margin-left: 4rem;
     text-decoration: none;
+}
+.astra-previewing-single-pages .astra-sites-custom-cta-wrap {
+    visibility: hidden;
 }
 
 @media screen and (max-width: 768px) {
@@ -3150,6 +3153,19 @@ span.astra-sites-cta-btn {
     }
     .subscription-fields {
         flex-direction: column;
+    }
+    .astra-sites-custom-cta-wrap {
+        margin-left: 0;
+    }
+    .astra-sites-cta-title {
+        font-size: 18px;
+        display: block;
+        margin-bottom: 10px;
+    }
+    .astra-sites-cta-btn a {
+        font-size: 14px;
+        padding: 8px 28px;
+        margin-left: unset;
     }
 }
 

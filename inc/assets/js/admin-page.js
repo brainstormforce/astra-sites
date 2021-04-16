@@ -531,7 +531,7 @@ var AstraSitesAjaxQueue = (function () {
 		_addCustomCTAInfobar: function () {
 			var scroll = $(window).scrollTop();
 
-			if(scroll > 50) {
+			if (scroll > 50) {
 				$(".astra-sites-custom-cta-wrap").addClass("show");
 			} else {
 				$(".astra-sites-custom-cta-wrap").removeClass("show");
