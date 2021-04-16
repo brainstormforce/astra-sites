@@ -52,7 +52,7 @@ label.bsf-quick-link-title {
     box-shadow: 0 0px 21px rgb(0 0 0 / 20%);
     transition: all 0.2s;
     padding: 7px;
-    border: 3px solid #AAC2FF;
+    border: 3px solid #FC87FF;
 }
 .bsf-quick-link.show img {
     box-shadow:0 0 30px 15px rgb(0 0 0 / 12%);
