@@ -46,9 +46,9 @@ if ( ! class_exists( 'Astra_Sites_Admin' ) ) :
 		 * @since 2.3.7
 		 */
 		private function __construct() {
-			add_action( 'admin_enqueue_scripts', array( $this, 'admin_assets' ) );
 			add_action( 'admin_notices', array( $this, 'admin_notices' ) );
 			add_action( 'astra_notice_before_markup', array( $this, 'notice_assets' ) );
+			add_action( 'admin_enqueue_scripts', array( $this, 'admin_assets' ) );
 			add_action( 'astra_sites_after_site_grid', array( $this, 'custom_upgrade_cta' ) );
 		}
 
