@@ -522,6 +522,7 @@ var AstraSitesAjaxQueue = (function () {
 			$(document).on('wp-collapse-menu', AstraSitesAdmin._manage_wp_collapse_menu);
 			$(document).on('astra-sites-added-pages', AstraSitesAdmin._stick_header);
 			$(document).on('astra-sites-added-pages', AstraSitesAdmin._manage_wp_collapse_menu);
+
 		},
 
 		/**
