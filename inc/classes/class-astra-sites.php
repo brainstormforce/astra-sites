@@ -139,38 +139,6 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			add_filter( 'heartbeat_received', array( $this, 'search_push' ), 10, 2 );
 			add_action( 'wp_ajax_astra-sites-update-subscription', array( $this, 'update_subscription' ) );
 			add_action( 'admin_footer', array( $this, 'add_quick_links' ) );
-			add_action( 'astra_sites_after_site_grid', array( $this, 'custom_upgrade_cta' ) );
-		}
-
-		/**
-		 * Add Custom CTA Infobar.
-		 */
-		public function custom_upgrade_cta() {
-			$current_screen = get_current_screen();
-
-			if ( 'appearance_page_starter-templates' !== $current_screen->id ) {
-				return;
-			}
-
-			if ( Astra_Sites_White_Label::get_instance()->is_white_labeled() ) {
-				return;
-			}
-			$custom_cta_content_data = apply_filters(
-				'astra_sites_custom_cta_vars',
-				array(
-					'text'        => __( 'Get unlimited access to all 150+ starter templates for just $169 USD!', 'astra-sites' ),
-					'button_text' => __( 'Claim Offer', 'astra-sites' ),
-					'cta_link'    => __( 'https://wpastra.com/pricing/?utm_source=Ready%20Websites&amp;utm_campaign=Astra%20Sites', 'astra-sites' ),
-				)
-			);
-
-			$html  = '<div class="astra-sites-custom-cta-wrap">';
-			$html .= '<span class="astra-sites-cta-title">' . esc_html( $custom_cta_content_data['text'] ) . '</span>';
-			$html .= '<span class="astra-sites-cta-btn">';
-			$html .= '<a href="' . esc_url( $custom_cta_content_data['cta_link'] ) . '"  target="_blank" >' . esc_html( $custom_cta_content_data['button_text'] ) . '</a>';
-			$html .= '</span>';
-			$html .= '</div>';
-			echo wp_kses_post( $html );
 		}
 
 		/**
