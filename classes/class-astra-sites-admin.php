@@ -48,6 +48,57 @@ if ( ! class_exists( 'Astra_Sites_Admin' ) ) :
 		private function __construct() {
 			add_action( 'admin_notices', array( $this, 'admin_notices' ) );
 			add_action( 'astra_notice_before_markup', array( $this, 'notice_assets' ) );
+			add_action( 'admin_enqueue_scripts', array( $this, 'admin_assets' ) );
+			add_action( 'astra_sites_after_site_grid', array( $this, 'custom_upgrade_cta' ) );
+		}
+
+		/**
+		 * Admin Assets
+		 */
+		public function admin_assets() {
+			$current_screen = get_current_screen();
+
+			if ( 'appearance_page_starter-templates' !== $current_screen->id ) {
+				return;
+			}
+
+			if ( Astra_Sites_White_Label::get_instance()->is_white_labeled() ) {
+				return;
+			}
+
+			wp_enqueue_style( 'astra-sites-admin-page', ASTRA_SITES_URI . 'assets/css/admin.css', ASTRA_SITES_VER, true );
+			wp_enqueue_script( 'astra-sites-admin-js', ASTRA_SITES_URI . 'assets/js/admin.js', array( 'jquery' ), ASTRA_SITES_VER, true );
+		}
+
+		/**
+		 * Add Custom CTA Infobar.
+		 */
+		public function custom_upgrade_cta() {
+			$current_screen = get_current_screen();
+
+			if ( 'appearance_page_starter-templates' !== $current_screen->id ) {
+				return;
+			}
+
+			if ( Astra_Sites_White_Label::get_instance()->is_white_labeled() ) {
+				return;
+			}
+			$custom_cta_content_data = apply_filters(
+				'astra_sites_custom_cta_vars',
+				array(
+					'text'        => __( 'Get unlimited access to all 150+ starter templates for just $169 USD!', 'astra-sites' ),
+					'button_text' => __( 'Claim Offer', 'astra-sites' ),
+					'cta_link'    => __( 'https://wpastra.com/pricing/?utm_source=Ready%20Websites&amp;utm_campaign=Astra%20Sites', 'astra-sites' ),
+				)
+			);
+
+			$html  = '<div class="astra-sites-custom-cta-wrap">';
+			$html .= '<span class="astra-sites-cta-title">' . esc_html( $custom_cta_content_data['text'] ) . '</span>';
+			$html .= '<span class="astra-sites-cta-btn">';
+			$html .= '<a href="' . esc_url( $custom_cta_content_data['cta_link'] ) . '"  target="_blank" >' . esc_html( $custom_cta_content_data['button_text'] ) . '</a>';
+			$html .= '</span>';
+			$html .= '</div>';
+			echo wp_kses_post( $html );
 		}
 
 		/**
