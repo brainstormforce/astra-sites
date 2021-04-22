@@ -183,6 +183,7 @@ var AstraSitesAjaxQueue = (function () {
 		first_import_complete: astraSitesVars.first_import_complete,
 		remaining_activate_plugins: [],
 		required_plugins_original_list: [],
+		subscription_form_submitted: astraSitesVars.subscribed,
 
 		compatibilities: [],
 
@@ -263,7 +264,7 @@ var AstraSitesAjaxQueue = (function () {
 
 		/**
 		 * load large image
-		 * 
+		 *
 		 * @return {[type]} [description]
 		 */
 		_load_large_image: function (el) {
@@ -636,10 +637,12 @@ var AstraSitesAjaxQueue = (function () {
 					AstraSitesAdmin.page_import_complete();
 				}
 			}
-			if(event && event.target.classList.value == 'button-subscription-skip') {
+			if (event && event.target.classList.value == 'button-subscription-skip') {
 				astraSitesVars.subscribed = '';
-			}else{
+				AstraSitesAdmin.subscription_form_submitted = '';
+			} else {
 				astraSitesVars.subscribed = 'yes';
+				AstraSitesAdmin.subscription_form_submitted = 'yes';
 			}
 		},
 
@@ -869,7 +872,7 @@ var AstraSitesAjaxQueue = (function () {
 
 		/**
 		 * Clean the URL.
-		 * 
+		 *
 		 * @param  string url URL string.
 		 * @return string     Change the current URL.
 		 */
@@ -909,7 +912,7 @@ var AstraSitesAjaxQueue = (function () {
 
 		/**
 		 * Get query strings.
-		 * 
+		 *
 		 * @param  string string Query string.
 		 * @return string     	 Check and return query string.
 		 */
@@ -2078,7 +2081,7 @@ var AstraSitesAjaxQueue = (function () {
 
 			$('.install-theme-info').hide();
 
-			if ($('.subscription-enabled').length) {
+			if ($('.subscription-enabled').length && AstraSitesAdmin.subscription_form_submitted !== 'yes') {
 				$('.subscription-popup').show();
 				$('.astra-sites-result-preview .default').hide();
 			} else {
@@ -3631,7 +3634,7 @@ var AstraSitesAjaxQueue = (function () {
 				return;
 			}
 
-			if ($('.subscription-enabled').length && astraSitesVars.subscribed !== 'yes') {
+			if ($('.subscription-enabled').length && AstraSitesAdmin.subscription_form_submitted !== 'yes') {
 				$('.subscription-popup').show();
 				$('.astra-sites-result-preview .default').hide();
 			} else {
