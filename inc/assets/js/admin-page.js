@@ -3585,7 +3585,7 @@ var AstraSitesAjaxQueue = (function () {
 							$('.astra-sites-result-preview').find('.astra-sites-import-plugins').show();
 							$('.astra-sites-result-preview').find('.required-plugins-list').html(output);
 						}
-						if ('yes' === AstraSitesAdmin.first_import_complete) {
+						if ('yes' === AstraSitesAdmin.first_import_complete && !$('.astra-sites-result-preview').hasClass('import-page')) {
 							$('.astra-sites-advanced-options').find('.astra-site-contents').prepend(wp.template('astra-sites-delete-previous-site'));
 						}
 
