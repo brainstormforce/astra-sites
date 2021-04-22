@@ -636,8 +636,11 @@ var AstraSitesAjaxQueue = (function () {
 					AstraSitesAdmin.page_import_complete();
 				}
 			}
-
-			astraSitesVars.subscribed = 'yes';
+			if(event && event.target.classList.value == 'button-subscription-skip') {
+				astraSitesVars.subscribed = '';
+			}else{
+				astraSitesVars.subscribed = 'yes';
+			}
 		},
 
 		_subscribe: function (event) {
@@ -3582,7 +3585,7 @@ var AstraSitesAjaxQueue = (function () {
 							$('.astra-sites-result-preview').find('.astra-sites-import-plugins').show();
 							$('.astra-sites-result-preview').find('.required-plugins-list').html(output);
 						}
-						if ('yes' === AstraSitesAdmin.first_import_complete) {
+						if ('yes' === AstraSitesAdmin.first_import_complete && !$('.astra-sites-result-preview').hasClass('import-page')) {
 							$('.astra-sites-advanced-options').find('.astra-site-contents').prepend(wp.template('astra-sites-delete-previous-site'));
 						}
 
@@ -3628,7 +3631,7 @@ var AstraSitesAjaxQueue = (function () {
 				return;
 			}
 
-			if ($('.subscription-enabled').length) {
+			if ($('.subscription-enabled').length && astraSitesVars.subscribed !== 'yes') {
 				$('.subscription-popup').show();
 				$('.astra-sites-result-preview .default').hide();
 			} else {
