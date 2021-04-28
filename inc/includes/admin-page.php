@@ -752,7 +752,7 @@ $site_import_options = apply_filters(
 					<div class="astra-sites-advanced-options-wrap">
 
 						<?php if ( true === $subscription_status ) : ?>
-							<p><?php esc_html_e( 'To serve more beautiful starter templates, we would like to know more about you:', 'astra-sites' ); ?></p>
+							<p class="user-building-for-title"><?php esc_html_e( 'To serve more beautiful starter templates, we would like to know more about you:', 'astra-sites' ); ?></p>
 						<?php endif; ?>
 
 						<div id="astra-sites-subscription-form-one" class="subscription-form astra-sites-subscription-form-one"></div>
