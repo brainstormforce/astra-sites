@@ -697,7 +697,6 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 			astra_sites_error_log( 'Request Failed! Still Calling..' );
 			update_site_option( 'astra-sites-batch-status-string', 'Request Failed! Still Calling..', 'no' );
 
-			$this->get_total_requests();
 		}
 
 		/**
