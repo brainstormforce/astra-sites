@@ -533,7 +533,7 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 			if ( empty( $this->current_site_data ) ) {
 				// @todo Use Astra_Sites::get_instance()->api_request() instead of below function.
 				$this->current_site_data = Astra_Sites_Importer::get_instance()->get_single_demo( $id );
-				update_option( 'astra_sites_import_data', $this->current_site_data );
+				update_option( 'astra_sites_import_data', $this->current_site_data, 'no' );
 			}
 
 			return $this->current_site_data;

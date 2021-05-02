@@ -138,7 +138,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Site_Import' ) ) :
 
 			$args = wp_parse_args( $args, $status );
 
-			update_option( 'astra_sites_site_import_batch_status', $args );
+			update_option( 'astra_sites_site_import_batch_status', $args, 'no' );
 		}
 
 		/**
@@ -697,7 +697,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Site_Import' ) ) :
 			if ( empty( $this->current_site_data ) ) {
 				// @todo Use Astra_Sites::get_instance()->api_request() instead of below function.
 				$this->current_site_data = Astra_Sites_Importer::get_instance()->get_single_demo( $id );
-				update_option( 'astra_sites_import_data', $this->current_site_data );
+				update_option( 'astra_sites_import_data', $this->current_site_data, 'no' );
 			}
 
 			return $this->current_site_data;

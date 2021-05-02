@@ -287,7 +287,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			) {
 				$flag_arr = array( $astra_image_flag );
 				$saved_images = array_diff( $saved_images, $flag_arr );
-				update_option( 'astra-sites-saved-images', $saved_images );
+				update_option( 'astra-sites-saved-images', $saved_images, 'no' );
 			}
 			// @codingStandardsIgnoreEnd
 		}
@@ -385,7 +385,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			if ( ! is_wp_error( $request ) && 200 === (int) wp_remote_retrieve_response_code( $request ) ) {
 
 				$demo_data = json_decode( wp_remote_retrieve_body( $request ), true );
-				update_option( 'astra_sites_import_data', $demo_data );
+				update_option( 'astra_sites_import_data', $demo_data, 'no' );
 
 				wp_send_json_success( $demo_data );
 			} elseif ( is_wp_error( $request ) ) {
@@ -480,7 +480,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				}
 			}
 
-			update_option( 'astra-sites-favorites', $new_favorites );
+			update_option( 'astra-sites-favorites', $new_favorites, 'no' );
 
 			wp_send_json_success(
 				array(
@@ -710,7 +710,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			}
 
 			$saved_images[] = $photo_id;
-			update_option( 'astra-sites-saved-images', $saved_images );
+			update_option( 'astra-sites-saved-images', $saved_images, 'no' );
 
 			$result['updated-saved-images'] = get_option( 'astra-sites-saved-images', array() );
 
@@ -954,7 +954,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 
 			// If file system fails? Then take a backup in site option.
 			if ( false === $file_system->put_contents( $log_file, wp_json_encode( $old_settings ), FS_CHMOD_FILE ) ) {
-				update_option( 'astra_sites_' . $file_name, $old_settings );
+				update_option( 'astra_sites_' . $file_name, $old_settings, 'no' );
 			}
 
 			if ( defined( 'WP_CLI' ) ) {
