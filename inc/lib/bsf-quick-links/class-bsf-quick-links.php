@@ -2,7 +2,7 @@
 /**
  * Quick_Links Setup.
  *
- * @since 2.6.3
+ * @since 2.6.2
  * @package Astra Sites
  */
 
@@ -21,7 +21,7 @@ if ( ! class_exists( 'BSF_Quick_Links' ) ) {
 		 *
 		 * @access private
 		 * @var array Quick_Links.
-		 * @since 2.6.3
+		 * @since 2.6.2
 		 */
 		private static $version = '1.0.0';
 
@@ -30,14 +30,14 @@ if ( ! class_exists( 'BSF_Quick_Links' ) ) {
 		 *
 		 * @access private
 		 * @var array Quick_Links.
-		 * @since 2.6.3
+		 * @since 2.6.2
 		 */
 		private static $instance;
 
 		/**
 		 * Initiator
 		 *
-		 * @since 2.6.3
+		 * @since 2.6.2
 		 * @return object initialized object of class.
 		 */
 		public static function get_instance() {
@@ -50,7 +50,7 @@ if ( ! class_exists( 'BSF_Quick_Links' ) ) {
 		/**
 		 * Constructor
 		 *
-		 * @since 2.6.3
+		 * @since 2.6.2
 		 */
 		public function __construct() {
 			add_action( 'admin_enqueue_scripts', array( $this, 'enqueue_scripts' ) );
@@ -59,7 +59,7 @@ if ( ! class_exists( 'BSF_Quick_Links' ) ) {
 		/**
 		 * Enqueue Scripts.
 		 *
-		 * @since 2.6.3
+		 * @since 2.6.2
 		 * @return void
 		 */
 		public function enqueue_scripts() {
