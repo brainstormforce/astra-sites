@@ -7,4 +7,5 @@ node_modules/
 *.tar.gz
 package-lock.json
 vendor
+inc/lib/bsf-quick-links/readme.md
 
