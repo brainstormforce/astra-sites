@@ -641,7 +641,7 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 						$url = $this->get_page_url( $slug );
 
 						if ( 'general' === $slug ) {
-							update_option( 'astra_parent_page_url', $url );
+							update_option( 'astra_parent_page_url', $url, 'no' );
 						}
 
 						$active = ( $slug === $action ) ? 'nav-tab-active' : '';
