@@ -8,7 +8,7 @@
  *
  * @since 1.0.0
  */
- var AstraSitesAjaxQueue = (function () {
+var AstraSitesAjaxQueue = (function () {
 
 	var requests = [];
 

@@ -2,7 +2,7 @@
 .bsf-quick-link {
     position: fixed;
     z-index: 10;
-    transition: all 0.2s ease-in-out;
+    transition: all 0.2s ease-in-out;   
     opacity: 1;
 }
 .bsf-quick-link-items-wrap{
@@ -35,7 +35,7 @@ label.bsf-quick-link-title {
     border-radius: 3px;
     -moz-border-radius: 3px;
     -webkit-border-radius: 3px;
-    height: 14px;
+    height: 14px;    
     display: none;
     border: 1px solid #959595;
     line-height: 1;
