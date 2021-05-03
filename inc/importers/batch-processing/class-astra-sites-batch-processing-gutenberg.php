@@ -168,6 +168,9 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Gutenberg' ) ) :
 							$this_site_term = get_term_by( 'slug', $value['slug'], 'category' );
 							if ( ! is_wp_error( $this_site_term ) && $this_site_term ) {
 								$content = str_replace( '"categories":"' . $value['id'], '"categories":"' . $this_site_term->term_id, $content );
+								$content = str_replace( '{"categories":[{"id":' . $value['id'], '{"categories":[{"id":' . $this_site_term->term_id, $content );
+								$content = str_replace( 'categories/' . $value['id'], 'categories/' . $this_site_term->term_id, $content );
+								$content = str_replace( 'categories=' . $value['id'], 'categories=' . $this_site_term->term_id, $content );
 							}
 						}
 					}
