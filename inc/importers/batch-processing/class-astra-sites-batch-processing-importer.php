@@ -195,13 +195,13 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing_Importer' ) ) :
 					// Set mini agency page builder.
 					$page_builder_slugs = wp_list_pluck( $page_builders, 'slug' );
 					if ( in_array( 'elementor', $page_builder_slugs ) && ! in_array( 'beaver-builder', $page_builder_slugs ) ) {
-						update_option( 'astra-sites-license-page-builder', 'elementor' );
+						update_option( 'astra-sites-license-page-builder', 'elementor', 'no' );
 						astra_sites_error_log( 'Set "Elementor" as License Page Builder' );
 					} elseif ( in_array( 'beaver-builder', $page_builder_slugs ) && ! in_array( 'elementor', $page_builder_slugs ) ) {
-						update_option( 'astra-sites-license-page-builder', 'beaver-builder' );
+						update_option( 'astra-sites-license-page-builder', 'beaver-builder', 'no' );
 						astra_sites_error_log( 'Set "Beaver Builder" as License Page Builder' );
 					} else {
-						update_option( 'astra-sites-license-page-builder', '' );
+						update_option( 'astra-sites-license-page-builder', '', 'no' );
 						astra_sites_error_log( 'Not Set Any License Page Builder' );
 					}
 					// @codingStandardsIgnoreEnd
