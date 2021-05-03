@@ -100,7 +100,7 @@ if ( ! class_exists( 'BSF_Quick_Links' ) ) {
 				<div class="bsf-quick-link-items-wrap">
 					<?php echo $this->get_links_html( $data ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				</div>
-				<a href="#" class="bsf-quick-link">					
+				<a href="#" class="bsf-quick-link">
 					<img src="<?php echo esc_url( $data['default_logo']['url'] ); ?>">
 				</a>
 			</div>
