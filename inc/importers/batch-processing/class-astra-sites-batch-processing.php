@@ -419,7 +419,7 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 		/**
 		 * Json Files Names.
 		 *
-		 * @since 2.6.2
+		 * @since 2.6.1
 		 * @return array
 		 */
 		public function get_default_assets() {
@@ -697,7 +697,6 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 			astra_sites_error_log( 'Request Failed! Still Calling..' );
 			update_site_option( 'astra-sites-batch-status-string', 'Request Failed! Still Calling..', 'no' );
 
-			$this->get_total_requests();
 		}
 
 		/**
@@ -733,7 +732,6 @@ if ( ! class_exists( 'Astra_Sites_Batch_Processing' ) ) :
 			astra_sites_error_log( 'BLOCK: Request Failed! Still Calling..' );
 			update_site_option( 'astra-blocks-batch-status-string', 'Request Failed! Still Calling..', 'no' );
 
-			$this->get_total_blocks_requests();
 		}
 
 		/**

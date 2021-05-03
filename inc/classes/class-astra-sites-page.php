@@ -641,7 +641,7 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 						$url = $this->get_page_url( $slug );
 
 						if ( 'general' === $slug ) {
-							update_option( 'astra_parent_page_url', $url );
+							update_option( 'astra_parent_page_url', $url, 'no' );
 						}
 
 						$active = ( $slug === $action ) ? 'nav-tab-active' : '';
@@ -758,7 +758,7 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 					break;
 
 				case 'gutenberg':
-					$image = ASTRA_SITES_URI . 'inc/assets/images/gutenberg.jpg';
+					$image = ASTRA_SITES_URI . 'inc/assets/images/block-editor.png';
 					break;
 
 				case 'brizy':
@@ -777,6 +777,11 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 		 */
 		public function get_page_builders() {
 			return array(
+				'gutenberg'      => array(
+					'slug'      => 'gutenberg',
+					'name'      => esc_html__( 'Block Editor', 'astra-sites' ),
+					'image_url' => ASTRA_SITES_URI . 'inc/assets/images/block-editor.jpg',
+				),
 				'elementor'      => array(
 					'slug'      => 'elementor',
 					'name'      => esc_html__( 'Elementor', 'astra-sites' ),
@@ -786,11 +791,6 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 					'slug'      => 'beaver-builder',
 					'name'      => esc_html__( 'Beaver Builder', 'astra-sites' ),
 					'image_url' => ASTRA_SITES_URI . 'inc/assets/images/beaver-builder.jpg',
-				),
-				'gutenberg'      => array(
-					'slug'      => 'gutenberg',
-					'name'      => esc_html__( 'Gutenberg', 'astra-sites' ),
-					'image_url' => ASTRA_SITES_URI . 'inc/assets/images/gutenberg.jpg',
 				),
 				'brizy'          => array(
 					'slug'      => 'brizy',

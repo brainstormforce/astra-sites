@@ -224,7 +224,7 @@ if ( ! class_exists( 'Astra_Sites_Importer_Log' ) ) :
 			self::$log_file = $upload_path . 'import-' . gmdate( 'd-M-Y-h-i-s' ) . '.txt';
 
 			if ( ! get_option( 'astra_sites_recent_import_log_file', false ) ) {
-				update_option( 'astra_sites_recent_import_log_file', self::$log_file );
+				update_option( 'astra_sites_recent_import_log_file', self::$log_file, 'no' );
 			}
 		}
 
