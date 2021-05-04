@@ -1,10 +1,10 @@
 (function ($) {
     /**
      * Admin
-     * 
-     * @since x.x.x 
+     *
+     * @since x.x.x
      */
-    Admin = {
+    StarterTemplatesAdmin = {
         /**
          * Initializes Events.
          *
@@ -23,7 +23,7 @@
          * @method _bind
          */
         _bind: function () {
-            $(window).on('scroll', Admin._addCustomCTAInfobar);
+            $(window).on('scroll', StarterTemplatesAdmin._addCustomCTAInfobar);
         },
 
         /**
@@ -42,6 +42,6 @@
     };
 
     $(function () {
-        Admin.init();
+        StarterTemplatesAdmin.init();
     });
 })(jQuery);

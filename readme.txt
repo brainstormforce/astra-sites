@@ -149,7 +149,7 @@ We are open to suggestions and would love to work on topics that our users are l
 
 == Changelog ==
 
-v2.6.3 - 7-April-2021
+v2.6.3 - 4-May-2021
 - Improvement: Advanced Options UI improvement.
 - Improvement: Admin UI improvements.
 - Improvement: Added SVG image support.
