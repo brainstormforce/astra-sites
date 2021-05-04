@@ -38,7 +38,7 @@ if ( ! class_exists( 'WXR_Importer' ) && class_exists( 'WP_Importer' ) ) :
 			|
 				# Match anything that looks like an upload URL
 				src=[\'"][^\'"]*(
-					[0-9]{4}/[0-9]{2}/[^\'"]+\.(jpg|jpeg|png|gif)
+					[0-9]{4}/[0-9]{2}/[^\'"]+\.(jpg|jpeg|png|gif|svg)
 				|
 					content/uploads[^\'"]+
 				)[\'"]
@@ -1209,7 +1209,6 @@ if ( ! class_exists( 'WXR_Importer' ) && class_exists( 'WP_Importer' ) ) :
 				$post['guid'] = $upload['url'];
 			}
 
-			// as per wp-admin/includes/upload.php.
 			$post_id = wp_insert_attachment( $post, $upload['file'] );
 			if ( is_wp_error( $post_id ) ) {
 				return $post_id;

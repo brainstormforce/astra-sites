@@ -138,6 +138,53 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			add_action( 'delete_attachment', array( $this, 'delete_astra_images' ) );
 			add_filter( 'heartbeat_received', array( $this, 'search_push' ), 10, 2 );
 			add_action( 'wp_ajax_astra-sites-update-subscription', array( $this, 'update_subscription' ) );
+			add_action( 'admin_footer', array( $this, 'add_quick_links' ) );
+		}
+
+		/**
+		 * Add BSF Quick Links.
+		 */
+		public function add_quick_links() {
+			$current_screen = get_current_screen();
+
+			if ( 'appearance_page_starter-templates' !== $current_screen->id ) {
+				return;
+			}
+
+			if ( Astra_Sites_White_Label::get_instance()->is_white_labeled() ) {
+				return;
+			}
+
+			$data = array(
+				'default_logo' => array(
+					'title' => __( 'See Quick Links', 'astra-sites' ),
+					'url'   => ASTRA_SITES_URI . 'inc/assets/images/logo.svg',
+				),
+				'links'        => array(
+					array(
+						'label'   => __( 'Upgrade to Premium', 'astra-sites' ),
+						'icon'    => 'dashicons-star-filled',
+						'url'     => 'https://wpastra.com/pricing/',
+						'bgcolor' => '#ffa500',
+					),
+					array(
+						'label' => __( 'Support & Docs', 'astra-sites' ),
+						'icon'  => 'dashicons-book',
+						'url'   => 'https://wpastra.com/docs-category/starter-templates/',
+					),
+					array(
+						'label' => __( 'Join our community', 'astra-sites' ),
+						'icon'  => 'dashicons-groups',
+						'url'   => 'https://www.facebook.com/groups/wpastra/',
+					),
+				),
+			);
+
+			if ( defined( 'ASTRA_PRO_SITES_VER' ) ) {
+				array_shift( $data['links'] );
+			}
+
+			bsf_quick_links( $data );
 		}
 
 		/**
@@ -158,7 +205,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				'Elementor'      => 1,
 				'Beaver Builder' => 2,
 				'Brizy'          => 3,
-				'Gutenberg'      => 4,
+				'Block Editor'   => 4,
 			);
 			$arguments['PAGE_BUILDER'] = isset( $page_builder_mapping[ $arguments['PAGE_BUILDER'] ] ) ? $page_builder_mapping[ $arguments['PAGE_BUILDER'] ] : '';
 
@@ -240,7 +287,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			) {
 				$flag_arr = array( $astra_image_flag );
 				$saved_images = array_diff( $saved_images, $flag_arr );
-				update_option( 'astra-sites-saved-images', $saved_images );
+				update_option( 'astra-sites-saved-images', $saved_images, 'no' );
 			}
 			// @codingStandardsIgnoreEnd
 		}
@@ -338,7 +385,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			if ( ! is_wp_error( $request ) && 200 === (int) wp_remote_retrieve_response_code( $request ) ) {
 
 				$demo_data = json_decode( wp_remote_retrieve_body( $request ), true );
-				update_option( 'astra_sites_import_data', $demo_data );
+				update_option( 'astra_sites_import_data', $demo_data, 'no' );
 
 				wp_send_json_success( $demo_data );
 			} elseif ( is_wp_error( $request ) ) {
@@ -433,7 +480,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				}
 			}
 
-			update_option( 'astra-sites-favorites', $new_favorites );
+			update_option( 'astra-sites-favorites', $new_favorites, 'no' );
 
 			wp_send_json_success(
 				array(
@@ -663,7 +710,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			}
 
 			$saved_images[] = $photo_id;
-			update_option( 'astra-sites-saved-images', $saved_images );
+			update_option( 'astra-sites-saved-images', $saved_images, 'no' );
 
 			$result['updated-saved-images'] = get_option( 'astra-sites-saved-images', array() );
 
@@ -907,7 +954,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 
 			// If file system fails? Then take a backup in site option.
 			if ( false === $file_system->put_contents( $log_file, wp_json_encode( $old_settings ), FS_CHMOD_FILE ) ) {
-				update_option( 'astra_sites_' . $file_name, $old_settings );
+				update_option( 'astra_sites_' . $file_name, $old_settings, 'no' );
 			}
 
 			if ( defined( 'WP_CLI' ) ) {
@@ -1264,6 +1311,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 						'page_import'  => esc_html__( 'Your Selected Template is Being Imported.', 'astra-sites' ),
 					),
 					'subscriptionSuccessMessage'         => esc_html__( 'We have sent you a surprise gift on your email address! Please check your inbox!', 'astra-sites' ),
+					'first_import_complete'              => get_option( 'astra_sites_import_complete' ),
 				)
 			);
 
@@ -1273,7 +1321,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		/**
 		 * Display subscription form
 		 *
-		 * @since 2.6.2
+		 * @since 2.6.1
 		 *
 		 * @return boolean
 		 */
@@ -1403,8 +1451,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			$this->image_search_assets();
 
 			wp_enqueue_script( 'astra-sites-elementor-admin-page', ASTRA_SITES_URI . 'inc/assets/js/elementor-admin-page.js', array( 'jquery', 'wp-util', 'updates', 'masonry', 'imagesloaded' ), ASTRA_SITES_VER, true );
-			wp_localize_script( 'astra-sites-elementor-admin-page', 'pagenow', ASTRA_SITES_NAME );
-
+			wp_add_inline_script( 'astra-sites-elementor-admin-page', sprintf( 'var pagenow = "%s";', ASTRA_SITES_NAME ), 'after' );
 			wp_enqueue_style( 'astra-sites-admin', ASTRA_SITES_URI . 'inc/assets/css/admin.css', ASTRA_SITES_VER, true );
 			wp_style_add_data( 'astra-sites-admin', 'rtl', 'replace' );
 
@@ -1847,6 +1894,11 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		public function get_default_page_builders() {
 			return array(
 				array(
+					'id'   => 42,
+					'slug' => 'gutenberg',
+					'name' => 'Block Editor',
+				),
+				array(
 					'id'   => 33,
 					'slug' => 'elementor',
 					'name' => 'Elementor',
@@ -1855,11 +1907,6 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 					'id'   => 34,
 					'slug' => 'beaver-builder',
 					'name' => 'Beaver Builder',
-				),
-				array(
-					'id'   => 42,
-					'slug' => 'gutenberg',
-					'name' => 'Gutenberg',
 				),
 				array(
 					'id'   => 41,

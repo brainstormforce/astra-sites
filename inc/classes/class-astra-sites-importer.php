@@ -103,7 +103,7 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) {
 			}
 
 			// Check is image URL of type jpg|png|gif|jpeg.
-			if ( Astra_Sites_Image_Importer::get_instance()->is_image_url( $url ) ) {
+			if ( astra_sites_is_valid_image( $url ) ) {
 				$timeout_value = 300;
 			}
 
@@ -226,7 +226,7 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) {
 				}
 			}
 
-			update_option( 'astra_sites_wpforms_ids_mapping', $ids_mapping );
+			update_option( 'astra_sites_wpforms_ids_mapping', $ids_mapping, 'no' );
 
 			if ( defined( 'WP_CLI' ) ) {
 				WP_CLI::line( 'WP Forms Imported.' );
@@ -308,7 +308,7 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) {
 				// Set meta for tracking the post.
 				astra_sites_error_log( 'Customizer Data ' . wp_json_encode( $customizer_data ) );
 
-				update_option( '_astra_sites_old_customizer_data', $customizer_data );
+				update_option( '_astra_sites_old_customizer_data', $customizer_data, 'no' );
 
 				Astra_Customizer_Import::instance()->import( $customizer_data );
 
@@ -379,7 +379,7 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) {
 						wp_send_json_error( __( 'There was an error downloading the XML file.', 'astra-sites' ) );
 					} else {
 
-						update_option( 'astra_sites_imported_wxr_id', $post_id );
+						update_option( 'astra_sites_imported_wxr_id', $post_id, 'no' );
 						$attachment_metadata = wp_generate_attachment_metadata( $post_id, $xml_path['data']['file'] );
 						wp_update_attachment_metadata( $post_id, $attachment_metadata );
 						$data        = Astra_WXR_Importer::instance()->get_xml_data( $xml_path['data']['file'], $post_id );
@@ -421,7 +421,7 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) {
 				// Set meta for tracking the post.
 				if ( is_array( $options_data ) ) {
 					Astra_Sites_Importer_Log::add( 'Imported - Site Options ' . wp_json_encode( $options_data ) );
-					update_option( '_astra_sites_old_site_options', $options_data );
+					update_option( '_astra_sites_old_site_options', $options_data, 'no' );
 				}
 
 				$options_importer = Astra_Site_Options_Import::instance();
@@ -474,7 +474,7 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) {
 				if ( is_object( $widgets_data ) ) {
 					$widgets_data = (array) $widgets_data;
 
-					update_option( '_astra_sites_old_widgets_data', $widgets_data );
+					update_option( '_astra_sites_old_widgets_data', $widgets_data, 'no' );
 				}
 
 				if ( defined( 'WP_CLI' ) ) {
@@ -513,7 +513,7 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) {
 
 			do_action( 'astra_sites_import_complete', $demo_data );
 
-			update_option( 'astra_sites_import_complete', 'yes' );
+			update_option( 'astra_sites_import_complete', 'yes', 'no' );
 
 			if ( wp_doing_ajax() ) {
 				wp_send_json_success();
