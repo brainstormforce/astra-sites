@@ -527,11 +527,12 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 										$default_page_builder = $this->get_setting( 'page_builder' );
 										$page_builders        = $this->get_page_builders();
 										foreach ( $page_builders as $key => $page_builder ) {
+											$title = isset( $page_builder['title'] ) ? $page_builder['title'] : $page_builder['name'];
 											?>
 											<li data-page-builder="<?php echo esc_html( $page_builder['slug'] ); ?>">
 												<label>
 													<input type="radio" name="page_builder" value="<?php echo esc_html( $page_builder['name'] ); ?>">
-													<img src="<?php echo esc_url( $this->get_page_builder_image( $page_builder['slug'] ) ); ?>" />
+													<img src="<?php echo esc_url( $this->get_page_builder_image( $page_builder['slug'] ) ); ?>" title="<?php echo esc_attr( $title ); ?>" />
 													<div class="title"><?php echo esc_html( $page_builder['name'] ); ?></div>
 												</label>
 											</li>
@@ -779,8 +780,9 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 			return array(
 				'gutenberg'      => array(
 					'slug'      => 'gutenberg',
-					'name'      => esc_html__( 'Block Editor', 'astra-sites' ),
+					'name'      => esc_html__( 'Gutenberg', 'astra-sites' ),
 					'image_url' => ASTRA_SITES_URI . 'inc/assets/images/block-editor.jpg',
+					'title'     => esc_html__( 'The default WordPress editor', 'astra-sites' ),
 				),
 				'elementor'      => array(
 					'slug'      => 'elementor',
