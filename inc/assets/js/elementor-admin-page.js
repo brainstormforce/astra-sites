@@ -149,7 +149,7 @@ var AstraSitesAjaxQueue = (function() {
 						white_label_class = " ast-elementor-white-label"
 						stylesheet = '<style type="">.elementor-add-ast-site-button.ast-elementor-white-label .eicon-folder:before {content: \'' + astraElementorSites.plugin_name[0] + '\';}</style>'
 					}
-					
+
 					action_for_add_section = action_for_add_section.replace( '<div class="elementor-add-section-drag-title', stylesheet + '<div class="elementor-add-section-area-button elementor-add-ast-site-button ' + white_label_class + '" title="' + astraElementorSites.plugin_name + '"> <i class="eicon-folder"></i> </div><div class="elementor-add-section-drag-title' );
 
 					add_section_tmpl.text( action_for_add_section );
@@ -169,7 +169,6 @@ var AstraSitesAjaxQueue = (function() {
 						$elscope.find( '.astra-blocks-category' ).select2();
 
 						$elscope.find( '.astra-blocks-category' ).on( 'select2:select', AstraElementorSitesAdmin._categoryChange );
-						$elscope.find( '.astra-blocks-filter' ).on( 'change', AstraElementorSitesAdmin._blockColorChange );
 
 						$( elementor.$previewContents[0].body ).on( "click", ".elementor-add-ast-site-button", AstraElementorSitesAdmin._open );
 
@@ -236,11 +235,6 @@ var AstraSitesAjaxQueue = (function() {
 
 		_categoryChange: function( event ) {
 			AstraElementorSitesAdmin.blockCategory = $( this ).val();
-			$elscope.find( '#wp-filter-search-input' ).trigger( 'keyup' );
-		},
-
-		_blockColorChange: function( event ) {
-			AstraElementorSitesAdmin.blockColor = $( this ).val();
 			$elscope.find( '#wp-filter-search-input' ).trigger( 'keyup' );
 		},
 
@@ -340,7 +334,7 @@ var AstraSitesAjaxQueue = (function() {
 						button.removeClass( 'updating-message');
 						console.log( 'Already sync all the sites.' );
 					} else {
-						
+
 						// Import categories.
 						$.ajax({
 							url  : astraElementorSites.ajaxurl,
@@ -365,7 +359,7 @@ var AstraSitesAjaxQueue = (function() {
 							console.log( jqXHR );
 						});
 
-						
+
 						// Import Blocks.
 						$.ajax({
 							url  : astraElementorSites.ajaxurl,
@@ -400,7 +394,7 @@ var AstraSitesAjaxQueue = (function() {
 											console.groupCollapsed( 'Importing Blocks - Page ' + i );
 											console.log( 'Importing Blocks - Page ' + i );
 										},
-										success: function( response ){								
+										success: function( response ){
 											console.log( response );
 											console.groupEnd( 'Importing Blocks - Page ' + i );
 										}
@@ -553,7 +547,7 @@ var AstraSitesAjaxQueue = (function() {
 			.fail(function( jqXHR ){
 				console.log( jqXHR.status + ' ' + jqXHR.responseText, true );
 				console.groupEnd();
-		    }) 
+		    })
 			.done(function ( data ) {
 
 				// 1. Fail - Import WPForms Options.
@@ -1574,7 +1568,7 @@ var AstraSitesAjaxQueue = (function() {
 					var remaining_plugins = 0;
 					var required_plugins_markup = '';
 
-					required_plugins = response.data['required_plugins'];				
+					required_plugins = response.data['required_plugins'];
 
 					if( response.data['third_party_required_plugins'].length ) {
 						output += '<li class="plugin-card plugin-card-'+plugin.slug+'" data-slug="'+plugin.slug+'" data-init="'+plugin.init+'" data-name="'+plugin.name+'">'+plugin.name+'</li>';
@@ -1667,7 +1661,7 @@ var AstraSitesAjaxQueue = (function() {
 			if( el.parents('.astra-theme').isInViewport() ) {
 				var large_img_url = el.data('src') || '';
 				var imgLarge = new Image();
-				imgLarge.src = large_img_url; 
+				imgLarge.src = large_img_url;
 				imgLarge.onload = function () {
 					el.removeClass('loading');
 					el.addClass('loaded');
@@ -1694,11 +1688,11 @@ var AstraSitesAjaxQueue = (function() {
 
 		_open: function( e ) {
 			$( document ).trigger( 'astra-sites__elementor-open-before' );
-			
+
 			$( 'body' ).addClass( 'astra-sites__elementor-open' );
 
 			let add_section = $( this ).closest( '.elementor-add-section' );
-			
+
 			if ( add_section.hasClass( 'elementor-add-section-inline' ) ) {
 				AstraElementorSitesAdmin.index = add_section.prevAll().length;
 			} else {

@@ -38,13 +38,6 @@ $suggestion_link = astra_sites_get_suggestion_link();
 								<# } #>
 							</select>
 						</div>
-						<div class="astra-blocks-filter-inner-wrap">
-							<select id="elementor-template-library-filter" class="astra-blocks-filter elementor-template-library-filter-select elementor-select2">
-								<option value=""><?php esc_html_e( 'Filter by Color', 'astra-sites' ); ?></option>
-								<option value="light"><?php esc_html_e( 'Light', 'astra-sites' ); ?></option>
-								<option value="dark"><?php esc_html_e( 'Dark', 'astra-sites' ); ?></option>
-							</select>
-						</div>
 					</div>
 					<div class="ast-sites-template-library-filter-text-wrapper">
 						<label for="elementor-template-library-filter-text" class="elementor-screen-only"><?php esc_html_e( 'Search...', 'astra-sites' ); ?></label>
