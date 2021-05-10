@@ -150,7 +150,7 @@ We are open to suggestions and would love to work on topics that our users are l
 == Changelog ==
 
 v2.6.4 - 10-May-2021
-Improvement: Quick links visible on the screen.
+Improvement: Added Quick links for a few important documents.
 Improvement: Added dynamic category support for the Gutenberg templates.
 Improvement: Removed color filter from Elementor block.
 Improvement: Change the Block Editor name with Gutenberg.
