@@ -1177,9 +1177,7 @@ var AstraSitesAjaxQueue = (function () {
 						page_content = response.data;
 
 						console.log(page_content);
-
 						console.groupEnd();
-						console.log(AstraElementorSitesAdmin.index);
 						if (undefined !== page_content && '' !== page_content) {
 							if (undefined != $e && 'undefined' != typeof $e.internal) {
 								elementor.channels.data.trigger('template:before:insert', templateModel);
@@ -1195,7 +1193,6 @@ var AstraSitesAjaxQueue = (function () {
 						}
 						AstraElementorSitesAdmin.insertActionFlag = true;
 						AstraElementorSitesAdmin._close();
-						AstraElementorSitesAdmin.index = parseInt(AstraElementorSitesAdmin.index) + 1;
 					});
 			}
 		},
