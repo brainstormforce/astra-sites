@@ -11,7 +11,6 @@
     color: #ffffff;
 }
 
-.ast-sites-dark-mode #ast-sites-modal .astra-blocks-filter,
 .ast-sites-dark-mode #ast-sites-modal .elementor-template-library-order-input {
 	border-color: #7d7e82;
 }
@@ -22,8 +21,7 @@
 
 
 .ast-sites-dark-mode #ast-sites-modal .astra-sites-content-wrap::-webkit-scrollbar,
-.ast-sites-dark-mode #ast-sites-modal .single-site-pages::-webkit-scrollbar,
-.ast-sites-dark-mode #ast-sites-modal .astra-blocks-filter {
+.ast-sites-dark-mode #ast-sites-modal .single-site-pages::-webkit-scrollbar {
     background-color: #34383C;
 }
 
