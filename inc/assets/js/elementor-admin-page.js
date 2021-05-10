@@ -1170,7 +1170,7 @@
 
 						page_content = response.data;
 
-						page_content = page_content.map( function( item ) {
+						page_content = page_content.map(function (item) {
 							item.id = Math.random().toString(36).substr(2, 7);
 							return item;
 						});
