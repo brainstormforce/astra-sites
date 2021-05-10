@@ -169,7 +169,6 @@
 						$elscope.find('.astra-blocks-category').select2();
 
 						$elscope.find('.astra-blocks-category').on('select2:select', AstraElementorSitesAdmin._categoryChange);
-						$elscope.find('.astra-blocks-filter').on('change', AstraElementorSitesAdmin._blockColorChange);
 
 						$(elementor.$previewContents[0].body).on("click", ".elementor-add-ast-site-button", AstraElementorSitesAdmin._open);
 
@@ -236,11 +235,6 @@
 
 		_categoryChange: function (event) {
 			AstraElementorSitesAdmin.blockCategory = $(this).val();
-			$elscope.find('#wp-filter-search-input').trigger('keyup');
-		},
-
-		_blockColorChange: function (event) {
-			AstraElementorSitesAdmin.blockColor = $(this).val();
 			$elscope.find('#wp-filter-search-input').trigger('keyup');
 		},
 
