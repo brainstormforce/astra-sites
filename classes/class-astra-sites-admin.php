@@ -88,7 +88,7 @@ if ( ! class_exists( 'Astra_Sites_Admin' ) ) :
 				array(
 					'text'        => __( 'Get unlimited access to all 150+ starter templates for just $169 USD!', 'astra-sites' ),
 					'button_text' => __( 'Claim Offer', 'astra-sites' ),
-					'cta_link'    => __( 'https://wpastra.com/pricing/?utm_source=Ready%20Websites&amp;utm_campaign=Astra%20Sites', 'astra-sites' ),
+					'cta_link'    => 'https://wpastra.com/pricing/?utm_source=StarterTemplatesPlugin&utm_campaign=WPAdmin',
 				)
 			);
 

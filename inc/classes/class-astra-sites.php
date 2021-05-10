@@ -205,7 +205,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				'Elementor'      => 1,
 				'Beaver Builder' => 2,
 				'Brizy'          => 3,
-				'Block Editor'   => 4,
+				'Gutenberg'      => 4,
 			);
 			$arguments['PAGE_BUILDER'] = isset( $page_builder_mapping[ $arguments['PAGE_BUILDER'] ] ) ? $page_builder_mapping[ $arguments['PAGE_BUILDER'] ] : '';
 
@@ -1896,7 +1896,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				array(
 					'id'   => 42,
 					'slug' => 'gutenberg',
-					'name' => 'Block Editor',
+					'name' => 'Gutenberg',
 				),
 				array(
 					'id'   => 33,
