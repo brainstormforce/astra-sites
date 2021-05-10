@@ -8,7 +8,7 @@
  *
  * @since 1.0.0
  */
-var AstraSitesAjaxQueue = (function () {
+ var AstraSitesAjaxQueue = (function () {
 
 	var requests = [];
 
@@ -1176,16 +1176,21 @@ var AstraSitesAjaxQueue = (function () {
 
 						page_content = response.data;
 
+						page_content = page_content.map( function( item ) {
+							item.id = Math.random().toString(36).substr(2, 7);
+							return item;
+						});
+
 						console.log(page_content);
 						console.groupEnd();
 						if (undefined !== page_content && '' !== page_content) {
 							if (undefined != $e && 'undefined' != typeof $e.internal) {
-								elementor.channels.data.trigger('template:before:insert', templateModel);
+								elementor.channels.data.trigger('document/import', templateModel);
 								elementor.getPreviewView().addChildModel(page_content, { at: AstraElementorSitesAdmin.index } || {});
 								elementor.channels.data.trigger('template:after:insert', {});
 								$e.internal('document/save/set-is-modified', { status: true })
 							} else {
-								elementor.channels.data.trigger('template:before:insert', templateModel);
+								elementor.channels.data.trigger('document/import', templateModel);
 								elementor.getPreviewView().addChildModel(page_content, { at: AstraElementorSitesAdmin.index } || {});
 								elementor.channels.data.trigger('template:after:insert', {});
 								elementor.saver.setFlagEditorChange(true);
