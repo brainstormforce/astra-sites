@@ -217,7 +217,6 @@ $suggestion_link = astra_sites_get_suggestion_link();
 					</div>
 				</div>
 				<div class="elementor-template-library-template-footer">
-					<div class="elementor-template-library-template-name theme-id-container">{{{site_title}}}</div>
 					<a class="elementor-template-library-template-action elementor-template-library-template-insert ast-block-insert">
 						<i class="eicon-file-download" aria-hidden="true"></i>
 						<span class="elementor-button-title"><?php esc_html_e( 'INSERT', 'astra-sites' ); ?></span>
