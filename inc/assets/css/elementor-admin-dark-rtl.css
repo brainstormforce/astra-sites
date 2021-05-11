@@ -11,7 +11,6 @@
     color: #ffffff;
 }
 
-.ast-sites-dark-mode #ast-sites-modal .astra-blocks-filter,
 .ast-sites-dark-mode #ast-sites-modal .elementor-template-library-order-input {
 	border-color: #7d7e82;
 }
@@ -22,8 +21,7 @@
 
 
 .ast-sites-dark-mode #ast-sites-modal .astra-sites-content-wrap::-webkit-scrollbar,
-.ast-sites-dark-mode #ast-sites-modal .single-site-pages::-webkit-scrollbar,
-.ast-sites-dark-mode #ast-sites-modal .astra-blocks-filter {
+.ast-sites-dark-mode #ast-sites-modal .single-site-pages::-webkit-scrollbar {
     background-color: #34383C;
 }
 
@@ -48,7 +46,6 @@
 .ast-sites-dark-mode #ast-sites-modal .elementor-template-library-menu-item,
 .ast-sites-dark-mode #ast-sites-modal .astra-sites-sync-library-button span,
 .ast-sites-dark-mode #ast-sites-modal .ast-sites-modal__header__item > i:not(:hover),
-.ast-sites-dark-mode #ast-sites-modal .astra-blocks-filter,
 .ast-sites-dark-mode #ast-sites-modal .elementor-template-library-order-input,
 .ast-sites-dark-mode.astra-sites__elementor-open #ast-sites-modal .select2-container--default .select2-selection__rendered,
 .ast-sites-dark-mode #ast-sites-modal .astra-sites-no-sites h3,

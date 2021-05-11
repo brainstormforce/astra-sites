@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the Starter Templates package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Starter Templates 2.6.3\n"
+"Project-Id-Version: Starter Templates 2.6.4\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/astra-sites\n"
-"POT-Creation-Date: 2021-04-20 05:39:20+00:00\n"
+"POT-Creation-Date: 2021-05-07 08:08:59+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -79,12 +79,6 @@ msgstr ""
 
 #: classes/class-astra-sites-admin.php:90
 msgid "Claim Offer"
-msgstr ""
-
-#: classes/class-astra-sites-admin.php:91
-msgid ""
-"https://wpastra.com/pricing/?utm_source=Ready%20Websites&amp;utm_"
-"campaign=Astra%20Sites"
 msgstr ""
 
 #: classes/class-astra-sites-admin.php:146
@@ -1108,7 +1102,7 @@ msgid "Failed to import \"%1$s\" (%2$s)"
 msgstr ""
 
 #: inc/importers/wxr-importer/class-wxr-importer.php:1042
-#: inc/importers/wxr-importer/class-wxr-importer.php:1932
+#: inc/importers/wxr-importer/class-wxr-importer.php:1929
 #. translators: %1$s is the post title, %2$s is post type.
 #. translators: %1$s is the taxonomy name, %2$s is taxonomy.
 msgid "Imported \"%1$s\" (%2$s)"
@@ -1123,117 +1117,117 @@ msgstr ""
 msgid "Invalid file type"
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:1709
+#: inc/importers/wxr-importer/class-wxr-importer.php:1706
 #. translators: %s user login name
 msgid "Failed to import user \"%s\""
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:1733
+#: inc/importers/wxr-importer/class-wxr-importer.php:1730
 #. translators: %s user login name
 msgid "Imported user \"%s\""
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:1740
+#: inc/importers/wxr-importer/class-wxr-importer.php:1737
 #. translators: %1$s original user Id, %2$s old user Id.
 msgid "User %1$d remapped to %2$d"
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:1905
+#: inc/importers/wxr-importer/class-wxr-importer.php:1902
 #. translators: %1$s is the taxonomy, %2$s is taxonomy name.
 msgid "Failed to import %1$s %2$s"
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:1940
+#: inc/importers/wxr-importer/class-wxr-importer.php:1937
 #. translators: %1$s is term original id, %2$s is term id.
 msgid "Term %1$d remapped to %2$d"
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:1998
+#: inc/importers/wxr-importer/class-wxr-importer.php:1995
 #. translators: %1$s is error code, %2$s is error code header, %3$s is url.
 msgid "Remote server returned %1$d %2$s for %3$s"
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:2011
+#: inc/importers/wxr-importer/class-wxr-importer.php:2008
 msgid "Remote file is incorrect size"
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:2016
+#: inc/importers/wxr-importer/class-wxr-importer.php:2013
 msgid "Zero size file downloaded"
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:2023
+#: inc/importers/wxr-importer/class-wxr-importer.php:2020
 #. translators: %s max file size.
 msgid "Remote file is too large, limit is %s"
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:2056
+#: inc/importers/wxr-importer/class-wxr-importer.php:2053
 #. translators: %d is post id.
 msgid "Running post-processing for post %d"
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:2072
+#: inc/importers/wxr-importer/class-wxr-importer.php:2069
 #. translators: %1$s is post title, %2$s is post id.
 msgid "Could not find the post parent for \"%1$s\" (post #%2$d)"
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:2080
+#: inc/importers/wxr-importer/class-wxr-importer.php:2077
 #. translators: %1$d is post id, %2$d is parent post id.
 msgid "Post %1$d was imported with parent %2$d, but could not be found"
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:2097
+#: inc/importers/wxr-importer/class-wxr-importer.php:2094
 #. translators: %1$s is the post title, %2$s is post id.
 msgid "Could not find the author for \"%1$s\" (post #%2$d)"
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:2105
+#: inc/importers/wxr-importer/class-wxr-importer.php:2102
 #. translators: %1$d is post id, %2$s is author slug.
 msgid "Post %1$d was imported with author \"%2$s\", but could not be found"
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:2134
+#: inc/importers/wxr-importer/class-wxr-importer.php:2131
 #. translators: %d is post id.
 msgid "Post %d was marked for post-processing, but none was required."
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:2148
+#: inc/importers/wxr-importer/class-wxr-importer.php:2145
 #. translators: %1$s is the post title, %2$s is post id.
 msgid "Could not update \"%1$s\" (post #%2$d) with mapped data"
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:2202
+#: inc/importers/wxr-importer/class-wxr-importer.php:2199
 #. translators: %1$s is the post title, %2$s is post id.
 msgid "Could not find the menu object for \"%1$s\" (post #%2$d)"
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:2210
+#: inc/importers/wxr-importer/class-wxr-importer.php:2207
 #. translators: %1$s is post id, %2$s is post object id, %3$s is menu type.
 msgid ""
 "Post %1$d was imported with object \"%2$d\" of type \"%3$s\", but could not "
 "be found"
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:2241
+#: inc/importers/wxr-importer/class-wxr-importer.php:2238
 #. translators: %d is comment id.
 msgid "Could not find the comment parent for comment #%d"
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:2248
+#: inc/importers/wxr-importer/class-wxr-importer.php:2245
 #. translators: %1$s is comment id, %2$s is parent comment id.
 msgid "Comment %1$d was imported with parent %2$d, but could not be found"
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:2265
+#: inc/importers/wxr-importer/class-wxr-importer.php:2262
 #. translators: %d is comment id.
 msgid "Could not find the author for comment #%d"
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:2272
+#: inc/importers/wxr-importer/class-wxr-importer.php:2269
 #. translators: %1$d is comment id, %2$d is author id.
 msgid "Comment %1$d was imported with author %2$d, but could not be found"
 msgstr ""
 
-#: inc/importers/wxr-importer/class-wxr-importer.php:2292
+#: inc/importers/wxr-importer/class-wxr-importer.php:2289
 #. translators: %d is comment id.
 msgid "Could not update comment #%d with mapped data"
 msgstr ""
