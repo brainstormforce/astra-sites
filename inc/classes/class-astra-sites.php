@@ -1257,7 +1257,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 					'whiteLabelName'                     => Astra_Sites_White_Label::get_instance()->get_white_label_name(),
 					'ajaxurl'                            => esc_url( admin_url( 'admin-ajax.php' ) ),
 					'siteURL'                            => site_url(),
-					'getProText'                         => __( 'Get Agency Bundle', 'astra-sites' ),
+					'getProText'                         => __( 'Get Access!', 'astra-sites' ),
 					'getProURL'                          => esc_url( 'https://wpastra.com/pricing/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=wp-dashboard' ),
 					'getUpgradeText'                     => __( 'Upgrade', 'astra-sites' ),
 					'getUpgradeURL'                      => esc_url( 'https://wpastra.com/pricing/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=wp-dashboard' ),
@@ -1471,11 +1471,11 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			}
 
 			/* translators: %s are link. */
-			$license_msg = sprintf( __( 'This is a premium website demo available only with the Agency Bundles you can purchase it from <a href="%s" target="_blank">here</a>.', 'astra-sites' ), 'https://wpastra.com/pricing/' );
+			$license_msg = sprintf( __( 'This is a premium template available with Essential Bundle and Growth Bundle. you can purchase it from <a href="%s" target="_blank">here</a>.', 'astra-sites' ), 'https://wpastra.com/pricing/' );
 
 			if ( defined( 'ASTRA_PRO_SITES_NAME' ) ) {
 				/* translators: %s are link. */
-				$license_msg = sprintf( __( 'This is a premium template available with \'Agency\' packages. <a href="%s" target="_blank">Validate Your License</a> Key to import this template.', 'astra-sites' ), esc_url( admin_url( 'plugins.php?bsf-inline-license-form=astra-pro-sites' ) ) );
+				$license_msg = sprintf( __( 'This is a premium template available with Essential Bundle and Growth Bundle. <a href="%s" target="_blank">Validate Your License</a> Key to import this template.', 'astra-sites' ), esc_url( admin_url( 'plugins.php?bsf-inline-license-form=astra-pro-sites' ) ) );
 			}
 
 			$data = apply_filters(
@@ -1497,7 +1497,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 					'isPro'                      => defined( 'ASTRA_PRO_SITES_NAME' ) ? true : false,
 					'license_msg'                => $license_msg,
 					'isWhiteLabeled'             => Astra_Sites_White_Label::get_instance()->is_white_labeled(),
-					'getProText'                 => __( 'Get Agency Bundle', 'astra-sites' ),
+					'getProText'                 => __( 'Get Access!', 'astra-sites' ),
 					'getProURL'                  => esc_url( 'https://wpastra.com/pricing/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=wp-dashboard' ),
 					'astra_block_categories'     => $this->get_api_option( 'astra-blocks-categories' ),
 					'siteURL'                    => site_url(),
