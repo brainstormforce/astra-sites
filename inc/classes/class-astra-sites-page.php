@@ -698,7 +698,7 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 								</li>
 								<li class="ast-sites__filter-wrap-checkbox">
 									<label>
-										<input id="radio-agency" type="radio" name="ast-sites-radio" class="checkbox" value="agency" /><?php esc_html_e( 'Agency', 'astra-sites' ); ?>
+										<input id="radio-agency" type="radio" name="ast-sites-radio" class="checkbox" value="agency" /><?php esc_html_e( 'Premium', 'astra-sites' ); ?>
 									</label>
 								</li>
 							</ul>
