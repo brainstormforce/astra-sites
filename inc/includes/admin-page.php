@@ -634,13 +634,54 @@ $site_import_options = apply_filters(
  */
 ?>
 <script type="text/template" id="tmpl-astra-sites-request-failed">
-	<p><?php esc_html_e( 'Your website is facing a temporary issue connecting to the template server.', 'astra-sites' ); ?></p>
+	<p><?php esc_html_e( 'We could not start the import process. This is the message from HTTP request:', 'astra-sites' ); ?></p>
+	<p>
+	<?php
+		/* translators: %s doc link. */
+		printf( __( 'Please raise a <a href="%s" target="_blank">support request</a> so we can help you with it.', 'astra-sites' ), 'hhttps://wpastra.com/support/' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+	?>
+	</p>
+</script>
+<?php
+/**
+ * TMPL - Import Process Interrupted - User end
+ */
+?>
+<script type="text/template" id="tmpl-astra-sites-request-failed-user">
+	<p>{{{ data.primary }}}</p>
+	<div class="current-importing-status">{{{ data.error.code }}} - {{{ data.error.message }}}</div>
+	<# if ( 'WP_Error' === data.error.code ) { #>
 	<p>
 		<?php
 		/* translators: %s doc link. */
-		printf( __( 'Read an article <a href="%s" target="_blank">here</a> to resolve the issue.', 'astra-sites' ), 'https://wpastra.com/docs/import-process-interrupted/' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		printf( __( 'We have listed the <a href="%s" target="_blank">possible solutions here</a> to help you resolve this.', 'astra-sites' ), 'https://wpastra.com/docs/fix-starter-template-importing-issues/' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		?>
 	</p>
+	<# } else if ( 'Cloudflare' === data.error.code ) { #>
+	<p>
+		<?php
+		/* translators: %s doc link. */
+		printf( __( 'Please report this error <a href="%s" target="_blank">here</a> so we can fix it.', 'astra-sites' ), 'https://wpastra.com/support/open-a-ticket/' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		?>
+	</p>
+	<# } else { #>
+	<p>
+		<?php
+		$ip       = Astra_Sites_Helper::get_client_ip();
+		$url_text = __( 'Please report this error <a href="#LINK" target="_blank">here</a> so we can fix it.', 'astra-sites' );
+		$url      = 'https://wpastra.com/starter-templates-support/?ip=' . $ip;
+		?>
+		<#
+		var url = '<?php echo $url; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>';
+		url += '&template-id=' + data.id;
+		url += '&subject=' + data.error.code + ' - ' + data.error.message;
+
+		var url_text = '<?php echo $url_text; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>';
+		url_text = url_text.replace( "#LINK", url );
+		#>
+		{{{url_text}}}
+	</p>
+	<# } #>
 </script>
 
 <?php
