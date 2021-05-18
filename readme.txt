@@ -149,7 +149,7 @@ We are open to suggestions and would love to work on topics that our users are l
 
 == Changelog ==
 
-v2.6.4 - 18-May-2021
+v2.6.5 - 18-May-2021
 Improvement: Added better error messages to the failed import process.
 
 v2.6.4 - 11-May-2021
