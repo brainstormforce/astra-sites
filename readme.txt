@@ -149,7 +149,7 @@ We are open to suggestions and would love to work on topics that our users are l
 
 == Changelog ==
 
-v2.6.5 - 18-May-2021
+v2.6.6 - 18-May-2021
 - Fix: Avoided the HTML being printed in one of the error message screens.
 - Improvement: Improved error message when the requests fail to reach Starter Templates' servers.
 
