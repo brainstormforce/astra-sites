@@ -382,22 +382,60 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			);
 
 			$request = wp_remote_get( trailingslashit( self::get_instance()->get_api_domain() ) . 'wp-json/wp/v2/' . $url, $api_args );
-			if ( ! is_wp_error( $request ) && 200 === (int) wp_remote_retrieve_response_code( $request ) ) {
 
-				$demo_data = json_decode( wp_remote_retrieve_body( $request ), true );
-				update_option( 'astra_sites_import_data', $demo_data, 'no' );
-
-				wp_send_json_success( $demo_data );
-			} elseif ( is_wp_error( $request ) ) {
-				wp_send_json_error( 'API Request is failed due to ' . $request->get_error_message() );
-			} elseif ( 200 !== (int) wp_remote_retrieve_response_code( $request ) ) {
-				$demo_data = json_decode( wp_remote_retrieve_body( $request ), true );
-				if ( is_array( $demo_data ) && isset( $demo_data['code'] ) ) {
-					wp_send_json_error( $demo_data['message'] );
-				} else {
-					wp_send_json_error( wp_remote_retrieve_body( $request ) );
+			if ( is_wp_error( $request ) ) {
+				$wp_error_code = $request->get_error_code();
+				switch ( $wp_error_code ) {
+					case 'http_request_not_executed':
+						/* translators: %s Error Message */
+						$message = sprintf( __( 'API Request could not be performed - %s', 'astra-sites' ), $request->get_error_message() );
+						break;
+					case 'http_request_failed':
+					default:
+						/* translators: %s Error Message */
+						$message = sprintf( __( 'API Request has failed - %s', 'astra-sites' ), $request->get_error_message() );
+						break;
 				}
+
+				wp_send_json_error(
+					array(
+						'message' => $request->get_error_message(),
+						'code'    => 'WP_Error',
+					)
+				);
 			}
+
+			$code      = (int) wp_remote_retrieve_response_code( $request );
+			$demo_data = json_decode( wp_remote_retrieve_body( $request ), true );
+
+			if ( 200 === $code ) {
+				update_option( 'astra_sites_import_data', $demo_data, 'no' );
+				wp_send_json_success( $demo_data );
+			}
+
+			$message = wp_remote_retrieve_body( $request );
+
+			if ( 200 !== $code && is_array( $demo_data ) && isset( $demo_data['code'] ) ) {
+				$message = $demo_data['message'];
+			}
+
+			if ( 500 === $code ) {
+				$message = __( 'Internal Server Error.', 'astra-sites' );
+			}
+
+			if ( 200 !== $code && false !== strpos( $message, 'Cloudflare' ) ) {
+				$ip = Astra_Sites_Helper::get_client_ip();
+				/* translators: %s IP address. */
+				$message = sprintf( __( 'The IP %1$s is blocked with the error code: %2$s', 'astra-sites' ), $ip, $code );
+				$code    = 'Cloudflare';
+			}
+
+			wp_send_json_error(
+				array(
+					'message' => $message,
+					'code'    => $code,
+				)
+			);
 		}
 
 		/**
@@ -1312,6 +1350,9 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 					),
 					'subscriptionSuccessMessage'         => esc_html__( 'We have sent you a surprise gift on your email address! Please check your inbox!', 'astra-sites' ),
 					'first_import_complete'              => get_option( 'astra_sites_import_complete' ),
+					'server_import_primary_error'        => __( 'Looks like the template you are importing is temporarily not available.', 'astra-sites' ),
+					'client_import_primary_error'        => __( 'We could not start the import process and this is the message from WordPress:', 'astra-sites' ),
+					'cloudflare_import_primary_error'    => __( 'We could not start the import process.', 'astra-sites' ),
 				)
 			);
 
