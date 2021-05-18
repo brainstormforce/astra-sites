@@ -654,14 +654,14 @@ $site_import_options = apply_filters(
 	<p>
 		<?php
 		/* translators: %s doc link. */
-		printf( __( 'We have listed the <a href="%s" target="_blank">possible solutions here</a> to help you resolve this.', 'astra-sites' ), 'https://wpastra.com/docs/fix-starter-template-importing-issues/' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		printf( esc_html__( 'We have listed the <a href="%s" target="_blank">possible solutions here</a> to help you resolve this.', 'astra-sites' ), 'https://wpastra.com/docs/fix-starter-template-importing-issues/' );
 		?>
 	</p>
 	<# } else if ( 'Cloudflare' === data.error.code ) { #>
 	<p>
 		<?php
 		/* translators: %s doc link. */
-		printf( __( 'Please report this error <a href="%s" target="_blank">here</a> so we can fix it.', 'astra-sites' ), 'https://wpastra.com/support/open-a-ticket/' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		printf( esc_html__( 'Please report this error <a href="%s" target="_blank">here</a> so we can fix it.', 'astra-sites' ), 'https://wpastra.com/support/open-a-ticket/' );
 		?>
 	</p>
 	<# } else { #>
@@ -672,7 +672,7 @@ $site_import_options = apply_filters(
 		$url      = 'https://wpastra.com/starter-templates-support/?ip=' . $ip;
 		?>
 		<#
-		var url = '<?php echo $url; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>';
+		var url = '<?php echo esc_url( $url ); ?>';
 		url += '&template-id=' + data.id;
 		url += '&subject=' + data.error.code + ' - ' + data.error.message;
 
