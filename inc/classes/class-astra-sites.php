@@ -426,7 +426,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			if ( 200 !== $code && false !== strpos( $message, 'Cloudflare' ) ) {
 				$ip = Astra_Sites_Helper::get_client_ip();
 				/* translators: %s IP address. */
-				$message = sprintf( __( 'The IP %1$s is blocked with the error code: %2$s', 'astra-sites' ), $ip, $code );
+				$message = sprintf( __( 'Client IP: %1$s </br> Error code: %2$s', 'astra-sites' ), $ip, $code );
 				$code    = 'Cloudflare';
 			}
 
@@ -1352,7 +1352,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 					'first_import_complete'              => get_option( 'astra_sites_import_complete' ),
 					'server_import_primary_error'        => __( 'Looks like the template you are importing is temporarily not available.', 'astra-sites' ),
 					'client_import_primary_error'        => __( 'We could not start the import process and this is the message from WordPress:', 'astra-sites' ),
-					'cloudflare_import_primary_error'    => __( 'We could not start the import process.', 'astra-sites' ),
+					'cloudflare_import_primary_error'    => __( 'There was an error connecting to the Starter Templates API from Cloudflare.', 'astra-sites' ),
 				)
 			);
 
