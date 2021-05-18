@@ -649,7 +649,11 @@ $site_import_options = apply_filters(
 ?>
 <script type="text/template" id="tmpl-astra-sites-request-failed-user">
 	<p>{{{ data.primary }}}</p>
-	<div class="current-importing-status">{{{ data.error.code }}} - {{{ data.error.message }}}</div>
+	<# if ( 'Cloudflare' === data.error.code ) { #>
+		<div class="current-importing-status">{{{ data.error.message }}}</div>
+	<# } else { #>
+		<div class="current-importing-status">{{{ data.error.code }}} - {{{ data.error.message }}}</div>
+	<# } #>
 	<# if ( 'WP_Error' === data.error.code ) { #>
 	<p>
 		<?php
