@@ -444,7 +444,7 @@ $site_import_options = apply_filters(
 
 <?php
 /**
- * TMPL - Invalid Mini Agency License
+ * TMPL - Invalid Essential Bundle License
  */
 ?>
 <script type="text/template" id="tmpl-astra-sites-invalid-mini-agency-license">
@@ -460,7 +460,7 @@ $site_import_options = apply_filters(
 		}
 
 		/* translators: %s is pricing page link */
-		printf( __( '<p>Seems like you have purchased the %4$s \'Mini Agency\' package with a choice of \'%1$s\' page builder addon.</p><p>While this template is built with \'%2$s\' page builder addon.</p><p>Read article <a href="%3$s" target="_blank">here</a> to see how you can proceed.</p>', 'astra-sites' ), esc_html( $current_page_builder ), esc_html( $upgrade_page_builder ), esc_url( Astra_Sites_White_Label::get_instance()->get_white_label_link( 'https://wpastra.com/docs/not-valid-license/' ) ), Astra_Sites_White_Label::get_instance()->get_white_label_name() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+		printf( __( '<p>Seems like you have purchased the %4$s \'Essential Bundle\' package with a choice of \'%1$s\' page builder addon.</p><p>While this template is built with \'%2$s\' page builder addon.</p><p>Read article <a href="%3$s" target="_blank">here</a> to see how you can proceed.</p>', 'astra-sites' ), esc_html( $current_page_builder ), esc_html( $upgrade_page_builder ), esc_url( Astra_Sites_White_Label::get_instance()->get_white_label_link( 'https://wpastra.com/docs/not-valid-license/' ) ), Astra_Sites_White_Label::get_instance()->get_white_label_name() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		?>
 	</p>
 </script>
