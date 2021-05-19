@@ -430,7 +430,7 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 								<?php if ( 'invalid_site_id' === $import_status ) { ?>
 									<p><?php esc_html_e( 'The demo you are importing seems invalid. The site is not found.', 'astra-sites' ); ?></p>
 								<?php } elseif ( 'premium_sites' === $import_status ) { ?>
-									<p><?php esc_html_e( 'The demo you are importing is a premium demo.', 'astra-sites' ); ?> <a href="https://wpastra.com/pricing/?utm_source=batch-site-import&utm_campaign=astra-sites&utm_medium=batch-import" class="" target="_blank"><?php esc_html_e( 'Get Agency Bundle', 'astra-sites' ); ?><i class="dashicons dashicons-external"></i></a></p>
+									<p><?php esc_html_e( 'The demo you are importing is a premium demo.', 'astra-sites' ); ?> <a href="https://wpastra.com/pricing/?utm_source=batch-site-import&utm_campaign=astra-sites&utm_medium=batch-import" class="" target="_blank"><?php esc_html_e( 'Get Access!', 'astra-sites' ); ?><i class="dashicons dashicons-external"></i></a></p>
 								<?php } else { ?>
 									<p><?php esc_html_e( 'The import process can take a few minutes depending on the size of the site and speed of the connection.', 'astra-sites' ); ?></p>
 								<?php } ?>
@@ -698,7 +698,7 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 								</li>
 								<li class="ast-sites__filter-wrap-checkbox">
 									<label>
-										<input id="radio-agency" type="radio" name="ast-sites-radio" class="checkbox" value="agency" /><?php esc_html_e( 'Agency', 'astra-sites' ); ?>
+										<input id="radio-agency" type="radio" name="ast-sites-radio" class="checkbox" value="agency" /><?php esc_html_e( 'Premium', 'astra-sites' ); ?>
 									</label>
 								</li>
 							</ul>
