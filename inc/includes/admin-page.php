@@ -241,7 +241,7 @@ $site_import_options = apply_filters(
 			</div>
 			<# if ( site_type && 'free' !== site_type ) { #>
 				<?php /* translators: %s are white label strings. */ ?>
-				<div class="agency-ribbons" title="<?php printf( esc_attr__( 'This premium template is accessible with %1$s "Agency" Package.', 'astra-sites' ), Astra_Sites_White_Label::get_instance()->get_white_label_name() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"><?php esc_html_e( 'Agency', 'astra-sites' ); ?></div>
+				<div class="agency-ribbons" title="<?php printf( esc_attr__( 'This premium template is accessible with %1$s "Premium" Package.', 'astra-sites' ), Astra_Sites_White_Label::get_instance()->get_white_label_name() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"><?php esc_html_e( 'Premium', 'astra-sites' ); ?></div>
 			<# } #>
 		</div>
 	</div>
@@ -330,7 +330,7 @@ $site_import_options = apply_filters(
 					</div>
 					<# if ( site_type && 'free' !== site_type ) { #>
 						<?php /* translators: %s are white label strings. */ ?>
-						<div class="agency-ribbons" title="<?php printf( esc_attr__( 'This premium template is accessible with %1$s "Agency" Package.', 'astra-sites' ), Astra_Sites_White_Label::get_instance()->get_white_label_name() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"><?php esc_html_e( 'Agency', 'astra-sites' ); ?></div>
+						<div class="agency-ribbons" title="<?php printf( esc_attr__( 'This premium template is accessible with %1$s "Premium" Package.', 'astra-sites' ), Astra_Sites_White_Label::get_instance()->get_white_label_name() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"><?php esc_html_e( 'Premium', 'astra-sites' ); ?></div>
 					<# } #>
 				</div>
 			</div>
@@ -391,7 +391,7 @@ $site_import_options = apply_filters(
 					</div>
 					<# if ( site_type && 'free' !== site_type ) { #>
 						<?php /* translators: %s are white label strings. */ ?>
-						<div class="agency-ribbons" title="<?php printf( esc_attr__( 'This premium template is accessible with %1$s "Agency" Package.', 'astra-sites' ), Astra_Sites_White_Label::get_instance()->get_white_label_name() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"><?php esc_html_e( 'Agency', 'astra-sites' ); ?></div>
+						<div class="agency-ribbons" title="<?php printf( esc_attr__( 'This premium template is accessible with %1$s "Premium" Package.', 'astra-sites' ), Astra_Sites_White_Label::get_instance()->get_white_label_name() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"><?php esc_html_e( 'Premium', 'astra-sites' ); ?></div>
 					<# } #>
 				</div>
 			</div>
@@ -410,13 +410,13 @@ $site_import_options = apply_filters(
 	<p>
 		<?php
 			/* translators: %s is pricing page link */
-			printf( __( 'This is a premium template available with \'Agency\' package. you can purchase it from <a href="%s" target="_blank">here</a>.', 'astra-sites' ), 'https://wpastra.com/pricing/' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			printf( __( 'This is a premium template available with Essential Bundle and Growth Bundle. You can purchase one of the bundles from <a href="%s" target="_blank">here</a> to get access to this premium template.', 'astra-sites' ), 'https://wpastra.com/pricing/' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		?>
 	</p>
 	<p>
 		<?php
 			/* translators: %s is article link */
-			printf( __( 'If you already own an Agency pack. Read an article to know how you can <a href="%s" target="_blank">import a premium website demo</a>.', 'astra-sites' ), esc_url( 'https://wpastra.com/docs/starter-templates-complete-site/' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			printf( __( 'If you already own Essential Bundle or Growth Bundle, read an article to know how you can <a href="%s" target="_blank">import a premium website demo</a>.', 'astra-sites' ), esc_url( 'https://wpastra.com/docs/starter-templates-complete-site/' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		?>
 	</p>
 </script>

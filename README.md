@@ -63,7 +63,7 @@ Businesses like restaurants, lawyers, agencies, interior designers, artist shops
 - [Gutenberg Free Website Templates](https://wpastra.com/ready-websites/?page-builder=gutenberg&category=free)
 - [Brizy Free Website Templates](https://wpastra.com/ready-websites/?page-builder=brizy&category=free)
 
-You can extend this library with premium ready-to-use website demos by purchasing one of the Agency Bundles, i.e. either the Mini Agency Bundle or the Agency Bundle.
+You can extend this library with premium ready-to-use website demos by purchasing one of the Astra Bundles, i.e. either the Essential Bundle or the Growth Bundle.
 
 ### WHY PEOPLE LOVE THE ASTRA THEME? ###
 
