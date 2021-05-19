@@ -1,13 +1,13 @@
 # Starter Templates — Elementor, Gutenberg & Beaver Builder Templates #
-**Contributors:** [brainstormforce](https://profiles.wordpress.org/brainstormforce)  
-**Donate link:** https://wpastra.com/pro/  
-**Tags:** Elementor,Beaver Builder,Templates,Gutenberg,Astra Starter Sites  
-**Requires at least:** 4.4  
-**Requires PHP:** 5.3  
-**Tested up to:** 5.7  
-**Stable tag:** 2.6.6  
-**License:** GPLv2 or later  
-**License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
+**Contributors:** [brainstormforce](https://profiles.wordpress.org/brainstormforce)
+**Donate link:** https://wpastra.com/pro/
+**Tags:** Elementor,Beaver Builder,Templates,Gutenberg,Astra Starter Sites
+**Requires at least:** 4.4
+**Requires PHP:** 5.3
+**Tested up to:** 5.7
+**Stable tag:** 2.6.7
+**License:** GPLv2 or later
+**License URI:** http://www.gnu.org/licenses/gpl-2.0.html
 
 The growing library of 300+ ready-to-use templates that work with all WordPress themes including Astra, Hello, OceanWP, GeneratePress and more
 
@@ -63,7 +63,7 @@ Businesses like restaurants, lawyers, agencies, interior designers, artist shops
 - [Gutenberg Free Website Templates](https://wpastra.com/ready-websites/?page-builder=gutenberg&category=free)
 - [Brizy Free Website Templates](https://wpastra.com/ready-websites/?page-builder=brizy&category=free)
 
-You can extend this library with premium ready-to-use website demos by purchasing one of the Agency Bundles, i.e. either the Mini Agency Bundle or the Agency Bundle.
+You can extend this library with premium ready-to-use website demos by purchasing one of the Astra Bundles, i.e. either the Essential Bundle or the Growth Bundle.
 
 ### WHY PEOPLE LOVE THE ASTRA THEME? ###
 
@@ -148,6 +148,12 @@ We are open to suggestions and would love to work on topics that our users are l
 7. Free Images by Pixabay right inside the WordPress media popup.
 
 ## Changelog ##
+
+v2.6.7 - 19-May-2021
+- Improvement: Changed 'Agency' tag with 'Premium' for templates in library [Screenshot](https://share.bsf.io/rRuGrRjq)
+- Improvement: Get Agency Bundle button text will now be  'Get Access' [Screenshot](https://share.bsf.io/rRuGrRjq)
+- Improvement: All strings with Agency Bundle will now be Growth Bundle. [Screenshot](https://share.bsf.io/6qu86nY1)
+- Improvement: All strings with Mini Agency Bundle will now be Essential Bundle.
 
 v2.6.6 - 18-May-2021
 - Fix: Avoided the HTML being printed in one of the error message screens.
