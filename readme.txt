@@ -149,6 +149,12 @@ We are open to suggestions and would love to work on topics that our users are l
 
 == Changelog ==
 
+v2.6.7 - 19-May-2021
+- Improvement: Changed 'Agency' tag with 'Premium' for templates in library [Screenshot](https://share.bsf.io/rRuGrRjq)
+- Improvement: Get Agency Bundle button text will now be  'Get Access' [Screenshot](https://share.bsf.io/rRuGrRjq)
+- Improvement: All strings with Agency Bundle will now be Growth Bundle. [Screenshot](https://share.bsf.io/6qu86nY1)
+- Improvement: All strings with Mini Agency Bundle will now be Essential Bundle.
+
 v2.6.6 - 18-May-2021
 - Fix: Avoided the HTML being printed in one of the error message screens.
 - Improvement: Improved error message when the requests fail to reach Starter Templates' servers.
