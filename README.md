@@ -5,7 +5,7 @@
 **Requires at least:** 4.4  
 **Requires PHP:** 5.3  
 **Tested up to:** 5.7  
-**Stable tag:** 2.6.5  
+**Stable tag:** 2.6.6  
 **License:** GPLv2 or later  
 **License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
@@ -149,16 +149,20 @@ We are open to suggestions and would love to work on topics that our users are l
 
 ## Changelog ##
 
+v2.6.6 - 18-May-2021
+- Fix: Avoided the HTML being printed in one of the error message screens.
+- Improvement: Improved error message when the requests fail to reach Starter Templates' servers.
+
 v2.6.5 - 18-May-2021
-Improvement: Added better error messages to the failed import process.
+- Improvement: Added better error messages to the failed import process.
 
 v2.6.4 - 11-May-2021
-Improvement: Added Quick links for a few important documents.
-Improvement: Added dynamic category support for the Gutenberg templates.
-Improvement: Removed color filter from Elementor block.
-Improvement: Change the Block Editor name with Gutenberg.
-Fix: Sync complete notice not closing on click.
-Fix: Elementor demo does not import if we try to import multiple times.
+- Improvement: Added Quick links for a few important documents.
+- Improvement: Added dynamic category support for the Gutenberg templates.
+- Improvement: Removed color filter from Elementor block.
+- Improvement: Change the Block Editor name with Gutenberg.
+- Fix: Sync complete notice not closing on click.
+- Fix: Elementor demo does not import if we try to import multiple times.
 
 v2.6.3 - 4-May-2021
 - Improvement: Advanced Options UI improvement.
