@@ -1,13 +1,13 @@
 # Starter Templates — Elementor, Gutenberg & Beaver Builder Templates #
-**Contributors:** [brainstormforce](https://profiles.wordpress.org/brainstormforce)  
-**Donate link:** https://wpastra.com/pro/  
-**Tags:** Elementor,Beaver Builder,Templates,Gutenberg,Astra Starter Sites  
-**Requires at least:** 4.4  
-**Requires PHP:** 5.3  
-**Tested up to:** 5.7  
-**Stable tag:** 2.6.6  
-**License:** GPLv2 or later  
-**License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
+**Contributors:** [brainstormforce](https://profiles.wordpress.org/brainstormforce)
+**Donate link:** https://wpastra.com/pro/
+**Tags:** Elementor,Beaver Builder,Templates,Gutenberg,Astra Starter Sites
+**Requires at least:** 4.4
+**Requires PHP:** 5.3
+**Tested up to:** 5.7
+**Stable tag:** 2.6.7
+**License:** GPLv2 or later
+**License URI:** http://www.gnu.org/licenses/gpl-2.0.html
 
 The growing library of 300+ ready-to-use templates that work with all WordPress themes including Astra, Hello, OceanWP, GeneratePress and more
 
@@ -148,6 +148,9 @@ We are open to suggestions and would love to work on topics that our users are l
 7. Free Images by Pixabay right inside the WordPress media popup.
 
 ## Changelog ##
+
+v2.6.7 - 19-May-2021
+- Improvement: String changes according to new plan names 'Agency Bundle' and 'Mini Agency Bundle' known as'Growth Bundle' and 'Essential Bundle' respectively.
 
 v2.6.6 - 18-May-2021
 - Fix: Avoided the HTML being printed in one of the error message screens.
