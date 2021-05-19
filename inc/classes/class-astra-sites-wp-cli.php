@@ -180,7 +180,7 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 			if ( 'free' !== $demo_data['site-type'] && 'upgrade' === $demo_data['license-status'] && ! $license_status ) {
 
 				if ( ! defined( 'ASTRA_PRO_SITES_NAME' ) ) {
-					WP_CLI::line( __( 'This is Agency site. Please activate the "Starter Templates" license!', 'astra-sites' ) );
+					WP_CLI::line( __( 'This is Premium site. Please activate the "Starter Templates" license!', 'astra-sites' ) );
 					WP_CLI::line( __( 'Use `wp plugin deactivate astra-sites` and then `wp plugin activate astra-pro-sites`', 'astra-sites' ) );
 				}
 
@@ -590,7 +590,7 @@ if ( class_exists( 'WP_CLI_Command' ) && ! class_exists( 'Astra_Sites_WP_CLI' ) 
 						'slug'          => $site['slug'],
 						'title'         => $site['title']['rendered'],
 						'url'           => $site['astra-site-url'],
-						'type'          => ( 'premium' === $site['astra-site-type'] ) ? 'Agency' : ucwords( $site['astra-site-type'] ),
+						'type'          => ( 'premium' === $site['astra-site-type'] ) ? 'Premium' : ucwords( $site['astra-site-type'] ),
 						'categories'    => array(),
 						'page_builders' => array(),
 					);
