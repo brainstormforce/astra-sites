@@ -649,19 +649,23 @@ $site_import_options = apply_filters(
 ?>
 <script type="text/template" id="tmpl-astra-sites-request-failed-user">
 	<p>{{{ data.primary }}}</p>
-	<div class="current-importing-status">{{{ data.error.code }}} - {{{ data.error.message }}}</div>
+	<# if ( 'Cloudflare' === data.error.code ) { #>
+		<div class="current-importing-status">{{{ data.error.message }}}</div>
+	<# } else { #>
+		<div class="current-importing-status">{{{ data.error.code }}} - {{{ data.error.message }}}</div>
+	<# } #>
 	<# if ( 'WP_Error' === data.error.code ) { #>
 	<p>
 		<?php
 		/* translators: %s doc link. */
-		printf( esc_html__( 'We have listed the <a href="%s" target="_blank">possible solutions here</a> to help you resolve this.', 'astra-sites' ), 'https://wpastra.com/docs/fix-starter-template-importing-issues/' );
+		printf( __( 'We have listed the <a href="%s" target="_blank">possible solutions here</a> to help you resolve this.', 'astra-sites' ), 'https://wpastra.com/docs/fix-starter-template-importing-issues/' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		?>
 	</p>
 	<# } else if ( 'Cloudflare' === data.error.code ) { #>
 	<p>
 		<?php
 		/* translators: %s doc link. */
-		printf( esc_html__( 'Please report this error <a href="%s" target="_blank">here</a> so we can fix it.', 'astra-sites' ), 'https://wpastra.com/support/open-a-ticket/' );
+		printf( __( 'Please report this error <a href="%s" target="_blank">here</a> so we can fix it.', 'astra-sites' ), 'https://wpastra.com/support/open-a-ticket/' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		?>
 	</p>
 	<# } else { #>
@@ -672,7 +676,7 @@ $site_import_options = apply_filters(
 		$url      = 'https://wpastra.com/starter-templates-support/?ip=' . $ip;
 		?>
 		<#
-		var url = '<?php echo esc_url( $url ); ?>';
+		var url = '<?php echo $url; // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>';
 		url += '&template-id=' + data.id;
 		url += '&subject=' + data.error.code + ' - ' + data.error.message;
 
