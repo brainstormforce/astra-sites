@@ -150,6 +150,7 @@ We are open to suggestions and would love to work on topics that our users are l
 == Changelog ==
 
 v2.6.8 - 21-May-2021
+- Improvement: Added the dark and light mode support for the Elementor popup.
 - Improvement: Added retry import option for few cases.
 - Improvement: Improved error messages for AJAX requests.
 
