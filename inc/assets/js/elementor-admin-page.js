@@ -8,7 +8,7 @@
  *
  * @since 1.0.0
  */
- var AstraSitesAjaxQueue = (function () {
+var AstraSitesAjaxQueue = (function () {
 
 	var requests = [];
 
@@ -166,9 +166,12 @@
 							$elscope.find('.astra-sites-content-wrap').before(header_template);
 						}
 
+						AstraElementorSitesAdmin._populate_color_filters();
+
 						$elscope.find('.astra-blocks-category').select2();
 
 						$elscope.find('.astra-blocks-category').on('select2:select', AstraElementorSitesAdmin._categoryChange);
+						$elscope.find('#elementor-template-block-color-filter select').on('change', AstraElementorSitesAdmin._blockColorChange);
 
 						$(elementor.$previewContents[0].body).on("click", ".elementor-add-ast-site-button", AstraElementorSitesAdmin._open);
 
@@ -216,6 +219,30 @@
 
 		},
 
+		_populate_color_filters: function() {
+
+			if( ! Object.keys( astraElementorSites.astra_blocks ).length ) {
+				return;
+			}
+
+			let template = wp.template('ast-template-block-color-filters');
+
+			var colorFilters = [];
+
+			for( block_id in astraElementorSites.astra_blocks ) {
+				if( astraElementorSites.astra_blocks[ block_id ]['filter'] && ! colorFilters.includes( astraElementorSites.astra_blocks[ block_id ]['filter'] )) {
+					colorFilters.push( astraElementorSites.astra_blocks[ block_id ]['filter'] );
+				}
+			}
+
+			if( colorFilters.length <= 1 ) {
+				return;
+			}
+
+			$( '#elementor-template-block-color-filter' ).show().html( template( colorFilters ) );
+
+		},
+
 		_paginateBlocks: function () {
 			if (AstraElementorSitesAdmin.type == 'blocks') {
 				if (undefined != $elscope.find('.astra-sites-library-template:last').offset()) {
@@ -235,6 +262,11 @@
 
 		_categoryChange: function (event) {
 			AstraElementorSitesAdmin.blockCategory = $(this).val();
+			$elscope.find('#wp-filter-search-input').trigger('keyup');
+		},
+
+		_blockColorChange: function (event) {
+			AstraElementorSitesAdmin.blockColor = $(this).val();
 			$elscope.find('#wp-filter-search-input').trigger('keyup');
 		},
 

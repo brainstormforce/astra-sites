@@ -38,6 +38,7 @@ $suggestion_link = astra_sites_get_suggestion_link();
 								<# } #>
 							</select>
 						</div>
+						<div class="astra-blocks-filter-inner-wrap"  id="elementor-template-block-color-filter" style="display: none;"></div>
 					</div>
 					<div class="ast-sites-template-library-filter-text-wrapper">
 						<label for="elementor-template-library-filter-text" class="elementor-screen-only"><?php esc_html_e( 'Search...', 'astra-sites' ); ?></label>
@@ -79,6 +80,15 @@ $suggestion_link = astra_sites_get_suggestion_link();
 	</div>
 </script>
 
+<script type="text/template" id="tmpl-ast-template-block-color-filters">
+	<select  class="astra-blocks-filter elementor-template-library-filter-select elementor-select2">
+		<option value=""><?php esc_html_e( 'Filter by Color', 'astra-sites' ); ?></option>
+		<# for ( key in data ) { #>
+			<option value="{{data[key]}}">{{data[key]}}</option>
+		<# } #>
+		</select>
+</script>
+
 <script type="text/template" id="tmpl-ast-template-modal__header-back">
 	<div class="dialog-lightbox-back"><span class="dialog-lightbox-back-text"><?php esc_html_e( 'Back to Pages', 'astra-sites' ); ?></span></div>
 </script>
@@ -106,7 +116,7 @@ $suggestion_link = astra_sites_get_suggestion_link();
 			</div>
 			<div class="elementor-templates-modal__header__menu-area astra-sites-step-1-wrap ast-sites-modal__options">
 				<div class="elementor-template-library-header-menu">
-					<div class="elementor-template-library-menu-item elementor-active" data-template-source="remote" data-template-type="pages"><span class="ast-icon-file"></span><?php esc_html_e( 'Pages', 'astra-sites' ); ?></div>		
+					<div class="elementor-template-library-menu-item elementor-active" data-template-source="remote" data-template-type="pages"><span class="ast-icon-file"></span><?php esc_html_e( 'Pages', 'astra-sites' ); ?></div>
 					<div class="elementor-template-library-menu-item" data-template-source="remote" data-template-type="blocks"><span class="ast-icon-layers"></span><?php esc_html_e( 'Blocks', 'astra-sites' ); ?></div>
 				</div>
 			</div>
@@ -370,7 +380,7 @@ $suggestion_link = astra_sites_get_suggestion_link();
 
 			var type_class = ' site-type-' + site_type;
 			count++;
-	#> 
+	#>
 		<div class="theme astra-theme site-single publish page-builder-elementor {{type_class}}" data-template-id={{ind}} data-site-id={{site_id}}>
 			<div class="inner">
 				<span class="site-preview" data-href="" data-title={{title2}}>
