@@ -399,8 +399,9 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 
 				wp_send_json_error(
 					array(
-						'message' => $request->get_error_message(),
-						'code'    => 'WP_Error',
+						'message'       => $request->get_error_message(),
+						'code'          => 'WP_Error',
+						'response_code' => $wp_error_code,
 					)
 				);
 			}
@@ -413,7 +414,8 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				wp_send_json_success( $demo_data );
 			}
 
-			$message = wp_remote_retrieve_body( $request );
+			$message       = wp_remote_retrieve_body( $request );
+			$response_code = $code;
 
 			if ( 200 !== $code && is_array( $demo_data ) && isset( $demo_data['code'] ) ) {
 				$message = $demo_data['message'];
@@ -432,8 +434,9 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 
 			wp_send_json_error(
 				array(
-					'message' => $message,
-					'code'    => $code,
+					'message'       => $message,
+					'code'          => $code,
+					'response_code' => $response_code,
 				)
 			);
 		}
@@ -1352,7 +1355,14 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 					'first_import_complete'              => get_option( 'astra_sites_import_complete' ),
 					'server_import_primary_error'        => __( 'Looks like the template you are importing is temporarily not available.', 'astra-sites' ),
 					'client_import_primary_error'        => __( 'We could not start the import process and this is the message from WordPress:', 'astra-sites' ),
-					'cloudflare_import_primary_error'    => __( 'There was an error connecting to the Starter Templates API from Cloudflare.', 'astra-sites' ),
+					'cloudflare_import_primary_error'    => __( 'There was an error connecting to the Starter Templates API.', 'astra-sites' ),
+					'xml_import_interrupted_primary'     => __( 'There was an error while importing the content.', 'astra-sites' ),
+					'xml_import_interrupted_secondary'   => __( 'To import content, WordPress needs to store XML file in /wp-content/ folder. Please get in touch with your hosting provider.', 'astra-sites' ),
+					'xml_import_interrupted_error'       => __( 'Looks like your host probably could not store XML file in /wp-content/ folder.', 'astra-sites' ),
+					/* translators: %s HTML tags */
+					'ajax_request_failed_primary'        => sprintf( __( '%1$sWe could not start the import process due to failed AJAX request and this is the message from WordPress:%2$s', 'astra-sites' ), '<p>', '</p>' ),
+					/* translators: %s URL to document. */
+					'ajax_request_failed_secondary'      => sprintf( __( '%1$sRead <a href="%2$s" target="_blank">article</a> to resolve the issue and continue importing template.%3$s', 'astra-sites' ), '<p>', esc_url( 'https://wpastra.com/docs/internal-server-error-starter-templates/', '</p>' ) ),
 				)
 			);
 

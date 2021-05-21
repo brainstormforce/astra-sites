@@ -2098,6 +2098,13 @@ body.loading-content .select-page-builder {
     transform: translate(-60%, -60%);
 }
 
+.ast-retry-text {
+    position: absolute;
+    left: 50%;
+    top: 60%;
+    transform: translate(-50%, -50%);
+}
+
 .astra-previewing-single-pages #wpbody-content {
     position: fixed;
 }

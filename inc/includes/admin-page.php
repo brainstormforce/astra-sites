@@ -650,7 +650,7 @@ $site_import_options = apply_filters(
 <script type="text/template" id="tmpl-astra-sites-request-failed-user">
 	<p>{{{ data.primary }}}</p>
 	<# if ( 'Cloudflare' === data.error.code ) { #>
-		<div class="current-importing-status">{{{ data.error.message }}}</div>
+		<div class="current-importing-status">{{{ data.error.message + ' (' + data.error.code + ')' }}}</div>
 	<# } else { #>
 		<div class="current-importing-status">{{{ data.error.code }}} - {{{ data.error.message }}}</div>
 	<# } #>
@@ -663,10 +663,17 @@ $site_import_options = apply_filters(
 	</p>
 	<# } else if ( 'Cloudflare' === data.error.code ) { #>
 	<p>
-		<?php
-		/* translators: %s doc link. */
-		printf( __( 'Please report this error <a href="%s" target="_blank">here</a> so we can fix it.', 'astra-sites' ), 'https://wpastra.com/support/open-a-ticket/' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
-		?>
+		<# if ( '522' == data.error.response_code ) { #>
+			<?php
+			/* translators: %s doc link. */
+			printf( __( 'Please <a class="ast-try-again" href="">click here and try again</a>. If this still does not work after few attempts, please report it <a href="%s" target="_blank">here</a>.', 'astra-sites' ), 'https://wpastra.com/support/open-a-ticket/' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			?>
+		<# } else { #>
+			<?php
+			/* translators: %s doc link. */
+			printf( __( 'Please report this error <a href="%s" target="_blank">here</a> so we can fix it.', 'astra-sites' ), 'https://wpastra.com/support/open-a-ticket/' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			?>
+		<# } #>
 	</p>
 	<# } else { #>
 	<p>

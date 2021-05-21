@@ -62,6 +62,11 @@
     margin-right: 10px;
 }
 
+#ast-sites-modal .astra-blocks-filter {
+    border-radius: 3px;
+}
+
+#ast-sites-modal .astra-blocks-filter,
 #ast-sites-modal .elementor-template-library-order-input {
     background: #fff;
     padding-left: 5px;
@@ -1195,6 +1200,11 @@
 
 #ast-sites-modal .position-left-last {
     margin-right: auto;
+}
+
+#elementor-template-block-color-filter select,
+#elementor-template-block-color-filter option {
+    text-transform: capitalize;
 }
 
 @media (max-width: 768px) {
