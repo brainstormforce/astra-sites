@@ -1,6 +1,6 @@
 {
   "name": "astra-sites",
-  "version": "2.6.8",
+  "version": "2.6.10",
   "main": "Gruntfile.js",
   "author": "Brainstorm Force",
   "scripts": {
