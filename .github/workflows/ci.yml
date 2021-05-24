@@ -1,4 +1,4 @@
-name: CI
+name: Code Analysis
 
 # Run the deployment only when code is committed to the branch.
 on:

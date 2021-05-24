@@ -1,4 +1,4 @@
-name: Code Analysis
+name: Syntax Check
 
 # Run the deployment only when code is committed to the branch.
 on:
@@ -14,7 +14,7 @@ jobs:
 
     strategy:
       matrix:
-        node: [5.6, 7.4, 8.0]
+        node: [7.4, 8.0]
 
     steps:
     - name: Checkout
