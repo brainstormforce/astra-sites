@@ -6,6 +6,7 @@ on:
     branches:
       - master
       - next-release
+      - setup-phpstan
 
 jobs:
   lint-and-audit:
