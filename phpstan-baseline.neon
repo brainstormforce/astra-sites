@@ -1,0 +1,487 @@
+parameters:
+	ignoreErrors:
+		-
+			message: "#^Call to static method get_instance\\(\\) on an unknown class BSF_Analytics_Loader\\.$#"
+			count: 1
+			path: astra-sites.php
+
+		-
+			message: "#^Call to static method add_notice\\(\\) on an unknown class Astra_Notices\\.$#"
+			count: 1
+			path: classes/class-astra-sites-admin.php
+
+		-
+			message: "#^Call to function is_null\\(\\) with bool will always evaluate to false\\.$#"
+			count: 1
+			path: inc/classes/batch-import/class-astra-sites-batch-site-import.php
+
+		-
+			message: "#^Call to function is_wp_error\\(\\) with array will always evaluate to false\\.$#"
+			count: 1
+			path: inc/classes/batch-import/class-astra-sites-batch-site-import.php
+
+		-
+			message: "#^Call to method add_menu\\(\\) on an unknown class instance\\.$#"
+			count: 1
+			path: inc/classes/batch-import/class-astra-sites-batch-site-import.php
+
+		-
+			message: "#^Call to static method instance\\(\\) on an unknown class Astra_WXR_Importer\\.$#"
+			count: 1
+			path: inc/classes/batch-import/class-astra-sites-batch-site-import.php
+
+		-
+			message: "#^Cannot access property \\$download_link on array\\|object\\.$#"
+			count: 1
+			path: inc/classes/batch-import/class-astra-sites-batch-site-import.php
+
+		-
+			message: "#^Cannot access property \\$name on array\\|object\\.$#"
+			count: 1
+			path: inc/classes/batch-import/class-astra-sites-batch-site-import.php
+
+		-
+			message: "#^Default value of the parameter \\#1 \\$admin_bar \\(string\\) of method Astra_Sites_Batch_Site_Import\\:\\:admin_bar_menu_item\\(\\) is incompatible with type instance\\.$#"
+			count: 1
+			path: inc/classes/batch-import/class-astra-sites-batch-site-import.php
+
+		-
+			message: "#^Method Astra_Sites_Batch_Site_Import\\:\\:get_site_data\\(\\) should return array but returns object\\.$#"
+			count: 1
+			path: inc/classes/batch-import/class-astra-sites-batch-site-import.php
+
+		-
+			message: "#^Method Astra_Sites_Batch_Site_Import\\:\\:import_customizer_settings\\(\\) invoked with 1 parameter, 0 required\\.$#"
+			count: 1
+			path: inc/classes/batch-import/class-astra-sites-batch-site-import.php
+
+		-
+			message: "#^Method Astra_Sites_Batch_Site_Import\\:\\:import_end\\(\\) invoked with 1 parameter, 0 required\\.$#"
+			count: 1
+			path: inc/classes/batch-import/class-astra-sites-batch-site-import.php
+
+		-
+			message: "#^Method Astra_Sites_Batch_Site_Import\\:\\:import_flows_and_steps\\(\\) invoked with 1 parameter, 0 required\\.$#"
+			count: 1
+			path: inc/classes/batch-import/class-astra-sites-batch-site-import.php
+
+		-
+			message: "#^Method Astra_Sites_Batch_Site_Import\\:\\:import_site_options\\(\\) invoked with 1 parameter, 0 required\\.$#"
+			count: 1
+			path: inc/classes/batch-import/class-astra-sites-batch-site-import.php
+
+		-
+			message: "#^Method Astra_Sites_Batch_Site_Import\\:\\:import_widgets\\(\\) invoked with 1 parameter, 0 required\\.$#"
+			count: 1
+			path: inc/classes/batch-import/class-astra-sites-batch-site-import.php
+
+		-
+			message: "#^Method Astra_Sites_Batch_Site_Import\\:\\:import_wp_forms\\(\\) invoked with 1 parameter, 0 required\\.$#"
+			count: 1
+			path: inc/classes/batch-import/class-astra-sites-batch-site-import.php
+
+		-
+			message: "#^Method Astra_Sites_Batch_Site_Import\\:\\:import_xml\\(\\) invoked with 1 parameter, 0 required\\.$#"
+			count: 1
+			path: inc/classes/batch-import/class-astra-sites-batch-site-import.php
+
+		-
+			message: "#^Method Astra_Sites_Batch_Site_Import\\:\\:install_required_plugins\\(\\) invoked with 1 parameter, 0 required\\.$#"
+			count: 1
+			path: inc/classes/batch-import/class-astra-sites-batch-site-import.php
+
+		-
+			message: "#^Parameter \\$admin_bar of method Astra_Sites_Batch_Site_Import\\:\\:admin_bar_menu_item\\(\\) has invalid typehint type instance\\.$#"
+			count: 1
+			path: inc/classes/batch-import/class-astra-sites-batch-site-import.php
+
+		-
+			message: "#^Variable \\$site_id in isset\\(\\) always exists and is not nullable\\.$#"
+			count: 1
+			path: inc/classes/batch-import/class-astra-sites-batch-site-import.php
+
+		-
+			message: "#^Call to static method generate_random_string\\(\\) on an unknown class Elementor\\\\Utils\\.$#"
+			count: 3
+			path: inc/classes/class-astra-sites-elementor-images.php
+
+		-
+			message: "#^Method Astra_Sites_Importer_Log\\:\\:get_log_file\\(\\) should return string but returns object\\.$#"
+			count: 1
+			path: inc/classes/class-astra-sites-importer-log.php
+
+		-
+			message: "#^Method Astra_Sites_Importer_Log\\:\\:has_file_read_write\\(\\) should return null but empty return statement found\\.$#"
+			count: 1
+			path: inc/classes/class-astra-sites-importer-log.php
+
+		-
+			message: "#^Method Astra_Sites_Importer_Log\\:\\:has_file_read_write\\(\\) should return null but return statement is missing\\.$#"
+			count: 1
+			path: inc/classes/class-astra-sites-importer-log.php
+
+		-
+			message: "#^Static property Astra_Sites_Importer_Log\\:\\:\\$log_file \\(object\\) does not accept string\\.$#"
+			count: 1
+			path: inc/classes/class-astra-sites-importer-log.php
+
+		-
+			message: "#^Call to function is_int\\(\\) with string will always evaluate to false\\.$#"
+			count: 1
+			path: inc/classes/class-astra-sites-importer.php
+
+		-
+			message: "#^Call to static method delete_asset_cache_for_all_posts\\(\\) on an unknown class FLBuilderModel\\.$#"
+			count: 1
+			path: inc/classes/class-astra-sites-importer.php
+
+		-
+			message: "#^Call to static method get_instance\\(\\) on an unknown class CartFlows_Importer\\.$#"
+			count: 1
+			path: inc/classes/class-astra-sites-importer.php
+
+		-
+			message: "#^Call to static method instance\\(\\) on an unknown class Astra_WXR_Importer\\.$#"
+			count: 2
+			path: inc/classes/class-astra-sites-importer.php
+
+		-
+			message: "#^Call to static method refresh_assets\\(\\) on an unknown class Astra_Minify\\.$#"
+			count: 1
+			path: inc/classes/class-astra-sites-importer.php
+
+		-
+			message: "#^Function update_site_option invoked with 3 parameters, 2 required\\.$#"
+			count: 1
+			path: inc/classes/class-astra-sites-importer.php
+
+		-
+			message: "#^Function wpforms_encode not found\\.$#"
+			count: 1
+			path: inc/classes/class-astra-sites-importer.php
+
+		-
+			message: "#^Method Astra_Sites_Importer\\:\\:get_single_demo\\(\\) should return array but returns WP_Error\\.$#"
+			count: 2
+			path: inc/classes/class-astra-sites-importer.php
+
+		-
+			message: "#^Variable \\$wxr_url in isset\\(\\) always exists and is not nullable\\.$#"
+			count: 1
+			path: inc/classes/class-astra-sites-importer.php
+
+		-
+			message: "#^Call to static method get_whitelabel_string\\(\\) on an unknown class Astra_Ext_White_Label_Markup\\.$#"
+			count: 3
+			path: inc/classes/class-astra-sites-page.php
+
+		-
+			message: "#^Method Astra_Sites_Page\\:\\:get_page_builder_image\\(\\) should return array but returns string\\.$#"
+			count: 1
+			path: inc/classes/class-astra-sites-page.php
+
+		-
+			message: "#^Property Astra_Sites_Page\\:\\:\\$instance has unknown class instance as its type\\.$#"
+			count: 1
+			path: inc/classes/class-astra-sites-page.php
+
+		-
+			message: "#^Static property Astra_Sites_Page\\:\\:\\$instance \\(instance\\) does not accept Astra_Sites_Page\\.$#"
+			count: 1
+			path: inc/classes/class-astra-sites-page.php
+
+		-
+			message: "#^Variable \\$count might not be defined\\.$#"
+			count: 3
+			path: inc/classes/class-astra-sites-page.php
+
+		-
+			message: "#^Variable \\$name might not be defined\\.$#"
+			count: 1
+			path: inc/classes/class-astra-sites-page.php
+
+		-
+			message: "#^Variable \\$seconds might not be defined\\.$#"
+			count: 1
+			path: inc/classes/class-astra-sites-page.php
+
+		-
+			message: "#^Call to static method get_white_label\\(\\) on an unknown class Astra_Ext_White_Label_Markup\\.$#"
+			count: 1
+			path: inc/classes/class-astra-sites-white-label.php
+
+		-
+			message: "#^Call to static method get_whitelabel_string\\(\\) on an unknown class Astra_Ext_White_Label_Markup\\.$#"
+			count: 10
+			path: inc/classes/class-astra-sites-white-label.php
+
+		-
+			message: "#^Method Astra_Sites_White_Label\\:\\:is_white_labeled\\(\\) should return string but returns false\\.$#"
+			count: 1
+			path: inc/classes/class-astra-sites-white-label.php
+
+		-
+			message: "#^Method Astra_Sites_White_Label\\:\\:is_white_labeled\\(\\) should return string but returns true\\.$#"
+			count: 1
+			path: inc/classes/class-astra-sites-white-label.php
+
+		-
+			message: "#^Binary operation \"\\.\" between 'astra\\-sites\\-term\\-' and array results in an error\\.$#"
+			count: 2
+			path: inc/classes/class-astra-sites-wp-cli.php
+
+		-
+			message: "#^Call to function is_wp_error\\(\\) with array will always evaluate to false\\.$#"
+			count: 1
+			path: inc/classes/class-astra-sites-wp-cli.php
+
+		-
+			message: "#^Call to static method bsf_is_active_license\\(\\) on an unknown class BSF_License_Manager\\.$#"
+			count: 1
+			path: inc/classes/class-astra-sites-wp-cli.php
+
+		-
+			message: "#^Call to static method instance\\(\\) on an unknown class Astra_WXR_Importer\\.$#"
+			count: 1
+			path: inc/classes/class-astra-sites-wp-cli.php
+
+		-
+			message: "#^Default value of the parameter \\#1 \\$term_slug \\(string\\) of method Astra_Sites_WP_CLI\\:\\:get_terms\\(\\) is incompatible with type array\\.$#"
+			count: 1
+			path: inc/classes/class-astra-sites-wp-cli.php
+
+		-
+			message: "#^Default value of the parameter \\#3 \\$force \\(false\\) of method Astra_Sites_WP_CLI\\:\\:get_terms\\(\\) is incompatible with type string\\.$#"
+			count: 1
+			path: inc/classes/class-astra-sites-wp-cli.php
+
+		-
+			message: "#^PHPDoc tag @return has invalid value \\(\\$array            Term response\\.\\)\\: Unexpected token \"\\$array\", expected type at offset 234$#"
+			count: 1
+			path: inc/classes/class-astra-sites-wp-cli.php
+
+		-
+			message: "#^Return typehint of function astra_sites_get_suggestion_link\\(\\) has invalid type suggestion\\.$#"
+			count: 1
+			path: inc/classes/functions.php
+
+		-
+			message: "#^Access to an undefined property object\\:\\:\\$type\\.$#"
+			count: 1
+			path: inc/importers/batch-processing/class-astra-sites-batch-processing-beaver-builder.php
+
+		-
+			message: "#^Call to static method delete_asset_cache_for_all_posts\\(\\) on an unknown class FLBuilderModel\\.$#"
+			count: 1
+			path: inc/importers/batch-processing/class-astra-sites-batch-processing-beaver-builder.php
+
+		-
+			message: "#^Call to static method get_attachment_data\\(\\) on an unknown class FLBuilderPhoto\\.$#"
+			count: 1
+			path: inc/importers/batch-processing/class-astra-sites-batch-processing-beaver-builder.php
+
+		-
+			message: "#^Call to static method get_post_types\\(\\) on an unknown class FLBuilderModel\\.$#"
+			count: 1
+			path: inc/importers/batch-processing/class-astra-sites-batch-processing-beaver-builder.php
+
+		-
+			message: "#^Result of && is always false\\.$#"
+			count: 1
+			path: inc/importers/batch-processing/class-astra-sites-batch-processing-beaver-builder.php
+
+		-
+			message: "#^Call to static method get\\(\\) on an unknown class Brizy_Editor_Post\\.$#"
+			count: 1
+			path: inc/importers/batch-processing/class-astra-sites-batch-processing-brizy.php
+
+		-
+			message: "#^Call to static method instance\\(\\) on an unknown class Brizy_Editor_Storage_Common\\.$#"
+			count: 1
+			path: inc/importers/batch-processing/class-astra-sites-batch-processing-brizy.php
+
+		-
+			message: "#^Result of && is always false\\.$#"
+			count: 1
+			path: inc/importers/batch-processing/class-astra-sites-batch-processing-brizy.php
+
+		-
+			message: "#^Call to function is_wp_error\\(\\) with array\\|WP_Term\\|false will always evaluate to false\\.$#"
+			count: 1
+			path: inc/importers/batch-processing/class-astra-sites-batch-processing-gutenberg.php
+
+		-
+			message: "#^Method Astra_Sites_Batch_Processing_Gutenberg\\:\\:get_content\\(\\) should return array but returns string\\.$#"
+			count: 2
+			path: inc/importers/batch-processing/class-astra-sites-batch-processing-gutenberg.php
+
+		-
+			message: "#^Result of && is always false\\.$#"
+			count: 1
+			path: inc/importers/batch-processing/class-astra-sites-batch-processing-gutenberg.php
+
+		-
+			message: "#^Function update_site_option invoked with 3 parameters, 2 required\\.$#"
+			count: 20
+			path: inc/importers/batch-processing/class-astra-sites-batch-processing-importer.php
+
+		-
+			message: "#^Method Astra_Sites_Batch_Processing_Misc\\:\\:fix_nav_menus\\(\\) should return object but empty return statement found\\.$#"
+			count: 3
+			path: inc/importers/batch-processing/class-astra-sites-batch-processing-misc.php
+
+		-
+			message: "#^Method Astra_Sites_Batch_Processing_Misc\\:\\:fix_nav_menus\\(\\) should return object but return statement is missing\\.$#"
+			count: 1
+			path: inc/importers/batch-processing/class-astra-sites-batch-processing-misc.php
+
+		-
+			message: "#^Method Astra_Sites_Batch_Processing_Misc\\:\\:get_menu_post_ids\\(\\) should return array but returns null\\.$#"
+			count: 1
+			path: inc/importers/batch-processing/class-astra-sites-batch-processing-misc.php
+
+		-
+			message: "#^Call to static method instance\\(\\) on an unknown class Astra_WXR_Importer\\.$#"
+			count: 1
+			path: inc/importers/batch-processing/helpers/class-astra-sites-image-importer.php
+
+		-
+			message: "#^Method Astra_Sites_Image_Importer\\:\\:get_saved_image\\(\\) should return string but returns array\\<string, array\\<string, mixed\\>\\|true\\>\\.$#"
+			count: 1
+			path: inc/importers/batch-processing/helpers/class-astra-sites-image-importer.php
+
+		-
+			message: "#^Method Astra_Sites_Image_Importer\\:\\:get_saved_image\\(\\) should return string but returns array\\<string, string\\|false\\>\\.$#"
+			count: 1
+			path: inc/importers/batch-processing/helpers/class-astra-sites-image-importer.php
+
+		-
+			message: "#^Method Astra_Sites_Image_Importer\\:\\:get_saved_image\\(\\) should return string but returns array\\<string, string\\|true\\>\\.$#"
+			count: 1
+			path: inc/importers/batch-processing/helpers/class-astra-sites-image-importer.php
+
+		-
+			message: "#^Offset 'attachment' does not exist on string\\.$#"
+			count: 2
+			path: inc/importers/batch-processing/helpers/class-astra-sites-image-importer.php
+
+		-
+			message: "#^Offset 'status' does not exist on string\\.$#"
+			count: 1
+			path: inc/importers/batch-processing/helpers/class-astra-sites-image-importer.php
+
+		-
+			message: "#^Offset 'url' does not exist on string\\.$#"
+			count: 4
+			path: inc/importers/batch-processing/helpers/class-astra-sites-image-importer.php
+
+		-
+			message: "#^Function update_site_option invoked with 3 parameters, 2 required\\.$#"
+			count: 8
+			path: inc/importers/batch-processing/helpers/class-wp-background-process-astra-site-importer.php
+
+		-
+			message: "#^Function update_site_option invoked with 3 parameters, 2 required\\.$#"
+			count: 2
+			path: inc/importers/batch-processing/helpers/class-wp-background-process.php
+
+		-
+			message: "#^PHPDoc tag @extends has invalid value \\(WP_Async_Request\\)\\: Unexpected token \"\\\\n\\\\t \", expected '\\<' at offset 93$#"
+			count: 1
+			path: inc/importers/batch-processing/helpers/class-wp-background-process.php
+
+		-
+			message: "#^Strict comparison using \\=\\=\\= between \\-1 and string will always evaluate to false\\.$#"
+			count: 1
+			path: inc/importers/batch-processing/helpers/class-wp-background-process.php
+
+		-
+			message: "#^Call to static method instance\\(\\) on an unknown class Astra_WXR_Importer\\.$#"
+			count: 1
+			path: inc/importers/class-astra-site-options-import.php
+
+		-
+			message: "#^Variable \\$cats in isset\\(\\) always exists and is not nullable\\.$#"
+			count: 1
+			path: inc/importers/class-astra-site-options-import.php
+
+		-
+			message: "#^Variable \\$nav_menu_locations in isset\\(\\) always exists and is not nullable\\.$#"
+			count: 1
+			path: inc/importers/class-astra-site-options-import.php
+
+		-
+			message: "#^Variable \\$options in isset\\(\\) always exists and is not nullable\\.$#"
+			count: 1
+			path: inc/importers/class-astra-site-options-import.php
+
+		-
+			message: "#^Argument of an invalid type stdClass supplied for foreach, only iterables are supported\\.$#"
+			count: 1
+			path: inc/importers/class-astra-sites-helper.php
+
+		-
+			message: "#^Cannot access property \\$height on array\\.$#"
+			count: 2
+			path: inc/importers/class-astra-sites-helper.php
+
+		-
+			message: "#^Cannot access property \\$width on array\\.$#"
+			count: 2
+			path: inc/importers/class-astra-sites-helper.php
+
+		-
+			message: "#^Method Astra_Sites_Helper\\:\\:get_svg_dimensions\\(\\) should return array but returns stdClass\\.$#"
+			count: 1
+			path: inc/importers/class-astra-sites-helper.php
+
+		-
+			message: "#^Method Astra_Sites_Helper\\:\\:sideload_image\\(\\) should return array but returns WP_Error\\.$#"
+			count: 2
+			path: inc/importers/class-astra-sites-helper.php
+
+		-
+			message: "#^Method Astra_Sites_Helper\\:\\:sideload_image\\(\\) should return array but returns stdClass\\.$#"
+			count: 1
+			path: inc/importers/class-astra-sites-helper.php
+
+		-
+			message: "#^Variable \\$nav_menus in isset\\(\\) always exists and is not nullable\\.$#"
+			count: 1
+			path: inc/importers/class-astra-sites-helper.php
+
+		-
+			message: "#^Negated boolean expression is always true\\.$#"
+			count: 1
+			path: inc/importers/class-astra-widget-importer.php
+
+		-
+			message: "#^Variable \\$widget_message might not be defined\\.$#"
+			count: 1
+			path: inc/importers/class-astra-widget-importer.php
+
+		-
+			message: "#^Variable \\$widget_message_type might not be defined\\.$#"
+			count: 1
+			path: inc/importers/class-astra-widget-importer.php
+
+		-
+			message: "#^Variable \\$global_cpt_meta might not be defined\\.$#"
+			count: 1
+			path: inc/includes/admin-page.php
+
+		-
+			message: "#^Call to static method branding_key_to_constant\\(\\) on an unknown class Astra_Ext_White_Label_Markup\\.$#"
+			count: 2
+			path: inc/includes/white-label.php
+
+		-
+			message: "#^Call to static method get_whitelabel_string\\(\\) on an unknown class Astra_Ext_White_Label_Markup\\.$#"
+			count: 2
+			path: inc/includes/white-label.php
+
+		-
+			message: "#^Variable \\$plugin_name might not be defined\\.$#"
+			count: 2
+			path: inc/includes/white-label.php
+
