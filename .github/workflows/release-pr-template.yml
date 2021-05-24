@@ -34,10 +34,9 @@ jobs:
             - [ ] Check if astra-notice library is updated to latest
             - [ ] Run to update packages        : `npm audit fix`
             - [ ] Run to produce rtl files : `grunt rtl`
-            - [ ] Run to update the Template Library    : `grunt google-fonts`
+            - [ ] Run to update the Template Library    : `wp astra-sites sync --force`
             - [ ] PHPCS - vendor/bin/phpcs
             - [ ] Run to update version number  : `grunt version-bump --ver=<version-number>`
-            - [ ] Check the Background Process function version
             - [ ] Update - Tested Upto - readme.txt
             - [ ] Update readme.txt file and then run: `grunt readme`
             - [ ] Generate POT file             : `grunt i18n`
