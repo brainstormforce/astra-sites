@@ -1,0 +1,50 @@
+name: PR update
+
+on:
+  pull_request:
+    types: [ labeled ]
+
+jobs:
+  update_pr:
+    name: PR update
+    if: ${{ github.event.label.name == 'Release PR checklist' }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check Branch
+        id: check-branch
+        run: |
+          if [[ ${{ github.base_ref }} == master || ${{ github.base_ref }} == release-candidate || ${{ github.base_ref }} == next-release ]]; then
+              echo ::set-output name=match::true
+          fi
+      - uses: tzkhan/pr-update-action@v2
+        if: steps.check-branch.outputs.match == 'true'
+        with:
+          repo-token: "${{ secrets.GITHUB_TOKEN }}"
+          base-branch-regex: '[A-Za-z\d-_.\\/]+'
+          head-branch-regex: '[A-Za-z\d-_.\\/]+'
+          title-template: 'Build: Release PR'
+          body-template: |
+            ### Description
+            - Final release PR. Please check all the checklist below before merging.
+            ---
+            ### Checklist:
+            - [ ] Finalize readme.txt
+            - [ ] Add doc links in the readme.txt
+            - [ ] Check if Starter Templates Blocks library is updated to latest.
+            - [ ] Check if astra-notice library is updated to latest
+            - [ ] Run to update packages        : `npm audit fix`
+            - [ ] Run to produce rtl files : `grunt rtl`
+            - [ ] Run to update the Template Library    : `grunt google-fonts`
+            - [ ] PHPCS - vendor/bin/phpcs
+            - [ ] Run to update version number  : `grunt version-bump --ver=<version-number>`
+            - [ ] Check the Background Process function version
+            - [ ] Update - Tested Upto - readme.txt
+            - [ ] Update readme.txt file and then run: `grunt readme`
+            - [ ] Generate POT file             : `grunt i18n`
+            - [ ] Add draft Release notes on github
+            - [ ] Add draft changelogs to wpastra.com
+            - [ ] Open PR to backport branch to `next-release`
+            ---
+          body-update-action: 'prefix'
+          title-update-action: 'prefix'
+          body-uppercase-base-match: false
