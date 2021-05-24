@@ -150,7 +150,7 @@ We are open to suggestions and would love to work on topics that our users are l
 ## Changelog ##
 
 v2.6.10 - 24-May-2021
-- Fix: Starter Templates popup opens on by default on every page load on Gutenberg pages.
+- Fix: Starter Templates popup opens by default on every page load on Gutenberg pages.
 
 v2.6.9 - 22-May-2021
 - Fix: PHP Fatal error on 'Getting Started' page.
