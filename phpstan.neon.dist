@@ -1,0 +1,15 @@
+parameters:
+ 	level: 4
+ 	paths:
+ 		- astra-sites.php
+ 		- inc/
+ 		- classes/
+ 	bootstrapFiles:
+ 	excludes_analyse:
+ 	 	- inc/lib/
+ 	 	- inc/classes/compatibility/
+ 	 	- inc/importers/wxr-importer/
+ 	ignoreErrors:
+ 		- '#Variable \$wp_customize might not be defined.#'
+ 		- '#^Function apply_filters invoked with [34567] parameters, 2 required\.$#'
+ 		- '#Constant [a-zA-Z0-9\\_()]+ not found#'

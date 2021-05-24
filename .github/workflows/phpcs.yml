@@ -47,3 +47,6 @@ jobs:
     
     - name: PHP Syntax Errors
       run: if find . -name "*.php" ! -path "./vendor/*" ! -path "./admin/bsf-core/*" -exec php -l {} \; | grep "Errors parsing"; then exit 1; fi
+
+    - name: "Static Analysis"
+      run: vendor/bin/phpstan analyse -c phpstan.neon.dist --memory-limit=256M
