@@ -1801,7 +1801,11 @@ body.loading-content .select-page-builder {
 
 .site-action-buttons-wrap {
     display: flex;
-    justify-content: space-between;
+    justify-content: center;
+}
+
+.site-action-buttons-wrap .site-preview-button {
+	margin-right: 5px;
 }
 
 .single-site-pages-header {
@@ -1869,7 +1873,7 @@ body.loading-content .select-page-builder {
 }
 
 .site-action-buttons-wrap .dashicons {
-    vertical-align: sub;
+    vertical-align: middle;
     font-size: 1rem;
     margin-left: .2em;
 }
