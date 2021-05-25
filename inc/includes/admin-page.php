@@ -410,13 +410,13 @@ $site_import_options = apply_filters(
 	<p>
 		<?php
 			/* translators: %s is pricing page link */
-			printf( __( 'This is a premium template available with Essential Bundle and Growth Bundle. You can purchase one of the bundles from <a href="%s" target="_blank">here</a> to get access to this premium template.', 'astra-sites' ), 'https://wpastra.com/pricing/' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			printf( __( 'This is a premium template available with Essential and Growth Bundle. <a href="%s" target="_blank">Get access</a> to this premium template.', 'astra-sites' ), 'https://wpastra.com/pricing/' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		?>
 	</p>
 	<p>
 		<?php
 			/* translators: %s is article link */
-			printf( __( 'If you already own Essential Bundle or Growth Bundle, read an article to know how you can <a href="%s" target="_blank">import a premium website demo</a>.', 'astra-sites' ), esc_url( 'https://wpastra.com/docs/starter-templates-complete-site/' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			printf( __( 'Already own an Essential or Growth Bundle? <a href="%s" target="_blank">Know how</a> to import premium templates.', 'astra-sites' ), esc_url( 'https://wpastra.com/docs/starter-templates-complete-site/' ) ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		?>
 	</p>
 </script>
