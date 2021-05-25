@@ -571,8 +571,7 @@ $site_import_options = apply_filters(
 							<span class="dashicons dashicons-editor-help astra-sites-invalid-mini-agency-license-button"></span>
 						<# } else if( 'free' !== data['astra-sites-type'] && ! astraSitesVars.license_status ) { #>
 							<# if( ! astraSitesVars.isPro ) { #>
-								<a class="button button-hero button-primary " href="{{astraSitesVars.getProURL}}" target="_blank">{{astraSitesVars.getProText}}<i class="dashicons dashicons-external"></i></a>
-								<span class="dashicons dashicons-editor-help astra-sites-get-agency-bundle-button"></span>
+								<a class="button button-hero button-primary astra-sites-get-agency-bundle-button" target="_blank">{{astraSitesVars.getProText}}<i class="dashicons dashicons-external"></i></a>
 							<# } else { #>
 								<span class="button button-hero button-primary astra-sites-activate-license-button">{{astraSitesVars.getProText}}</span>
 							<# } #>
