@@ -101,7 +101,7 @@ if ( ! class_exists( 'BSF_Quick_Links' ) ) {
 				</div>
 				<a href="#" class="bsf-quick-link">
 					<div class="quick-link-button-wrap">
-						<span class="dashicons dashicons-admin-links"></span>
+						<img src="<?php echo esc_url( $data['default_logo']['url'] ); ?>">
 						<span>Quick Links</span>
 					</div>
 				</a>
