@@ -12,8 +12,6 @@
 .bsf-quick-link{
     right: 25px;
     bottom: 40px;
-    background-color: #fff;
-    border-radius: 50%;
 }
 .bsf-quick-link-wrap a {
     text-decoration: none;
@@ -22,24 +20,6 @@
     text-decoration: none;
     box-shadow: unset;
     outline: unset;
-}
-label.bsf-quick-link-title {
-    text-decoration: none;
-    position: fixed;
-    right: 8.5em;
-    bottom: 4.5em;
-    color: #fff;
-    background: #5C5C5C;
-    white-space: nowrap;
-    padding: 5px 10px;
-    border-radius: 3px;
-    -moz-border-radius: 3px;
-    -webkit-border-radius: 3px;
-    height: 14px;
-    display: none;
-    border: 1px solid #959595;
-    line-height: 1;
-    font-size: 12px;
 }
 .bsf-quick-link img{
     height: 40px;
@@ -113,3 +93,10 @@ label.bsf-quick-link-title {
     transform: scale(0);
 }
 
+.quick-link-button-wrap {
+    background: #fff;
+    padding: 10px;
+    border: 2px solid blue;
+    border-radius: 30px;
+    color: black;
+}
