@@ -173,7 +173,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 						'url'   => 'https://wpastra.com/docs-category/starter-templates/',
 					),
 					array(
-						'label' => __( 'Join our community', 'astra-sites' ),
+						'label' => __( 'Join Facebook Group', 'astra-sites' ),
 						'icon'  => 'dashicons-groups',
 						'url'   => 'https://www.facebook.com/groups/wpastra/',
 					),
