@@ -3096,6 +3096,11 @@ body.loading-content .select-page-builder {
     height: 285px;
 }
 
+.highlighted-note {
+    font-size: 14px;
+    font-weight: 500;
+}
+
 @media screen and (max-width: 768px) {
     .wp-core-ui .astra-sites-result-preview .subscription-actions .button.button-hero {
         height: auto;
