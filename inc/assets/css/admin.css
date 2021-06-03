@@ -1618,7 +1618,8 @@ body.loading-content .select-page-builder {
 .agency-ribbons {
 	color: #000;
 	text-align: center;
-	display: inline-block;
+	display: flex;
+	align-items: center;
 	position: absolute;
 	z-index: 9;
 	top: -7px;
@@ -1629,9 +1630,16 @@ body.loading-content .select-page-builder {
 	right: -7px;
 	border-radius: 2px;
 	line-height: 15px;
-	padding: 5px 9px;
-	background-color: #ffc107;
+	padding: 4px 7px;
+	background-color: #FCAF2A;
 	cursor: default;
+
+}
+
+.premium-crown-icon {
+	height: auto;
+	width: 17px;
+	margin-right: 5px;
 }
 
 .theme-browser .theme:hover .theme-actions,
@@ -3086,6 +3094,11 @@ body.loading-content .select-page-builder {
 
 .import-page .subscription-popup .astra-sites-import-content {
     height: 285px;
+}
+
+.highlighted-note {
+    font-size: 14px;
+    font-weight: 500;
 }
 
 @media screen and (max-width: 768px) {

@@ -102,7 +102,7 @@ if ( ! class_exists( 'BSF_Quick_Links' ) ) {
 				<a href="#" class="bsf-quick-link">
 					<div class="quick-link-button-wrap">
 						<img src="<?php echo esc_url( $data['default_logo']['url'] ); ?>">
-						<span>Quick Links</span>
+						<span><?php esc_html_e( 'Quick Links', 'astra-sites' ); ?></span>
 					</div>
 				</a>
 			</div>

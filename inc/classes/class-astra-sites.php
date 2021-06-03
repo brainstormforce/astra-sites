@@ -158,7 +158,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			$data = array(
 				'default_logo' => array(
 					'title' => __( 'See Quick Links', 'astra-sites' ),
-					'url'   => ASTRA_SITES_URI . 'inc/assets/images/logo.svg',
+					'url'   => ASTRA_SITES_URI . 'inc/assets/images/quick-link-logo.svg',
 				),
 				'links'        => array(
 					array(
