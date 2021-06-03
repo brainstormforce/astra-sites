@@ -250,9 +250,12 @@ if ( ! class_exists( 'Astra_Sites_Importer_Log' ) ) :
 			// Style separator.
 			$separator = PHP_EOL;
 
-			astra_sites_error_log( $content );
+			if ( apply_filters( 'astra_sites_debug_logs', false ) ) {
+				astra_sites_error_log( $content );
 
-			Astra_Sites::get_instance()->get_filesystem()->put_contents( $log_file, $existing_data . $separator . $content, FS_CHMOD_FILE );
+				Astra_Sites::get_instance()->get_filesystem()->put_contents( $log_file, $existing_data . $separator . $content, FS_CHMOD_FILE );
+			}
+
 		}
 
 		/**
