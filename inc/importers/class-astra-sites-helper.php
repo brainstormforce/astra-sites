@@ -312,8 +312,8 @@ if ( ! class_exists( 'Astra_Sites_Helper' ) ) :
 				return array();
 			}
 
-			$image_links  = array();
-			$other_links  = array();
+			$image_links = array();
+			$other_links = array();
 
 			// Extract normal and image links.
 			foreach ( $all_links as $key => $link ) {
