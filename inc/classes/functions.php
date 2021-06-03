@@ -24,7 +24,9 @@ if ( ! function_exists( 'astra_sites_error_log' ) ) :
 				$message = wp_json_encode( $message );
 			}
 
-			error_log( $message ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+			if ( apply_filters( 'astra_sites_debug_logs', false ) ) {
+				error_log( $message ); // phpcs:ignore WordPress.PHP.DevelopmentFunctions.error_log_error_log
+			}
 		}
 	}
 

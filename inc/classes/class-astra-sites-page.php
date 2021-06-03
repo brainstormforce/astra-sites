@@ -69,7 +69,6 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 		 * @param string $classes Space separated class string.
 		 */
 		public function admin_body_class( $classes = '' ) {
-
 			$is_page_builder_screen = isset( $_GET['change-page-builder'] ) ? true : false; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$current_page_builder   = self::get_instance()->get_setting( 'page_builder' );
 

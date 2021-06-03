@@ -1,5 +1,5 @@
 (function($){
-
+    
     $scope = {};
 
     AstraImageCommon = {
@@ -288,8 +288,11 @@
     /**
      * Initialize AstraImageCommon
      */
-    $(function(){
+    $( function(){
+
         AstraImageCommon.init();
+
     });
 
 })(jQuery);
+

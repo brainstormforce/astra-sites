@@ -708,12 +708,11 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		}
 
 		/**
-		 * Import Image.
+		 * Download and save the image in the media library.
 		 *
 		 * @since  2.0.0
 		 */
 		public function create_image() {
-
 			// Verify Nonce.
 			check_ajax_referer( 'astra-sites', '_ajax_nonce' );
 
@@ -721,33 +720,43 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				wp_send_json_error( __( 'You are not allowed to perform this action', 'astra-sites' ) );
 			}
 
-			$url      = $_POST['url'];
-			$name     = $_POST['name'];
-			$photo_id = $_POST['id'];
+			$url      = isset( $_POST['url'] ) ? esc_url_raw( $_POST['url'] ) : false;
+			$name     = isset( $_POST['name'] ) ? sanitize_text_field( $_POST['name'] ) : false;
+			$photo_id = isset( $_POST['id'] ) ? absint( $_POST['id'] ) : 0;
 
-			$saved_images = get_option( 'astra-sites-saved-images', array() );
-
-			$this->wp_upload_url = $this->get_wp_upload_url();
+			if ( false === $url ) {
+				wp_send_json_error( __( 'Need to send URL of the image to be downloaded', 'astra-sites' ) );
+			}
 
 			$image  = '';
 			$result = array();
 
-			if ( '' !== $url ) {
+			$name  = preg_replace( '/\.[^.]+$/', '', $name ) . '-' . $photo_id . '.jpg';
+			$image = $this->create_image_from_url( $url, $name, $photo_id );
 
-				$name  = preg_replace( '/\.[^.]+$/', '', $name ) . '-' . $photo_id . '.jpg';
-				$image = $this->create_image_from_url( $url, $name );
-
-				if ( $image ) {
-
-					$result['attachmentData'] = wp_prepare_attachment_for_js( $image );
-					if ( did_action( 'elementor/loaded' ) ) {
-						$result['data'] = Astra_Sites_Elementor_Images::get_instance()->get_attachment_data( $image );
-					}
-				}
+			if ( is_wp_error( $image ) ) {
+				wp_send_json_error( $image );
 			}
 
-			if ( empty( $saved_images ) || false === $saved_images ) {
-				$saved_images = array();
+			if ( 0 !== $image ) {
+				$result['attachmentData'] = wp_prepare_attachment_for_js( $image );
+				if ( did_action( 'elementor/loaded' ) ) {
+					$result['data'] = Astra_Sites_Elementor_Images::get_instance()->get_attachment_data( $image );
+				}
+			} else {
+				wp_send_json_error( __( 'Could not download the image.', 'astra-sites' ) );
+			}
+
+			// Save downloaded image reference to an option.
+			if ( 0 !== $photo_id ) {
+				$saved_images = get_option( 'astra-sites-saved-images', array() );
+
+				if ( empty( $saved_images ) || false === $saved_images ) {
+					$saved_images = array();
+				}
+
+				$saved_images[] = $photo_id;
+				update_option( 'astra-sites-saved-images', $saved_images, 'no' );
 			}
 
 			$saved_images[] = $photo_id;
@@ -771,47 +780,37 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		 *
 		 * @param String $url URL to pixabay image.
 		 * @param String $name Name to pixabay image.
+		 * @param String $photo_id Photo ID to pixabay image.
 		 * @see http://codex.wordpress.org/Function_Reference/wp_insert_attachment#Example
 		 */
-		public function create_image_from_url( $url, $name ) {
+		public function create_image_from_url( $url, $name, $photo_id ) {
+			$file_array         = array();
+			$file_array['name'] = wp_basename( $name );
 
-			if ( empty( $url ) || empty( $this->wp_upload_url ) ) {
-				return false;
+			// Download file to temp location.
+			$file_array['tmp_name'] = download_url( $url );
+
+			// If error storing temporarily, return the error.
+			if ( is_wp_error( $file_array['tmp_name'] ) ) {
+				return $file_array;
 			}
 
-			$filename = basename( $url );
+			// Do the validation and storage stuff.
+			$id = media_handle_sideload( $file_array, 0, null );
 
-			$upload_file = wp_upload_bits( $name, null, self::get_instance()->get_filesystem()->get_contents( $url ) );
-
-			if ( ! $upload_file['error'] ) {
-
-				$wp_filetype   = wp_check_filetype( $name, null );
-				$attachment    = array(
-					'post_mime_type' => $wp_filetype['type'],
-					'post_parent'    => 0,
-					'post_title'     => preg_replace( '/\.[^.]+$/', '', $name ),
-					'post_content'   => ASTRA_SITES_NAME . ' Image - ' . $name,
-					'post_status'    => 'inherit',
-				);
-				$attachment_id = wp_insert_attachment( $attachment, $upload_file['file'], 0 );
-
-				if ( ! is_wp_error( $attachment_id ) ) {
-
-					require_once ABSPATH . 'wp-admin/includes/image.php';
-					require_once ABSPATH . 'wp-admin/includes/media.php';
-
-					$attachment_data = wp_generate_attachment_metadata( $attachment_id, $upload_file['file'] );
-					wp_update_attachment_metadata( $attachment_id, $attachment_data );
-
-					update_post_meta( $attachment_id, 'astra-images', $_POST['id'] ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
-					update_post_meta( $attachment_id, '_wp_attachment_image_alt', sanitize_text_field( ! empty( $_POST['name'] ) ? $_POST['name'] : '' ) ); // phpcs:ignore WordPress.Security.NonceVerification.Missing
-
-					return $attachment_id;
-				}
+			// If error storing permanently, unlink.
+			if ( is_wp_error( $id ) ) {
+				@unlink( $file_array['tmp_name'] ); // phpcs:ignore WordPress.PHP.NoSilencedErrors.Discouraged
+				return $id;
 			}
 
-			return false;
+			// Store the original attachment source in meta.
+			add_post_meta( $id, '_source_url', $url );
 
+			update_post_meta( $id, 'astra-images', $photo_id );
+			update_post_meta( $id, '_wp_attachment_image_alt', $name );
+
+			return $id;
 		}
 
 		/**
@@ -1071,7 +1070,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		 * @since  1.0.0
 		 */
 		public static function get_api_domain() {
-			return apply_filters( 'astra_sites_api_domain', 'https://websitedemos.net/' );
+			return defined( 'STARTER_TEMPLATES_REMOTE_URL' ) ? STARTER_TEMPLATES_REMOTE_URL : apply_filters( 'astra_sites_api_domain', 'https://websitedemos.net/' );
 		}
 
 		/**
@@ -1102,7 +1101,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 
 			wp_enqueue_script(
 				'astra-sites-images-common',
-				ASTRA_SITES_URI . 'inc/assets/js/dist/common.js',
+				ASTRA_SITES_URI . 'inc/assets/js/common.js',
 				array( 'jquery', 'wp-util' ), // Dependencies, defined above.
 				ASTRA_SITES_VER,
 				true
@@ -1168,7 +1167,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 
 			wp_enqueue_script(
 				'astra-sites-images-script',
-				ASTRA_SITES_URI . 'inc/assets/js/dist/index.js',
+				ASTRA_SITES_URI . 'inc/assets/js/dist/main.js',
 				array( 'wp-blocks', 'wp-i18n', 'wp-element', 'wp-components', 'wp-api-fetch', 'astra-sites-images-common' ), // Dependencies, defined above.
 				ASTRA_SITES_VER,
 				true
@@ -1244,6 +1243,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			// Admin Page.
 			wp_enqueue_style( 'astra-sites-admin', ASTRA_SITES_URI . 'inc/assets/css/admin.css', ASTRA_SITES_VER, true );
 			wp_style_add_data( 'astra-sites-admin', 'rtl', 'replace' );
+
 			wp_enqueue_script( 'astra-sites-admin-page', ASTRA_SITES_URI . 'inc/assets/js/admin-page.js', array( 'jquery', 'wp-util', 'updates', 'jquery-ui-autocomplete', 'astra-sites-api', 'astra-sites-history' ), ASTRA_SITES_VER, true );
 
 			$data = $this->get_local_vars();
@@ -1657,7 +1657,6 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 
 			// Batch Import.
 			require_once ASTRA_SITES_DIR . 'inc/classes/batch-import/class-astra-sites-batch-import.php';
-
 		}
 
 		/**
@@ -1744,7 +1743,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				'notinstalled' => array(),
 			);
 
-			$required_plugins = ( isset( $_POST['required_plugins'] ) ) ? $_POST['required_plugins'] : $required_plugins;
+			$required_plugins = ( isset( $_POST['required_plugins'] ) ) ? json_decode( stripslashes( $_POST['required_plugins'] ) ) : $required_plugins;
 
 			$learndash_course_grid = 'https://www.learndash.com/add-on/course-grid/';
 			$learndash_woocommerce = 'https://www.learndash.com/add-on/woocommerce/';
@@ -1781,6 +1780,8 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 
 			if ( ! empty( $required_plugins ) ) {
 				foreach ( $required_plugins as $key => $plugin ) {
+
+					$plugin = (array) $plugin;
 
 					/**
 					 * Has Pro Version Support?
