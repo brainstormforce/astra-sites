@@ -3585,7 +3585,7 @@ var AstraSitesAjaxQueue = (function () {
 				data: {
 					action: 'astra-required-plugins',
 					_ajax_nonce: astraSitesVars._ajax_nonce,
-					required_plugins: requiredPlugins,
+					required_plugins: JSON.stringify(requiredPlugins),
 					options: AstraSitesAdmin.options_data,
 					enabledExtensions: AstraSitesAdmin.enabled_extensions,
 				},
