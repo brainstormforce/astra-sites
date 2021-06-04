@@ -701,6 +701,7 @@ var AstraSitesAjaxQueue = (function () {
 				PAGE_BUILDER: astraSitesVars.default_page_builder_data.name,
 				WP_USER_TYPE: subscription_user_type,
 				BUILD_WEBSITE_FOR: subscription_build_for,
+				SOURCE: hfe_admin_data.data_source
 			};
 
 			$.ajax({
