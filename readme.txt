@@ -149,6 +149,9 @@ We are open to suggestions and would love to work on topics that our users are l
 
 == Changelog ==
 
+v2.6.11.1 - Development Version
+- Improvement: Added a source parameter with subscription form submission request.
+
 v2.6.11 - 3-June-2021
 - Improvement: Gutenberg Template library auto-syncs at regular intervals.
 - Improvement: Updated image download functionality.
