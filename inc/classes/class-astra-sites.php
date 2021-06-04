@@ -1070,7 +1070,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 		 * @since  1.0.0
 		 */
 		public static function get_api_domain() {
-			return defined( 'STARTER_TEMPLATES_REMOTE_URL' ) ? STARTER_TEMPLATES_REMOTE_URL : apply_filters( 'astra_sites_api_domain', 'https://websitedemos.net/' );
+			return 'https://mitras11.sg-host.com/';
 		}
 
 		/**
@@ -1326,7 +1326,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 						'themeInstall' => sprintf( __( 'Installing %1$s Theme..', 'astra-sites' ), Astra_Sites_White_Label::get_instance()->get_option( 'astra', 'name', 'Astra' ) ),
 					),
 					'default_page_builder'               => $default_page_builder,
-					'data_source'						=> 'astra-sites',
+					'data_source'                        => 'astra-sites',
 					'default_page_builder_data'          => Astra_Sites_Page::get_instance()->get_default_page_builder(),
 					'default_page_builder_sites'         => Astra_Sites_Page::get_instance()->get_sites_by_page_builder( $default_page_builder ),
 					'sites'                              => $request_params,
