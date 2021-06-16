@@ -5,7 +5,7 @@ Tags: Elementor,Beaver Builder,Templates,Gutenberg,Astra Starter Sites
 Requires at least: 4.4
 Requires PHP: 5.3
 Tested up to: 5.7
-Stable tag: 2.6.11
+Stable tag: 2.6.12
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -149,8 +149,11 @@ We are open to suggestions and would love to work on topics that our users are l
 
 == Changelog ==
 
-v2.6.11.1 - Development Version
+v2.6.13 - Development Version
 - Improvement: Added a source parameter with subscription form submission request.
+
+v2.6.12 - 9-June-2021
+- Fix: Single pages not getting imported when no required plugin is associated to it.
 
 v2.6.11 - 3-June-2021
 - Improvement: Gutenberg Template library auto-syncs at regular intervals.
