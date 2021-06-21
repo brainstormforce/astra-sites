@@ -55,7 +55,6 @@
         },
 
     };
-    
 
     /**
      * Initialize AstraImages

@@ -69,7 +69,6 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 		 * @param string $classes Space separated class string.
 		 */
 		public function admin_body_class( $classes = '' ) {
-
 			$is_page_builder_screen = isset( $_GET['change-page-builder'] ) ? true : false; // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 			$current_page_builder   = self::get_instance()->get_setting( 'page_builder' );
 
@@ -430,7 +429,7 @@ if ( ! class_exists( 'Astra_Sites_Page' ) ) {
 								<?php if ( 'invalid_site_id' === $import_status ) { ?>
 									<p><?php esc_html_e( 'The demo you are importing seems invalid. The site is not found.', 'astra-sites' ); ?></p>
 								<?php } elseif ( 'premium_sites' === $import_status ) { ?>
-									<p><?php esc_html_e( 'The demo you are importing is a premium demo.', 'astra-sites' ); ?> <a href="https://wpastra.com/pricing/?utm_source=batch-site-import&utm_campaign=astra-sites&utm_medium=batch-import" class="" target="_blank"><?php esc_html_e( 'Get Access!', 'astra-sites' ); ?><i class="dashicons dashicons-external"></i></a></p>
+									<p><?php esc_html_e( 'The demo you are importing is a premium demo.', 'astra-sites' ); ?> <a href="https://wpastra.com/starter-templates-plans/?utm_source=batch-site-import&utm_campaign=astra-sites&utm_medium=batch-import" class="" target="_blank"><?php esc_html_e( 'Get Access!', 'astra-sites' ); ?><i class="dashicons dashicons-external"></i></a></p>
 								<?php } else { ?>
 									<p><?php esc_html_e( 'The import process can take a few minutes depending on the size of the site and speed of the connection.', 'astra-sites' ); ?></p>
 								<?php } ?>

@@ -221,6 +221,7 @@ module.exports = function( grunt ) {
     grunt.registerTask( 'i18n', ['addtextdomain', 'makepot'] );
 
     // Grunt release - Create installable package of the local files
+    grunt.registerTask('release-depracated', ['clean:zip', 'copy', 'compress']);
     grunt.registerTask('release', ['clean:zip', 'copy', 'compress', 'clean:main']);
 
     // Bump Version - `grunt version-bump --ver=<version-number>`
