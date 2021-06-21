@@ -410,7 +410,7 @@ $site_import_options = apply_filters(
 	<p>
 		<?php
 			/* translators: %s is pricing page link */
-			printf( __( '<span class="highlighted-note">This is a premium template available with Essential and Growth Bundle.</span><br /> <a href="%s" target="_blank">Get access</a> to this premium template.', 'astra-sites' ), 'https://wpastra.com/pricing/' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
+			printf( __( '<span class="highlighted-note">This is a premium template available with Essential and Growth Bundle.</span><br /> <a href="%s" target="_blank">Get access</a> to this premium template.', 'astra-sites' ), 'https://wpastra.com/starter-templates-plans/' ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped
 		?>
 	</p>
 	<p>
