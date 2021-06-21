@@ -149,6 +149,9 @@ We are open to suggestions and would love to work on topics that our users are l
 
 ## Changelog ##
 
+vx.x.x - Draft
+- Improvement: Updated the widget reset logic in which old widget moved to the inactive list.
+
 v2.6.12 - 9-June-2021
 - Fix: Single pages not getting imported when no required plugin is associated to it.
 
