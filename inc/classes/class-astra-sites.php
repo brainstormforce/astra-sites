@@ -743,12 +743,6 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				if ( did_action( 'elementor/loaded' ) ) {
 					$result['data'] = Astra_Sites_Elementor_Images::get_instance()->get_attachment_data( $image );
 				}
-				if ( 0 === $photo_id ) {
-					/**
-					 * This flag ensures these files are deleted in the Reset Process.
-					 */
-					update_post_meta( $image, '_astra_sites_imported_post', true );
-				}
 			} else {
 				wp_send_json_error( __( 'Could not download the image.', 'astra-sites' ) );
 			}
@@ -764,6 +758,9 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				$saved_images[] = $photo_id;
 				update_option( 'astra-sites-saved-images', $saved_images, 'no' );
 			}
+
+			$saved_images[] = $photo_id;
+			update_option( 'astra-sites-saved-images', $saved_images, 'no' );
 
 			$result['updated-saved-images'] = get_option( 'astra-sites-saved-images', array() );
 
