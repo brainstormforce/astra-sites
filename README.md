@@ -148,6 +148,9 @@ We are open to suggestions and would love to work on topics that our users are l
 7. Free Images by Pixabay right inside the WordPress media popup.
 
 ## Changelog ##
+v2.6.13 - (Draft)
+- Improvement: Quick Links UI improvements.
+- Improvement: Premium Templates UI improvements.
 
 v2.6.12 - 9-June-2021
 - Fix: Single pages not getting imported when no required plugin is associated to it.
