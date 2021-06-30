@@ -5,7 +5,7 @@ Tags: Elementor,Beaver Builder,Templates,Gutenberg,Astra Starter Sites
 Requires at least: 4.4
 Requires PHP: 5.3
 Tested up to: 5.7
-Stable tag: 2.6.12
+Stable tag: 2.6.13
 License: GPLv2 or later
 License URI: http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -149,8 +149,10 @@ We are open to suggestions and would love to work on topics that our users are l
 
 == Changelog ==
 
-vx.x.x - Draft
+v2.6.13 - 30-June-2021
 - Improvement: Updated the widget reset logic in which old widget moved to the inactive list.
+- Improvement: Quick Links UI improvements.
+- Improvement: Premium Templates UI improvements.
 
 v2.6.12 - 9-June-2021
 - Fix: Single pages not getting imported when no required plugin is associated to it.

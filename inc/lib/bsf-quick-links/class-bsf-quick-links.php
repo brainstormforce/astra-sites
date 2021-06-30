@@ -96,12 +96,14 @@ if ( ! class_exists( 'BSF_Quick_Links' ) ) {
 
 			?>
 			<div class="bsf-quick-link-wrap">
-				<label class="bsf-quick-link-title"><?php echo esc_html( $data['default_logo']['title'] ); ?></label>
 				<div class="bsf-quick-link-items-wrap hide-wrapper">
 					<?php echo $this->get_links_html( $data ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>
 				</div>
 				<a href="#" class="bsf-quick-link">
-					<img src="<?php echo esc_url( $data['default_logo']['url'] ); ?>">
+					<div class="quick-link-button-wrap">
+						<img src="<?php echo esc_url( $data['default_logo']['url'] ); ?>">
+						<span><?php esc_html_e( 'Quick Links', 'astra-sites' ); ?></span>
+					</div>
 				</a>
 			</div>
 			<?php

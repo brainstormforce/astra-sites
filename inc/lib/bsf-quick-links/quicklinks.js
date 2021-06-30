@@ -23,8 +23,6 @@
 		 * @method _bind
 		 */
 		_bind: function () {
-			$(document).on("mouseover", ".bsf-quick-link", BSFQuickLinks._showTooltip);
-			$(document).on("mouseout", ".bsf-quick-link", BSFQuickLinks._hideTooltip);
 			$(document).on("click", ".bsf-quick-link", BSFQuickLinks._toggle);
 			$(document).on("click", BSFQuickLinks._onClickOutside);
 			$(document).on("click", BSFQuickLinks._movePopUpToTop);
@@ -35,11 +33,9 @@
 			if ($('.single-site-footer').length) {
 				$(".bsf-quick-link").css("bottom", "80px");
 				$(".bsf-quick-link-items-wrap").css("bottom", "11em");
-				$(".bsf-quick-link-title").css("bottom", "8em");
 			} else {
 				$(".bsf-quick-link").css("bottom", "40px");
 				$(".bsf-quick-link-items-wrap").css("bottom", "8em");
-				$(".bsf-quick-link-title").css("bottom", "4.5em");
 			}
 			if ($('.astra-sites-result-preview').length && !$('.astra-sites-result-preview').is(':empty')) {
 				$(".bsf-quick-link").css("z-index", "-10");
@@ -54,20 +50,9 @@
 			}
 		},
 
-		_showTooltip: function (event) {
-			if (!$('.bsf-quick-link-items-wrap').hasClass('show-popup')) {
-				$('.bsf-quick-link-title').show();
-			}
-		},
-
-		_hideTooltip: function (event) {
-			$('.bsf-quick-link-title').hide();
-		},
-
 		_toggle: function (event) {
 			event.preventDefault();
 			var wrap = $('.bsf-quick-link-items-wrap');
-			$('.bsf-quick-link-title').hide();
 			wrap.removeClass('hide-wrapper');
 
 			if (wrap.hasClass('show-popup')) {
