@@ -148,9 +148,6 @@ We are open to suggestions and would love to work on topics that our users are l
 7. Free Images by Pixabay right inside the WordPress media popup.
 
 ## Changelog ##
-v2.6.13 - (Draft)
-- Improvement: Quick Links UI improvements.
-- Improvement: Premium Templates UI improvements.
 
 v2.6.13 - 30-June-2021
 - Improvement: Updated the widget reset logic in which old widget moved to the inactive list.
