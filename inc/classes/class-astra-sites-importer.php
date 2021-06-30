@@ -463,19 +463,13 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) {
 
 			$widgets_data = ( isset( $_POST['widgets_data'] ) ) ? (object) json_decode( stripslashes( $_POST['widgets_data'] ) ) : (object) $widgets_data;
 
-			Astra_Sites_Importer_Log::add( 'Imported - Widgets ' . wp_json_encode( $widgets_data ) );
-
 			if ( ! empty( $widgets_data ) ) {
 
-				$widgets_importer = Astra_Widget_Importer::instance();
-				$status           = $widgets_importer->import_widgets_data( $widgets_data );
+				Astra_Widget_Importer::instance()->import_widgets_data( $widgets_data );
 
-				// Set meta for tracking the post.
-				if ( is_object( $widgets_data ) ) {
-					$widgets_data = (array) $widgets_data;
-
-					update_option( '_astra_sites_old_widgets_data', $widgets_data, 'no' );
-				}
+				$sidebars_widgets = get_option( 'sidebars_widgets', array() );
+				update_option( '_astra_sites_old_widgets_data', $sidebars_widgets, 'no' );
+				Astra_Sites_Importer_Log::add( 'Imported - Widgets ' . wp_json_encode( $sidebars_widgets ) );
 
 				if ( defined( 'WP_CLI' ) ) {
 					WP_CLI::line( 'Widget Imported!' );
@@ -729,23 +723,35 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) {
 				}
 			}
 
-			$old_widgets = (array) get_option( '_astra_sites_old_widgets_data', array() );
+			// Get all old widget ids.
+			$old_widgets_data = (array) get_option( '_astra_sites_old_widgets_data', array() );
+			$old_widget_ids = array();
+			foreach ( $old_widgets_data as $old_sidebar_key => $old_widgets ) {
+				if ( ! empty( $old_widgets ) && is_array( $old_widgets ) ) {
+					$old_widget_ids = array_merge( $old_widget_ids, $old_widgets );
+				}
+			}
 
-			if ( ! empty( $old_widgets ) ) {
+			// Process if not empty.
+			$sidebars_widgets = get_option( 'sidebars_widgets', array() );
+			if ( ! empty( $old_widget_ids ) && ! empty( $sidebars_widgets ) ) {
 
-				Astra_Sites_Importer_Log::add( 'DELETED - WIDGETS ' . wp_json_encode( $old_widgets ) );
+				Astra_Sites_Importer_Log::add( 'DELETED - WIDGETS ' . wp_json_encode( $old_widget_ids ) );
 
-				$sidebars_widgets = get_option( 'sidebars_widgets', array() );
-
-				foreach ( $old_widgets as $sidebar_id => $widgets ) {
+				foreach ( $sidebars_widgets as $sidebar_id => $widgets ) {
+					$widgets = (array) $widgets;
 
 					if ( ! empty( $widgets ) && is_array( $widgets ) ) {
-						foreach ( $widgets as $widget_key => $widget_data ) {
+						foreach ( $widgets as $widget_id ) {
 
-							if ( isset( $sidebars_widgets['wp_inactive_widgets'] ) ) {
-								if ( ! in_array( $widget_key, $sidebars_widgets['wp_inactive_widgets'], true ) ) {
-									$sidebars_widgets['wp_inactive_widgets'][] = $widget_key;
-								}
+							if ( in_array( $widget_id, $old_widget_ids, true ) ) {
+								Astra_Sites_Importer_Log::add( 'DELETED - WIDGET ' . $widget_id );
+
+								// Move old widget to inacitve list.
+								$sidebars_widgets['wp_inactive_widgets'][] = $widget_id;
+
+								// Remove old widget from sidebar.
+								$sidebars_widgets[ $sidebar_id ] = array_diff( $sidebars_widgets[ $sidebar_id ], array( $widget_id ) );
 							}
 						}
 					}
