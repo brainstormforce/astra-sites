@@ -158,13 +158,13 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			$data = array(
 				'default_logo' => array(
 					'title' => __( 'See Quick Links', 'astra-sites' ),
-					'url'   => ASTRA_SITES_URI . 'inc/assets/images/logo.svg',
+					'url'   => ASTRA_SITES_URI . 'inc/assets/images/quick-link-logo.svg',
 				),
 				'links'        => array(
 					array(
 						'label'   => __( 'Upgrade to Premium', 'astra-sites' ),
 						'icon'    => 'dashicons-star-filled',
-						'url'     => 'https://wpastra.com/pricing/',
+						'url'     => 'https://wpastra.com/starter-templates-plans/',
 						'bgcolor' => '#ffa500',
 					),
 					array(
@@ -173,7 +173,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 						'url'   => 'https://wpastra.com/docs-category/starter-templates/',
 					),
 					array(
-						'label' => __( 'Join our community', 'astra-sites' ),
+						'label' => __( 'Join Facebook Group', 'astra-sites' ),
 						'icon'  => 'dashicons-groups',
 						'url'   => 'https://www.facebook.com/groups/wpastra/',
 					),
@@ -743,6 +743,12 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				if ( did_action( 'elementor/loaded' ) ) {
 					$result['data'] = Astra_Sites_Elementor_Images::get_instance()->get_attachment_data( $image );
 				}
+				if ( 0 === $photo_id ) {
+					/**
+					 * This flag ensures these files are deleted in the Reset Process.
+					 */
+					update_post_meta( $image, '_astra_sites_imported_post', true );
+				}
 			} else {
 				wp_send_json_error( __( 'Could not download the image.', 'astra-sites' ) );
 			}
@@ -758,9 +764,6 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				$saved_images[] = $photo_id;
 				update_option( 'astra-sites-saved-images', $saved_images, 'no' );
 			}
-
-			$saved_images[] = $photo_id;
-			update_option( 'astra-sites-saved-images', $saved_images, 'no' );
 
 			$result['updated-saved-images'] = get_option( 'astra-sites-saved-images', array() );
 
@@ -1299,9 +1302,9 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 					'ajaxurl'                            => esc_url( admin_url( 'admin-ajax.php' ) ),
 					'siteURL'                            => site_url(),
 					'getProText'                         => __( 'Get Access!', 'astra-sites' ),
-					'getProURL'                          => esc_url( 'https://wpastra.com/pricing/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=wp-dashboard' ),
+					'getProURL'                          => esc_url( 'https://wpastra.com/starter-templates-plans/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=wp-dashboard' ),
 					'getUpgradeText'                     => __( 'Upgrade', 'astra-sites' ),
-					'getUpgradeURL'                      => esc_url( 'https://wpastra.com/pricing/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=wp-dashboard' ),
+					'getUpgradeURL'                      => esc_url( 'https://wpastra.com/starter-templates-plans/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=wp-dashboard' ),
 					'_ajax_nonce'                        => wp_create_nonce( 'astra-sites' ),
 					'requiredPlugins'                    => array(),
 					'syncLibraryStart'                   => '<span class="message">' . esc_html__( 'Syncing template library in the background. The process can take anywhere between 2 to 3 minutes. We will notify you once done.', 'astra-sites' ) . '</span>',
@@ -1522,7 +1525,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 			}
 
 			/* translators: %s are link. */
-			$license_msg = sprintf( __( 'This is a premium template available with Essential Bundle and Growth Bundle. you can purchase it from <a href="%s" target="_blank">here</a>.', 'astra-sites' ), 'https://wpastra.com/pricing/' );
+			$license_msg = sprintf( __( 'This is a premium template available with Essential Bundle and Growth Bundle. you can purchase it from <a href="%s" target="_blank">here</a>.', 'astra-sites' ), 'https://wpastra.com/starter-templates-plans/' );
 
 			if ( defined( 'ASTRA_PRO_SITES_NAME' ) ) {
 				/* translators: %s are link. */
@@ -1549,7 +1552,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 					'license_msg'                => $license_msg,
 					'isWhiteLabeled'             => Astra_Sites_White_Label::get_instance()->is_white_labeled(),
 					'getProText'                 => __( 'Get Access!', 'astra-sites' ),
-					'getProURL'                  => esc_url( 'https://wpastra.com/pricing/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=wp-dashboard' ),
+					'getProURL'                  => esc_url( 'https://wpastra.com/starter-templates-plans/?utm_source=demo-import-panel&utm_campaign=astra-sites&utm_medium=wp-dashboard' ),
 					'astra_block_categories'     => $this->get_api_option( 'astra-blocks-categories' ),
 					'siteURL'                    => site_url(),
 					'template'                   => esc_html__( 'Template', 'astra-sites' ),

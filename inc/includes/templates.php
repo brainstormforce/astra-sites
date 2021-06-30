@@ -178,7 +178,7 @@ $suggestion_link = astra_sites_get_suggestion_link();
 					</div>
 					<# if ( site_type && 'free' !== site_type ) { #>
 						<?php /* translators: %s are white label strings. */ ?>
-						<div class="agency-ribbons" title="<?php printf( esc_attr__( 'This premium template is accessible with %1$s "Premium" Package.', 'astra-sites' ), Astra_Sites_White_Label::get_instance()->get_white_label_name() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"><?php esc_html_e( 'Premium', 'astra-sites' ); ?></div>
+						<div class="agency-ribbons" title="<?php printf( esc_attr__( 'This premium template is accessible with %1$s "Premium" Package.', 'astra-sites' ), Astra_Sites_White_Label::get_instance()->get_white_label_name() ); // phpcs:ignore WordPress.Security.EscapeOutput.OutputNotEscaped ?>"><img class="premium-crown-icon" src="<?php echo esc_url( ASTRA_SITES_URI . 'inc/assets/images/premium-crown.svg' ); ?>" alt="premium-crown"><?php esc_html_e( 'Premium', 'astra-sites' ); ?></div>
 					<# } #>
 				</div>
 			</div>

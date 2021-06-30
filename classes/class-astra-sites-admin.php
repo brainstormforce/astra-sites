@@ -86,9 +86,9 @@ if ( ! class_exists( 'Astra_Sites_Admin' ) ) :
 			$custom_cta_content_data = apply_filters(
 				'astra_sites_custom_cta_vars',
 				array(
-					'text'        => __( 'Get unlimited access to all 150+ starter templates for just $169 USD!', 'astra-sites' ),
-					'button_text' => __( 'Claim Offer', 'astra-sites' ),
-					'cta_link'    => 'https://wpastra.com/pricing/?utm_source=StarterTemplatesPlugin&utm_campaign=WPAdmin',
+					'text'        => __( 'Get unlimited access to all premium Starter Templates and more, at a single low cost!', 'astra-sites' ),
+					'button_text' => __( 'Get Essential Bundle', 'astra-sites' ),
+					'cta_link'    => 'https://wpastra.com/starter-templates-plans/?utm_source=StarterTemplatesPlugin&utm_campaign=WPAdmin',
 				)
 			);
 
