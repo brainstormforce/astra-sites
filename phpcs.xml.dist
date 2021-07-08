@@ -45,4 +45,5 @@
 	<exclude-pattern>*/dist/*</exclude-pattern>
 	<exclude-pattern>*/admin/bsf-core/*</exclude-pattern>
 	<exclude-pattern>*/inc/assets/js/dist/*</exclude-pattern>
+	<exclude-pattern>*/inc/lib/*</exclude-pattern>
 </ruleset>
