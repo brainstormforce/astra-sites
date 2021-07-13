@@ -71,7 +71,7 @@ if ( ! function_exists( 'astra_get_site_data' ) ) :
 	 *
 	 * @param string $index  The index value of the data.
 	 *
-	 * @since x.x.x
+	 * @since 2.6.14
 	 * @return mixed
 	 */
 	function astra_get_site_data( $index = '' ) {
