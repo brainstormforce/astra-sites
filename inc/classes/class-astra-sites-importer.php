@@ -299,7 +299,7 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) {
 				}
 			}
 
-			$customizer_data = ( isset( $_POST['customizer_data'] ) ) ? (array) json_decode( stripcslashes( $_POST['customizer_data'] ), 1 ) : $customizer_data;
+			$customizer_data = astra_get_site_data( 'astra-site-customizer-data' );
 
 			if ( ! empty( $customizer_data ) ) {
 
@@ -415,7 +415,7 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) {
 				}
 			}
 
-			$options_data = ( isset( $_POST['options_data'] ) ) ? (array) json_decode( stripcslashes( $_POST['options_data'] ), 1 ) : $options_data;
+			$options_data = astra_get_site_data( 'astra-site-options-data' );
 
 			if ( ! empty( $options_data ) ) {
 				// Set meta for tracking the post.
@@ -627,6 +627,8 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) {
 
 			// Flush permalinks.
 			flush_rewrite_rules();
+
+			delete_site_option( 'astra_sites_import_data' );
 
 			Astra_Sites_Importer_Log::add( 'Complete ' );
 		}
