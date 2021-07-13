@@ -1,9 +1,25 @@
 {
+    "require": {
+        "brainstormforce/astra-notices": "^1.1"
+      },
     "require-dev": {
         "dealerdirect/phpcodesniffer-composer-installer": "0.7.0",
         "wp-coding-standards/wpcs": "dev-master",
         "phpcompatibility/phpcompatibility-wp": "*"
     },
+    "extra": {
+        "installer-paths": {
+            "inc/lib/{$name}/": [
+            "brainstormforce/astra-notices"
+            ]
+        }
+    },
+    "repositories": [
+        {
+            "type": "vcs",
+            "url": "git@github.com:brainstormforce/astra-notices.git"
+        }
+    ],
     "scripts": {
         "format": "phpcbf",
         "lint": "phpcs"

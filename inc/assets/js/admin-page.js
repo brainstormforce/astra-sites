@@ -515,7 +515,7 @@ var AstraSitesAjaxQueue = (function () {
 			$(document).on('click', '.page-builder-icon', AstraSitesAdmin._toggle_page_builder_list);
 			$(document).on('click', '.showing-page-builders #wpbody-content', AstraSitesAdmin._close_page_builder_list);
 			$(document).on('keyup input', '#wp-filter-search-input', AstraSitesAdmin._search);
-			$(document).on('keyup', '#wp-filter-search-input', _.debounce(AstraSitesAdmin._searchPost, 1000));
+			$(document).on('keyup', '#wp-filter-search-input', _.debounce(AstraSitesAdmin._searchPost, 1500));
 			$(document).on('heartbeat-send', AstraSitesAdmin._sendHeartbeat);
 			$(document).on('heartbeat-tick', AstraSitesAdmin._heartbeatDone);
 			$(document).on('click', '.ui-autocomplete .ui-menu-item', AstraSitesAdmin._show_search_term);
@@ -757,13 +757,14 @@ var AstraSitesAjaxQueue = (function () {
 		},
 
 		_searchPost: function (e) {
-			var term = $(this).val();
-			if ('' === term) {
+			var term = $(this).val().toLowerCase();
+			// Skip blank words and words smaller than 3 characters.
+			if ('' === term || term.length < 3 ) {
 				return;
 			}
 
 			if (!AstraSitesAdmin.search_terms.includes(term)) {
-				AstraSitesAdmin.search_terms.push(term.toLowerCase());
+				AstraSitesAdmin.search_terms.push(term);
 			}
 		},
 
@@ -1900,7 +1901,6 @@ var AstraSitesAjaxQueue = (function () {
 			if (astraSitesVars.sites && astraSitesVars.sites.site_url) {
 				AstraSitesAdmin._api_params['site_url'] = astraSitesVars.sites.site_url;
 			}
-			AstraSitesAdmin._api_params['track'] = true;
 		},
 
 		_show_default_page_builder_sites: function () {
@@ -2611,7 +2611,6 @@ var AstraSitesAjaxQueue = (function () {
 					dataType: 'json',
 					data: {
 						action: 'astra-sites-import-options',
-						options_data: AstraSitesAdmin.options_data,
 						_ajax_nonce: astraSitesVars._ajax_nonce,
 					},
 					beforeSend: function () {
@@ -2889,7 +2888,6 @@ var AstraSitesAjaxQueue = (function () {
 					dataType: 'json',
 					data: {
 						action: 'astra-sites-import-customizer-settings',
-						customizer_data: AstraSitesAdmin.customizer_data,
 						_ajax_nonce: astraSitesVars._ajax_nonce,
 					},
 					beforeSend: function () {
@@ -3015,8 +3013,6 @@ var AstraSitesAjaxQueue = (function () {
 					data: {
 						'action': 'astra-required-plugin-activate',
 						'init': response.init,
-						'options': AstraSitesAdmin.options_data,
-						'enabledExtensions': AstraSitesAdmin.enabled_extensions,
 						'_ajax_nonce': astraSitesVars._ajax_nonce,
 					},
 				})
@@ -3720,9 +3716,6 @@ var AstraSitesAjaxQueue = (function () {
 					data: {
 						action: 'astra-required-plugins',
 						_ajax_nonce: astraSitesVars._ajax_nonce,
-						required_plugins: JSON.stringify(requiredPlugins),
-						options: AstraSitesAdmin.options_data,
-						enabledExtensions: AstraSitesAdmin.enabled_extensions,
 					},
 					beforeSend: function () {
 						console.groupCollapsed('Required Plugins');
@@ -3879,7 +3872,7 @@ var AstraSitesAjaxQueue = (function () {
 				$('.current-importing-status-wrap').remove();
 				$('.astra-sites-result-preview .inner > h3').text('We are importing page!');
 
-				fetch(AstraSitesAdmin.templateData['astra-page-api-url'] + '?&track=true&site_url=' + astraSitesVars.siteURL).then(response => {
+				fetch(AstraSitesAdmin.templateData['astra-page-api-url'] + '?&site_url=' + astraSitesVars.siteURL).then(response => {
 					return response.json();
 				}).then(data => {
 

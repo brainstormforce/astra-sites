@@ -1,18 +1,11 @@
 <?php
 /**
- * Astra Sites Notices
+ * Astra Notices
  *
- * Closing notice on click on `astra-notice-close` class.
+ * An easy to use PHP Library to add dismissible admin notices in the WordPress admin.
  *
- * If notice has the data attribute `data-repeat-notice-after="%2$s"` then notice close for that SPECIFIC TIME.
- * If notice has NO data attribute `data-repeat-notice-after="%2$s"` then notice close for the CURRENT USER FOREVER.
- *
- * > Create custom close notice link in the notice markup. E.g.
- * `<a href="#" data-repeat-notice-after="<?php echo MONTH_IN_SECONDS; ?>" class="astra-notice-close">`
- * It close the notice for 30 days.
- *
- * @package Astra Sites
- * @since 1.4.0
+ * @package Astra Notices
+ * @since 1.0.0
  */
 
 if ( ! defined( 'ABSPATH' ) ) {
@@ -24,7 +17,7 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 	/**
 	 * Astra_Notices
 	 *
-	 * @since 1.4.0
+	 * @since 1.0.0
 	 */
 	class Astra_Notices {
 
@@ -33,16 +26,16 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		 *
 		 * @access private
 		 * @var array Notices.
-		 * @since 1.4.0
+		 * @since 1.0.0
 		 */
-		private static $version = '1.1.7';
+		private static $version = '1.1.8';
 
 		/**
 		 * Notices
 		 *
 		 * @access private
 		 * @var array Notices.
-		 * @since 1.4.0
+		 * @since 1.0.0
 		 */
 		private static $notices = array();
 
@@ -51,14 +44,14 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		 *
 		 * @access private
 		 * @var object Class object.
-		 * @since 1.4.0
+		 * @since 1.0.0
 		 */
 		private static $instance;
 
 		/**
 		 * Initiator
 		 *
-		 * @since 1.4.0
+		 * @since 1.0.0
 		 * @return object initialized object of class.
 		 */
 		public static function get_instance() {
@@ -71,7 +64,7 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		/**
 		 * Constructor
 		 *
-		 * @since 1.4.0
+		 * @since 1.0.0
 		 */
 		public function __construct() {
 			add_action( 'admin_notices', array( $this, 'show_notices' ), 30 );
@@ -83,10 +76,10 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		/**
 		 * Filters and Returns a list of allowed tags and attributes for a given context.
 		 *
-		 * @param Array  $allowedposttags Array of allowed tags.
-		 * @param String $context Context type (explicit).
-		 * @since 1.4.0
-		 * @return Array
+		 * @param array  $allowedposttags array of allowed tags.
+		 * @param string $context Context type (explicit).
+		 * @since 1.0.0
+		 * @return array
 		 */
 		public function add_data_attributes( $allowedposttags, $context ) {
 			$allowedposttags['a']['data-repeat-notice-after'] = true;
@@ -97,7 +90,7 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		/**
 		 * Add Notice.
 		 *
-		 * @since 1.4.0
+		 * @since 1.0.0
 		 * @param array $args Notice arguments.
 		 * @return void
 		 */
@@ -108,18 +101,19 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		/**
 		 * Dismiss Notice.
 		 *
-		 * @since 1.4.0
+		 * @since 1.0.0
 		 * @return void
 		 */
 		public function dismiss_notice() {
-
-			if ( ! apply_filters( 'astra_notices_user_cap_check', current_user_can( 'manage_options' ) ) ) {
-				return;
-			}
-
 			$notice_id           = ( isset( $_POST['notice_id'] ) ) ? sanitize_key( $_POST['notice_id'] ) : '';
 			$repeat_notice_after = ( isset( $_POST['repeat_notice_after'] ) ) ? absint( $_POST['repeat_notice_after'] ) : '';
 			$nonce               = ( isset( $_POST['nonce'] ) ) ? sanitize_key( $_POST['nonce'] ) : '';
+			$notice              = $this->get_notice_by_id( $notice_id );
+			$capability          = isset( $notice['capability'] ) ? $notice['capability'] : 'manage_options';
+
+			if ( ! apply_filters( 'astra_notices_user_cap_check', current_user_can( $capability ) ) ) {
+				return;
+			}
 
 			if ( false === wp_verify_nonce( $nonce, 'astra-notices' ) ) {
 				wp_send_json_error( esc_html_e( 'WordPress Nonce not validated.', 'astra-sites' ) );
@@ -143,11 +137,11 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		/**
 		 * Enqueue Scripts.
 		 *
-		 * @since 1.4.0
+		 * @since 1.0.0
 		 * @return void
 		 */
 		public function enqueue_scripts() {
-			wp_register_script( 'astra-notices', self::_get_uri() . 'notices.js', array( 'jquery' ), self::$version, true );
+			wp_register_script( 'astra-notices', self::get_url() . 'notices.js', array( 'jquery' ), self::$version, true );
 			wp_localize_script(
 				'astra-notices',
 				'astraNotices',
@@ -158,32 +152,67 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		}
 
 		/**
-		 * Rating priority sort
+		 * Sort the notices based on the given priority of the notice.
+		 * This function is called from usort()
 		 *
 		 * @since 1.5.2
-		 * @param array $array1 array one.
-		 * @param array $array2 array two.
+		 * @param array $notice_1 First notice.
+		 * @param array $notice_2 Second Notice.
 		 * @return array
 		 */
-		public function sort_notices( $array1, $array2 ) {
-			if ( ! isset( $array1['priority'] ) ) {
-				$array1['priority'] = 10;
+		public function sort_notices( $notice_1, $notice_2 ) {
+			if ( ! isset( $notice_1['priority'] ) ) {
+				$notice_1['priority'] = 10;
 			}
-			if ( ! isset( $array2['priority'] ) ) {
-				$array2['priority'] = 10;
+			if ( ! isset( $notice_2['priority'] ) ) {
+				$notice_2['priority'] = 10;
 			}
 
-			return $array1['priority'] - $array2['priority'];
+			return $notice_1['priority'] - $notice_2['priority'];
 		}
 
 		/**
-		 * Notice Types
+		 * Get all registered notices.
+		 * Since v1.1.8 it is recommended to register the notices on
 		 *
-		 * @since 1.4.0
+		 * @return array|null
+		 */
+		private function get_notices() {
+			usort( self::$notices, array( $this, 'sort_notices' ) );
+
+			return self::$notices;
+		}
+
+		/**
+		 * Get notice by notice_id
+		 *
+		 * @param string $notice_id Notice id.
+		 *
+		 * @return array notice based on the notice id.
+		 */
+		private function get_notice_by_id( $notice_id ) {
+			if ( empty( $notice_id ) ) {
+				return array();
+			}
+
+			$notices = $this->get_notices();
+			$notice  = wp_list_filter(
+				$notices,
+				array(
+					'id' => $notice_id,
+				)
+			);
+
+			return ! empty( $notice ) ? $notice[0] : array();
+		}
+
+		/**
+		 * Display the notices in the WordPress admin.
+		 *
+		 * @since 1.0.0
 		 * @return void
 		 */
 		public function show_notices() {
-
 			$defaults = array(
 				'id'                         => '',      // Optional, Notice ID. If empty it set `astra-notices-id-<$array-index>`.
 				'type'                       => 'info',  // Optional, Notice type. Default `info`. Expected [info, warning, notice, error].
@@ -195,20 +224,22 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 				'priority'                   => 10,      // Priority of the notice.
 				'display-with-other-notices' => true,    // Should the notice be displayed if other notices  are being displayed from Astra_Notices.
 				'is_dismissible'             => true,
+				'capability'                 => 'manage_options', // User capability - This capability is required for the current user to see this notice.
 			);
 
 			// Count for the notices that are rendered.
 			$notices_displayed = 0;
+			$notices           = $this->get_notices();
 
-			// sort the array with priority.
-			usort( self::$notices, array( $this, 'sort_notices' ) );
-
-			foreach ( self::$notices as $key => $notice ) {
-
+			foreach ( $notices as $key => $notice ) {
 				$notice = wp_parse_args( $notice, $defaults );
 
-				$notice['id'] = self::get_notice_id( $notice, $key );
+				// Show notices only for users with `manage_options` cap.
+				if ( ! current_user_can( $notice['capability'] ) ) {
+					continue;
+				}
 
+				$notice['id']      = self::get_notice_id( $notice, $key );
 				$notice['classes'] = self::get_wrap_classes( $notice );
 
 				// Notices visible after transient expire.
@@ -230,14 +261,13 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		}
 
 		/**
-		 * Markup Notice.
+		 * Render a notice.
 		 *
-		 * @since 1.4.0
+		 * @since 1.0.0
 		 * @param  array $notice Notice markup.
 		 * @return void
 		 */
 		public static function markup( $notice = array() ) {
-
 			wp_enqueue_script( 'astra-notices' );
 
 			do_action( 'astra_notice_before_markup' );
@@ -256,13 +286,12 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 			do_action( "astra_notice_after_markup_{$notice['id']}" );
 
 			do_action( 'astra_notice_after_markup' );
-
 		}
 
 		/**
-		 * Notice classes.
+		 * Get wrapper classes for a notice.
 		 *
-		 * @since 1.4.0
+		 * @since 1.0.0
 		 *
 		 * @param  array $notice Notice arguments.
 		 * @return array       Notice wrapper classes.
@@ -283,13 +312,13 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		}
 
 		/**
-		 * Get Notice ID.
+		 * Get HTML ID for a given notice.
 		 *
-		 * @since 1.4.0
+		 * @since 1.0.0
 		 *
 		 * @param  array $notice Notice arguments.
-		 * @param  int   $key     Notice array index.
-		 * @return string       Notice id.
+		 * @param  int   $key    Notice array index.
+		 * @return string HTML if for the notice.
 		 */
 		private static function get_notice_id( $notice, $key ) {
 			if ( isset( $notice['id'] ) && ! empty( $notice['id'] ) ) {
@@ -300,9 +329,9 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		}
 
 		/**
-		 * Is notice expired?
+		 * Check if the notice is expires.
 		 *
-		 * @since 1.4.0
+		 * @since 1.0.0
 		 *
 		 * @param  array $notice Notice arguments.
 		 * @return boolean
@@ -335,11 +364,11 @@ if ( ! class_exists( 'Astra_Notices' ) ) :
 		}
 
 		/**
-		 * Get URI
+		 * Get base URL for the astra-notices.
 		 *
 		 * @return mixed URL.
 		 */
-		public static function _get_uri() { // phpcs:ignore PSR2.Methods.MethodDeclaration.Underscore
+		public static function get_url() {
 			$path      = wp_normalize_path( dirname( __FILE__ ) );
 			$theme_dir = wp_normalize_path( get_template_directory() );
 
