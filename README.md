@@ -149,6 +149,12 @@ We are open to suggestions and would love to work on topics that our users are l
 
 ## Changelog ##
 
+v2.6.14 - 13-July-2021
+- Improvement: Compatibility to WordPress 5.8.
+- Improvement: Improved the import process by reducing the body size of the AJAX calls for better performance.
+- Improvement: Added support for dark and light support for block patterns with improved sidebar UI.
+- Fix: Handle the white label support.
+
 v2.6.13 - 30-June-2021
 - Improvement: Updated the widget reset logic in which old widget moved to the inactive list.
 - Improvement: Quick Links UI improvements.
