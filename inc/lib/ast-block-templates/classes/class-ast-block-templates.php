@@ -190,8 +190,6 @@ if ( ! class_exists( 'Ast_Block_Templates' ) ) :
 		 */
 		public function get_content( $content = '' ) {
 
-			$content = stripslashes( $content );
-
 			// Extract all links.
 			preg_match_all( '#\bhttps?://[^,\s()<>]+(?:\([\w\d]+\)|([^,[:punct:]\s]|/))#', $content, $match );
 
@@ -387,7 +385,7 @@ if ( ! class_exists( 'Ast_Block_Templates' ) ) :
 						'wpforms_status'          => $this->get_plugin_status( 'wpforms-lite/wpforms.php' ),
 						'gutenberg_status'        => $this->get_plugin_status( 'gutenberg/gutenberg.php' ),
 						'_ajax_nonce'             => wp_create_nonce( 'ast-block-templates-ajax-nonce' ),
-						'button_text'             => esc_html__( 'Starter Templates', 'astra-sites' ),
+						'button_text'             => esc_html__( 'Starter Templates', 'ast-block-templates' ),
 						'display_button_logo'     => true,
 						'popup_logo_uri'          => AST_BLOCK_TEMPLATES_URI . 'dist/logo.svg',
 						'button_logo'             => AST_BLOCK_TEMPLATES_URI . 'dist/starter-template-logo.svg',
@@ -403,7 +401,7 @@ if ( ! class_exists( 'Ast_Block_Templates' ) ) :
 		/**
 		 * Get white label name
 		 *
-		 * @since 2.6.14
+		 * @since 1.0.7
 		 *
 		 * @return string
 		 */
