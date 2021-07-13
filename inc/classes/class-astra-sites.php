@@ -251,7 +251,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				'blocking'  => true,
 				'sslverify' => apply_filters( 'https_local_ssl_verify', false ),
 				'body'      => array(
-					'search' => $data['ast-sites-search-terms'],
+					'search' => array_unique( $data['ast-sites-search-terms'] ),
 					'url'    => esc_url( site_url() ),
 				),
 			);
@@ -1311,9 +1311,9 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 					'xmlRequiredFilesMissing'            => __( 'Some of the files required during the import process are missing.<br/><br/>Please try again after some time.', 'astra-sites' ),
 					'importFailedMessageDueToDebug'      => __( '<p>WordPress debug mode is currently enabled on your website. This has interrupted the import process..</p><p>Kindly disable debug mode and try importing Starter Template again.</p><p>You can add the following code into the wp-config.php file to disable debug mode.</p><p><code>define(\'WP_DEBUG\', false);</code></p>', 'astra-sites' ),
 					/* translators: %s is a documentation link. */
-					'importFailedMessage'                => sprintf( __( '<p>Your website is facing a temporary issue in connecting the template server.</p><p>Read <a href="%s" target="_blank">article</a> to resolve the issue and continue importing template.</p>', 'astra-sites' ), esc_url( 'https://wpastra.com/docs/import-process-interrupted/' ) ),
+					'importFailedMessage'                => sprintf( __( '<p>We are facing a temporary issue in importing this template.</p><p>Read <a href="%s" target="_blank">article</a> to resolve the issue and continue importing template.</p>', 'astra-sites' ), esc_url( 'https://wpastra.com/docs/fix-starter-template-importing-issues/' ) ),
 					/* translators: %s is a documentation link. */
-					'importFailedRequiredPluginsMessage' => sprintf( __( '<p>Your website is facing a temporary issue in connecting the template server.</p><p>Read <a href="%s" target="_blank">article</a> to resolve the issue and continue importing template.</p>', 'astra-sites' ), esc_url( 'https://wpastra.com/docs/plugin-installation-failed-multisite/' ) ),
+					'importFailedRequiredPluginsMessage' => sprintf( __( '<p>We are facing a temporary issue in installing the required plugins for this template.</p><p>Read <a href="%s" target="_blank">article</a> to resolve the issue and continue importing template.</p>', 'astra-sites' ), esc_url( 'https://wpastra.com/docs/plugin-installation-failed-multisite/' ) ),
 
 					'strings'                            => array(
 						/* translators: %s are white label strings. */
@@ -1706,8 +1706,8 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				}
 			}
 
-			$options            = ( isset( $_POST['options'] ) ) ? json_decode( stripslashes( $_POST['options'] ) ) : $options;
-			$enabled_extensions = ( isset( $_POST['enabledExtensions'] ) ) ? json_decode( stripslashes( $_POST['enabledExtensions'] ) ) : $enabled_extensions;
+			$options = astra_get_site_data( 'astra-site-options-data' );
+			$enabled_extensions = astra_get_site_data( 'astra-enabled-extensions' );
 
 			$this->after_plugin_activate( $plugin_init, $options, $enabled_extensions );
 
@@ -1746,8 +1746,9 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 				'notinstalled' => array(),
 			);
 
-			$required_plugins = ( isset( $_POST['required_plugins'] ) ) ? json_decode( stripslashes( $_POST['required_plugins'] ) ) : $required_plugins;
-
+			$options = astra_get_site_data( 'astra-site-options-data' );
+			$enabled_extensions = astra_get_site_data( 'astra-enabled-extensions' );
+			$required_plugins = astra_get_site_data( 'required-plugins' );
 			$learndash_course_grid = 'https://www.learndash.com/add-on/course-grid/';
 			$learndash_woocommerce = 'https://www.learndash.com/add-on/woocommerce/';
 			if ( is_plugin_active( 'sfwd-lms/sfwd_lms.php' ) ) {
@@ -1774,9 +1775,6 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 					'link' => $learndash_woocommerce,
 				),
 			);
-
-			$options            = ( isset( $_POST['options'] ) ) ? json_decode( stripslashes( $_POST['options'] ) ) : $options;
-			$enabled_extensions = ( isset( $_POST['enabledExtensions'] ) ) ? json_decode( stripslashes( $_POST['enabledExtensions'] ) ) : $enabled_extensions;
 
 			$plugin_updates          = get_plugin_updates();
 			$update_avilable_plugins = array();

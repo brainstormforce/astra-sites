@@ -64,3 +64,21 @@ if ( ! function_exists( 'astra_sites_is_valid_image' ) ) :
 		return preg_match( '/^((https?:\/\/)|(www\.))([a-z0-9-].?)+(:[0-9]+)?\/[\w\-]+\.(jpg|png|gif|jpeg|svg)\/?$/i', $link );
 	}
 endif;
+
+if ( ! function_exists( 'astra_get_site_data' ) ) :
+	/**
+	 * Returns the value of the index for the Site Data
+	 *
+	 * @param string $index  The index value of the data.
+	 *
+	 * @since x.x.x
+	 * @return mixed
+	 */
+	function astra_get_site_data( $index = '' ) {
+		$demo_data = get_site_option( 'astra_sites_import_data', array() );
+		if ( ! empty( $demo_data ) && isset( $demo_data[ $index ] ) ) {
+			return $demo_data[ $index ];
+		}
+		return '';
+	}
+endif;

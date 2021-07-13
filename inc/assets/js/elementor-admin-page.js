@@ -998,7 +998,7 @@ var AstraSitesAjaxQueue = (function () {
 
 				AstraElementorSitesAdmin._importWPForm(AstraElementorSitesAdmin.templateData['astra-site-wpforms-path'], function (form_response) {
 
-					fetch(AstraElementorSitesAdmin.templateData['astra-page-api-url'] + '?&track=true&site_url=' + astraElementorSites.siteURL).then(response => {
+					fetch(AstraElementorSitesAdmin.templateData['astra-page-api-url'] + '?&site_url=' + astraElementorSites.siteURL).then(response => {
 						return response.json();
 					}).then(data => {
 						AstraElementorSitesAdmin.insertData = data;
@@ -1173,9 +1173,9 @@ var AstraSitesAjaxQueue = (function () {
 				let api_url = '';
 
 				if ('blocks' == AstraElementorSitesAdmin.type) {
-					api_url = astraElementorSites.ApiURL + 'astra-blocks/' + data['id'] + '/?&track=true&site_url=' + astraElementorSites.siteURL;
+					api_url = astraElementorSites.ApiURL + 'astra-blocks/' + data['id'] + '/?&site_url=' + astraElementorSites.siteURL;
 				} else {
-					api_url = AstraElementorSitesAdmin.templateData['astra-page-api-url'] + '?&track=true&site_url=' + astraElementorSites.siteURL;
+					api_url = AstraElementorSitesAdmin.templateData['astra-page-api-url'] + '?&site_url=' + astraElementorSites.siteURL;
 				}
 
 				$.ajax({
