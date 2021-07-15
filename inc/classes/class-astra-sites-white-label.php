@@ -254,7 +254,10 @@ if ( ! class_exists( 'Astra_Sites_White_Label' ) ) :
 		 */
 		public function get_white_label_link( $link = '' ) {
 			if ( is_callable( 'Astra_Ext_White_Label_Markup::get_whitelabel_string' ) ) {
-				return Astra_Ext_White_Label_Markup::get_whitelabel_string( 'astra-agency', 'licence' );
+				$white_label_link = Astra_Ext_White_Label_Markup::get_whitelabel_string( 'astra-agency', 'licence' );
+				if ( ! empty( $white_label_link ) ) {
+					return $white_label_link;
+				}
 			}
 
 			return $link;

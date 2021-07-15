@@ -1,13 +1,13 @@
 # Starter Templates — Elementor, Gutenberg & Beaver Builder Templates #
-**Contributors:** [brainstormforce](https://profiles.wordpress.org/brainstormforce)
-**Donate link:** https://wpastra.com/pro/
-**Tags:** Elementor,Beaver Builder,Templates,Gutenberg,Astra Starter Sites
-**Requires at least:** 4.4
-**Requires PHP:** 5.3
-**Tested up to:** 5.8
-**Stable tag:** 2.6.14
-**License:** GPLv2 or later
-**License URI:** http://www.gnu.org/licenses/gpl-2.0.html
+**Contributors:** [brainstormforce](https://profiles.wordpress.org/brainstormforce)  
+**Donate link:** https://wpastra.com/pro/  
+**Tags:** Elementor,Beaver Builder,Templates,Gutenberg,Astra Starter Sites  
+**Requires at least:** 4.4  
+**Requires PHP:** 5.3  
+**Tested up to:** 5.8  
+**Stable tag:** 2.6.15  
+**License:** GPLv2 or later  
+**License URI:** http://www.gnu.org/licenses/gpl-2.0.html  
 
 The growing library of 300+ ready-to-use templates that work with all WordPress themes including Astra, Hello, OceanWP, GeneratePress and more
 
@@ -148,6 +148,10 @@ We are open to suggestions and would love to work on topics that our users are l
 7. Free Images by Pixabay right inside the WordPress media popup.
 
 ## Changelog ##
+
+v2.6.15 - 15-July-2021
+- Fix: Rectified the failing import process on multisite due to an issue introduced in v2.6.14
+- Fix: Fixed the broken invalid license document links.
 
 v2.6.14 - 13-July-2021
 - Improvement: Compatibility to WordPress 5.8.

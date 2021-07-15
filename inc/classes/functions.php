@@ -75,7 +75,7 @@ if ( ! function_exists( 'astra_get_site_data' ) ) :
 	 * @return mixed
 	 */
 	function astra_get_site_data( $index = '' ) {
-		$demo_data = get_site_option( 'astra_sites_import_data', array() );
+		$demo_data = get_option( 'astra_sites_import_data', array() );
 		if ( ! empty( $demo_data ) && isset( $demo_data[ $index ] ) ) {
 			return $demo_data[ $index ];
 		}
