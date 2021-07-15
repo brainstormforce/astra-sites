@@ -151,6 +151,7 @@ We are open to suggestions and would love to work on topics that our users are l
 
 v2.6.15 - 15-July-2021
 - Fix: Rectified the failing import process on multisite due to an issue introduced in v2.6.14
+- Fix: Fixed the broken invalid license document links.
 
 v2.6.14 - 13-July-2021
 - Improvement: Compatibility to WordPress 5.8.
