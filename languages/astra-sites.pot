@@ -2,9 +2,9 @@
 # This file is distributed under the same license as the Starter Templates package.
 msgid ""
 msgstr ""
-"Project-Id-Version: Starter Templates 2.6.13\n"
+"Project-Id-Version: Starter Templates 2.6.14\n"
 "Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/astra-sites\n"
-"POT-Creation-Date: 2021-07-13 07:38:25+00:00\n"
+"POT-Creation-Date: 2021-07-15 08:32:16+00:00\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -1787,14 +1787,6 @@ msgstr ""
 
 #: inc/lib/astra-notices/class-astra-notices.php:119
 msgid "WordPress Nonce not validated."
-msgstr ""
-
-#: inc/lib/astra-notices/vendor/wp-cli/wp-cli/php/utils-wp.php:222
-msgid "Inactive Widgets"
-msgstr ""
-
-#: inc/lib/astra-notices/vendor/wp-cli/wp-cli/php/utils-wp.php:225
-msgid "Drag widgets here to remove them from the sidebar but keep their settings."
 msgstr ""
 
 #: inc/lib/bsf-quick-links/class-bsf-quick-links.php:105
