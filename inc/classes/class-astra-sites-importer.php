@@ -628,7 +628,7 @@ if ( ! class_exists( 'Astra_Sites_Importer' ) ) {
 			// Flush permalinks.
 			flush_rewrite_rules();
 
-			delete_site_option( 'astra_sites_import_data' );
+			delete_option( 'astra_sites_import_data' );
 
 			Astra_Sites_Importer_Log::add( 'Complete ' );
 		}
