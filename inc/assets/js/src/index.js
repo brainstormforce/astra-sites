@@ -7,11 +7,12 @@
             if ( undefined != wp && wp.media ) {
 
                 var $ = jQuery,
+                    oldMediaFramePost = wp.media.view.MediaFrame.Post,
                     oldMediaFrameSelect = wp.media.view.MediaFrame.Select;
 
                 wp.media.view.AstraAttachmentsBrowser = require( './frame.js' );
 
-                wp.media.view.MediaFrame.Select = oldMediaFrameSelect.extend( {
+                const pixabayFrame = {
 
                     // Tab / Router
                     browseRouter( routerView ) {
@@ -50,7 +51,13 @@
                         }, 100 );
                     }
                     
-                });
+                }
+
+                if ( astraImages.is_elementor_editor ) {
+                    wp.media.view.MediaFrame.Post = oldMediaFramePost.extend( pixabayFrame );
+                } else {
+                    wp.media.view.MediaFrame.Select = oldMediaFrameSelect.extend( pixabayFrame );
+                }
             }
         },
 
