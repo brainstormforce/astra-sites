@@ -164,7 +164,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 					array(
 						'label'   => __( 'Upgrade to Premium', 'astra-sites' ),
 						'icon'    => 'dashicons-star-filled',
-						'url'     => 'https://wpastra.com/starter-templates-plans/',
+						'url'     => 'https://wpastra.com/starter-templates-plans/?utm_source=StarterTemplatesPlugin&utm_campaign=WPAdmin',
 						'bgcolor' => '#ffa500',
 					),
 					array(
