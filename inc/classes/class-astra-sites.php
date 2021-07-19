@@ -1120,6 +1120,7 @@ if ( ! class_exists( 'Astra_Sites' ) ) :
 					'is_bb_active'        => ( class_exists( 'FLBuilderModel' ) ),
 					'is_brizy_active'     => ( class_exists( 'Brizy_Editor_Post' ) ),
 					'is_elementor_active' => ( did_action( 'elementor/loaded' ) ),
+					'is_elementor_editor' => ( did_action( 'elementor/loaded' ) ) ? Elementor\Plugin::instance()->editor->is_edit_mode() : false,
 					'is_bb_editor'        => ( class_exists( 'FLBuilderModel' ) ) ? ( FLBuilderModel::is_builder_active() ) : false,
 					'is_brizy_editor'     => ( class_exists( 'Brizy_Editor_Post' ) ) ? ( isset( $_GET['brizy-edit'] ) || isset( $_GET['brizy-edit-iframe'] ) ) : false, // phpcs:ignore WordPress.Security.NonceVerification.Recommended
 					'saved_images'        => get_option( 'astra-sites-saved-images', array() ),

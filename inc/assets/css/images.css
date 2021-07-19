@@ -415,7 +415,20 @@
     cursor: pointer;
 }
 
-.ast-attachments-browser .ast-image__save.installing:before {
+.ast-image__save.button-primary {
+    display: flex;
+    align-items: center;
+}
+
+.ast-image__filter-safesearch > label {
+    display: flex;
+}
+
+.ast-image__filter-safesearch > label input {
+    margin-right: 5px;
+}
+
+.ast-attachments-browser .ast-image__save.installing:after {
     content: "\f463";
     display: inline-block;
     font: normal 20px/1 'dashicons';
@@ -430,7 +443,7 @@
     color: #fff;
     margin: 0;
     padding: 0;
-    margin-right: 10px;
+    margin-left: 10px;
     vertical-align: middle;
 }
 

@@ -212,7 +212,11 @@
             $scope.append( skeleton );
 
             let pixabay_filter = wp.template( 'ast-image-filters' );
-            $scope.find( '.ast-attachments-search-wrap' ).append( pixabay_filter() );
+            if ( $scope.find( '.ast-image__filter-wrap' ).length > 0 ) {
+                $scope.find( '.ast-image__filter-wrap' ).replaceWith( pixabay_filter() );
+            } else {
+                $scope.find( '.ast-attachments-search-wrap' ).append( pixabay_filter() );
+            }
 
             AstraImageCommon.offset = AstraImageCommon.frame.outerHeight();
             let wrapHeight = ( AstraImageCommon.offset - 210 );

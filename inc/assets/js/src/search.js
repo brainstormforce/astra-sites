@@ -50,7 +50,7 @@ var AstraSearch = wp.Backbone.View.extend({
         let thisObject = this;
         setTimeout( function(){
             thisObject.doSearch( event );
-        }, 1000 );
+        }, 1500 );
     },
 
     // Runs a search on the theme collection.
